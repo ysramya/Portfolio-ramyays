@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raahi - Ramya Yerramilli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Noto+Sans+Telugu:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ── NEW DARK EDITORIAL DESIGN SYSTEM ── */
+:root {
+  --black:#000000; --white:#FFFFFF;
+  --gold:#E5B55C;
+  --card:#111111;
+  --border:rgba(255,255,255,0.08);
+  --muted:rgba(255,255,255,0.38);
+  --dim:rgba(255,255,255,0.58);
+  /* Legacy variable aliases */
+  --bg:#000000; --bg2:#0a0a0a; --bg3:#0a0a0a;
+  --surface:rgba(17,17,17,.98); --surface2:rgba(10,10,10,.99);
+  --text:#FFFFFF; --text-dim:rgba(255,255,255,0.58); --text-muted:rgba(255,255,255,0.38);
+  --saffron:#E5B55C; --teal:#4CAF50; --marigold:#E5B55C;
+  --border-hi:rgba(229,181,92,0.3);
+  --nav-bg:rgba(0,0,0,0.6);
+  --t:.35s ease; --r:14px; --r-xl:18px; --r-pill:100px;
+}
+
+
+/* ── CONTENT VISIBILITY GUARANTEE ──
+   Hero content: visible immediately (no observer needed above fold).
+   All other .fi: revealed by IntersectionObserver OR by the 400ms
+   CSS-animation fallback below — whichever fires first.            */
+.cs-hero .fi,
+.cs-hero .fi.visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Fallback: if JS observer is delayed, reveal everything after 400ms */
+@keyframes fi-fallback { to { opacity:1; transform:none; } }
+.fi { animation: fi-fallback 0.01s 0.4s forwards; }
+.fi.visible { animation: none; opacity:1; transform:none; }
+
+/* ── HIDE OLD DECORATIVE ELEMENTS ── */
+#page-bg, #kolam-bg, #cursor, #sparkle-canvas { display:none!important; }
+
+/* ── RESET ── */
+*,*::before,*::after { margin:0;padding:0;box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif;background:#000000;color:#FFFFFF;overflow-x:hidden;line-height:1.7; }
+a { color:inherit;text-decoration:none; }
+img { max-width:100%;display:block; }
+
+/* ── NAV ── */
+#nav { position:sticky;top:0;z-index:100;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;background:rgba(0,0,0,0.6);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.08); }
+#theme-toggle { display:none; }
+.nav-right { display:flex;align-items:center;gap:.8rem; }
+.burger { display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;z-index:1001;cursor:pointer; }
+.burger span { display:block;width:22px;height:1.5px;background:#fff;border-radius:2px;transition:all .3s; }
+.burger.open span:nth-child(1) { transform:rotate(45deg) translate(4px,5px); }
+.burger.open span:nth-child(2) { opacity:0;transform:scaleX(0); }
+.burger.open span:nth-child(3) { transform:rotate(-45deg) translate(4px,-5px); }
+.nav-links { display:flex;align-items:center;gap:2.2rem; }
+.nav-links a { font-family:'Inter',sans-serif;font-size:0.62rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,0.9);transition:color .2s; }
+.nav-links a:hover { color:#E5B55C; }
+.nav-links a.resume-link { color:#E5B55C;border:1px solid rgba(229,181,92,0.35);border-radius:100px;padding:0.3rem 0.85rem; }
+@media(max-width:768px) {
+  .burger { display:flex; }
+  .nav-links { position:fixed;top:0;right:0;height:100dvh;width:min(280px,80vw);background:rgba(10,10,10,.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);flex-direction:column;justify-content:center;align-items:flex-start;gap:2.5rem;padding:3rem 2rem;border-left:1px solid rgba(255,255,255,0.08);transform:translateX(100%);transition:transform .35s ease;z-index:1000; }
+  .nav-links.open { transform:translateX(0); }
+  .nav-links a { font-size:0.75rem; }
+  .nav-overlay { position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;opacity:0;pointer-events:none;transition:opacity .3s; }
+  .nav-overlay.show { opacity:1;pointer-events:all; }
+}
+
+/* ── LAYOUT ── */
+main { position:relative;z-index:1; }
+.wrap { max-width:1080px;margin:0 auto;padding:0 2.5rem; }
+.section { padding:5.5rem 0; }
+.section-sm { padding:3.5rem 0; }
+.bg-alt { background:#0a0a0a; }
+
+/* ── TYPE ── */
+.eyebrow { font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:#E5B55C;display:flex;align-items:center;gap:.5rem;margin-bottom:.9rem; }
+.eyebrow::before { content:'✦';font-size:.6rem; }
+h1.cs-title { font-family:'Anton',sans-serif;font-size:clamp(3rem,7vw,7rem);font-weight:400;line-height:0.9;color:#fff;text-transform:uppercase; }
+h1.cs-title em { font-style:italic;color:#E5B55C;display:block; }
+h2.display { font-family:'Anton',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;line-height:1.05;text-transform:uppercase;color:#fff; }
+h2.display em { font-style:italic;color:#E5B55C; }
+.lead { font-size:clamp(.95rem,1.5vw,1.1rem);line-height:1.8;color:rgba(255,255,255,0.58);font-weight:300;max-width:680px; }
+
+/* ── BUTTONS ── */
+.btn { font-family:'Inter',sans-serif;font-size:.875rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:100px;padding:.75rem 1.8rem;transition:all .25s;display:inline-flex;align-items:center;gap:.5rem; }
+.btn-primary { background:#E5B55C;color:#000;border:1px solid #E5B55C; }
+.btn-primary:hover { filter:brightness(1.08);transform:translateY(-2px); }
+.btn-ghost { background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.25); }
+.btn-ghost:hover { border-color:#E5B55C;color:#E5B55C; }
+
+/* ── CS HERO ── */
+.cs-hero { padding:5rem 2.5rem 4rem;max-width:1080px;margin:0 auto;background:#000; }
+.cs-badge { display:inline-flex;align-items:center;gap:.5rem;background:#111;border:1px solid rgba(229,181,92,0.3);border-radius:20px;padding:.35rem .95rem;margin-bottom:2rem; }
+.cs-badge-dot { width:6px;height:6px;border-radius:50%;background:#E5B55C;flex-shrink:0; }
+.cs-badge-text { font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:#E5B55C; }
+.cs-meta { display:flex;flex-wrap:wrap;gap:1.2rem;padding:1.5rem 0;border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);margin:2.5rem 0; }
+.cs-meta-item { display:flex;flex-direction:column;gap:.2rem;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.8rem 1.2rem; }
+.cs-meta-item:hover { border-color:rgba(229,181,92,0.3); }
+.cs-meta-lbl { font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:rgba(255,255,255,0.38); }
+.cs-meta-val { font-family:'Inter',sans-serif;font-size:.875rem;color:rgba(255,255,255,0.58); }
+.cs-meta-val strong { color:#fff;font-weight:600; }
+
+/* Hero image */
+.hero-img { border-radius:var(--r);overflow:hidden;border:1px solid rgba(255,255,255,0.08);background:#111;margin-bottom:.5rem; }
+.hero-img img { width:100%;object-fit:contain;display:block; }
+
+/* ── PROBLEM CALLOUT ── */
+.callout { background:#111;border:1px solid rgba(255,255,255,0.08);border-left:3px solid #E5B55C;border-radius:2px;padding:2rem 2.2rem;margin:2rem 0; }
+.callout-q { font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,2vw,1.6rem);font-style:italic;font-weight:300;line-height:1.5;color:rgba(255,255,255,0.82);margin-bottom:.8rem; }
+.callout-foot { font-family:'Inter',sans-serif;font-size:.66rem;color:rgba(255,255,255,0.38);letter-spacing:.04em;padding-top:.8rem;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:.5rem;align-items:center; }
+.callout-foot strong { color:#E5B55C; }
+
+/* HMW */
+.hmw { text-align:center;padding:4.5rem 2rem;background:#0a0a0a; }
+.hmw-label { font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:#E5B55C;display:block;margin-bottom:1.2rem; }
+.hmw-text { font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,2.5vw,2rem);font-weight:300;font-style:italic;line-height:1.5;max-width:740px;margin:0 auto;color:#fff; }
+.hmw-text em { font-weight:600;font-style:normal;color:#E5B55C; }
+
+/* ── INSIGHT STRIP ── */
+.insight-strip { display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);overflow:hidden;margin:2rem 0; }
+.insight-cell { background:#000;padding:1.4rem 1.3rem; }
+.insight-icon { font-size:1.3rem;margin-bottom:.5rem;display:block; }
+.insight-lbl { font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:#E5B55C;margin-bottom:.3rem; }
+.insight-text { font-size:.9rem;line-height:1.65;color:rgba(255,255,255,0.58); }
+
+/* ── PHASE TIMELINE ── */
+.timeline-wrap { margin:2.5rem 0; }
+.phase-bar-row { display:flex;gap:3px;margin-bottom:3px;height:10px; }
+.phase-seg { border-radius:2px;flex-shrink:0; }
+.phase-cards { display:flex;gap:3px; }
+.phase-card { background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:2px;padding:1.1rem .9rem;transition:border-color .25s;flex-shrink:0; }
+.phase-card:hover { border-color:rgba(229,181,92,0.3); }
+.pc-wk { font-family:'Inter',sans-serif;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem; }
+.pc-name { font-family:'Anton',sans-serif;font-size:.95rem;font-weight:400;margin-bottom:.35rem;line-height:1.2;color:#fff; }
+.pc-pct { font-family:'Inter',sans-serif;font-size:.9rem;font-weight:600;line-height:1;margin-bottom:.4rem;color:#E5B55C; }
+.pc-acts { list-style:none;display:flex;flex-direction:column;gap:.22rem; }
+.pc-acts li { font-family:'Inter',sans-serif;font-size:.72rem;color:rgba(255,255,255,0.38);letter-spacing:.02em;line-height:1.4;display:flex;gap:.3rem; }
+.pc-acts li::before { content:'-';opacity:.5;flex-shrink:0; }
+.pc-wide { flex:2; }
+.pc-narrow { flex:1; }
+.c1 { color:#E5B55C; }
+.c2 { color:#E5B55C;opacity:.85; }
+.c3 { color:#E5B55C;opacity:.7; }
+.c4 { color:#E5B55C;opacity:.55; }
+.seg1 { background:#E5B55C; }
+.seg2 { background:#E5B55C;opacity:.75; }
+.seg3 { background:#E5B55C;opacity:.6; }
+.seg4 { background:#E5B55C;opacity:.45; }
+
+/* ── RATIONALE CARDS ── */
+.rationale-grid { display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;margin:2rem 0; }
+.rat-card { background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);padding:2rem;position:relative;overflow:hidden;transition:border-color .25s,transform .35s cubic-bezier(.34,1.56,.64,1); }
+.rat-card:hover { border-color:rgba(229,181,92,0.3);transform:translateY(-4px); }
+.rat-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px; }
+.rat-card.c-saffron::before,.rat-card.c-teal::before,.rat-card.c-marigold::before { background:#E5B55C; }
+.rat-icon { font-size:1.8rem;margin-bottom:.8rem;display:block; }
+.rat-why { font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:#E5B55C;margin-bottom:.5rem; }
+.rat-title { font-family:'Anton',sans-serif;font-size:1.1rem;font-weight:400;margin-bottom:.6rem;color:#fff; }
+.rat-body { font-size:.9rem;line-height:1.72;color:rgba(255,255,255,0.58); }
+.rat-note { margin-top:1rem;padding:.7rem .85rem;background:rgba(229,181,92,.05);border-radius:2px;font-family:'Inter',sans-serif;font-size:.8rem;color:rgba(255,255,255,0.38);line-height:1.45; }
+.rat-note strong { color:#fff; }
+
+/* ── PHOTO GRID ── */
+.photo-grid { display:grid;gap:4px;margin:2rem 0; }
+.photo-grid.g3 { grid-template-columns:repeat(3,1fr); }
+.photo-grid.g2 { grid-template-columns:repeat(2,1fr); }
+.photo-grid.g21 { grid-template-columns:2fr 1fr; }
+.photo-grid.g12 { grid-template-columns:1fr 2fr; }
+.photo-item { position:relative;overflow:hidden;background:#111;border-radius:var(--r); }
+.photo-item img { width:100%;height:auto;display:block;transition:transform .4s; }
+.photo-item.wide img,.photo-item.sq img,.photo-item.tall img { height:100%;object-fit:cover; }
+.photo-item:hover img { transform:scale(1.03); }
+.photo-item.wide { aspect-ratio:16/9; }
+.photo-item.sq { aspect-ratio:1/1; }
+.photo-item.tall { aspect-ratio:3/4; }
+.photo-cap { padding:.55rem .75rem;background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.08);font-family:'Inter',sans-serif;font-size:0.72rem;color:rgba(255,255,255,0.38);letter-spacing:.04em; }
+
+/* ── IMPACT STATS ── */
+.impact-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);overflow:hidden;margin:2rem 0; }
+.impact-cell { background:#000;padding:2.8rem 2rem;text-align:center; }
+.impact-n { font-family:'Anton',sans-serif;font-size:5rem;font-weight:400;color:#E5B55C;line-height:1;margin-bottom:.3rem; }
+.impact-lbl { font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:rgba(255,255,255,0.58);margin-bottom:.6rem; }
+.impact-desc { font-size:.9rem;line-height:1.65;color:rgba(255,255,255,0.38); }
+
+/* ── RECOGNITION TRACK ── */
+.recog-track { display:flex;flex-direction:column;position:relative;margin:2rem 0; }
+.recog-track::before { content:'';position:absolute;left:10px;top:10px;bottom:10px;width:1px;background:rgba(255,255,255,0.08); }
+.recog-item { display:grid;grid-template-columns:22px 1fr;gap:1.2rem;padding:.9rem 0;align-items:start; }
+.recog-dot { width:22px;height:22px;border-radius:50%;background:#111;border:2px solid #E5B55C;z-index:1;position:relative;flex-shrink:0; }
+.recog-date { font-family:'Inter',sans-serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#E5B55C;margin-bottom:.2rem; }
+.recog-title { font-family:'Anton',sans-serif;font-size:.95rem;font-weight:400;margin-bottom:.3rem;color:#fff; }
+.recog-body { font-size:.9rem;line-height:1.65;color:rgba(255,255,255,0.58); }
+
+/* ── TAKEAWAYS ── */
+.take-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;margin:2rem 0; }
+.take-card { background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);padding:1.8rem;transition:border-color .25s,transform .35s cubic-bezier(.34,1.56,.64,1); }
+.take-card:hover { border-color:rgba(229,181,92,0.3);transform:translateY(-4px); }
+.take-icon { font-size:1.6rem;margin-bottom:.8rem;display:block; }
+.take-title { font-family:'Anton',sans-serif;font-size:1rem;font-weight:400;margin-bottom:.5rem;line-height:1.2;color:#fff; }
+.take-title em { font-style:italic;color:#E5B55C; }
+.take-body { font-size:.9rem;line-height:1.72;color:rgba(255,255,255,0.58); }
+.take-stat { margin-top:.8rem;font-family:'Inter',sans-serif;font-size:.8rem;color:#E5B55C;letter-spacing:.04em; }
+
+/* ── CTA BANNER ── */
+.cta-band { display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:2.5rem 3rem;background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap; }
+.cta-text { font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;font-style:italic;color:rgba(255,255,255,0.38); }
+.cta-text strong { font-weight:600;font-style:normal;color:#fff; }
+
+/* ── DIVIDERS ── */
+.sec-div { display:flex;align-items:center;gap:.7rem;margin:4rem 0;opacity:.4; }
+.sec-div::before,.sec-div::after { content:'';flex:1;height:1px;background:rgba(255,255,255,0.08); }
+.sec-div-text { font-family:'Inter',sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.38);white-space:nowrap; }
+
+/* ── FOOTER ── */
+footer { background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.08);padding:4rem 2.5rem; }
+.footer-inner { max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:3rem; }
+.footer-name { font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;letter-spacing:-.02em;margin-bottom:.5rem;color:#fff; }
+.footer-name em { font-style:italic;font-weight:300;color:#E5B55C; }
+.footer-tagline { font-size:.9rem;color:rgba(255,255,255,0.38);line-height:1.7;max-width:320px; }
+.footer-links { display:flex;flex-direction:column;gap:.8rem; }
+.footer-link { font-family:'Inter',sans-serif;font-size:.875rem;letter-spacing:.08em;color:rgba(255,255,255,0.38);display:flex;align-items:center;gap:.6rem;transition:color .2s; }
+.footer-link:hover { color:#E5B55C; }
+.footer-bottom { max-width:1080px;margin:2rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem; }
+.footer-copy { font-family:'Inter',sans-serif;font-size:.8rem;letter-spacing:.06em;color:rgba(255,255,255,0.38); }
+
+/* ── CHATBOT ── */
+.chat-widget { position:fixed;bottom:1.8rem;right:1.8rem;z-index:5000;font-family:'Inter',sans-serif; }
+.chat-trigger { width:56px;height:56px;border-radius:50%;background:#E5B55C;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(229,181,92,.35);transition:transform .25s,box-shadow .25s;font-size:1.3rem;color:#000; }
+.chat-trigger:hover { transform:scale(1.08);box-shadow:0 6px 28px rgba(229,181,92,.5); }
+.chat-panel { position:absolute;bottom:68px;right:0;width:340px;background:rgba(10,10,10,.99);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.6);display:flex;flex-direction:column;transform:scale(.92) translateY(12px);opacity:0;pointer-events:none;transition:transform .3s ease,opacity .3s ease;transform-origin:bottom right; }
+.chat-panel.open { transform:scale(1) translateY(0);opacity:1;pointer-events:all; }
+.chat-head { padding:1rem 1.2rem;background:#0a0a0a;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:.8rem; }
+.chat-avatar { width:36px;height:36px;border-radius:50%;background:#E5B55C;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#000;flex-shrink:0;font-weight:700; }
+.chat-head-info { flex:1; }
+.chat-head-name { font-weight:600;font-size:.9rem;color:#fff; }
+.chat-head-status { font-family:'Inter',sans-serif;font-size:.75rem;color:rgba(255,255,255,0.38);letter-spacing:.05em; }
+.chat-close { background:none;border:none;color:rgba(255,255,255,0.38);font-size:1.1rem;cursor:pointer;padding:2px;line-height:1;transition:color .2s; }
+.chat-close:hover { color:#fff; }
+.chat-body { flex:1;overflow-y:auto;padding:1.2rem;display:flex;flex-direction:column;gap:.85rem;max-height:300px;min-height:180px; }
+.chat-body::-webkit-scrollbar { width:3px; }
+.chat-body::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.08);border-radius:2px; }
+.chat-msg { max-width:88%;line-height:1.55;font-size:.9rem;border-radius:10px;padding:.65rem .9rem; }
+.chat-msg.bot { background:#111;color:rgba(255,255,255,0.58);align-self:flex-start;border-bottom-left-radius:3px; }
+.chat-msg.user { background:#E5B55C;color:#000;align-self:flex-end;border-bottom-right-radius:3px; }
+.chat-typing { display:flex;gap:4px;align-items:center;padding:.65rem .9rem; }
+.chat-dot { width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.38);animation:blink 1.2s infinite; }
+.chat-dot:nth-child(2) { animation-delay:.2s; } .chat-dot:nth-child(3) { animation-delay:.4s; }
+@keyframes blink { 0%,80%,100%{opacity:.3} 40%{opacity:1} }
+.chat-footer { padding:.8rem 1rem;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:.6rem; }
+.chat-input { flex:1;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:.55rem .9rem;font-size:.9rem;color:#fff;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;cursor:text; }
+.chat-input:focus { border-color:#E5B55C; }
+.chat-input::placeholder { color:rgba(255,255,255,0.38); }
+.chat-send { width:36px;height:36px;background:#E5B55C;border:none;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:#000;transition:filter .2s;flex-shrink:0; }
+.chat-send:hover { filter:brightness(1.1); }
+.chat-hint { text-align:center;padding:.5rem;font-family:'Inter',sans-serif;font-size:.72rem;color:rgba(255,255,255,0.38);letter-spacing:.04em;opacity:.8;border-top:1px solid rgba(255,255,255,0.08); }
+
+/* ── FADE IN ── */
+.fi { opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease; }
+.fi.visible { opacity:1;transform:translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px) {
+  .wrap { max-width:100%; }
+  h1.cs-title { font-size:clamp(3rem,8vw,6rem); }
+}
+@media(max-width:960px) {
+  .wrap { padding:0 2rem; }
+  h1.cs-title { font-size:clamp(2.5rem,7vw,5rem); }
+  .cs-hero { padding:4rem 2rem 3rem; }
+  .insight-strip { grid-template-columns:1fr 1fr; }
+  .rationale-grid { grid-template-columns:1fr 1fr; }
+  .impact-grid { grid-template-columns:repeat(3,1fr); }
+  .take-grid { grid-template-columns:1fr 1fr; }
+  .phase-cards { flex-wrap:wrap; }
+  .pc-wide,.pc-narrow { flex:1 1 45%; }
+  .photo-grid.g3 { grid-template-columns:1fr 1fr; }
+  .cta-band { padding:2rem 2rem; }
+  .section { padding:4.5rem 0; }
+}
+@media(max-width:768px) {
+  .wrap { padding:0 1.6rem; }
+  h1.cs-title { font-size:clamp(2rem,7vw,4rem); }
+  .cs-hero { padding:3.5rem 1.6rem 2.5rem; }
+  .cs-meta { gap:.8rem; }
+  .insight-strip { grid-template-columns:1fr 1fr; }
+  .rationale-grid { grid-template-columns:1fr; }
+  .impact-grid { grid-template-columns:1fr 1fr; }
+  .impact-n { font-size:3.5rem; }
+  .take-grid { grid-template-columns:1fr 1fr; }
+  .pc-wide,.pc-narrow { flex:1 1 45%; }
+  .photo-grid.g21,.photo-grid.g12 { grid-template-columns:1fr; }
+  .hmw { padding:3rem 1.6rem; }
+  .section { padding:4rem 0; }
+  .cta-band { flex-direction:column; gap:1.5rem; }
+  .footer-inner { flex-wrap:wrap; gap:2rem; }
+}
+@media(max-width:640px) {
+  .cs-hero { padding:3rem 1.2rem 2rem; }
+  #nav { padding:0 1.2rem; }
+  .wrap { padding:0 1.2rem; }
+  h1.cs-title { font-size:clamp(2rem,9vw,3rem); }
+  .lead { font-size:1rem; }
+  .cs-meta { gap:.6rem; flex-wrap:wrap; }
+  .section { padding:3rem 0; }
+  .insight-strip { grid-template-columns:1fr; }
+  .rationale-grid { grid-template-columns:1fr; }
+  .impact-grid { grid-template-columns:1fr 1fr; }
+  .impact-n { font-size:2.8rem; }
+  .impact-cell { padding:1.6rem 1rem; }
+  .take-grid { grid-template-columns:1fr; }
+  .pc-wide,.pc-narrow { flex:1 1 100%; }
+  .photo-grid.g2,.photo-grid.g21,.photo-grid.g12,.photo-grid.g3 { grid-template-columns:1fr; }
+  .hmw { padding:2.5rem 1.2rem; }
+  .hmw-text { font-size:1.15rem; }
+  .chat-widget { bottom:1.2rem; right:1.2rem; }
+  .chat-panel { width:calc(100vw - 2.4rem);right:-.4rem; }
+  .cta-band { flex-direction:column; padding:1.8rem 1.2rem; gap:1.2rem; }
+  .footer-inner { flex-direction:column; gap:1.8rem; }
+  .footer-bottom { flex-direction:column; align-items:flex-start; gap:.5rem; }
+}
+@media(max-width:380px) {
+  h1.cs-title { font-size:1.9rem; }
+  .impact-grid { grid-template-columns:1fr; }
+  .impact-n { font-size:2.4rem; }
+}
+/* ── PROJECT NAVIGATION (prev / next) ── */
+.proj-nav-prev,
+.proj-nav-next {
+  position: fixed;
+  bottom: 2.2rem;
+  z-index: 200;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.85rem 1.6rem;
+  border-radius: 100px;
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+  white-space: nowrap;
+}
+
+/* Prev — left corner, ghost style */
+.proj-nav-prev {
+  left: 2.2rem;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: rgba(255,255,255,0.75);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+.proj-nav-prev:hover {
+  color: #fff;
+  border-color: rgba(229,181,92,0.55);
+  transform: translateX(-3px);
+}
+
+/* Next — right corner, gold filled */
+.proj-nav-next {
+  right: 2.2rem;
+  background: #E5B55C;
+  color: #000;
+  border: none;
+  box-shadow: 0 4px 20px rgba(229,181,92,0.3);
+}
+.proj-nav-next:hover {
+  filter: brightness(1.1);
+  transform: translateX(3px);
+  box-shadow: 0 6px 28px rgba(229,181,92,0.45);
+}
+
+@media (max-width: 600px) {
+  .proj-nav-prev { font-size: 0.55rem; padding: 0.7rem 1.1rem; left: 1rem; bottom: 1.2rem; }
+  .proj-nav-next { font-size: 0.55rem; padding: 0.7rem 1.1rem; right: 1rem; bottom: 1.2rem; }
+}
+
+</style>
+</head>
+<body>
+
+<div id="page-bg" aria-hidden="true"></div>
+<canvas id="sparkle-canvas"></canvas>
+<svg id="cursor" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(11,11)">
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(0)"/>
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(45)"/>
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(90)"/>
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(135)"/>
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(180)"/>
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(225)"/>
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(270)"/>
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(315)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(22.5)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(67.5)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(112.5)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(157.5)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(202.5)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(247.5)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(292.5)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(337.5)"/>
+  </g>
+  <circle cx="11" cy="11" r="2.8" fill="#7B3F00"/>
+  <circle cx="11" cy="11" r="1.5" fill="#3D1F00"/>
+</svg>
+
+<div id="kolam-bg">
+  <svg id="kolam-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(200,200)">
+      <circle class="kp" cx="0" cy="0" r="185"/><circle class="kp" cx="0" cy="0" r="155"/>
+      <circle class="kp" cx="0" cy="0" r="120"/><circle class="kp" cx="0" cy="0" r="88"/>
+      <circle class="kp" cx="0" cy="0" r="58"/><circle class="kp" cx="0" cy="0" r="28"/>
+      <path class="kp" d="M0,-185 L18,-57 L70,-70 L57,-18 L185,0 L57,18 L70,70 L18,57 L0,185 L-18,57 L-70,70 L-57,18 L-185,0 L-57,-18 L-70,-70 L-18,-57 Z"/>
+      <path class="kp" d="M0,-155 C28,-100 100,-28 155,0 C100,28 28,100 0,155 C-28,100 -100,28 -155,0 C-100,-28 -28,-100 0,-155 Z"/>
+      <circle class="kd" cx="0" cy="-185" r="3.5"/><circle class="kd" cx="131" cy="-131" r="3"/>
+      <circle class="kd" cx="185" cy="0" r="3.5"/><circle class="kd" cx="131" cy="131" r="3"/>
+      <circle class="kd" cx="0" cy="185" r="3.5"/><circle class="kd" cx="-131" cy="131" r="3"/>
+      <circle class="kd" cx="-185" cy="0" r="3.5"/><circle class="kd" cx="-131" cy="-131" r="3"/>
+      <circle class="kd" cx="0" cy="0" r="4.5"/>
+    </g>
+  </svg>
+</div>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="hero-concept.html" class="nav-logo" style="text-decoration:none;display:flex;align-items:center;gap:0.35rem;"><span style="width:6px;height:6px;border-radius:50%;background:#E5B55C;display:inline-block;"></span><span style="font-family:'Noto Sans Telugu',sans-serif;color:#E5B55C;font-weight:700;font-size:1.5rem;letter-spacing:0;line-height:1;">రమ్య</span></a>
+  <div class="nav-links" id="nav-links">
+    <a href="hero-concept.html#work">Work</a>
+    <a href="hero-concept.html#about">About</a>
+    <a href="hero-concept.html#research">Research</a>
+    <a href="hero-concept.html#contact">Contact</a>
+    <a href="RAMYA YERRAMILLI -UXR-2026 (4).pdf" target="_blank" class="resume-link">Resume ↗</a>
+  </div>
+  <div class="nav-right">
+    <button class="burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="nav-overlay" id="nav-overlay"></div>
+
+<main>
+
+  <!-- ── HERO ── -->
+  <div class="cs-hero">
+    <div class="cs-badge fi"><span class="cs-badge-dot"></span><span class="cs-badge-text">iD Lab Shark Tank · Competitively Funded · 2025</span></div>
+    <h1 class="cs-title fi">Raahi<em>Spot It. Fix It.</em></h1>
+    <p class="lead fi" style="margin-top:1.2rem;">Validated by <strong>78.9%</strong> of 57+ UX practitioners - a purpose-built AI dark pattern detection tool that gives researchers a systematic, portable way to catch harmful patterns before they ship.</p>
+    <div class="cs-meta fi">
+      <div class="cs-meta-item"><span class="cs-meta-lbl">Role</span><span class="cs-meta-val"><strong>UX Researcher + Co-founder</strong></span></div>
+      <div class="cs-meta-item"><span class="cs-meta-lbl">Duration</span><span class="cs-meta-val"><strong>16 Weeks</strong> · Jan – May 2025</span></div>
+      <div class="cs-meta-item"><span class="cs-meta-lbl">Team</span><span class="cs-meta-val">UX Research Lead · Technical Co-founder</span></div>
+      <div class="cs-meta-item"><span class="cs-meta-lbl">Tools</span><span class="cs-meta-val">Figma · Miro · Google Forms · Notion</span></div>
+    </div>
+    <div class="hero-img fi">
+      <img src="img/raahi/brand-splash.png" alt="Raahi - AI dark pattern detection tool brand identity">
+    </div>
+  </div>
+
+  <!-- ── PROBLEM ── -->
+  <section class="section bg-alt">
+    <div class="wrap">
+      <div class="eyebrow fi">The Problem</div>
+      <h2 class="display fi">AI interfaces manipulate users.<br><em>No one has a tool to stop it.</em></h2>
+      <p class="lead fi" style="margin-top:1.2rem;">AI-generated interfaces move fast - too fast for practitioners to manually review. Dark patterns slip through: hidden unsubscribes, forced consent flows, deceptive defaults. There is no systematic, portable way to detect them before they ship.</p>
+
+      <div class="insight-strip fi">
+        <div class="insight-cell">
+          <span class="insight-icon">🤖</span>
+          <div class="insight-lbl">The Scale</div>
+          <div class="insight-text">14M+ apps use AI-generated interfaces. Dark patterns are embedded in production - unseen and unchecked.</div>
+        </div>
+        <div class="insight-cell">
+          <span class="insight-icon">⚡</span>
+          <div class="insight-lbl">The Speed</div>
+          <div class="insight-text">Users fall for AI dark patterns in under 30 seconds - before they realise they've been manipulated.</div>
+        </div>
+        <div class="insight-cell">
+          <span class="insight-icon">🔍</span>
+          <div class="insight-lbl">The Gap</div>
+          <div class="insight-text">No dedicated tool exists. Practitioners use ad-hoc checklists, intuition, and generic heuristics - inconsistently.</div>
+        </div>
+      </div>
+
+      <div class="callout fi">
+        <p class="callout-q">"I know dark patterns when I see them - but I have no systematic way to document or prove it to a stakeholder."</p>
+        <div class="callout-foot"><strong>Primary research finding</strong> - interview with senior UX practitioner, March 2025</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HMW ── -->
+  <div class="hmw">
+    <span class="hmw-label">How Might We</span>
+    <p class="hmw-text">How might we give UX practitioners a <em>reliable, systematic tool</em> to detect and document AI-generated dark patterns - before harmful designs ship to users?</p>
+  </div>
+
+  <!-- ── RESEARCH PROCESS ── -->
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow fi">Research Process</div>
+      <h2 class="display fi">Four phases.<br><em>Research-first, always.</em></h2>
+      <p class="lead fi" style="margin:1rem 0 2.5rem;">The project was deliberately research-heavy - spending the first two-thirds understanding the problem before writing a single line of product spec. Every design decision traces back to a practitioner insight.</p>
+
+      <div class="timeline-wrap fi">
+        <!-- Proportional bar: narrow · wide · narrow · wide -->
+        <div class="phase-bar-row">
+          <div class="phase-seg seg1 pc-narrow"></div>
+          <div class="phase-seg seg2 pc-wide"></div>
+          <div class="phase-seg seg3 pc-narrow"></div>
+          <div class="phase-seg seg4 pc-wide"></div>
+        </div>
+        <div class="phase-cards">
+          <div class="phase-card pc-narrow">
+            <div class="pc-wk c1">Wks 1–3</div>
+            <div class="pc-name">Secondary Research</div>
+            <div class="pc-pct c1">18%</div>
+            <ul class="pc-acts">
+              <li>Literature review on dark patterns</li>
+              <li>AI interface taxonomy</li>
+              <li>Problem framing</li>
+            </ul>
+          </div>
+          <div class="phase-card pc-wide">
+            <div class="pc-wk c2">Wks 4–8</div>
+            <div class="pc-name">Primary Research</div>
+            <div class="pc-pct c2">35%</div>
+            <ul class="pc-acts">
+              <li>12 practitioner interviews</li>
+              <li>Survey - 57+ respondents</li>
+              <li>Competitive audit (8 tools)</li>
+              <li>Affinity mapping + synthesis</li>
+            </ul>
+          </div>
+          <div class="phase-card pc-narrow">
+            <div class="pc-wk c3">Wks 9–11</div>
+            <div class="pc-name">Strategy + Framework</div>
+            <div class="pc-pct c3">22%</div>
+            <ul class="pc-acts">
+              <li>Detection framework design</li>
+              <li>3-tier category taxonomy</li>
+              <li>Go-to-market positioning</li>
+            </ul>
+          </div>
+          <div class="phase-card pc-wide">
+            <div class="pc-wk c4">Wks 12–16</div>
+            <div class="pc-name">Product Design + Validation</div>
+            <div class="pc-pct c4">25%</div>
+            <ul class="pc-acts">
+              <li>Toolbar UI design in Figma</li>
+              <li>Brand identity - Raahi</li>
+              <li>Practitioner validation (78.9%)</li>
+              <li>iD Lab Shark Tank pitch + win</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RESEARCH FINDINGS ── -->
+  <section class="section-sm bg-alt">
+    <div class="wrap">
+      <div class="eyebrow fi">Research Findings</div>
+      <h2 class="display fi">What 57 practitioners<br><em>told us about dark patterns.</em></h2>
+      <p class="lead fi" style="margin-top:1rem;">The survey and interviews converged on one urgent insight: practitioners know the problem exists - they just have no shared language or tooling to act on it consistently. That gap is Raahi.</p>
+      <div class="photo-grid g2 fi" style="margin-top:2rem;">
+        <div class="photo-item wide">
+          <img src="img/raahi/research-framework.png" alt="Raahi research planning board - affinity mapping and synthesis">
+          <div class="photo-cap">Research framework - affinity mapping across 12 interviews and 57 survey responses</div>
+        </div>
+        <div class="photo-item wide">
+          <img src="img/raahi/survey-results.png" alt="Survey results - practitioner validation data">
+          <div class="photo-cap">Survey results - 78.9% of practitioners validated the problem and expressed intent to use a dedicated tool</div>
+        </div>
+      </div>
+      <div class="callout fi">
+        <p class="callout-q">"78.9% of respondents confirmed they encounter AI dark patterns regularly - but 94% have no consistent process to document them."</p>
+        <div class="callout-foot"><strong>Survey finding</strong> - 57+ UX practitioners surveyed, Feb–Mar 2025</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sec-div wrap"><span class="sec-div-text">✦ - Design Rationale - ✦</span></div>
+
+  <!-- ── DESIGN RATIONALE ── -->
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow fi">Design Rationale</div>
+      <h2 class="display fi">Why a toolbar?<br><em>Three deliberate decisions.</em></h2>
+      <div class="rationale-grid fi">
+        <div class="rat-card c-teal">
+          <span class="rat-icon">🔌</span>
+          <div class="rat-why">The format</div>
+          <div class="rat-title">Browser Toolbar, Not a Standalone App</div>
+          <p class="rat-body">Practitioners review live products inside the browser - friction kills adoption. A toolbar embeds directly into the workflow, requiring zero context-switching.</p>
+          <div class="rat-note"><strong>Research basis:</strong> 100% of interviewees reviewed products in-browser. A separate app would add too many steps for sprint-pace work.</div>
+        </div>
+        <div class="rat-card c-saffron">
+          <span class="rat-icon">📋</span>
+          <div class="rat-why">The audience</div>
+          <div class="rat-title">Practitioner-First, Not End-User</div>
+          <p class="rat-body">Arming practitioners to catch dark patterns upstream scales the impact. One practitioner protects thousands of users - a multiplicative approach to ethical design.</p>
+          <div class="rat-note"><strong>Strategic decision:</strong> B2B SaaS model targets design teams and UX auditors - the people who can actually change what ships.</div>
+        </div>
+        <div class="rat-card c-marigold">
+          <span class="rat-icon">🧠</span>
+          <div class="rat-why">The taxonomy</div>
+          <div class="rat-title">Three-Tier Detection Framework</div>
+          <p class="rat-body">We mapped dark patterns into three tiers - Coercive (manipulates action), Deceptive (hides intent), Addictive (exploits cognition) - giving practitioners a shared vocabulary for reporting.</p>
+          <div class="rat-note"><strong>Framework basis:</strong> Built from Brignull + Gray et al. literature review, validated by 78.9% of respondents.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SOLUTION ── -->
+  <section class="section-sm bg-alt">
+    <div class="wrap">
+      <div class="eyebrow fi">The Solution</div>
+      <h2 class="display fi">From research to<br><em>product.</em></h2>
+      <p class="lead fi" style="margin-top:1rem;">Raahi is a browser toolbar that detects, categorises, and surfaces AI-generated dark patterns in real time - with one-click reporting so practitioners can document findings without leaving the page.</p>
+      <div class="photo-grid g2 fi" style="margin-top:2rem;">
+        <div class="photo-item wide">
+          <img src="img/raahi/design-workflow.png" alt="Raahi design workflow - phase-based product positioning">
+          <div class="photo-cap">Design workflow - phase-based positioning showing how Raahi fits into a UX audit process</div>
+        </div>
+        <div class="photo-item wide">
+          <img src="img/raahi/product-specs.png" alt="Raahi product specs - goals, target users, brand identity, toolbar specs">
+          <div class="photo-cap">Product specs - goals, target users, brand identity system, and toolbar feature set</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sec-div wrap"><span class="sec-div-text">✦ - Impact - ✦</span></div>
+
+  <!-- ── IMPACT ── -->
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow fi">Impact</div>
+      <h2 class="display fi">Validated by the<br><em>people who matter.</em></h2>
+      <div class="impact-grid fi">
+        <div class="impact-cell">
+          <div class="impact-n">78.9%</div>
+          <div class="impact-lbl">Market Validation</div>
+          <p class="impact-desc">Of UX practitioners confirmed encountering AI dark patterns regularly and expressed clear intent to use a dedicated detection tool.</p>
+        </div>
+        <div class="impact-cell">
+          <div class="impact-n">57+</div>
+          <div class="impact-lbl">Practitioners Surveyed</div>
+          <p class="impact-desc">UX researchers, designers, and product managers across industries contributed to the primary research validation phase.</p>
+        </div>
+        <div class="impact-cell">
+          <div class="impact-n">iD Lab</div>
+          <div class="impact-lbl">Shark Tank - Won</div>
+          <p class="impact-desc">Competitively funded by DePaul's iD Lab after pitching to a panel of investors and faculty. Selected from multiple competing ideas.</p>
+        </div>
+      </div>
+
+      <div class="recog-track fi">
+        <div class="recog-item">
+          <div class="recog-dot"></div>
+          <div>
+            <div class="recog-date">Feb – Mar 2025</div>
+            <div class="recog-title">Primary Research - 57+ Practitioners Surveyed</div>
+            <p class="recog-body">Conducted 12 in-depth interviews and a 57+ respondent survey across UX practitioners in the US and India to validate the problem and shape the detection framework.</p>
+          </div>
+        </div>
+        <div class="recog-item">
+          <div class="recog-dot"></div>
+          <div>
+            <div class="recog-date">April 2025</div>
+            <div class="recog-title">iD Lab Shark Tank - Competitively Funded</div>
+            <p class="recog-body">Raahi was selected for funding by DePaul's iD Lab entrepreneurship programme after a competitive Shark Tank-style pitch to faculty and industry investors.</p>
+          </div>
+        </div>
+        <div class="recog-item">
+          <div class="recog-dot"></div>
+          <div>
+            <div class="recog-date">May 2025</div>
+            <div class="recog-title">78.9% Practitioner Validation - Final Survey</div>
+            <p class="recog-body">Final validation survey confirmed 78.9% market fit - practitioners rated the toolbar concept as a clear improvement over existing ad-hoc review methods.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="photo-grid g2 fi" style="margin-top:2.5rem;">
+        <div class="photo-item tall">
+          <img src="img/raahi/IMG_8875.jpg" alt="Raahi - iD Lab Shark Tank pitch presentation">
+          <div class="photo-cap">iD Lab Shark Tank pitch - presenting Raahi to faculty and industry investors</div>
+        </div>
+        <div class="photo-item tall">
+          <img src="img/raahi/IMG_8877.jpg" alt="Raahi - iD Lab showcase event, Spring 2025">
+          <div class="photo-cap">iD Lab showcase - Raahi selected for competitive funding, Spring 2025</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TAKEAWAYS ── -->
+  <section class="section-sm bg-alt">
+    <div class="wrap">
+      <div class="eyebrow fi">Key Takeaways</div>
+      <h2 class="display fi">What building Raahi<br><em>taught me.</em></h2>
+      <div class="take-grid fi">
+        <div class="take-card">
+          <span class="take-icon">🎯</span>
+          <div class="take-title">Validate Before <em>You Build</em></div>
+          <p class="take-body">78.9% validation came from thorough research - not assumption. Every product decision was grounded in practitioner evidence, not intuition.</p>
+          <div class="take-stat">↑ 78.9% validation - research-first compounds returns</div>
+        </div>
+        <div class="take-card">
+          <span class="take-icon">🔗</span>
+          <div class="take-title">Scale Through <em>Practitioners</em></div>
+          <p class="take-body">One practitioner protects thousands of users. Targeting the auditor - not the end user - is a multiplicative approach to ethical design at scale.</p>
+          <div class="take-stat">57+ practitioners × their user base = systems-level change</div>
+        </div>
+        <div class="take-card">
+          <span class="take-icon">🗣️</span>
+          <div class="take-title">Language is <em>Infrastructure</em></div>
+          <p class="take-body">The three-tier taxonomy gave practitioners a shared vocabulary. Before Raahi, "dark pattern" meant something different to every person in the room.</p>
+          <div class="take-stat">3-tier framework - coercive · deceptive · addictive</div>
+        </div>
+        <div class="take-card">
+          <span class="take-icon">🚀</span>
+          <div class="take-title">Pitch as <em>Validation</em></div>
+          <p class="take-body">The iD Lab Shark Tank wasn't just funding - it was a forcing function to stress-test the business model, market sizing, and differentiation under real scrutiny.</p>
+          <div class="take-stat">iD Lab funded - idea survived investor scrutiny</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <div class="cta-band">
+    <p class="cta-text"><strong>Next project:</strong> VR mental wellness companion - 71% student validation, showcased at Jarvis Innovation Challenge.</p>
+    <a href="wellnut.html" class="btn btn-primary">See Wellnut →</a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-name" style="font-family:'Noto Sans Telugu',sans-serif;">రమ్య</div>
+      <p class="footer-tagline">UX Researcher. DePaul University. Available for roles and collaborations.</p>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:ys.ramya@gmail.com" class="footer-link">✉ ys.ramya@gmail.com</a>
+      <a href="hero-concept.html" class="footer-link">← All Work</a>
+      <a href="cost-of-a-click.html" class="footer-link">→ Cost of a Click</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div style="font-family:'DM Sans',sans-serif;font-size:1rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);opacity:.4;">✦ Raahi · iD Lab 2025</div>
+    <span class="footer-copy">© 2026 Ramya Yerramilli</span>
+  </div>
+</footer>
+
+<!-- ── CHATBOT ── -->
+<div class="chat-widget">
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-head">
+      <div class="chat-avatar">✦</div>
+      <div class="chat-head-info"><div class="chat-head-name">Portfolio Assistant</div><div class="chat-head-status">Ask about Raahi</div></div>
+      <button class="chat-close" id="chat-close">×</button>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="chat-msg bot">Hi! Ask me anything about Raahi - the research, the dark pattern framework, the iD Lab win, or how to reach Ramya. 🔍</div>
+    </div>
+    <div class="chat-footer">
+      <input class="chat-input" id="chat-input" type="text" placeholder="Ask anything…" autocomplete="off">
+      <button class="chat-send" id="chat-send">→</button>
+    </div>
+    <div class="chat-hint">Powered by Claude · ys.ramya@gmail.com</div>
+  </div>
+  <button class="chat-trigger" id="chat-trigger" aria-label="Open chat">✦</button>
+</div>
+
+<script>
+const CHAT_CONFIG = { apiKey: '', model: 'claude-haiku-4-5' };
+const SYSTEM_PROMPT = `You are the portfolio assistant for Ramya Yerramilli. A visitor is reading the "Raahi" case study page. Answer questions about: the project (AI dark pattern detection browser toolbar), the research process (12 interviews + 57+ practitioner survey), the detection framework (3 tiers: coercive / deceptive / addictive), the 78.9% market validation, the iD Lab Shark Tank win, the two-person founding team (UX Research Lead + Technical Co-founder), or Ramya's background and availability. Be concise - under 3 sentences per answer. Contact: ys.ramya@gmail.com`;
+const FAQ=[
+  {keys:['dark pattern','dark patterns','detect','detection','toolbar','browser'],ans:"Raahi is a browser toolbar that detects AI-generated dark patterns in real time, categorises them into three tiers (coercive, deceptive, addictive), and lets practitioners document and report them without leaving the browser. 🔍"},
+  {keys:['78','validation','survey','validate','market'],ans:"78.9% of 57+ UX practitioners validated the problem and expressed clear intent to use a dedicated detection tool - making the market case very strong before any code was written. ✅"},
+  {keys:['shark tank','id lab','fund','funded','depaul','grant'],ans:"Raahi won DePaul's iD Lab Shark Tank - a competitive entrepreneurship pitch to faculty and industry investors. It was selected for funding from multiple competing ideas. 🏆"},
+  {keys:['co-founder','team','technical','founder'],ans:"Raahi was co-founded by a two-person team: UX Research Lead (Ramya) and a Technical Co-founder. The research-first approach was Ramya's contribution; the Technical Co-founder led the architecture. 👥"},
+  {keys:['framework','tier','coercive','deceptive','addictive','taxonomy'],ans:"The three-tier detection framework classifies dark patterns as: Coercive (manipulates user action), Deceptive (hides intent or consequence), and Addictive (exploits cognitive biases). Built from Brignull + primary research synthesis. 🧠"},
+  {keys:['interview','research process','how long','16 weeks','phases'],ans:"The research ran 16 weeks across 4 phases: secondary research → 12 practitioner interviews + 57-person survey → strategy and framework → product design and validation. Discovery-first, always. 📊"},
+  {keys:['contact','hire','available','email'],ans:"Reach Ramya at ys.ramya@gmail.com - she's open to UX Research roles and collaborations. ✉"},
+  {keys:['hello','hi','hey'],ans:"Hi! I can tell you about Raahi's research process, the dark pattern framework, the iD Lab win, or how to reach Ramya. What would you like to know? ✦"},
+];
+function faqResponse(msg){const l=msg.toLowerCase();for(const f of FAQ){if(f.keys.some(k=>l.includes(k)))return f.ans;}return"For more details, reach Ramya directly at ys.ramya@gmail.com - she's happy to walk through any aspect of the Raahi project. ✦";}
+const chatTrigger=document.getElementById('chat-trigger'),chatPanel=document.getElementById('chat-panel'),chatClose=document.getElementById('chat-close'),chatInput=document.getElementById('chat-input'),chatSend=document.getElementById('chat-send'),chatBody=document.getElementById('chat-body');
+let chatOpen=false,history=[];
+function toggleChat(o){chatOpen=o??!chatOpen;chatPanel.classList.toggle('open',chatOpen);if(chatOpen)chatInput.focus();}
+chatTrigger.addEventListener('click',()=>toggleChat());
+chatClose.addEventListener('click',()=>toggleChat(false));
+function appendMsg(t,r){const d=document.createElement('div');d.className=`chat-msg ${r}`;d.textContent=t;chatBody.appendChild(d);chatBody.scrollTop=chatBody.scrollHeight;return d;}
+function showTyping(){const d=document.createElement('div');d.className='chat-msg bot chat-typing';d.innerHTML='<span class="chat-dot"></span><span class="chat-dot"></span><span class="chat-dot"></span>';chatBody.appendChild(d);chatBody.scrollTop=chatBody.scrollHeight;return d;}
+async function sendMessage(){const t=chatInput.value.trim();if(!t)return;chatInput.value='';appendMsg(t,'user');history.push({role:'user',content:t});
+if(!CHAT_CONFIG.apiKey){const tp=showTyping();await new Promise(r=>setTimeout(r,600+Math.random()*400));tp.remove();const r=faqResponse(t);appendMsg(r,'bot');history.push({role:'assistant',content:r});return;}
+const tp=showTyping();try{const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'x-api-key':CHAT_CONFIG.apiKey,'anthropic-version':'2023-06-01','content-type':'application/json','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:CHAT_CONFIG.model,max_tokens:300,system:SYSTEM_PROMPT,messages:history.slice(-8)})});const data=await res.json();tp.remove();const r=data.content?.[0]?.text||faqResponse(t);appendMsg(r,'bot');history.push({role:'assistant',content:r});}catch{tp.remove();appendMsg(faqResponse(t),'bot');}}
+chatSend.addEventListener('click',sendMessage);
+chatInput.addEventListener('keydown',e=>{if(e.key==='Enter')sendMessage();});
+
+/* FADE IN */
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:.08});
+document.querySelectorAll('.fi').forEach(el=>io.observe(el));
+</script>
+
+<!-- ── PREVIOUS / NEXT PROJECT NAVIGATION ── -->
+<a href="asap.html" class="proj-nav-prev">← ASAP</a>
+<a href="cost-of-a-click.html" class="proj-nav-next">Cost of a Click →</a>
+
+</body>
+</html>

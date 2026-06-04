@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cost of a Click - Ramya Yerramilli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Noto+Sans+Telugu:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ── NEW DARK EDITORIAL DESIGN SYSTEM ── */
+:root {
+  --black:#000000; --white:#FFFFFF;
+  --gold:#E5B55C;
+  --card:#111111;
+  --border:rgba(255,255,255,0.08);
+  --muted:rgba(255,255,255,0.38);
+  --dim:rgba(255,255,255,0.58);
+  /* Legacy variable aliases */
+  --bg:#000000; --bg2:#0a0a0a; --bg3:#0a0a0a;
+  --surface:rgba(17,17,17,.98); --surface2:rgba(10,10,10,.99);
+  --text:#FFFFFF; --text-dim:rgba(255,255,255,0.58); --text-muted:rgba(255,255,255,0.38);
+  --saffron:#E5B55C; --teal:#4CAF50; --marigold:#E5B55C;
+  --border-hi:rgba(229,181,92,0.3);
+  --nav-bg:rgba(0,0,0,0.6);
+  --t:.35s ease; --r:14px; --r-xl:18px; --r-pill:100px;
+}
+
+
+/* ── CONTENT VISIBILITY GUARANTEE ──
+   Hero content: visible immediately (no observer needed above fold).
+   All other .fi: revealed by IntersectionObserver OR by the 400ms
+   CSS-animation fallback below — whichever fires first.            */
+.cs-hero .fi,
+.cs-hero .fi.visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Fallback: if JS observer is delayed, reveal everything after 400ms */
+@keyframes fi-fallback { to { opacity:1; transform:none; } }
+.fi { animation: fi-fallback 0.01s 0.4s forwards; }
+.fi.visible { animation: none; opacity:1; transform:none; }
+
+/* ── HIDE OLD DECORATIVE ELEMENTS ── */
+#page-bg, #kolam-bg, #cursor, #sparkle-canvas { display:none!important; }
+
+/* ── RESET ── */
+*,*::before,*::after { margin:0;padding:0;box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif;background:#000000;color:#FFFFFF;overflow-x:hidden;line-height:1.7; }
+a { color:inherit;text-decoration:none; }
+img { max-width:100%;display:block; }
+
+/* ── NAV ── */
+#nav { position:sticky;top:0;z-index:100;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;background:rgba(0,0,0,0.6);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.08); }
+#theme-toggle { display:none; }
+.nav-right { display:flex;align-items:center;gap:.8rem; }
+.burger { display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;z-index:1001;cursor:pointer; }
+.burger span { display:block;width:22px;height:1.5px;background:#fff;border-radius:2px;transition:all .3s; }
+.burger.open span:nth-child(1) { transform:rotate(45deg) translate(4px,5px); }
+.burger.open span:nth-child(2) { opacity:0;transform:scaleX(0); }
+.burger.open span:nth-child(3) { transform:rotate(-45deg) translate(4px,-5px); }
+.nav-links { display:flex;align-items:center;gap:2.2rem; }
+.nav-links a { font-family:'Inter',sans-serif;font-size:0.62rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,0.9);transition:color .2s; }
+.nav-links a:hover { color:#E5B55C; }
+.nav-links a.resume-link { color:#E5B55C;border:1px solid rgba(229,181,92,0.35);border-radius:100px;padding:0.3rem 0.85rem; }
+@media(max-width:768px) {
+  .burger { display:flex; }
+  .nav-links { position:fixed;top:0;right:0;height:100dvh;width:min(280px,80vw);background:rgba(10,10,10,.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);flex-direction:column;justify-content:center;align-items:flex-start;gap:2.5rem;padding:3rem 2rem;border-left:1px solid rgba(255,255,255,0.08);transform:translateX(100%);transition:transform .35s ease;z-index:1000; }
+  .nav-links.open { transform:translateX(0); }
+  .nav-links a { font-size:0.75rem; }
+  .nav-overlay { position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;opacity:0;pointer-events:none;transition:opacity .3s; }
+  .nav-overlay.show { opacity:1;pointer-events:all; }
+}
+
+/* ── LAYOUT ── */
+main { position:relative;z-index:1; }
+.wrap { max-width:1080px;margin:0 auto;padding:0 2.5rem; }
+.section { padding:5.5rem 0; }
+.section-sm { padding:3.5rem 0; }
+.bg-alt { background:#0a0a0a; }
+
+/* ── TYPE ── */
+.eyebrow { font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:#E5B55C;display:flex;align-items:center;gap:.5rem;margin-bottom:.9rem; }
+.eyebrow::before { content:'✦';font-size:.6rem; }
+h1.cs-title { font-family:'Anton',sans-serif;font-size:clamp(3rem,7vw,7rem);font-weight:400;line-height:0.9;color:#fff;text-transform:uppercase; }
+h1.cs-title em { font-style:italic;color:#E5B55C;display:block; }
+h2.display { font-family:'Anton',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;line-height:1.05;text-transform:uppercase;color:#fff; }
+h2.display em { font-style:italic;color:#E5B55C; }
+.lead { font-size:clamp(.95rem,1.5vw,1.1rem);line-height:1.8;color:rgba(255,255,255,0.58);font-weight:300;max-width:680px; }
+
+/* ── BUTTONS ── */
+.btn { font-family:'Inter',sans-serif;font-size:.875rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:100px;padding:.75rem 1.8rem;transition:all .25s;display:inline-flex;align-items:center;gap:.5rem; }
+.btn-primary { background:#E5B55C;color:#000;border:1px solid #E5B55C; }
+.btn-primary:hover { filter:brightness(1.08);transform:translateY(-2px); }
+.btn-ghost { background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.25); }
+.btn-ghost:hover { border-color:#E5B55C;color:#E5B55C; }
+
+/* ── CS HERO ── */
+.cs-hero { padding:5rem 2.5rem 4rem;max-width:1080px;margin:0 auto;background:#000; }
+.cs-badge { display:inline-flex;align-items:center;gap:.5rem;background:#111;border:1px solid rgba(229,181,92,0.3);border-radius:20px;padding:.35rem .95rem;margin-bottom:2rem; }
+.cs-badge-dot { width:6px;height:6px;border-radius:50%;background:#E5B55C;flex-shrink:0; }
+.cs-badge-text { font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:#E5B55C; }
+.cs-meta { display:flex;flex-wrap:wrap;gap:1.2rem;padding:1.5rem 0;border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);margin:2.5rem 0; }
+.cs-meta-item { display:flex;flex-direction:column;gap:.2rem;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:0.8rem 1.2rem; }
+.cs-meta-item:hover { border-color:rgba(229,181,92,0.3); }
+.cs-meta-lbl { font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:rgba(255,255,255,0.38); }
+.cs-meta-val { font-family:'Inter',sans-serif;font-size:.875rem;color:rgba(255,255,255,0.58); }
+.cs-meta-val strong { color:#fff;font-weight:600; }
+
+/* Hero image */
+.hero-img { border-radius:var(--r);overflow:hidden;border:1px solid rgba(255,255,255,0.08);background:#111;margin-bottom:.5rem; }
+.hero-img img { width:100%;object-fit:contain;display:block; }
+
+/* ── PROBLEM CALLOUT ── */
+.callout { background:#111;border:1px solid rgba(255,255,255,0.08);border-left:3px solid #E5B55C;border-radius:2px;padding:2rem 2.2rem;margin:2rem 0; }
+.callout-q { font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,2vw,1.6rem);font-style:italic;font-weight:300;line-height:1.5;color:rgba(255,255,255,0.82);margin-bottom:.8rem; }
+.callout-foot { font-family:'Inter',sans-serif;font-size:.66rem;color:rgba(255,255,255,0.38);letter-spacing:.04em;padding-top:.8rem;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:.5rem;align-items:center; }
+.callout-foot strong { color:#E5B55C; }
+
+/* HMW */
+.hmw { text-align:center;padding:4.5rem 2rem;background:#0a0a0a; }
+.hmw-label { font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:#E5B55C;display:block;margin-bottom:1.2rem; }
+.hmw-text { font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,2.5vw,2rem);font-weight:300;font-style:italic;line-height:1.5;max-width:740px;margin:0 auto;color:#fff; }
+.hmw-text em { font-weight:600;font-style:normal;color:#E5B55C; }
+
+/* ── INSIGHT STRIP ── */
+.insight-strip { display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);overflow:hidden;margin:2rem 0; }
+.insight-cell { background:#000;padding:1.4rem 1.3rem; }
+.insight-icon { font-size:1.3rem;margin-bottom:.5rem;display:block; }
+.insight-lbl { font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:#E5B55C;margin-bottom:.3rem; }
+.insight-text { font-size:.9rem;line-height:1.65;color:rgba(255,255,255,0.58); }
+
+/* ── PHASE TIMELINE ── */
+.timeline-wrap { margin:2.5rem 0; }
+.phase-labels { display:flex;gap:3px;margin-bottom:6px; }
+.phase-label { font-family:'Inter',sans-serif;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;text-align:center;color:rgba(255,255,255,0.38); }
+.phase-bar-row { display:flex;gap:3px;margin-bottom:3px;height:10px; }
+.phase-seg { border-radius:2px;flex-shrink:0; }
+.phase-cards { display:flex;gap:3px; }
+.phase-card { background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:2px;padding:1.1rem .9rem;transition:border-color .25s;flex-shrink:0; }
+.phase-card:hover { border-color:rgba(229,181,92,0.3); }
+.pc-wk { font-family:'Inter',sans-serif;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem; }
+.pc-name { font-family:'Anton',sans-serif;font-size:.95rem;font-weight:400;margin-bottom:.35rem;line-height:1.2;color:#fff; }
+.pc-pct { font-family:'Inter',sans-serif;font-size:.9rem;font-weight:600;line-height:1;margin-bottom:.4rem;color:#E5B55C; }
+.pc-acts { list-style:none;display:flex;flex-direction:column;gap:.22rem; }
+.pc-acts li { font-family:'Inter',sans-serif;font-size:.72rem;color:rgba(255,255,255,0.38);letter-spacing:.02em;line-height:1.4;display:flex;gap:.3rem; }
+.pc-acts li::before { content:'-';opacity:.5;flex-shrink:0; }
+.pc-wide { flex:2; }
+.pc-narrow { flex:1; }
+.c1 { color:#E5B55C; } .c2 { color:#E5B55C;opacity:.85; } .c3 { color:#E5B55C;opacity:.7; }
+.c4,.c5,.c6,.c7 { color:rgba(255,255,255,0.38); }
+.seg1 { background:#E5B55C; } .seg2 { background:#E5B55C;opacity:.75; } .seg3 { background:#E5B55C;opacity:.6; }
+.seg4,.seg5,.seg6,.seg7 { background:rgba(255,255,255,0.3); }
+.label1 { color:#E5B55C; } .label2 { color:#E5B55C;opacity:.85; } .label3 { color:#E5B55C;opacity:.7; }
+.label4,.label5,.label6,.label7 { color:rgba(255,255,255,0.38); }
+
+/* ── RATIONALE CARDS ── */
+.rationale-grid { display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:2rem 0; }
+.rat-card { background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);padding:2rem;position:relative;overflow:hidden;transition:border-color .25s,transform .35s cubic-bezier(.34,1.56,.64,1); }
+.rat-card:hover { border-color:rgba(229,181,92,0.3);transform:translateY(-4px); }
+.rat-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px; }
+.rat-card.c-saffron::before,.rat-card.c-teal::before,.rat-card.c-marigold::before { background:#E5B55C; }
+.rat-icon { font-size:1.8rem;margin-bottom:.8rem;display:block; }
+.rat-why { font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:#E5B55C;margin-bottom:.5rem; }
+.rat-title { font-family:'Anton',sans-serif;font-size:1.1rem;font-weight:400;margin-bottom:.6rem;color:#fff; }
+.rat-body { font-size:.9rem;line-height:1.72;color:rgba(255,255,255,0.58); }
+.rat-note { margin-top:1rem;padding:.7rem .85rem;background:rgba(229,181,92,.05);border-radius:2px;font-family:'Inter',sans-serif;font-size:.8rem;color:rgba(255,255,255,0.38);line-height:1.45; }
+.rat-note strong { color:#fff; }
+
+/* ── PHOTO GRID ── */
+.photo-grid { display:grid;gap:4px;margin:2rem 0; }
+.photo-grid.g3 { grid-template-columns:repeat(3,1fr); }
+.photo-grid.g2 { grid-template-columns:repeat(2,1fr); }
+.photo-grid.g21 { grid-template-columns:2fr 1fr; }
+.photo-grid.g12 { grid-template-columns:1fr 2fr; }
+.photo-item { position:relative;overflow:hidden;background:#111;border-radius:var(--r); }
+.photo-item img { width:100%;height:auto;display:block;transition:transform .4s; }
+.photo-item.wide img,.photo-item.sq img,.photo-item.tall img { height:100%;object-fit:cover; }
+.photo-item:hover img { transform:scale(1.03); }
+.photo-item.wide { aspect-ratio:16/9; }
+.photo-item.sq { aspect-ratio:1/1; }
+.photo-item.tall { aspect-ratio:3/4; }
+.photo-cap { padding:.55rem .75rem;background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.08);font-family:'Inter',sans-serif;font-size:0.72rem;color:rgba(255,255,255,0.38);letter-spacing:.04em; }
+
+/* ── IMPACT STATS ── */
+.impact-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);overflow:hidden;margin:2rem 0; }
+.impact-cell { background:#000;padding:2.8rem 2rem;text-align:center; }
+.impact-n { font-family:'Anton',sans-serif;font-size:5rem;font-weight:400;color:#E5B55C;line-height:1;margin-bottom:.3rem; }
+.impact-lbl { font-family:'Inter',sans-serif;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:rgba(255,255,255,0.58);margin-bottom:.6rem; }
+.impact-desc { font-size:.9rem;line-height:1.65;color:rgba(255,255,255,0.38); }
+
+/* ── RECOGNITION TRACK ── */
+.recog-track { display:flex;flex-direction:column;position:relative;margin:2rem 0; }
+.recog-track::before { content:'';position:absolute;left:10px;top:10px;bottom:10px;width:1px;background:rgba(255,255,255,0.08); }
+.recog-item { display:grid;grid-template-columns:22px 1fr;gap:1.2rem;padding:.9rem 0;align-items:start; }
+.recog-dot { width:22px;height:22px;border-radius:50%;background:#111;border:2px solid #E5B55C;z-index:1;position:relative;flex-shrink:0; }
+.recog-date { font-family:'Inter',sans-serif;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#E5B55C;margin-bottom:.2rem; }
+.recog-title { font-family:'Anton',sans-serif;font-size:.95rem;font-weight:400;margin-bottom:.3rem;color:#fff; }
+.recog-body { font-size:.9rem;line-height:1.65;color:rgba(255,255,255,0.58); }
+
+/* ── TAKEAWAYS ── */
+.take-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;margin:2rem 0; }
+.take-card { background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);padding:1.8rem;transition:border-color .25s,transform .35s cubic-bezier(.34,1.56,.64,1); }
+.take-card:hover { border-color:rgba(229,181,92,0.3);transform:translateY(-4px); }
+.take-icon { font-size:1.6rem;margin-bottom:.8rem;display:block; }
+.take-title { font-family:'Anton',sans-serif;font-size:1rem;font-weight:400;margin-bottom:.5rem;line-height:1.2;color:#fff; }
+.take-title em { font-style:italic;color:#E5B55C; }
+.take-body { font-size:.9rem;line-height:1.72;color:rgba(255,255,255,0.58); }
+.take-stat { margin-top:.8rem;font-family:'Inter',sans-serif;font-size:.8rem;color:#E5B55C;letter-spacing:.04em; }
+
+/* ── CTA BANNER ── */
+.cta-band { display:flex;align-items:center;justify-content:space-between;gap:2rem;padding:2.5rem 3rem;background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap; }
+.cta-text { font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;font-style:italic;color:rgba(255,255,255,0.38); }
+.cta-text strong { font-weight:600;font-style:normal;color:#fff; }
+
+/* ── DIVIDERS ── */
+.sec-div { display:flex;align-items:center;gap:.7rem;margin:4rem 0;opacity:.4; }
+.sec-div::before,.sec-div::after { content:'';flex:1;height:1px;background:rgba(255,255,255,0.08); }
+.sec-div-text { font-family:'Inter',sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,0.38);white-space:nowrap; }
+
+/* ── FOOTER ── */
+footer { background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.08);padding:4rem 2.5rem; }
+.footer-inner { max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:3rem; }
+.footer-name { font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;letter-spacing:-.02em;margin-bottom:.5rem;color:#fff; }
+.footer-name em { font-style:italic;font-weight:300;color:#E5B55C; }
+.footer-tagline { font-size:.9rem;color:rgba(255,255,255,0.38);line-height:1.7;max-width:320px; }
+.footer-links { display:flex;flex-direction:column;gap:.8rem; }
+.footer-link { font-family:'Inter',sans-serif;font-size:.875rem;letter-spacing:.08em;color:rgba(255,255,255,0.38);display:flex;align-items:center;gap:.6rem;transition:color .2s; }
+.footer-link:hover { color:#E5B55C; }
+.footer-bottom { max-width:1080px;margin:2rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem; }
+.footer-copy { font-family:'Inter',sans-serif;font-size:.8rem;letter-spacing:.06em;color:rgba(255,255,255,0.38); }
+
+/* ── CHATBOT ── */
+.chat-widget { position:fixed;bottom:1.8rem;right:1.8rem;z-index:5000;font-family:'Inter',sans-serif; }
+.chat-trigger { width:56px;height:56px;border-radius:50%;background:#E5B55C;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(229,181,92,.35);transition:transform .25s,box-shadow .25s;font-size:1.3rem;color:#000; }
+.chat-trigger:hover { transform:scale(1.08);box-shadow:0 6px 28px rgba(229,181,92,.5); }
+.chat-panel { position:absolute;bottom:68px;right:0;width:340px;background:rgba(10,10,10,.99);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.6);display:flex;flex-direction:column;transform:scale(.92) translateY(12px);opacity:0;pointer-events:none;transition:transform .3s ease,opacity .3s ease;transform-origin:bottom right; }
+.chat-panel.open { transform:scale(1) translateY(0);opacity:1;pointer-events:all; }
+.chat-head { padding:1rem 1.2rem;background:#0a0a0a;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:.8rem; }
+.chat-avatar { width:36px;height:36px;border-radius:50%;background:#E5B55C;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#000;flex-shrink:0;font-weight:700; }
+.chat-head-info { flex:1; }
+.chat-head-name { font-weight:600;font-size:.9rem;color:#fff; }
+.chat-head-status { font-family:'Inter',sans-serif;font-size:.75rem;color:rgba(255,255,255,0.38);letter-spacing:.05em; }
+.chat-close { background:none;border:none;color:rgba(255,255,255,0.38);font-size:1.1rem;cursor:pointer;padding:2px;line-height:1;transition:color .2s; }
+.chat-close:hover { color:#fff; }
+.chat-body { flex:1;overflow-y:auto;padding:1.2rem;display:flex;flex-direction:column;gap:.85rem;max-height:300px;min-height:180px; }
+.chat-body::-webkit-scrollbar { width:3px; }
+.chat-body::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.08);border-radius:2px; }
+.chat-msg { max-width:88%;line-height:1.55;font-size:.9rem;border-radius:10px;padding:.65rem .9rem; }
+.chat-msg.bot { background:#111;color:rgba(255,255,255,0.58);align-self:flex-start;border-bottom-left-radius:3px; }
+.chat-msg.user { background:#E5B55C;color:#000;align-self:flex-end;border-bottom-right-radius:3px; }
+.chat-typing { display:flex;gap:4px;align-items:center;padding:.65rem .9rem; }
+.chat-dot { width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.38);animation:blink 1.2s infinite; }
+.chat-dot:nth-child(2) { animation-delay:.2s; } .chat-dot:nth-child(3) { animation-delay:.4s; }
+@keyframes blink { 0%,80%,100%{opacity:.3} 40%{opacity:1} }
+.chat-footer { padding:.8rem 1rem;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:.6rem; }
+.chat-input { flex:1;background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:.55rem .9rem;font-size:.9rem;color:#fff;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;cursor:text; }
+.chat-input:focus { border-color:#E5B55C; }
+.chat-input::placeholder { color:rgba(255,255,255,0.38); }
+.chat-send { width:36px;height:36px;background:#E5B55C;border:none;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:#000;transition:filter .2s;flex-shrink:0; }
+.chat-send:hover { filter:brightness(1.1); }
+.chat-hint { text-align:center;padding:.5rem;font-family:'Inter',sans-serif;font-size:.72rem;color:rgba(255,255,255,0.38);letter-spacing:.04em;opacity:.8;border-top:1px solid rgba(255,255,255,0.08); }
+
+/* ── FADE IN ── */
+.fi { opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease; }
+.fi.visible { opacity:1;transform:translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px) {
+  .wrap { max-width:100%; }
+  h1.cs-title { font-size:clamp(3rem,8vw,6rem); }
+}
+@media(max-width:960px) {
+  .wrap { padding:0 2rem; }
+  h1.cs-title { font-size:clamp(2.5rem,7vw,5rem); }
+  .cs-hero { padding:4rem 2rem 3rem; }
+  .insight-strip { grid-template-columns:1fr 1fr; }
+  .rationale-grid { grid-template-columns:1fr 1fr; }
+  .impact-grid { grid-template-columns:repeat(3,1fr); }
+  .take-grid { grid-template-columns:1fr 1fr; }
+  .phase-cards { flex-wrap:wrap; }
+  .pc-wide,.pc-narrow { flex:1 1 45%; }
+  .photo-grid.g3 { grid-template-columns:1fr 1fr; }
+  .cta-band { padding:2rem 2rem; }
+  .section { padding:4.5rem 0; }
+}
+@media(max-width:768px) {
+  .wrap { padding:0 1.6rem; }
+  h1.cs-title { font-size:clamp(2rem,7vw,4rem); }
+  .cs-hero { padding:3.5rem 1.6rem 2.5rem; }
+  .cs-meta { gap:.8rem; }
+  .insight-strip { grid-template-columns:1fr 1fr; }
+  .rationale-grid { grid-template-columns:1fr; }
+  .impact-grid { grid-template-columns:1fr 1fr; }
+  .impact-n { font-size:3.5rem; }
+  .take-grid { grid-template-columns:1fr 1fr; }
+  .pc-wide,.pc-narrow { flex:1 1 45%; }
+  .photo-grid.g21,.photo-grid.g12 { grid-template-columns:1fr; }
+  .hmw { padding:3rem 1.6rem; }
+  .section { padding:4rem 0; }
+  .cta-band { flex-direction:column; gap:1.5rem; }
+  .footer-inner { flex-wrap:wrap; gap:2rem; }
+}
+@media(max-width:640px) {
+  .cs-hero { padding:3rem 1.2rem 2rem; }
+  #nav { padding:0 1.2rem; }
+  .wrap { padding:0 1.2rem; }
+  h1.cs-title { font-size:clamp(2rem,9vw,3rem); }
+  .lead { font-size:1rem; }
+  .cs-meta { gap:.6rem; flex-wrap:wrap; }
+  .section { padding:3rem 0; }
+  .insight-strip { grid-template-columns:1fr; }
+  .rationale-grid { grid-template-columns:1fr; }
+  .impact-grid { grid-template-columns:1fr 1fr; }
+  .impact-n { font-size:2.8rem; }
+  .impact-cell { padding:1.6rem 1rem; }
+  .take-grid { grid-template-columns:1fr; }
+  .pc-wide,.pc-narrow { flex:1 1 100%; }
+  .photo-grid.g2,.photo-grid.g21,.photo-grid.g12,.photo-grid.g3 { grid-template-columns:1fr; }
+  .hmw { padding:2.5rem 1.2rem; }
+  .hmw-text { font-size:1.15rem; }
+  .chat-widget { bottom:1.2rem; right:1.2rem; }
+  .chat-panel { width:calc(100vw - 2.4rem);right:-.4rem; }
+  .cta-band { flex-direction:column; padding:1.8rem 1.2rem; gap:1.2rem; }
+  .footer-inner { flex-direction:column; gap:1.8rem; }
+  .footer-bottom { flex-direction:column; align-items:flex-start; gap:.5rem; }
+}
+@media(max-width:380px) {
+  h1.cs-title { font-size:1.9rem; }
+  .impact-grid { grid-template-columns:1fr; }
+  .impact-n { font-size:2.4rem; }
+}
+/* ── PROJECT NAVIGATION (prev / next) ── */
+.proj-nav-prev,
+.proj-nav-next {
+  position: fixed;
+  bottom: 2.2rem;
+  z-index: 200;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.85rem 1.6rem;
+  border-radius: 100px;
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+  white-space: nowrap;
+}
+
+/* Prev — left corner, ghost style */
+.proj-nav-prev {
+  left: 2.2rem;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: rgba(255,255,255,0.75);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+.proj-nav-prev:hover {
+  color: #fff;
+  border-color: rgba(229,181,92,0.55);
+  transform: translateX(-3px);
+}
+
+/* Next — right corner, gold filled */
+.proj-nav-next {
+  right: 2.2rem;
+  background: #E5B55C;
+  color: #000;
+  border: none;
+  box-shadow: 0 4px 20px rgba(229,181,92,0.3);
+}
+.proj-nav-next:hover {
+  filter: brightness(1.1);
+  transform: translateX(3px);
+  box-shadow: 0 6px 28px rgba(229,181,92,0.45);
+}
+
+@media (max-width: 600px) {
+  .proj-nav-prev { font-size: 0.55rem; padding: 0.7rem 1.1rem; left: 1rem; bottom: 1.2rem; }
+  .proj-nav-next { font-size: 0.55rem; padding: 0.7rem 1.1rem; right: 1rem; bottom: 1.2rem; }
+}
+
+</style>
+</head>
+<body>
+
+<div id="page-bg" aria-hidden="true"></div>
+<canvas id="sparkle-canvas"></canvas>
+<svg id="cursor" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(11,11)">
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(0)"/>
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(45)"/>
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(90)"/>
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(135)"/>
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(180)"/>
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(225)"/>
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(270)"/>
+    <ellipse class="cp cp-outer" rx="2.8" ry="5.5" cy="-4.5" fill="#F5A623" transform="rotate(315)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(22.5)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(67.5)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(112.5)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(157.5)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(202.5)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(247.5)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(292.5)"/>
+    <ellipse class="cp cp-inner" rx="2" ry="3.8" cy="-3.2" fill="#FFF8A6" transform="rotate(337.5)"/>
+  </g>
+  <circle cx="11" cy="11" r="2.8" fill="#7B3F00"/>
+  <circle cx="11" cy="11" r="1.5" fill="#3D1F00"/>
+</svg>
+
+<div id="kolam-bg">
+  <svg id="kolam-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(200,200)">
+      <circle class="kp" cx="0" cy="0" r="185"/><circle class="kp" cx="0" cy="0" r="155"/>
+      <circle class="kp" cx="0" cy="0" r="120"/><circle class="kp" cx="0" cy="0" r="88"/>
+      <circle class="kp" cx="0" cy="0" r="58"/><circle class="kp" cx="0" cy="0" r="28"/>
+      <path class="kp" d="M0,-185 L18,-57 L70,-70 L57,-18 L185,0 L57,18 L70,70 L18,57 L0,185 L-18,57 L-70,70 L-57,18 L-185,0 L-57,-18 L-70,-70 L-18,-57 Z"/>
+      <path class="kp" d="M0,-155 C28,-100 100,-28 155,0 C100,28 28,100 0,155 C-28,100 -100,28 -155,0 C-100,-28 -28,-100 0,-155 Z"/>
+      <circle class="kd" cx="0" cy="-185" r="3.5"/><circle class="kd" cx="131" cy="-131" r="3"/>
+      <circle class="kd" cx="185" cy="0" r="3.5"/><circle class="kd" cx="131" cy="131" r="3"/>
+      <circle class="kd" cx="0" cy="185" r="3.5"/><circle class="kd" cx="-131" cy="131" r="3"/>
+      <circle class="kd" cx="-185" cy="0" r="3.5"/><circle class="kd" cx="-131" cy="-131" r="3"/>
+      <circle class="kd" cx="0" cy="0" r="4.5"/>
+    </g>
+  </svg>
+</div>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="hero-concept.html" class="nav-logo" style="text-decoration:none;display:flex;align-items:center;gap:0.35rem;"><span style="width:6px;height:6px;border-radius:50%;background:#E5B55C;display:inline-block;"></span><span style="font-family:'Noto Sans Telugu',sans-serif;color:#E5B55C;font-weight:700;font-size:1.5rem;letter-spacing:0;line-height:1;">రమ్య</span></a>
+  <div class="nav-links" id="nav-links">
+    <a href="hero-concept.html#work">Work</a>
+    <a href="hero-concept.html#about">About</a>
+    <a href="hero-concept.html#research">Research</a>
+    <a href="hero-concept.html#contact">Contact</a>
+    <a href="RAMYA YERRAMILLI -UXR-2026 (4).pdf" target="_blank" class="resume-link">Resume ↗</a>
+  </div>
+  <div class="nav-right">
+    <button class="burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="nav-overlay" id="nav-overlay"></div>
+
+<main>
+
+  <!-- ── HERO ── -->
+  <div style="display:grid;grid-template-columns:1fr 360px;gap:3rem;align-items:center;max-width:1080px;margin:0 auto;padding:0 2.5rem;min-height:calc(100vh - 60px);">
+    <div style="padding-top:2rem;">
+      <div class="cs-badge fi"><span class="cs-badge-dot"></span><span class="cs-badge-text">DePaul Summer Impact Grant 2025 · Winner</span></div>
+      <h1 class="cs-title fi">Cost of<em>a Click</em></h1>
+      <p class="lead fi" style="margin-top:1.2rem;">Made AI's invisible water cost physically tangible - increasing environmental awareness by <strong>85%</strong> through sensor-driven experience design.</p>
+      <div class="cs-meta fi">
+        <div class="cs-meta-item"><span class="cs-meta-lbl">Role</span><span class="cs-meta-val"><strong>Lead UX Researcher</strong></span></div>
+        <div class="cs-meta-item"><span class="cs-meta-lbl">Duration</span><span class="cs-meta-val"><strong>10 Weeks</strong> · July – Sept 2025</span></div>
+        <div class="cs-meta-item"><span class="cs-meta-lbl">Team</span><span class="cs-meta-val">UX Researcher · UI Designer · Developer · PM</span></div>
+        <div class="cs-meta-item"><span class="cs-meta-lbl">Tools</span><span class="cs-meta-val">Figma · Framer · Arduino · VS Code</span></div>
+      </div>
+    </div>
+    <div class="fi" style="height:calc(100vh - 80px);display:flex;align-items:center;justify-content:center;">
+      <img src="img/coac/1ac6439c-d469-4611-bd9b-043257c96079.jpg"
+           alt="Cost of a Click - physical installation at DePaul"
+           style="max-height:100%;max-width:100%;width:auto;height:auto;object-fit:contain;border-radius:var(--r);display:block;box-shadow:0 24px 64px rgba(0,0,0,.35);">
+    </div>
+  </div>
+  <style>
+    @media(max-width:768px){
+      .coac-hero-grid { grid-template-columns:1fr!important; min-height:auto!important; padding-top:2rem!important; }
+      .coac-hero-img { height:60vw!important; }
+    }
+  </style>
+
+  <!-- ── PROBLEM ── -->
+  <section class="section bg-alt">
+    <div class="wrap">
+      <div class="eyebrow fi">The Problem</div>
+      <h2 class="display fi">AI has a water bill.<br><em>Nobody knows.</em></h2>
+      <p class="lead fi" style="margin-top:1.2rem;">Every AI query consumes real water to cool data centre servers. In 2025, users type hundreds of prompts a week - with zero awareness of the environmental cost. Abstract facts don't change behaviour. Felt experience does.</p>
+
+      <div class="insight-strip fi">
+        <div class="insight-cell">
+          <span class="insight-icon">💧</span>
+          <div class="insight-lbl">The Cost</div>
+          <div class="insight-text">One ChatGPT conversation uses ~500ml of water. Most users have no idea.</div>
+        </div>
+        <div class="insight-cell">
+          <span class="insight-icon">🧠</span>
+          <div class="insight-lbl">The Gap</div>
+          <div class="insight-text">Awareness campaigns fail because the impact is invisible, distant, and abstract.</div>
+        </div>
+        <div class="insight-cell">
+          <span class="insight-icon">🎯</span>
+          <div class="insight-lbl">The Insight</div>
+          <div class="insight-text">Physical sensation creates emotional memory. If you feel the water drain, you remember it.</div>
+        </div>
+      </div>
+
+      <div class="callout fi">
+        <p class="callout-q">"Abstract environmental data doesn't change behaviour. But when you watch the water pour - you feel it."</p>
+        <div class="callout-foot"><strong>Research finding</strong> - exit interviews after installation interaction, Summer 2025</div>
+      </div>
+      <div class="photo-grid fi" style="margin-top:2rem;">
+        <div class="photo-item wide">
+          <img src="img/coac/pump-bucket.jpg" alt="Water pump and bucket - the physical mechanism behind the installation">
+          <div class="photo-cap">Water pump triggered by Arduino - every AI prompt sends real water proportional to query length</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HMW ── -->
+  <div class="hmw">
+    <span class="hmw-label">How Might We</span>
+    <p class="hmw-text">How might we make the <em>invisible cost</em> of AI felt - not just understood - so people can make informed choices?</p>
+  </div>
+
+  <!-- ── RESEARCH PROCESS ── -->
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow fi">Research Process</div>
+      <h2 class="display fi">Seven phases.<br><em>One clear arc.</em></h2>
+      <p class="lead fi" style="margin:1rem 0 2.5rem;">Each phase was sized to the problem - discovery-heavy at the start, refinement-intensive at the close.</p>
+
+      <div class="timeline-wrap fi">
+        <!-- Proportional bar -->
+        <div class="phase-bar-row">
+          <div class="phase-seg seg1 pc-wide"></div>
+          <div class="phase-seg seg2 pc-wide"></div>
+          <div class="phase-seg seg3 pc-wide"></div>
+          <div class="phase-seg seg4 pc-narrow"></div>
+          <div class="phase-seg seg5 pc-narrow"></div>
+          <div class="phase-seg seg6 pc-narrow"></div>
+          <div class="phase-seg seg7 pc-narrow"></div>
+        </div>
+        <div class="phase-cards">
+          <div class="phase-card pc-wide">
+            <div class="pc-wk c1">Wks 1–2</div>
+            <div class="pc-name">Discovery</div>
+            <div class="pc-pct c1">20%</div>
+            <ul class="pc-acts"><li>Desk research on AI energy use</li><li>Secondary data synthesis</li><li>Problem framing</li></ul>
+          </div>
+          <div class="phase-card pc-wide">
+            <div class="pc-wk c2">Wks 3–4</div>
+            <div class="pc-name">User Research</div>
+            <div class="pc-pct c2">20%</div>
+            <ul class="pc-acts"><li>15 semi-structured interviews</li><li>Survey (n=42)</li><li>Journey mapping</li></ul>
+          </div>
+          <div class="phase-card pc-wide">
+            <div class="pc-wk c3">Wks 5–6</div>
+            <div class="pc-name">Concept + Design</div>
+            <div class="pc-pct c3">20%</div>
+            <ul class="pc-acts"><li>Concept ideation (3 directions)</li><li>Physical + digital prototyping</li><li>Figma flows</li></ul>
+          </div>
+          <div class="phase-card pc-narrow">
+            <div class="pc-wk c4">Wk 7</div>
+            <div class="pc-name">Build</div>
+            <div class="pc-pct c4">10%</div>
+            <ul class="pc-acts"><li>Arduino build</li><li>Sensor integration</li></ul>
+          </div>
+          <div class="phase-card pc-narrow">
+            <div class="pc-wk c5">Wk 8</div>
+            <div class="pc-name">Test R1</div>
+            <div class="pc-pct c5">10%</div>
+            <ul class="pc-acts"><li>Lab usability test</li><li>Iteration</li></ul>
+          </div>
+          <div class="phase-card pc-narrow">
+            <div class="pc-wk c6">Wk 9</div>
+            <div class="pc-name">Test R2</div>
+            <div class="pc-pct c6">10%</div>
+            <ul class="pc-acts"><li>Field test</li><li>Refinement</li></ul>
+          </div>
+          <div class="phase-card pc-narrow">
+            <div class="pc-wk c7">Wk 10</div>
+            <div class="pc-name">Exhibit</div>
+            <div class="pc-pct c7">10%</div>
+            <ul class="pc-acts"><li>DePaul Showcase</li><li>Impact measure</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DESIGN RATIONALE ── -->
+  <section class="section-sm bg-alt">
+    <div class="wrap">
+      <div class="eyebrow fi">Design Rationale</div>
+      <h2 class="display fi">Why <em>physical + digital?</em></h2>
+      <div class="rationale-grid fi">
+        <div class="rat-card c-teal">
+          <span class="rat-icon">💧</span>
+          <div class="rat-why">The water metaphor</div>
+          <div class="rat-title">Sensation over Statistics</div>
+          <p class="rat-body">Watching real water pour proportional to your query creates visceral, embodied understanding - impossible to achieve with a number on a screen.</p>
+          <div class="rat-note"><strong>Research basis:</strong> Somatic marker hypothesis - physical sensation anchors emotional memory.</div>
+        </div>
+        <div class="rat-card c-marigold">
+          <span class="rat-icon">🌳</span>
+          <div class="rat-why">The dying tree</div>
+          <div class="rat-title">Visible Consequence</div>
+          <p class="rat-body">A tree withering on screen as users type creates a real-time cost metaphor - making systemic impact personal and immediate.</p>
+          <div class="rat-note"><strong>Design decision:</strong> Negative visual feedback (loss aversion) outperforms neutral information delivery in behaviour change research.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BUILD PHOTOS ── -->
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow fi">Behind the Build</div>
+      <h2 class="display fi">From sensor<br><em>to experience.</em></h2>
+      <div class="photo-grid g2 fi" style="margin-top:2rem;">
+        <div class="photo-item wide">
+          <img src="img/coac/arduino-wiring.jpg" alt="Arduino relay circuit - physical computing backbone">
+          <div class="photo-cap">Arduino relay circuit - triggers the water pump on each prompt</div>
+        </div>
+        <div class="photo-item wide">
+          <img src="img/coac/mockup-2.png" alt="Digital interface - real-time water counter as users type">
+          <div class="photo-cap">Digital interface - real-time water cost counter as users type</div>
+        </div>
+      </div>
+      <div class="photo-grid g2 fi">
+        <div class="photo-item wide">
+          <img src="img/coac/team-4.jpg" alt="The four-person build team assembling the installation">
+          <div class="photo-cap">The build team - assembling and wiring the installation</div>
+        </div>
+        <div class="photo-item wide">
+          <img src="img/coac/team-testing.jpg" alt="Team conducting usability testing - observing physical and digital response">
+          <div class="photo-cap">Usability testing - observing how participants respond to the physical feedback</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EXHIBITION ── -->
+  <section class="section-sm bg-alt">
+    <div class="wrap">
+      <div class="eyebrow fi">Exhibition</div>
+      <h2 class="display fi">DePaul Summer<br><em>Showcase 2025</em></h2>
+      <div class="photo-grid g21 fi" style="margin-top:2rem;">
+        <div class="photo-item wide">
+          <img src="img/coac/exhibition-room.jpg" alt="Exhibition room at DePaul - visitors interacting with the installation">
+          <div class="photo-cap">Full exhibition space - visitors experiencing the installation first-hand</div>
+        </div>
+        <div class="photo-item">
+          <img src="img/coac/marketing-materials.jpg" alt="Exhibition marketing materials - brochures and research bookmarks">
+          <div class="photo-cap">Research materials designed to extend the conversation beyond the room</div>
+        </div>
+      </div>
+      <div class="photo-grid g2 fi">
+        <div class="photo-item wide">
+          <img src="img/coac/video-wall.jpg" alt="Cost of a Click video wall at DePaul exhibition">
+          <div class="photo-cap">"Cost of a Click" video wall - exhibition room centrepiece</div>
+        </div>
+        <div class="photo-item wide">
+          <img src="img/coac/team-6.jpg" alt="The full team of 6 at DePaul Summer Showcase">
+          <div class="photo-cap">The full team at DePaul Summer Showcase 2025</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── VIRAL VIDEO ── -->
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow fi">6 Million Views</div>
+      <h2 class="display fi">The internet<br><em>paid attention.</em></h2>
+      <p class="lead fi" style="max-width:640px;margin-bottom:2.5rem;color:var(--text-dim);">After the DePaul exhibition, footage of Cost of a Click spread on TikTok and reached <strong>6 million views</strong> - sparking a global conversation about AI's hidden environmental cost.</p>
+      <div class="fi" style="max-width:360px;margin:0 auto;border-radius:var(--r-xl);overflow:hidden;border:2px solid var(--border-hi);box-shadow:0 20px 60px rgba(241,167,181,.2);">
+        <video controls playsinline muted loop style="width:100%;display:block;aspect-ratio:9/16;background:#000;object-fit:contain;">
+          <source src="img/coac/Download.mp4" type="video/mp4">
+        </video>
+      </div>
+      <p class="fi" style="text-align:center;margin-top:1.2rem;font-size:.82rem;color:var(--text-muted);letter-spacing:.04em;">Originally posted by @thetshegofatso on TikTok · 6M+ views · 2025</p>
+    </div>
+  </section>
+
+  <div class="sec-div wrap"><span class="sec-div-text">✦ - Impact - ✦</span></div>
+
+  <!-- ── IMPACT ── -->
+  <section class="section">
+    <div class="wrap">
+      <div class="eyebrow fi">Impact</div>
+      <h2 class="display fi">Numbers that<br><em>moved people.</em></h2>
+      <div class="impact-grid fi">
+        <div class="impact-cell">
+          <div class="impact-n">85%</div>
+          <div class="impact-lbl">Awareness Increase</div>
+          <p class="impact-desc">Of participants reported changed awareness of AI's environmental footprint after interacting with the installation.</p>
+        </div>
+        <div class="impact-cell">
+          <div class="impact-n">73%</div>
+          <div class="impact-lbl">Behaviour Change Intent</div>
+          <p class="impact-desc">Committed to more mindful AI usage - specifically reducing unnecessary or casual queries.</p>
+        </div>
+        <div class="impact-cell">
+          <div class="impact-n">30%</div>
+          <div class="impact-lbl">More Informed Usage</div>
+          <p class="impact-desc">Increase in self-reported informed decision-making about when to use AI tools.</p>
+        </div>
+      </div>
+
+      <div class="recog-track fi">
+        <div class="recog-item">
+          <div class="recog-dot"></div>
+          <div>
+            <div class="recog-date">Grant Award · Spring 2025</div>
+            <div class="recog-title">DePaul Summer Impact Grant - Won</div>
+            <p class="recog-body">Competitive research grant awarded for the proposal to make AI's environmental cost tangible through experience design.</p>
+          </div>
+        </div>
+        <div class="recog-item">
+          <div class="recog-dot"></div>
+          <div>
+            <div class="recog-date">Exhibition · Summer 2025</div>
+            <div class="recog-title">DePaul Summer Showcase - Featured Installation</div>
+            <p class="recog-body">Installation exhibited to students, faculty, and public. 85% awareness increase measured through exit surveys.</p>
+          </div>
+        </div>
+        <div class="recog-item">
+          <div class="recog-dot"></div>
+          <div>
+            <div class="recog-date">Social · Post-exhibition</div>
+            <div class="recog-title">Viral on TikTok</div>
+            <p class="recog-body">Exhibition footage circulated widely on social media - extending the research's reach beyond the academic context.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TAKEAWAYS ── -->
+  <section class="section-sm bg-alt">
+    <div class="wrap">
+      <div class="eyebrow fi">Key Takeaways</div>
+      <h2 class="display fi">What this project<br><em>taught me.</em></h2>
+      <div class="take-grid fi">
+        <div class="take-card">
+          <span class="take-icon">🎭</span>
+          <div class="take-title">Felt > <em>Told</em></div>
+          <p class="take-body">Physical sensation anchors awareness in a way abstract data never can. Design the experience, not the information.</p>
+          <div class="take-stat">↑ 85% awareness - felt experience beats data</div>
+        </div>
+        <div class="take-card">
+          <span class="take-icon">🔗</span>
+          <div class="take-title">Research + <em>Build</em></div>
+          <p class="take-body">Combining UX research methods with physical computing required fluency in both domains. The research shaped the hardware decisions as much as the design ones.</p>
+          <div class="take-stat">Arduino + Figma + field research in one sprint</div>
+        </div>
+        <div class="take-card">
+          <span class="take-icon">📏</span>
+          <div class="take-title">Test <em>Early, Often</em></div>
+          <p class="take-body">Two rounds of usability testing before exhibition caught critical friction points in the physical interaction - including water spillage, prompt timing, and screen readability.</p>
+          <div class="take-stat">2 test rounds → 4 critical fixes before launch</div>
+        </div>
+        <div class="take-card">
+          <span class="take-icon">🌱</span>
+          <div class="take-title">Ethics as <em>Design Brief</em></div>
+          <p class="take-body">Designing for environmental awareness means the research itself had to be ethically grounded - consent-first, never alarmist, always actionable.</p>
+          <div class="take-stat">73% behaviour change intent - actionable framing works</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <div class="cta-band">
+    <p class="cta-text"><strong>Next project:</strong> VR mental wellness companion - 71% student validation, showcased at Jarvis Innovation Challenge.</p>
+    <a href="wellnut.html" class="btn btn-primary">See Wellnut →</a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-name" style="font-family:'Noto Sans Telugu',sans-serif;">రమ్య</div>
+      <p class="footer-tagline">UX Researcher. DePaul University. Available for roles and collaborations.</p>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:ys.ramya@gmail.com" class="footer-link">✉ ys.ramya@gmail.com</a>
+      <a href="hero-concept.html" class="footer-link">← All Work</a>
+      <a href="wellnut.html" class="footer-link">→ Wellnut</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div style="font-family:'DM Sans',sans-serif;font-size:1rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);opacity:.4;">✦ Cost of a Click · DePaul 2025</div>
+    <span class="footer-copy">© 2026 Ramya Yerramilli</span>
+  </div>
+</footer>
+
+<!-- ── CHATBOT (same widget) ── -->
+<div class="chat-widget">
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-head">
+      <div class="chat-avatar">✦</div>
+      <div class="chat-head-info"><div class="chat-head-name">Portfolio Assistant</div><div class="chat-head-status">Ask about this project</div></div>
+      <button class="chat-close" id="chat-close">×</button>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="chat-msg bot">Hi! Ask me anything about Cost of a Click - the research, the build, the impact, or how to reach Ramya. 💧</div>
+    </div>
+    <div class="chat-footer">
+      <input class="chat-input" id="chat-input" type="text" placeholder="Ask anything…" autocomplete="off">
+      <button class="chat-send" id="chat-send">→</button>
+    </div>
+    <div class="chat-hint">Powered by Claude · ys.ramya@gmail.com</div>
+  </div>
+  <button class="chat-trigger" id="chat-trigger" aria-label="Open chat">✦</button>
+</div>
+
+<script>
+const CHAT_CONFIG = { apiKey: '', model: 'claude-haiku-4-5' };
+const SYSTEM_PROMPT = `You are the portfolio assistant for Ramya Yerramilli. A visitor is reading the "Cost of a Click" case study page. Answer questions about: the project (AI water cost installation), the research process, impact stats (85% awareness, 73% behaviour change), the Arduino + sensor build, the DePaul grant, the TikTok virality, or Ramya's background and availability. Be concise - under 3 sentences per answer. Contact: ys.ramya@gmail.com`;
+const FAQ=[
+  {keys:['water','arduino','sensor','pump','tank'],ans:"The installation uses an Arduino to trigger a water pump - when you type an AI prompt, real water pours proportional to your query length. You watch a glass tank fill while a tree withers on screen. 💧"},
+  {keys:['85','impact','awareness','result'],ans:"85% of participants reported changed awareness of AI's environmental cost after interacting with the installation. 73% committed to more mindful AI usage. 🌱"},
+  {keys:['grant','depaul','fund'],ans:"The project won DePaul University's Summer Impact Grant 2025 - a competitive research award to fund the installation and exhibition. 🏆"},
+  {keys:['tiktok','viral','social'],ans:"Exhibition footage went viral on TikTok after the DePaul Summer Showcase, extending the research's reach well beyond the academic context. 📱"},
+  {keys:['team','role','researcher'],ans:"Ramya was the Lead UX Researcher on a team of 4: UX Researcher + UI Designer + Developer + PM. The project ran for 10 weeks across Summer 2025. 👥"},
+  {keys:['contact','hire','available','email'],ans:"Reach Ramya at ys.ramya@gmail.com - she's open to UX Research roles and collaborations. ✉"},
+  {keys:['hello','hi','hey'],ans:"Hi! I can tell you about the research process, the physical build, the impact numbers, or how to get in touch with Ramya. What would you like to know? ✦"},
+];
+function faqResponse(msg){const l=msg.toLowerCase();for(const f of FAQ){if(f.keys.some(k=>l.includes(k)))return f.ans;}return"For more details, reach Ramya directly at ys.ramya@gmail.com - she's happy to walk through any aspect of the project. ✦";}
+const chatTrigger=document.getElementById('chat-trigger'),chatPanel=document.getElementById('chat-panel'),chatClose=document.getElementById('chat-close'),chatInput=document.getElementById('chat-input'),chatSend=document.getElementById('chat-send'),chatBody=document.getElementById('chat-body');
+let chatOpen=false,history=[];
+function toggleChat(o){chatOpen=o??!chatOpen;chatPanel.classList.toggle('open',chatOpen);if(chatOpen)chatInput.focus();}
+chatTrigger.addEventListener('click',()=>toggleChat());
+chatClose.addEventListener('click',()=>toggleChat(false));
+function appendMsg(t,r){const d=document.createElement('div');d.className=`chat-msg ${r}`;d.textContent=t;chatBody.appendChild(d);chatBody.scrollTop=chatBody.scrollHeight;return d;}
+function showTyping(){const d=document.createElement('div');d.className='chat-msg bot chat-typing';d.innerHTML='<span class="chat-dot"></span><span class="chat-dot"></span><span class="chat-dot"></span>';chatBody.appendChild(d);chatBody.scrollTop=chatBody.scrollHeight;return d;}
+async function sendMessage(){const t=chatInput.value.trim();if(!t)return;chatInput.value='';appendMsg(t,'user');history.push({role:'user',content:t});
+if(!CHAT_CONFIG.apiKey){const tp=showTyping();await new Promise(r=>setTimeout(r,600+Math.random()*400));tp.remove();const r=faqResponse(t);appendMsg(r,'bot');history.push({role:'assistant',content:r});return;}
+const tp=showTyping();try{const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'x-api-key':CHAT_CONFIG.apiKey,'anthropic-version':'2023-06-01','content-type':'application/json','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:CHAT_CONFIG.model,max_tokens:300,system:SYSTEM_PROMPT,messages:history.slice(-8)})});const data=await res.json();tp.remove();const r=data.content?.[0]?.text||faqResponse(t);appendMsg(r,'bot');history.push({role:'assistant',content:r});}catch{tp.remove();appendMsg(faqResponse(t),'bot');}}
+chatSend.addEventListener('click',sendMessage);
+chatInput.addEventListener('keydown',e=>{if(e.key==='Enter')sendMessage();});
+
+/* FADE IN */
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:.08});
+document.querySelectorAll('.fi').forEach(el=>io.observe(el));
+</script>
+
+<!-- ── PREVIOUS / NEXT PROJECT NAVIGATION ── -->
+<a href="raahi.html" class="proj-nav-prev">← Raahi</a>
+<a href="wellnut.html" class="proj-nav-next">Wellnut →</a>
+
+</body>
+</html>

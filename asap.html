@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASAP - Ramya Yerramilli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Noto+Sans+Telugu:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --black:#000000; --white:#FFFFFF; --gold:#E5B55C;
+  --card:#111111; --border:rgba(255,255,255,0.08);
+  --muted:rgba(255,255,255,0.38); --dim:rgba(255,255,255,0.58);
+  --gold-hi:rgba(229,181,92,0.3);
+  --r:14px; --r-xl:18px; --r-pill:100px;
+}
+
+/* visibility guarantee */
+.cs-hero .fi, .cs-hero .fi.visible { opacity:1!important; transform:none!important; }
+@keyframes fi-fallback { to { opacity:1; transform:none; } }
+.fi { animation:fi-fallback 0.01s 0.4s forwards; }
+.fi.visible { animation:none; opacity:1; transform:none; }
+#page-bg,#kolam-bg,#cursor,#sparkle-canvas { display:none!important; }
+
+/* reset */
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; background:#000; color:#fff; overflow-x:hidden; line-height:1.7; }
+a { color:inherit; text-decoration:none; }
+img { max-width:100%; display:block; }
+
+/* nav */
+#nav {
+  position:sticky; top:0; z-index:100;
+  height:60px; display:flex; align-items:center; justify-content:space-between;
+  padding:0 2.5rem;
+  background:rgba(0,0,0,0.6); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+#theme-toggle { display:none; }
+.nav-right { display:flex; align-items:center; gap:.8rem; }
+.burger { display:none; flex-direction:column; gap:5px; background:none; border:none; padding:4px; cursor:pointer; }
+.burger span { display:block; width:22px; height:1.5px; background:#fff; border-radius:2px; transition:all .3s; }
+.burger.open span:nth-child(1) { transform:rotate(45deg) translate(4px,5px); }
+.burger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+.burger.open span:nth-child(3) { transform:rotate(-45deg) translate(4px,-5px); }
+.nav-links { display:flex; align-items:center; gap:2.2rem; list-style:none; }
+.nav-links a { font-size:0.62rem; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:#fff; text-shadow:0 2px 10px rgba(0,0,0,0.9); transition:color .2s; }
+.nav-links a:hover { color:#E5B55C; }
+.nav-links a.resume-link { color:#E5B55C; border:1px solid rgba(229,181,92,0.35); border-radius:100px; padding:0.3rem 0.85rem; }
+.nav-overlay { display:none; }
+@media(max-width:768px) {
+  .burger { display:flex; }
+  .nav-links { position:fixed; top:0; right:0; height:100dvh; width:min(280px,80vw); background:rgba(10,10,10,.98); backdrop-filter:blur(24px); flex-direction:column; justify-content:center; align-items:flex-start; gap:2.5rem; padding:3rem 2rem; border-left:1px solid rgba(255,255,255,0.08); transform:translateX(100%); transition:transform .35s ease; z-index:1000; }
+  .nav-links.open { transform:translateX(0); }
+  .nav-overlay { display:block; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:999; opacity:0; pointer-events:none; transition:opacity .3s; }
+  .nav-overlay.show { opacity:1; pointer-events:all; }
+}
+
+/* layout */
+main { position:relative; z-index:1; }
+.wrap { max-width:1080px; margin:0 auto; padding:0 2.5rem; }
+.section { padding:5.5rem 0; }
+.section-sm { padding:3.5rem 0; }
+.bg-alt { background:#0a0a0a; }
+
+/* typography */
+.eyebrow { font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase; color:#E5B55C; display:flex; align-items:center; gap:.5rem; margin-bottom:.9rem; }
+.eyebrow::before { content:'✦'; font-size:.6rem; }
+h1.cs-title { font-family:'Anton',sans-serif; font-size:clamp(3rem,7vw,7rem); font-weight:400; line-height:0.9; color:#fff; text-transform:uppercase; }
+h1.cs-title em { font-style:italic; color:#E5B55C; display:block; }
+h2.display { font-family:'Anton',sans-serif; font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:400; line-height:1.05; text-transform:uppercase; color:#fff; }
+h2.display em { font-style:italic; color:#E5B55C; }
+.lead { font-size:clamp(.95rem,1.5vw,1.1rem); line-height:1.8; color:rgba(255,255,255,0.58); font-weight:300; max-width:680px; }
+p { font-size:1rem; line-height:1.8; color:rgba(255,255,255,0.58); font-weight:300; margin-bottom:1rem; }
+p:last-child { margin-bottom:0; }
+p strong { color:#fff; font-weight:600; }
+
+/* buttons */
+.btn { font-family:'Inter',sans-serif; font-size:.875rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; cursor:pointer; border-radius:100px; padding:.75rem 1.8rem; transition:all .25s; display:inline-flex; align-items:center; gap:.5rem; }
+.btn-primary { background:#E5B55C; color:#000; border:1px solid #E5B55C; }
+.btn-primary:hover { filter:brightness(1.08); transform:translateY(-2px); }
+.btn-ghost { background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.25); }
+.btn-ghost:hover { border-color:#E5B55C; color:#E5B55C; }
+
+/* hero */
+.cs-hero { padding:5rem 2.5rem 4rem; max-width:1080px; margin:0 auto; }
+.cs-badge { display:inline-flex; align-items:center; gap:.5rem; background:#111; border:1px solid var(--gold-hi); border-radius:20px; padding:.35rem .95rem; margin-bottom:2rem; }
+.cs-badge-dot { width:6px; height:6px; border-radius:50%; background:#E5B55C; flex-shrink:0; }
+.cs-badge-text { font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase; color:#E5B55C; }
+.status-pill { display:inline-flex; align-items:center; gap:.45rem; background:rgba(229,181,92,0.08); border:1px solid rgba(229,181,92,0.25); border-radius:100px; padding:.3rem .9rem; font-size:0.62rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:#E5B55C; margin-top:1.2rem; }
+.status-dot { width:6px; height:6px; border-radius:50%; background:#4CAF50; animation:pulse-dot 1.8s ease-in-out infinite; flex-shrink:0; }
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.5;transform:scale(.8);} }
+.cs-meta { display:flex; flex-wrap:wrap; gap:1.2rem; padding:1.5rem 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); margin:2.5rem 0; }
+.cs-meta-item { display:flex; flex-direction:column; gap:.2rem; background:#111; border:1px solid var(--border); border-radius:10px; padding:0.8rem 1.2rem; transition:border-color .2s; }
+.cs-meta-item:hover { border-color:var(--gold-hi); }
+.cs-meta-lbl { font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase; color:rgba(255,255,255,0.38); }
+.cs-meta-val { font-size:.875rem; color:rgba(255,255,255,0.58); }
+.cs-meta-val strong { color:#fff; font-weight:600; }
+
+/* stat row */
+.stat-row { display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; margin:2.5rem 0; }
+.stat-cell { background:#000; padding:1.8rem 1.4rem; text-align:center; }
+.stat-n { font-family:'Anton',sans-serif; font-size:2.8rem; color:#E5B55C; line-height:1; margin-bottom:.25rem; }
+.stat-l { font-size:.7rem; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,0.38); line-height:1.4; }
+
+/* callout */
+.callout { background:#111; border:1px solid var(--border); border-left:3px solid #E5B55C; border-radius:2px; padding:2rem 2.2rem; margin:2rem 0; }
+.callout-q { font-family:'Cormorant Garamond',serif; font-size:clamp(1.2rem,2vw,1.6rem); font-style:italic; font-weight:300; line-height:1.5; color:rgba(255,255,255,0.82); margin-bottom:.8rem; }
+.callout-foot { font-size:.66rem; color:rgba(255,255,255,0.38); letter-spacing:.04em; padding-top:.8rem; border-top:1px solid var(--border); }
+.callout-foot strong { color:#E5B55C; }
+
+/* insight strip */
+.insight-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; margin:2rem 0; }
+.insight-cell { background:#000; padding:1.4rem 1.3rem; }
+.insight-icon { font-size:1.3rem; margin-bottom:.5rem; display:block; }
+.insight-lbl { font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase; color:#E5B55C; margin-bottom:.3rem; }
+.insight-text { font-size:.9rem; line-height:1.65; color:rgba(255,255,255,0.58); }
+
+/* phase grid */
+.phase-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:2.5rem 0; }
+.phase-card { background:#111; border:1px solid var(--border); border-radius:var(--r); padding:1.6rem 1.4rem; transition:border-color .2s; }
+.phase-card:hover { border-color:var(--gold-hi); }
+.phase-card.complete { border-left:3px solid #E5B55C; }
+.phase-card.pending { border-left:3px solid rgba(255,255,255,0.12); opacity:.65; }
+.phase-num { font-family:'Anton',sans-serif; font-size:0.7rem; letter-spacing:0.2em; color:#E5B55C; margin-bottom:.55rem; }
+.phase-status { display:inline-flex; align-items:center; gap:.35rem; font-size:0.55rem; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:.7rem; }
+.phase-status.done { color:#4CAF50; }
+.phase-status.soon { color:rgba(255,255,255,0.3); }
+.phase-title { font-family:'Anton',sans-serif; font-size:1.05rem; text-transform:uppercase; color:#fff; margin-bottom:.4rem; line-height:1.1; }
+.phase-desc { font-size:.8rem; line-height:1.6; color:rgba(255,255,255,0.45); }
+
+/* role chips */
+.role-list { display:flex; flex-wrap:wrap; gap:.55rem; margin:1.5rem 0; }
+.role-chip { font-size:0.62rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; background:rgba(229,181,92,0.08); border:1px solid rgba(229,181,92,0.25); border-radius:100px; padding:.45rem 1rem; color:#E5B55C; }
+
+/* ai tool cards */
+.ai-grid { display:grid; grid-template-columns:1fr; gap:12px; margin:2rem 0; }
+.ai-card { background:#111; border:1px solid var(--border); border-radius:var(--r); padding:1.6rem 1.8rem; display:grid; grid-template-columns:180px 1fr; gap:1.5rem; align-items:start; transition:border-color .2s; }
+.ai-card:hover { border-color:var(--gold-hi); }
+.ai-tool { font-family:'Anton',sans-serif; font-size:1rem; text-transform:uppercase; color:#fff; letter-spacing:.04em; }
+.ai-use-label { font-size:0.58rem; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:#E5B55C; margin-top:.25rem; margin-bottom:.3rem; }
+.ai-text { font-size:.88rem; line-height:1.7; color:rgba(255,255,255,0.55); }
+
+/* design system cards */
+.ds-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:2.5rem 0; }
+.ds-card { background:#111; border:1px solid var(--border); border-radius:var(--r); padding:1.8rem 1.6rem; transition:border-color .2s; }
+.ds-card:hover { border-color:var(--gold-hi); }
+.ds-icon { font-size:1.6rem; margin-bottom:1rem; display:block; }
+.ds-label { font-size:0.58rem; font-weight:600; letter-spacing:0.26em; text-transform:uppercase; color:#E5B55C; margin-bottom:.4rem; }
+.ds-name { font-family:'Anton',sans-serif; font-size:1.3rem; text-transform:uppercase; color:#fff; margin-bottom:.6rem; line-height:1.1; }
+.ds-desc { font-size:.85rem; line-height:1.65; color:rgba(255,255,255,0.5); }
+
+/* findings */
+.findings-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin:2rem 0; }
+.findings-col { background:#111; border:1px solid var(--border); border-radius:var(--r); padding:1.8rem; }
+.findings-col.wins { border-top:3px solid #4CAF50; }
+.findings-col.gaps { border-top:3px solid rgba(229,181,92,0.6); }
+.findings-head { font-size:0.6rem; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; margin-bottom:1.2rem; display:flex; align-items:center; gap:.45rem; }
+.findings-col.wins .findings-head { color:#4CAF50; }
+.findings-col.gaps .findings-head { color:#E5B55C; }
+.findings-list { list-style:none; display:flex; flex-direction:column; gap:.85rem; }
+.findings-list li { font-size:.88rem; line-height:1.65; color:rgba(255,255,255,0.6); padding-left:1.2rem; position:relative; }
+.findings-list li::before { content:''; position:absolute; left:0; top:.65em; width:5px; height:5px; border-radius:50%; }
+.findings-col.wins .findings-list li::before { background:#4CAF50; }
+.findings-col.gaps .findings-list li::before { background:#E5B55C; }
+
+/* roadmap */
+.roadmap { display:flex; flex-direction:column; }
+.roadmap-item { display:flex; gap:1.5rem; align-items:flex-start; padding:1.4rem 0; border-bottom:1px solid rgba(255,255,255,0.06); }
+.roadmap-item:last-child { border-bottom:none; }
+.roadmap-num { font-family:'Anton',sans-serif; font-size:2rem; color:#E5B55C; line-height:1; flex-shrink:0; width:2.5rem; opacity:.7; }
+.roadmap-text { font-size:.95rem; line-height:1.7; color:rgba(255,255,255,0.62); padding-top:.2rem; }
+.roadmap-text strong { color:#fff; }
+
+/* ── PHOTO DISPLAY ── */
+/* Standard photo grid */
+.photo-grid { display:grid; gap:6px; margin:2.5rem 0; }
+.photo-grid.g2 { grid-template-columns:repeat(2,1fr); }
+.photo-grid.g3 { grid-template-columns:repeat(3,1fr); }
+.photo-grid.g4 { grid-template-columns:repeat(4,1fr); }
+.photo-item { overflow:hidden; border-radius:var(--r); border:1px solid rgba(255,255,255,0.08); background:#111; }
+.photo-item img { width:100%; height:auto; display:block; }
+.photo-item.contain img { height:auto; object-fit:contain; }
+.photo-item.contain img { object-fit:contain; background:#111; }
+.photo-cap { font-size:.7rem; color:rgba(255,255,255,0.35); padding:.55rem .8rem; letter-spacing:.03em; }
+
+/* Full-width image (wireframes etc.) displayed large */
+.img-full { width:100%; border-radius:var(--r); border:1px solid rgba(255,255,255,0.08); overflow:hidden; margin:2rem 0; background:#111; }
+.img-full img { width:100%; display:block; }
+.img-full .photo-cap { padding:.7rem 1rem; }
+
+/* Scrollable phone strip (hi-fi app screens) */
+.phone-strip { display:flex; gap:10px; overflow-x:auto; padding-bottom:.5rem; margin:2rem 0; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+.phone-strip::-webkit-scrollbar { display:none; }
+.phone-frame { flex-shrink:0; width:200px; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); background:#0a0a0a; }
+.phone-frame img { width:100%; display:block; }
+.phone-frame .photo-cap { font-size:.62rem; padding:.4rem .65rem; }
+
+/* 2-col: text left, phones right */
+.split { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; margin:3rem 0; }
+.split.flip { direction:rtl; }
+.split.flip > * { direction:ltr; }
+.split-phones { display:flex; gap:8px; justify-content:flex-start; }
+.split-phones .phone-frame { width:160px; }
+
+/* section divider */
+.sec-div { display:flex; align-items:center; gap:.7rem; max-width:1080px; margin:0 auto; padding:0 2.5rem; opacity:.2; }
+.sec-div::before,.sec-div::after { content:''; flex:1; height:1px; background:linear-gradient(to right,transparent,rgba(255,255,255,0.6),transparent); }
+.sec-div-text { font-size:.62rem; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.6); white-space:nowrap; }
+
+/* takeaway */
+.takeaway { text-align:center; padding:5rem 2rem; }
+.takeaway-label { font-size:0.6rem; font-weight:500; letter-spacing:0.3em; text-transform:uppercase; color:#E5B55C; display:block; margin-bottom:1.5rem; }
+.takeaway-text { font-family:'Cormorant Garamond',serif; font-size:clamp(1.3rem,3vw,2.2rem); font-weight:300; font-style:italic; line-height:1.5; max-width:680px; margin:0 auto 2rem; color:#fff; }
+.takeaway-text em { font-weight:600; font-style:normal; color:#E5B55C; }
+.tag-row { display:flex; flex-wrap:wrap; gap:.45rem; justify-content:center; margin-top:2rem; }
+.tag { font-size:.6rem; font-weight:500; letter-spacing:.14em; text-transform:uppercase; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:100px; padding:.35rem .85rem; color:rgba(255,255,255,0.45); }
+
+/* footer */
+footer { background:#0a0a0a; border-top:1px solid var(--border); padding:2.5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.5rem; }
+.footer-left p { font-size:.65rem; font-weight:300; color:rgba(255,255,255,0.25); letter-spacing:.1em; text-transform:uppercase; margin-top:.25rem; }
+.footer-links { display:flex; gap:2rem; list-style:none; }
+.footer-links a { font-size:.62rem; font-weight:400; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,0.38); transition:color .2s; }
+.footer-links a:hover { color:#E5B55C; }
+.footer-copy { font-size:.58rem; color:rgba(255,255,255,.2); letter-spacing:.1em; text-transform:uppercase; }
+
+/* prev / next */
+.proj-nav-prev, .proj-nav-next {
+  position:fixed; bottom:2.2rem; z-index:200;
+  display:inline-flex; align-items:center; gap:.55rem;
+  font-size:0.62rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;
+  text-decoration:none; padding:.85rem 1.6rem; border-radius:100px;
+  transition:transform .2s, filter .2s; white-space:nowrap;
+}
+.proj-nav-prev { left:2.2rem; background:rgba(0,0,0,0.6); backdrop-filter:blur(12px); color:rgba(255,255,255,0.75); border:1px solid rgba(255,255,255,0.18); }
+.proj-nav-prev:hover { color:#fff; border-color:rgba(229,181,92,0.55); transform:translateX(-3px); }
+.proj-nav-next { right:2.2rem; background:#E5B55C; color:#000; border:none; box-shadow:0 4px 20px rgba(229,181,92,0.3); }
+.proj-nav-next:hover { filter:brightness(1.1); transform:translateX(3px); }
+
+/* responsive */
+@media(max-width:768px) {
+  .cs-hero { padding:4rem 1.6rem 3rem; }
+  .section { padding:4rem 0; } .wrap { padding:0 1.6rem; }
+  .phase-grid { grid-template-columns:1fr 1fr; }
+  .findings-grid { grid-template-columns:1fr; }
+  .ds-grid { grid-template-columns:1fr 1fr; }
+  .ai-card { grid-template-columns:1fr; gap:.8rem; }
+  .split { grid-template-columns:1fr; gap:2rem; }
+  .split.flip { direction:ltr; }
+  .stat-row { grid-template-columns:repeat(3,1fr); }
+  .insight-strip { grid-template-columns:1fr 1fr; }
+  .photo-grid.g3, .photo-grid.g4 { grid-template-columns:repeat(2,1fr); }
+}
+@media(max-width:480px) {
+  .phase-grid { grid-template-columns:1fr; }
+  .ds-grid { grid-template-columns:1fr; }
+  .stat-row { grid-template-columns:repeat(2,1fr); }
+  .photo-grid.g2 { grid-template-columns:1fr; }
+  .proj-nav-prev { font-size:.55rem; padding:.7rem 1.1rem; left:1rem; bottom:1.2rem; }
+  .proj-nav-next { font-size:.55rem; padding:.7rem 1.1rem; right:1rem; bottom:1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="page-bg" aria-hidden="true"></div>
+<canvas id="sparkle-canvas"></canvas>
+<div id="kolam-bg" style="display:none;"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="hero-concept.html" class="nav-logo" style="text-decoration:none;display:flex;align-items:center;gap:0.4rem;">
+    <span style="width:7px;height:7px;border-radius:50%;background:#E5B55C;display:inline-block;flex-shrink:0;"></span>
+    <span style="font-family:'Noto Sans Telugu',sans-serif;color:#E5B55C;font-weight:700;font-size:1.5rem;letter-spacing:0;line-height:1;">రమ్య</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links" id="nav-links">
+      <li><a href="hero-concept.html">Home</a></li>
+      <li><a href="hero-concept.html#about">About</a></li>
+      <li><a href="hero-concept.html#work">Work</a></li>
+      <li><a href="hero-concept.html#research">Research</a></li>
+      <li><a href="hero-concept.html#contact">Contact</a></li>
+      <li><a href="RAMYA YERRAMILLI -UXR-2026 (4).pdf" target="_blank" class="resume-link">Resume ↗</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="nav-overlay" id="nav-overlay"></div>
+
+<main>
+
+<!-- ═══ HERO ═══ -->
+<div class="cs-hero">
+  <div class="cs-badge fi"><span class="cs-badge-dot"></span><span class="cs-badge-text">Case Study · HCI Capstone · DePaul University</span></div>
+  <h1 class="cs-title fi">ASAP<em>AI-Scaffolded Action Planner</em></h1>
+  <p class="lead fi" style="margin-top:1.2rem;">An AI-native mobile app that helps people navigating major life transitions break down overwhelming tasks — one step at a time — acting as a <strong>coach, not an assistant.</strong></p>
+  <div class="status-pill fi"><span class="status-dot"></span>Live with real AI integration · Iteration 2 in progress</div>
+  <div class="cs-meta fi">
+    <div class="cs-meta-item"><span class="cs-meta-lbl">Team</span><span class="cs-meta-val"><strong>4 Members</strong></span></div>
+    <div class="cs-meta-item"><span class="cs-meta-lbl">My Role</span><span class="cs-meta-val"><strong>Research Lead · UX Design</strong></span></div>
+    <div class="cs-meta-item"><span class="cs-meta-lbl">Tools</span><span class="cs-meta-val">Figma · Claude · Cursor · Perplexity · Anara</span></div>
+    <div class="cs-meta-item"><span class="cs-meta-lbl">Status</span><span class="cs-meta-val"><strong>Post Round 1 Testing</strong> · Pre-deployment</span></div>
+  </div>
+  <!-- Hero: show the finished app in both modes -->
+  <div class="photo-grid g2 fi">
+    <div class="photo-item contain" style="background:#0a0a0a;">
+      <img src="img/ASAP/1.png" alt="ASAP light mode - home screen">
+      <div class="photo-cap">Light mode — home screen</div>
+    </div>
+    <div class="photo-item contain" style="background:#0a0a0a;">
+      <img src="img/ASAP/1d.png" alt="ASAP dark mode - home screen">
+      <div class="photo-cap">Dark mode — home screen</div>
+    </div>
+  </div>
+</div>
+
+<!-- KPIs -->
+<div class="wrap">
+  <div class="stat-row fi">
+    <div class="stat-cell"><div class="stat-n">6+</div><div class="stat-l">Design Research Interviews</div></div>
+    <div class="stat-cell"><div class="stat-n">4</div><div class="stat-l">Usability Test Scenarios</div></div>
+    <div class="stat-cell"><div class="stat-n">3</div><div class="stat-l">Fidelity Levels Lo to Hi</div></div>
+    <div class="stat-cell"><div class="stat-n">2</div><div class="stat-l">Modes Dark &amp; Light</div></div>
+    <div class="stat-cell"><div class="stat-n">100%</div><div class="stat-l">Real AI Integration at Hi-Fi</div></div>
+  </div>
+</div>
+
+<div class="sec-div wrap"><span class="sec-div-text">✦ 01 · Problem ✦</span></div>
+
+<!-- ═══ 01 PROBLEM ═══ -->
+<section class="section bg-alt">
+  <div class="wrap">
+    <div class="eyebrow fi">01 · Problem</div>
+    <h2 class="display fi">The paralysis<br><em>of starting over.</em></h2>
+    <p class="lead fi" style="margin-top:1.2rem;">Whether it's starting college, switching careers, or launching a business — major transitions dump an entirely new set of tasks on people who don't yet know how to handle them. The result: overwhelm, avoidance, and stagnation.</p>
+
+    <div class="callout fi">
+      <p class="callout-q">"The problem isn't motivation — it's scaffolding. People know they have things to do. They don't know how to start, sequence, or break them down without help."</p>
+      <div class="callout-foot"><strong>Core research insight</strong></div>
+    </div>
+
+    <div class="insight-strip fi">
+      <div class="insight-cell"><span class="insight-icon">🌀</span><div class="insight-lbl">The Gap</div><div class="insight-text">Existing tools either dump tasks on users or complete them entirely. Neither builds independent planning skills.</div></div>
+      <div class="insight-cell"><span class="insight-icon">😶</span><div class="insight-lbl">The Moment</div><div class="insight-text">The blank screen moment is the biggest barrier. Users freeze before they type a single word.</div></div>
+      <div class="insight-cell"><span class="insight-icon">🎯</span><div class="insight-lbl">The Goal</div><div class="insight-text">ASAP fills this gap: coach, not complete. Guide users through their own thinking — don't think for them.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-div wrap"><span class="sec-div-text">✦ 02 · My Role ✦</span></div>
+
+<!-- ═══ 02 ROLE ═══ -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow fi">02 · My Role</div>
+    <h2 class="display fi">Research lead<br><em>&amp; UX director.</em></h2>
+    <p class="lead fi" style="margin-top:1.2rem;">I led user research end-to-end — literature review, design research interviews, usability testing — and translated findings into design direction. I directed the IA and screen flow, drove the color system for both modes, and kept every decision grounded in what participants actually said.</p>
+    <div class="role-list fi">
+      <span class="role-chip">Literature Review</span><span class="role-chip">Design Research Interviews</span>
+      <span class="role-chip">Usability Testing</span><span class="role-chip">IA &amp; Screen Flow</span>
+      <span class="role-chip">Color System</span><span class="role-chip">Feature Prioritization</span>
+    </div>
+  </div>
+</section>
+
+<div class="sec-div wrap"><span class="sec-div-text">✦ 03 · Design Process ✦</span></div>
+
+<!-- ═══ 03 PROCESS ═══ -->
+<section class="section bg-alt">
+  <div class="wrap">
+    <div class="eyebrow fi">03 · Design Process</div>
+    <h2 class="display fi">Six phases,<br><em>two full cycles.</em></h2>
+    <p class="lead fi" style="margin-top:1rem;">A structured double-diamond process with two planned usability testing rounds. Round 2 is scheduled post-deployment to test with real usage context.</p>
+
+    <div class="phase-grid fi">
+      <div class="phase-card complete"><div class="phase-num">01</div><div class="phase-status done">✓ Complete</div><div class="phase-title">Problem Definition</div><div class="phase-desc">Literature review, competitive analysis, problem framing</div></div>
+      <div class="phase-card complete"><div class="phase-num">02</div><div class="phase-status done">✓ Complete</div><div class="phase-title">Early Ideation</div><div class="phase-desc">Lo-fi wireframes, screen flows, AI-assisted initial output via Figma Make</div></div>
+      <div class="phase-card complete"><div class="phase-num">03</div><div class="phase-status done">✓ Complete</div><div class="phase-title">Round 1 Testing</div><div class="phase-desc">6 participants, 4 scenarios, happy path mapping</div></div>
+      <div class="phase-card complete"><div class="phase-num">04</div><div class="phase-status done">✓ Complete</div><div class="phase-title">First Iteration</div><div class="phase-desc">Mid-fi to hi-fi with real Claude API integration, dark + light mode</div></div>
+      <div class="phase-card pending"><div class="phase-num">05</div><div class="phase-status soon">→ Up next</div><div class="phase-title">Deployment</div><div class="phase-desc">App goes live before Round 2 to capture real-use patterns</div></div>
+      <div class="phase-card pending"><div class="phase-num">06</div><div class="phase-status soon">→ Planned</div><div class="phase-title">Round 2 Testing</div><div class="phase-desc">Post-deployment iteration based on real usage findings</div></div>
+    </div>
+
+    <!-- LO-FI WIREFRAMES — displayed large so ideation is readable -->
+    <div class="eyebrow fi" style="margin-top:3rem;">Lo-fi Wireframes — Phase 02</div>
+    <p class="fi" style="max-width:600px;margin-bottom:1.5rem;">Initial lo-fi explorations. Three rounds of lo-fi built the foundation: where core actions live, how the AI coaching flow is triggered, and what information the user needs at each step.</p>
+
+    <div class="img-full fi">
+      <img src="img/ASAP/Lo-fi wireframes.png" alt="ASAP lo-fi wireframes round 1 — first screen explorations">
+      <div class="photo-cap">Lo-fi round 1 — first screen explorations, task entry and breakdown views</div>
+    </div>
+    <div class="img-full fi">
+      <img src="img/ASAP/Lofi 2.png" alt="ASAP lo-fi wireframes round 2 — refined flows">
+      <div class="photo-cap">Lo-fi round 2 — refined flows, AI coaching interaction patterns emerging</div>
+    </div>
+    <div class="img-full fi">
+      <img src="img/ASAP/Lo-fi 3Wireframes.png" alt="ASAP lo-fi wireframes round 3 — pre-testing refinement">
+      <div class="photo-cap">Lo-fi round 3 — pre-testing refinement, happy path mapped end-to-end</div>
+    </div>
+
+    <!-- MID-FI WIREFRAMES — bridge to hi-fi -->
+    <div class="eyebrow fi" style="margin-top:2.5rem;">Mid-fi Wireframes — Bridge to Hi-Fi</div>
+    <p class="fi" style="max-width:600px;margin-bottom:1.5rem;">Mid-fidelity added structure and hierarchy. This is where visual language was established — spacing, component placement, and the information architecture that carried through to the final hi-fi build.</p>
+
+    <div class="img-full fi">
+      <img src="img/ASAP/mid fi wireframes.png" alt="ASAP mid-fi wireframes — structure and visual hierarchy">
+      <div class="photo-cap">Mid-fi wireframes — visual structure, component hierarchy, and information architecture</div>
+    </div>
+
+    <!-- HAPPY PATH -->
+    <div class="eyebrow fi" style="margin-top:2.5rem;">Happy Path — Core User Journey</div>
+    <p class="fi" style="max-width:600px;margin-bottom:1.5rem;">The happy path maps the ideal flow from first open to a completed, AI-broken-down action plan — with the clarification and coaching steps visible.</p>
+
+    <div class="img-full fi">
+      <img src="img/ASAP/Happy path .png" alt="ASAP happy path — complete user journey from input to action plan">
+      <div class="photo-cap">Happy path — from first task input to AI-generated, structured action plan</div>
+    </div>
+
+    <!-- IN-CLASS ACTIVITY -->
+    <div class="eyebrow fi" style="margin-top:2.5rem;">Team Alignment Activity</div>
+    <div class="img-full fi">
+      <img src="img/ASAP/ASAP In-Class Activity.png" alt="ASAP in-class design alignment activity">
+      <div class="photo-cap">In-class alignment activity — collaborative problem framing and feature prioritisation</div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-div wrap"><span class="sec-div-text">✦ 04 · User Research ✦</span></div>
+
+<!-- ═══ 04 RESEARCH ═══ -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow fi">04 · User Research</div>
+    <h2 class="display fi">Who we<br><em>designed for.</em></h2>
+    <p class="lead fi" style="margin-top:1rem;">6 design research interviews with participants aged 18-34, each currently or recently navigating a major life transition. Four scenarios shaped the entire design: College Student, Tech Newbie, Career Swapper, Entrepreneur.</p>
+
+    <div class="callout fi">
+      <p class="callout-q">"Users didn't lack ambition — they lacked a clear first step. The blank screen moment was the biggest barrier to action."</p>
+      <div class="callout-foot"><strong>Key research finding</strong></div>
+    </div>
+
+    <!-- Screens 2 & 3: onboarding / first interaction — relevant to showing what users see first -->
+    <div class="split fi">
+      <div>
+        <p class="eyebrow">Onboarding Flow — What users see first</p>
+        <p>The onboarding was designed to immediately signal the app's purpose: scaffolded guidance, not another to-do list. Users enter their transition type before the AI can personalise its coaching responses.</p>
+      </div>
+      <div class="split-phones">
+        <div class="phone-frame"><img src="img/ASAP/2.png" alt="ASAP screen 2 — onboarding light"><div class="photo-cap">Onboarding — light</div></div>
+        <div class="phone-frame"><img src="img/ASAP/2d.png" alt="ASAP screen 2 — onboarding dark"><div class="photo-cap">Onboarding — dark</div></div>
+      </div>
+    </div>
+
+    <div class="ai-grid fi">
+      <div class="ai-card"><div><div class="ai-tool">Literature Review</div></div><div><div class="ai-use-label">Method</div><div class="ai-text">Established research foundation for AI scaffolding in executive function support and task management for transitioning adults.</div></div></div>
+      <div class="ai-card"><div><div class="ai-tool">Competitive Analysis</div></div><div><div class="ai-use-label">Method</div><div class="ai-text">Benchmarked against Todoist, Notion AI, and general-purpose LLMs — identified the coaching gap none of them filled.</div></div></div>
+      <div class="ai-card"><div><div class="ai-tool">Design Interviews</div></div><div><div class="ai-use-label">Method</div><div class="ai-text">6 participants across 4 transition types. Surfaced emotional triggers — paralysis, shame, overwhelm — alongside practical friction points.</div></div></div>
+      <div class="ai-card"><div><div class="ai-tool">Persona Development</div></div><div><div class="ai-use-label">Method</div><div class="ai-text">Built from real interview findings, not assumptions — to keep design decisions grounded throughout the project.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-div wrap"><span class="sec-div-text">✦ 05 · AI in Our Process ✦</span></div>
+
+<!-- ═══ 05 AI IN PROCESS ═══ -->
+<section class="section bg-alt">
+  <div class="wrap">
+    <div class="eyebrow fi">05 · AI in Our Process</div>
+    <h2 class="display fi">Where AI helped —<br><em>and where it didn't.</em></h2>
+    <p class="lead fi" style="margin-top:1rem;">AI was embedded in how we designed and built it. An honest account of what worked and what fell short.</p>
+
+    <!-- Screens 3 & 3d: task entry — where the AI coaching actually starts -->
+    <div class="split flip fi">
+      <div>
+        <p class="eyebrow">Task Entry — Where coaching begins</p>
+        <p>The task input screen is intentionally minimal. The AI doesn't act immediately — it first asks a clarifying question to understand the user's context before breaking down the task. This was a direct research finding: users felt heard before being guided.</p>
+      </div>
+      <div class="split-phones">
+        <div class="phone-frame"><img src="img/ASAP/3.png" alt="ASAP screen 3 — task input light"><div class="photo-cap">Task input — light</div></div>
+        <div class="phone-frame"><img src="img/ASAP/3d.png" alt="ASAP screen 3 — task input dark"><div class="photo-cap">Task input — dark</div></div>
+      </div>
+    </div>
+
+    <div class="ai-grid fi" style="margin-top:2rem;">
+      <div class="ai-card"><div><div class="ai-tool">Figma Make</div><div class="ai-use-label" style="margin-top:.3rem;">Initial wireframe generation</div></div><div><div class="ai-text">Fast starting point for early flows. Needed significant rework — lacked nuance but unlocked team alignment quickly.</div></div></div>
+      <div class="ai-card"><div><div class="ai-tool">Perplexity + Anara</div><div class="ai-use-label" style="margin-top:.3rem;">Research synthesis</div></div><div><div class="ai-text">Useful for scanning literature quickly. Saved hours in the literature review phase. Citations needed manual verification.</div></div></div>
+      <div class="ai-card"><div><div class="ai-tool">Claude + Cursor</div><div class="ai-use-label" style="margin-top:.3rem;">Hi-fi build + AI integration</div></div><div><div class="ai-text">The hi-fi prototype is live with real Claude API integration for task breakdown and coaching. Biggest technical unlock of the project.</div></div></div>
+    </div>
+
+    <div class="callout fi">
+      <p class="callout-q">"AI accelerated ideation and build speed significantly. It struggled with context-depth — the same gap we identified in the product itself."</p>
+      <div class="callout-foot"><strong>Honest assessment</strong> — generic AI output required heavy human curation at every stage</div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-div wrap"><span class="sec-div-text">✦ 06 · Design System ✦</span></div>
+
+<!-- ═══ 06 DESIGN SYSTEM ═══ -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow fi">06 · Design System</div>
+    <h2 class="display fi">Calm<br><em>by design.</em></h2>
+    <p class="lead fi" style="margin-top:1rem;">The core principle: the app must not add to the noise. Users are already overwhelmed. Every decision — color, type, layout — reduces cognitive load.</p>
+
+    <div class="ds-grid fi">
+      <div class="ds-card"><span class="ds-icon">🎨</span><div class="ds-label">Color</div><div class="ds-name">Slate Teal Primary</div><div class="ds-desc">Grounded, non-stimulating palette. Warm neutrals with earthy sage and amber accents. Built for both light and dark modes.</div></div>
+      <div class="ds-card"><span class="ds-icon">Aa</span><div class="ds-label">Type</div><div class="ds-name">Inter Throughout</div><div class="ds-desc">Clean, accessible, readable across screen sizes without visual weight. Lets users focus on the task, not the interface.</div></div>
+      <div class="ds-card"><span class="ds-icon">⬜</span><div class="ds-label">Buttons</div><div class="ds-name">Neutral &amp; Unambiguous</div><div class="ds-desc">No unnecessary flair. Users always know what to tap next without thinking. Less friction, more flow.</div></div>
+    </div>
+
+    <!-- AI breakdown screen (4 & 4d) — first result screen -->
+    <div class="split fi">
+      <div>
+        <p class="eyebrow">AI Breakdown — Screen 4</p>
+        <p>The first AI response screen shows the broken-down task with confidence labels. The calm design language prevents the screen from feeling overwhelming — intentional use of whitespace, muted secondary text, and a single primary action.</p>
+      </div>
+      <div class="split-phones">
+        <div class="phone-frame"><img src="img/ASAP/4.png" alt="ASAP screen 4 — AI breakdown light"><div class="photo-cap">AI breakdown — light</div></div>
+        <div class="phone-frame"><img src="img/ASAP/4d.png" alt="ASAP screen 4 — AI breakdown dark"><div class="photo-cap">AI breakdown — dark</div></div>
+      </div>
+    </div>
+
+    <!-- Subtask detail (5 & 5d) -->
+    <div class="split flip fi">
+      <div>
+        <p class="eyebrow">Subtask Detail — Screen 5</p>
+        <p>Subtask detail view. Each step is presented one at a time to prevent re-triggering the blank screen effect. The coaching nudge appears contextually — not on every screen.</p>
+      </div>
+      <div class="split-phones">
+        <div class="phone-frame"><img src="img/ASAP/5.png" alt="ASAP screen 5 — subtask detail light"><div class="photo-cap">Subtask detail — light</div></div>
+        <div class="phone-frame"><img src="img/ASAP/5d.png" alt="ASAP screen 5 — subtask detail dark"><div class="photo-cap">Subtask detail — dark</div></div>
+      </div>
+    </div>
+
+    <!-- Progress / saved (6 & 6d) -->
+    <div class="split fi">
+      <div>
+        <p class="eyebrow">Progress View — Screen 6</p>
+        <p>Progress tracking. The design uses a minimal progress indicator — not a gamified streak — to avoid creating anxiety around incomplete tasks. The goal is momentum, not pressure.</p>
+      </div>
+      <div class="split-phones">
+        <div class="phone-frame"><img src="img/ASAP/6.png" alt="ASAP screen 6 — progress light"><div class="photo-cap">Progress — light</div></div>
+        <div class="phone-frame"><img src="img/ASAP/6d.png" alt="ASAP screen 6 — progress dark"><div class="photo-cap">Progress — dark</div></div>
+      </div>
+    </div>
+
+    <!-- Deep focus / calendar (7 & 7d) -->
+    <div class="split flip fi">
+      <div>
+        <p class="eyebrow">Deep Focus Mode — Screen 7</p>
+        <p>Deep Focus is a distraction-free view for users who want to work through a single task without switching between screens. Calendar access is intentionally housed here — a Round 1 finding: users wanted it earlier in the flow. Iteration 2 will surface it sooner.</p>
+      </div>
+      <div class="split-phones">
+        <div class="phone-frame"><img src="img/ASAP/7.png" alt="ASAP screen 7 — deep focus light"><div class="photo-cap">Deep Focus — light</div></div>
+        <div class="phone-frame"><img src="img/ASAP/7d.png" alt="ASAP screen 7 — deep focus dark"><div class="photo-cap">Deep Focus — dark</div></div>
+      </div>
+    </div>
+
+    <!-- Settings / profile (8 & 8d) -->
+    <div class="split fi">
+      <div>
+        <p class="eyebrow">Profile + Settings — Screen 8</p>
+        <p>Profile and settings. Transition type is stored here — a key input for personalising the AI's coaching responses. In Iteration 2, this will inform contextual memory across sessions.</p>
+      </div>
+      <div class="split-phones">
+        <div class="phone-frame"><img src="img/ASAP/8.png" alt="ASAP screen 8 — profile light"><div class="photo-cap">Profile — light</div></div>
+        <div class="phone-frame"><img src="img/ASAP/8d.png" alt="ASAP screen 8 — profile dark"><div class="photo-cap">Profile — dark</div></div>
+      </div>
+    </div>
+
+    <!-- Screens 9-11: additional flows -->
+    <div class="eyebrow fi" style="margin-top:2.5rem;">Additional Screens — 9 to 11</div>
+    <p class="fi" style="max-width:600px;margin-bottom:1.5rem;">Remaining light-mode screens covering edge cases, empty states, and the onboarding completion flow.</p>
+    <div class="photo-grid g3 fi">
+      <div class="photo-item contain" style="background:#0a0a0a;"><img src="img/ASAP/9.png" alt="ASAP screen 9"><div class="photo-cap">Screen 9</div></div>
+      <div class="photo-item contain" style="background:#0a0a0a;"><img src="img/ASAP/10.png" alt="ASAP screen 10"><div class="photo-cap">Screen 10</div></div>
+      <div class="photo-item contain" style="background:#0a0a0a;"><img src="img/ASAP/11.png" alt="ASAP screen 11"><div class="photo-cap">Screen 11</div></div>
+    </div>
+
+    <!-- Figma overview -->
+    <div class="eyebrow fi" style="margin-top:2.5rem;">Figma Design System Overview</div>
+    <div class="img-full fi">
+      <img src="img/ASAP/Screenshot 2026-06-03 at 2.21.16 PM.png" alt="ASAP Figma component library and screen overview">
+      <div class="photo-cap">Figma — component library, design tokens, and full screen set</div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-div wrap"><span class="sec-div-text">✦ 07 · Usability Findings ✦</span></div>
+
+<!-- ═══ 07 USABILITY ═══ -->
+<section class="section bg-alt">
+  <div class="wrap">
+    <div class="eyebrow fi">07 · Usability Findings</div>
+    <h2 class="display fi">What Round 1<br><em>testing revealed.</em></h2>
+    <p class="lead fi" style="margin-top:1rem;">Participants spanned all four transition types. A product with a strong emotional foundation but significant functional gaps limiting real-world adoption.</p>
+
+    <div class="callout fi">
+      <p class="callout-q">"ASAP's voice is its superpower. Its intelligence depth is its ceiling."</p>
+      <div class="callout-foot"><strong>Core tension identified</strong> — next iteration must close the gap between emotional resonance and real-world utility</div>
+    </div>
+
+    <div class="findings-grid fi">
+      <div class="findings-col wins">
+        <div class="findings-head">✓ What worked</div>
+        <ul class="findings-list">
+          <li>Warm, honest tone — didn't feel generic or robotic</li>
+          <li>Confidence labels felt refreshingly different from other AI tools</li>
+          <li>One-step-at-a-time pattern helped users who freeze at blank screens</li>
+          <li>Clarification flow caught vague inputs — called a "hidden gem" by one participant</li>
+          <li>Welcome copy that acknowledged life transitions resonated emotionally</li>
+          <li>Soft refusal and coach fallback responses felt supportive, not dismissive</li>
+        </ul>
+      </div>
+      <div class="findings-col gaps">
+        <div class="findings-head">✗ What didn't</div>
+        <ul class="findings-list">
+          <li>Subtasks too surface-level — all personas got roughly the same output</li>
+          <li>5 steps insufficient for multi-day or complex projects</li>
+          <li>No due date functionality breaks the planning loop</li>
+          <li>Clarification flow powerful but hidden — users didn't know it existed</li>
+          <li>No onboarding tutorial before the first task</li>
+          <li>Edit button ambiguous; no save progress indicator</li>
+          <li>Calendar only accessible in Deep Focus — users wanted it earlier</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sec-div wrap"><span class="sec-div-text">✦ 08 · What's Next ✦</span></div>
+
+<!-- ═══ 08 ROADMAP ═══ -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow fi">08 · What's Next</div>
+    <h2 class="display fi">Iteration 2<br><em>roadmap.</em></h2>
+    <p class="lead fi" style="margin-top:1rem;">Deployed before Round 2 testing — intentionally. Real usage data will surface friction that controlled testing can't capture.</p>
+
+    <div class="roadmap fi">
+      <div class="roadmap-item"><div class="roadmap-num">01</div><div class="roadmap-text"><strong>Deeper subtask personalisation</strong> — role-aware breakdowns that adapt to context, not canned outputs</div></div>
+      <div class="roadmap-item"><div class="roadmap-num">02</div><div class="roadmap-text"><strong>Contextual memory</strong> — remember transition type and build on previous sessions</div></div>
+      <div class="roadmap-item"><div class="roadmap-num">03</div><div class="roadmap-text"><strong>Due date functionality + calendar integration</strong> — close the planning loop</div></div>
+      <div class="roadmap-item"><div class="roadmap-num">04</div><div class="roadmap-text"><strong>Onboarding tutorial</strong> — surface the clarification flow and confidence labels on first use</div></div>
+      <div class="roadmap-item"><div class="roadmap-num">05</div><div class="roadmap-text"><strong>Sub-role granularity</strong> — engineer vs. nurse vs. sales rep need meaningfully different scaffolding</div></div>
+      <div class="roadmap-item"><div class="roadmap-num">06</div><div class="roadmap-text"><strong>Round 2 usability testing</strong> post-deployment to validate iteration decisions</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TAKEAWAY -->
+<div class="takeaway bg-alt">
+  <span class="takeaway-label">Takeaway</span>
+  <p class="takeaway-text fi">Building the <em>coach,</em> not the answer. A tool that does everything for you isn't scaffolding — it's dependency. The goal was always to make itself unnecessary. That's still the north star.</p>
+  <div class="tag-row fi">
+    <span class="tag">UX Research</span><span class="tag">AI-Native Design</span><span class="tag">Mobile UX</span>
+    <span class="tag">Usability Testing</span><span class="tag">EdTech</span><span class="tag">Executive Function</span>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-left">
+    <a href="hero-concept.html" style="font-family:'Noto Sans Telugu',sans-serif;color:#E5B55C;font-size:1.2rem;font-weight:700;">రమ్య</a>
+    <p>UX Research · AI Safety · Chicago · 2026</p>
+  </div>
+  <ul class="footer-links">
+    <li><a href="hero-concept.html#work">All Work</a></li>
+    <li><a href="raahi.html">Raahi</a></li>
+    <li><a href="cost-of-a-click.html">Invisible Impacts</a></li>
+    <li><a href="wellnut.html">Wellnut</a></li>
+    <li><a href="mailto:ys.ramya@gmail.com">Email</a></li>
+  </ul>
+  <span class="footer-copy">© 2026 Ramya Yerramilli</span>
+</footer>
+
+<a href="hero-concept.html#work" class="proj-nav-prev">← Home</a>
+<a href="raahi.html" class="proj-nav-next">Raahi →</a>
+
+<script>
+const burger=document.getElementById('burger'),navLinks=document.getElementById('nav-links'),navOverlay=document.getElementById('nav-overlay');
+function closeMenu(){burger.classList.remove('open');navLinks.classList.remove('open');navOverlay.classList.remove('show');}
+burger.addEventListener('click',()=>{const o=burger.classList.toggle('open');navLinks.classList.toggle('open',o);navOverlay.classList.toggle('show',o);});
+navOverlay.addEventListener('click',closeMenu);
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:.08});
+document.querySelectorAll('.fi').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
