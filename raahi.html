@@ -815,6 +815,13 @@ const tp=showTyping();try{const res=await fetch('https://api.anthropic.com/v1/me
 chatSend.addEventListener('click',sendMessage);
 chatInput.addEventListener('keydown',e=>{if(e.key==='Enter')sendMessage();});
 
+/* Mobile Menu Toggle */
+const burger=document.getElementById('burger'),navLinks=document.getElementById('nav-links'),navOverlay=document.getElementById('nav-overlay');
+function closeMenu(){burger.classList.remove('open');navLinks.classList.remove('open');navOverlay.classList.remove('show');}
+burger.addEventListener('click',()=>{const o=burger.classList.toggle('open');navLinks.classList.toggle('open',o);navOverlay.classList.toggle('show',o);});
+navOverlay.addEventListener('click',closeMenu);
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+
 /* FADE IN */
 const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:.08});
 document.querySelectorAll('.fi').forEach(el=>io.observe(el));
