@@ -25,7 +25,60 @@
   --muted   : rgba(255,255,255,0.38);
   --dim     : rgba(255,255,255,0.58);
   --gold-bg : rgba(229,181,92,0.1);
-  --nav-h   : 65px;   /* keep in sync with nav padding */
+  --nav-h   : 65px;
+  --bg      : #000000;
+  --text    : #FFFFFF;
+  --hero-bg : #000000;
+  --hero-l  : #000;
+}
+
+[data-theme="light"] {
+  --black   : #F5F2EC;
+  --white   : #1A1614;
+  --card    : #ECEAE4;
+  --card2   : #E4E2DC;
+  --border  : rgba(0,0,0,0.09);
+  --line    : rgba(0,0,0,0.06);
+  --muted   : rgba(0,0,0,0.42);
+  --dim     : rgba(0,0,0,0.6);
+  --gold-bg : rgba(229,181,92,0.13);
+  --bg      : #F5F2EC;
+  --text    : #1A1614;
+  --hero-bg : #F5F2EC;
+  --hero-l  : #F5F2EC;
+}
+
+/* ── Reading progress bar ── */
+.progress-bar {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  height: 2px; width: 0;
+  background: var(--gold);
+  transition: width 80ms linear;
+  pointer-events: none;
+}
+
+/* ── Theme toggle ── */
+.theme-toggle {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: transparent;
+  border: 1px solid rgba(229,181,92,0.35);
+  color: var(--gold); cursor: pointer; flex-shrink: 0;
+  transition: background .2s, transform .3s;
+}
+.theme-toggle:hover { background: var(--gold-bg); transform: rotate(20deg); }
+.theme-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.icon-sun { display: none; }
+.icon-moon { display: block; }
+[data-theme="light"] .icon-sun  { display: block; }
+[data-theme="light"] .icon-moon { display: none; }
+
+/* ── Cursor spotlight in hero ── */
+.hero-spotlight {
+  position: absolute; inset: 0; z-index: 6;
+  pointer-events: none;
+  background: radial-gradient(circle 320px at -100px -100px, rgba(229,181,92,0.07), transparent 70%);
+  transition: background 80ms linear;
 }
 
 html { scroll-behavior: smooth; font-size: 16px; }
@@ -36,6 +89,7 @@ body {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  transition: background .3s, color .3s;
 }
 
 /* ── Shared Utilities ── */
@@ -82,17 +136,23 @@ body {
   height: min(88vh, 860px);
   min-height: 520px;
   overflow: hidden;
-  background: #000;
+  background: var(--hero-bg);
 }
 
-/* Pure-black shield behind left-half text - guarantees headline visibility */
 .hero::before {
   content: '';
   position: absolute; inset: 0; z-index: 4; pointer-events: none;
   background: linear-gradient(to right,
-    #000 0%, #000 40%,
+    var(--hero-l) 0%, var(--hero-l) 40%,
     rgba(0,0,0,0.6) 52%,
     rgba(0,0,0,0) 68%
+  );
+}
+[data-theme="light"] .hero::before {
+  background: linear-gradient(to right,
+    #F5F2EC 0%, #F5F2EC 40%,
+    rgba(245,242,236,0.6) 52%,
+    rgba(245,242,236,0) 68%
   );
 }
 
@@ -134,7 +194,6 @@ body {
 .portrait::after {
   content: ''; position: absolute; inset: 0; z-index: 1;
   background:
-    /* Bottom fade - starts at 42% so face area (top 35%) stays untouched */
     linear-gradient(to bottom,
       rgba(0,0,0,0)    0%,
       rgba(0,0,0,0)    38%,
@@ -143,21 +202,41 @@ body {
       rgba(0,0,0,0.82) 77%,
       #000              92%
     ),
-    /* Left edge fade - blends portrait into text zone */
     linear-gradient(to right,
       #000              0%,
       rgba(0,0,0,0.78) 7%,
       rgba(0,0,0,0.28) 18%,
       rgba(0,0,0,0)    34%
     ),
-    /* Right edge vignette */
     linear-gradient(to left,
       rgba(0,0,0,0.35) 0%,
       rgba(0,0,0,0)    22%
     );
 }
+[data-theme="light"] .portrait::after {
+  background:
+    linear-gradient(to bottom,
+      rgba(245,242,236,0)    0%,
+      rgba(245,242,236,0)    38%,
+      rgba(245,242,236,0.08) 48%,
+      rgba(245,242,236,0.42) 62%,
+      rgba(245,242,236,0.82) 77%,
+      #F5F2EC                92%
+    ),
+    linear-gradient(to right,
+      #F5F2EC                0%,
+      rgba(245,242,236,0.78) 7%,
+      rgba(245,242,236,0.28) 18%,
+      rgba(245,242,236,0)    34%
+    ),
+    linear-gradient(to left,
+      rgba(245,242,236,0.35) 0%,
+      rgba(245,242,236,0)    22%
+    );
+}
+/* Subtle parallax — JS drives translateY */
+.portrait { will-change: transform; }
 
-/* ── Navigation ── */
 /* ── Sticky liquid-glass nav ── */
 .nav {
   position: sticky;
@@ -169,6 +248,11 @@ body {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background .3s, border-color .3s;
+}
+[data-theme="light"] .nav {
+  background: rgba(245, 242, 236, 0.80);
+  border-bottom-color: rgba(0,0,0,0.08);
 }
 
 .nav-logo {
@@ -177,9 +261,10 @@ body {
   color: #fff;
   text-shadow: 0 2px 12px rgba(0,0,0,1), 0 0 30px rgba(0,0,0,0.9);
 }
+[data-theme="light"] .nav-logo { text-shadow: none; }
 
 .nav-right {
-  display: flex; align-items: center; gap: 3rem;
+  display: flex; align-items: center; gap: 2rem;
 }
 
 .nav-links {
@@ -194,6 +279,7 @@ body {
   text-shadow: 0 2px 10px rgba(0,0,0,0.95);
   transition: color .2s;
 }
+[data-theme="light"] .nav-links a { color: #1A1614; text-shadow: none; }
 .nav-links a:hover { color: var(--gold); }
 
 .nav-xhair {
@@ -333,21 +419,30 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* FAB */
-.fab {
-  position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
-  width: 54px; height: 54px; border-radius: 50%;
-  background: var(--gold); color: #000;
-  font-size: 1.5rem; font-weight: 300; line-height: 1;
-  display: flex; align-items: center; justify-content: center;
-  text-decoration: none; border: none; cursor: pointer;
-  box-shadow: 0 0 0 1px rgba(229,181,92,0.2), 0 8px 30px rgba(229,181,92,0.3);
-  transition: transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s;
-}
-.fab:hover {
-  transform: scale(1.1) rotate(45deg);
-  box-shadow: 0 0 0 2px rgba(229,181,92,0.35), 0 12px 40px rgba(229,181,92,0.45);
-}
+/* Light mode overrides for sections */
+[data-theme="light"] .about { border-top-color: var(--border); }
+[data-theme="light"] .about-right p { color: rgba(26,22,20,0.72); }
+[data-theme="light"] .mcard { background: var(--card); }
+[data-theme="light"] .mcard:hover { background: #E0DED8; }
+[data-theme="light"] .mcard-num { color: var(--white); }
+[data-theme="light"] .mcard-sub { color: rgba(26,22,20,0.6); }
+[data-theme="light"] .bcard { background: var(--card); border-color: var(--border); }
+[data-theme="light"] .bcard-img { background: #E0DED8; }
+[data-theme="light"] .bcard-title { color: var(--white); }
+[data-theme="light"] .bcard-desc { color: rgba(26,22,20,0.65); }
+[data-theme="light"] .bcard-year { color: rgba(26,22,20,0.3); }
+[data-theme="light"] .pub-title { color: var(--white); }
+[data-theme="light"] .pub-venue { color: rgba(26,22,20,0.58); }
+[data-theme="light"] .mlabel { color: rgba(26,22,20,0.75); }
+[data-theme="light"] .sub-text { color: rgba(26,22,20,0.75); }
+[data-theme="light"] .sub-dot { color: var(--gold); }
+[data-theme="light"] .hl-w { color: #1A1614; text-shadow: none; }
+[data-theme="light"] .footer { background: #E8E5DF; }
+[data-theme="light"] .footer-copy { color: rgba(0,0,0,0.22); }
+[data-theme="light"] .footer-sub { color: var(--muted); }
+[data-theme="light"] .burger span { background: #1A1614; }
+[data-theme="light"] .nav-links { background: rgba(240,237,231,0.98) !important; }
+[data-theme="light"] .methods-row { background: var(--border); border-color: var(--border); }
 
 /* ══════════════════════════════════════════════════
    █ SECTION 2 - ABOUT ME
@@ -776,8 +871,6 @@ body {
   40%  { opacity: 0.6; filter: blur(6px); }
   100% { opacity: 1; transform: translateY(0);    filter: blur(0px); }
 }
-.fab { bottom:5.8rem; }
-@media (max-width:640px) { .fab { bottom:5.4rem;right:1rem; } }
 
 </style>
 </head>
@@ -787,6 +880,7 @@ body {
      STICKY LIQUID-GLASS NAV - lives outside hero so
      position:sticky works across the whole page
 ══════════════════════════════════════════════════ -->
+<div class="progress-bar" id="progress-bar"></div>
 <nav class="nav" aria-label="Primary">
   <!-- Logo: click returns to top of this page -->
   <a href="index.html" class="nav-logo" aria-label="Ramya Yerramilli home">
@@ -801,6 +895,10 @@ body {
       <li><a href="https://www.linkedin.com/in/ramyays" target="_blank" rel="noopener">Contact</a></li>
       <li><a href="Ramya_Yerramilli_resume.pdf" target="_blank" style="color:var(--gold);border:1px solid rgba(229,181,92,0.35);border-radius:var(--r-pill,100px);padding:0.3rem 0.85rem;">Resume ↗</a></li>
     </ul>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
     <div class="nav-xhair" aria-hidden="true">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
         <circle cx="10" cy="10" r="9" stroke="#E5B55C" stroke-width="0.9"/>
@@ -825,6 +923,9 @@ body {
      HERO
 ══════════════════════════════════════════════════ -->
 <section class="hero" id="hero">
+
+  <!-- Cursor spotlight -->
+  <div class="hero-spotlight" id="hero-spotlight" aria-hidden="true"></div>
 
   <!-- Grid lines -->
   <div class="grid-lines" aria-hidden="true">
@@ -900,8 +1001,6 @@ body {
 
 </section>
 
-<!-- FAB -->
-<a href="#contact" class="fab" aria-label="Contact Ramya">+</a>
 <a href="#hero" class="to-top" aria-label="Back to top">↑</a>
 
 
@@ -1030,7 +1129,7 @@ body {
       </a>
 
       <!-- Card 3: WELLNUT - right col, TALL (spans both rows) -->
-      <a href="wellnut.html" class="bcard bc-2">
+      <a href="wellnut.html" class="bcard bc-2 bc-tall">
         <div class="bcard-img">
           <img src="img/wellnut/brand-poster.png" alt="Wellnut VR companion brand poster" loading="lazy">
           <span class="bcard-wm">WELLNUT</span>
@@ -1143,72 +1242,149 @@ body {
 </footer>
 
 <script>
-  const burger = document.getElementById('burger');
-  const navLinks = document.getElementById('nav-links');
-  const navOverlay = document.getElementById('nav-overlay');
-  const closeMenu = () => {
-    burger.classList.remove('open');
-    navLinks.classList.remove('open');
-    navOverlay.classList.remove('show');
-  };
-  burger.addEventListener('click', () => {
-    const open = burger.classList.toggle('open');
-    navLinks.classList.toggle('open', open);
-    navOverlay.classList.toggle('show', open);
+/* ── Mobile nav ── */
+const burger = document.getElementById('burger');
+const navLinks = document.getElementById('nav-links');
+const navOverlay = document.getElementById('nav-overlay');
+const closeMenu = () => {
+  burger.classList.remove('open');
+  navLinks.classList.remove('open');
+  navOverlay.classList.remove('show');
+};
+burger.addEventListener('click', () => {
+  const open = burger.classList.toggle('open');
+  navLinks.classList.toggle('open', open);
+  navOverlay.classList.toggle('show', open);
+});
+navOverlay.addEventListener('click', closeMenu);
+navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+navLinks.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', event => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (!target) return;
+    event.preventDefault();
+    closeMenu();
+    const top = target.getBoundingClientRect().top + window.pageYOffset - 72;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    history.replaceState(null, '', link.getAttribute('href'));
   });
-  navOverlay.addEventListener('click', closeMenu);
-  navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
-  navLinks.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', event => {
-      const target = document.querySelector(link.getAttribute('href'));
-      if (!target) return;
-      event.preventDefault();
-      closeMenu();
-      const top = target.getBoundingClientRect().top + window.pageYOffset - 72;
-      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-      history.replaceState(null, '', link.getAttribute('href'));
-    });
-  });
+});
 
 (function(){
+  /* ── Theme toggle ── */
+  const toggleBtn = document.getElementById('theme-toggle');
+  const root = document.documentElement;
+  const saved = localStorage.getItem('theme');
+  if (saved) root.setAttribute('data-theme', saved);
+  toggleBtn && toggleBtn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next === 'dark' ? '' : next);
+    if (next === 'dark') root.removeAttribute('data-theme');
+    localStorage.setItem('theme', next);
+  });
+
+  /* ── Reading progress bar ── */
+  const progressBar = document.getElementById('progress-bar');
+  const updateProgress = () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    if (progressBar && docHeight > 0) progressBar.style.width = (scrollTop / docHeight * 100) + '%';
+  };
+  window.addEventListener('scroll', updateProgress, { passive: true });
+
+  /* ── Back-to-top ── */
   const topBtn = document.querySelector('.to-top');
   const toggleTop = () => { if (topBtn) topBtn.classList.toggle('show', window.scrollY > 520); };
-  if (topBtn) {
-    topBtn.addEventListener('click', event => {
-      event.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
+  if (topBtn) topBtn.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
   toggleTop();
-  window.addEventListener('scroll', toggleTop, { passive:true });
+  window.addEventListener('scroll', toggleTop, { passive: true });
 
+  /* ── Scroll reveal ── */
   const revealTargets = document.querySelectorAll('section, .sec-head, .mcard, .bcard, .pub-row, .about-grid, .methods-row, .cs-badge, .cs-title, .lead, .cs-meta, .hero-img, .callout, .hmw, .insight-strip, .stat-row, .phase-card, .rat-card, .mvp-card, .photo-item, .impact-cell, .take-card, .recog-item, .showcase-quote, .cta-band');
-  revealTargets.forEach(el => {
-    if (!el.classList.contains('fi') && !el.classList.contains('hero')) el.classList.add('motion-reveal');
-  });
+  revealTargets.forEach(el => { if (!el.classList.contains('fi') && !el.classList.contains('hero')) el.classList.add('motion-reveal'); });
   const revealObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold:0.08, rootMargin:'0px 0px -8% 0px' });
+    entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('.motion-reveal').forEach(el => revealObserver.observe(el));
 
+  /* ── 3D tilt on cards ── */
   const tiltTargets = document.querySelectorAll('.bcard, .mcard, .btn-pill, .btn-sq, .pub-link, .cs-meta-item, .rat-card, .mvp-card, .take-card, .photo-item, .impact-cell, .insight-cell, .phase-card');
   tiltTargets.forEach(el => {
     el.classList.add('tilt-ready');
-    el.addEventListener('mousemove', event => {
-      const rect = el.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width - 0.5;
-      const y = (event.clientY - rect.top) / rect.height - 0.5;
-      el.style.transform = 'perspective(600px) rotateX(' + (-y * 7).toFixed(2) + 'deg) rotateY(' + (x * 7).toFixed(2) + 'deg) translateY(-3px)';
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      el.style.transform = `perspective(600px) rotateX(${(-y*7).toFixed(2)}deg) rotateY(${(x*7).toFixed(2)}deg) translateY(-3px)`;
     });
     el.addEventListener('mouseleave', () => { el.style.transform = ''; });
   });
-})();
 
+  /* ── Spatial: cursor spotlight in hero ── */
+  const heroEl = document.querySelector('.hero');
+  const spotlight = document.getElementById('hero-spotlight');
+  if (heroEl && spotlight) {
+    heroEl.addEventListener('mousemove', e => {
+      const r = heroEl.getBoundingClientRect();
+      spotlight.style.background = `radial-gradient(circle 360px at ${e.clientX - r.left}px ${e.clientY - r.top}px, rgba(229,181,92,0.09), transparent 70%)`;
+    });
+    heroEl.addEventListener('mouseleave', () => { spotlight.style.background = 'none'; });
+  }
+
+  /* ── Spatial: portrait parallax on scroll ── */
+  const portrait = document.querySelector('.portrait');
+  const onScroll = () => {
+    if (!portrait) return;
+    const pct = Math.min(window.scrollY / (window.innerHeight * 0.8), 1);
+    portrait.style.transform = `translateY(${pct * 48}px)`;
+    updateProgress();
+    toggleTop();
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ── Adaptive: time-aware greeting ── */
+  const subText = document.querySelector('.sub-text');
+  if (subText) {
+    const h = new Date().getHours();
+    const greeting = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+    subText.innerHTML = `<span style="color:var(--gold);font-weight:500;">${greeting}.</span> I research why systems fail people&nbsp;— then design them to be trustworthy, ethical, and human.`;
+  }
+
+  /* ── Adaptive: animated stat counters ── */
+  const counters = document.querySelectorAll('.mcard-num');
+  const animateCounter = (el, target, suffix) => {
+    let start = 0, dur = 1400, startTime = null;
+    const step = ts => {
+      if (!startTime) startTime = ts;
+      const p = Math.min((ts - startTime) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = (target < 10 ? '0' : '') + Math.floor(ease * target) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = (target < 10 ? '0' : '') + target + suffix;
+    };
+    requestAnimationFrame(step);
+  };
+  const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const text = el.textContent.trim();
+      if (text === '07+') animateCounter(el, 7, '+');
+      counterObserver.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(el => counterObserver.observe(el));
+
+  /* ── Brand storytelling: micro-labels fade in after title ── */
+  const microLabels = document.querySelectorAll('.mlabel');
+  microLabels.forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(10px)';
+    el.style.transition = 'opacity .6s ease, transform .6s ease';
+    setTimeout(() => { el.style.opacity = ''; el.style.transform = ''; }, 1200 + i * 180);
+  });
+
+})();
 </script>
 </body>
 </html>
