@@ -1413,13 +1413,44 @@ navLinks.querySelectorAll('a[href^="#"]').forEach(link => {
   }, { threshold: 0.5 });
   counters.forEach(el => counterObserver.observe(el));
 
-  /* ── Brand storytelling: micro-labels fade in after title ── */
+  /* ── Hero animation — replays on every enter (scroll up, reload, back nav) ── */
+  const headline = document.querySelector('.headline-name-in');
   const microLabels = document.querySelectorAll('.mlabel');
-  microLabels.forEach((el, i) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(10px)';
-    el.style.transition = 'opacity .6s ease, transform .6s ease';
-    setTimeout(() => { el.style.opacity = ''; el.style.transform = ''; }, 1200 + i * 180);
+
+  const playHeroAnimation = () => {
+    /* Replay title: remove class → force reflow → re-add to restart keyframes */
+    if (headline) {
+      headline.classList.remove('headline-name-in');
+      void headline.offsetWidth; /* force reflow so browser resets keyframe */
+      headline.classList.add('headline-name-in');
+    }
+    /* Replay micro-labels staggered after title */
+    microLabels.forEach((el, i) => {
+      el.style.transition = 'none';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(10px)';
+      /* Wait for next frame so reset is painted, then animate in */
+      requestAnimationFrame(() => {
+        el.style.transition = 'opacity .6s ease, transform .6s ease';
+        setTimeout(() => { el.style.opacity = ''; el.style.transform = ''; }, 1200 + i * 180);
+      });
+    });
+  };
+
+  /* Fire on every viewport entry — covers scroll up/down */
+  const heroSection = document.querySelector('.hero');
+  if (heroSection) {
+    const heroObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) playHeroAnimation();
+      });
+    }, { threshold: 0.15 });
+    heroObserver.observe(heroSection);
+  }
+
+  /* Fire on browser back/forward (bfcache restores frozen page) */
+  window.addEventListener('pageshow', e => {
+    if (e.persisted) playHeroAnimation();
   });
 
 })();
