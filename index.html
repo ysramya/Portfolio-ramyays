@@ -896,6 +896,42 @@ body {
   100% { opacity: 1; transform: translateY(0);    filter: blur(0px); }
 }
 
+/* ── Chat Widget ── */
+.chat-widget{position:fixed;bottom:1.6rem;right:1.6rem;z-index:500;display:flex;flex-direction:column;align-items:flex-end;gap:.75rem}
+.chat-btn{width:52px;height:52px;border-radius:50%;background:var(--gold);color:#000;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1px rgba(229,181,92,.25),0 8px 28px rgba(229,181,92,.3);transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;flex-shrink:0}
+.chat-btn:hover{transform:scale(1.1);box-shadow:0 0 0 2px rgba(229,181,92,.4),0 12px 40px rgba(229,181,92,.45)}
+.chat-btn svg{width:22px;height:22px;stroke:#000;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.chat-panel{width:330px;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.55);transform-origin:bottom right;transform:scale(.88) translateY(10px);opacity:0;pointer-events:none;transition:transform .32s cubic-bezier(.34,1.56,.64,1),opacity .22s;position:absolute;bottom:64px;right:0}
+.chat-panel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.chat-header{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;border-bottom:1px solid var(--border);background:rgba(0,0,0,.45);backdrop-filter:blur(8px)}
+[data-theme="light"] .chat-header{background:rgba(229,225,215,.7)}
+.chat-hinfo{display:flex;align-items:center;gap:.6rem}
+.chat-avatar{width:32px;height:32px;border-radius:50%;background:var(--gold);color:#000;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;letter-spacing:.06em;flex-shrink:0}
+.chat-hname{font-size:.75rem;font-weight:600;color:var(--white);letter-spacing:.02em}
+.chat-hstatus{font-size:.57rem;color:#4ade80;letter-spacing:.05em;margin-top:1px}
+.chat-close-btn{background:none;border:none;cursor:pointer;color:var(--muted);font-size:.9rem;padding:.25rem;line-height:1;transition:color .2s}
+.chat-close-btn:hover{color:var(--white)}
+.chat-messages{flex:1;overflow-y:auto;padding:.9rem;display:flex;flex-direction:column;gap:.65rem;min-height:0;max-height:300px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.chat-msg{display:flex}
+.chat-msg.user{justify-content:flex-end}
+.chat-bubble{max-width:82%;padding:.55rem .85rem;border-radius:12px;font-size:.77rem;line-height:1.6;word-break:break-word}
+.chat-msg.ai .chat-bubble{background:rgba(255,255,255,.06);color:rgba(255,255,255,.82);border-radius:4px 12px 12px 12px;border:1px solid var(--border)}
+[data-theme="light"] .chat-msg.ai .chat-bubble{background:rgba(0,0,0,.05);color:rgba(26,22,20,.82)}
+.chat-msg.user .chat-bubble{background:var(--gold);color:#000;font-weight:500;border-radius:12px 4px 12px 12px}
+.chat-typing{display:flex;gap:4px;align-items:center;padding:.05rem 0}
+.chat-typing span{width:5px;height:5px;border-radius:50%;background:var(--muted);animation:chatDot 1.2s infinite}
+.chat-typing span:nth-child(2){animation-delay:.2s}
+.chat-typing span:nth-child(3){animation-delay:.4s}
+@keyframes chatDot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+.chat-footer{display:flex;gap:.45rem;padding:.7rem;border-top:1px solid var(--border)}
+.chat-input{flex:1;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--white);border-radius:100px;padding:.5rem .9rem;font-size:.77rem;font-family:inherit;outline:none;transition:border-color .2s}
+[data-theme="light"] .chat-input{background:rgba(0,0,0,.05);color:#1A1614}
+.chat-input:focus{border-color:rgba(229,181,92,.45)}
+.chat-input::placeholder{color:var(--muted)}
+.chat-send{width:34px;height:34px;border-radius:50%;background:var(--gold);color:#000;border:none;cursor:pointer;font-size:.9rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:filter .2s,transform .2s;flex-shrink:0}
+.chat-send:hover{filter:brightness(1.15);transform:scale(1.08)}
+@media(prefers-reduced-motion:reduce){.chat-panel{transition:opacity .15s}.chat-btn{transition:none}}
+
 </style>
 </head>
 <body>
@@ -1454,6 +1490,130 @@ navLinks.querySelectorAll('a[href^="#"]').forEach(link => {
   });
 
 })();
+
+/* ── Chatbot Widget ── */
+document.addEventListener('DOMContentLoaded', function(){(function(){
+  const SYSTEM_PROMPT = `You are a helpful assistant on Ramya Yerramilli's portfolio website. Be warm, concise, and informative. Keep replies to 2–4 sentences.
+
+About Ramya:
+- UX Researcher & AI Safety specialist based in Chicago
+- 7+ years spatial design experience (architecture/interior design) now applied to digital systems
+- Graduate student at DePaul University studying Human-Computer Interaction
+- Research focus: ethical AI, dark patterns in AI interfaces, accessible design, mixed-methods research, participatory design
+
+Key projects:
+- ASAP (2026): AI-scaffolded academic planner balancing automation with user autonomy — Graduate Capstone at DePaul
+- Raahi (2025): Browser tool detecting dark patterns in AI interfaces, validated by 78.9% of 57+ UX practitioners, funded by iD Lab Shark Tank
+- Wellnut (2025): VR mental wellness companion for students, 4-phase mixed-methods research with a licensed therapist, Jarvis Innovation Challenge
+- Invisible Impacts (2025): Sensor-powered installation making AI's hidden water cost tangible, 85% rise in environmental AI awareness, DePaul Grant recipient
+
+Publications in progress: dark patterns in generative AI for vulnerable users; interactive art as AI ethics interface (AIES submission); AI personality influence on user compliance.
+
+Contact: ys.ramya@gmail.com | linkedin.com/in/ramyays
+
+If asked something you don't know, suggest emailing Ramya directly.`;
+
+  const panel   = document.getElementById('chat-panel');
+  const btn     = document.getElementById('chat-btn');
+  const closeBtn= document.getElementById('chat-close');
+  const input   = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('chat-send');
+  const msgs    = document.getElementById('chat-messages');
+  if (!panel || !btn) return;
+
+  let open = false, busy = false;
+  const history = [];
+
+  const toggle = () => {
+    open = !open;
+    panel.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open);
+    if (open) setTimeout(() => input.focus(), 320);
+  };
+  btn.addEventListener('click', toggle);
+  closeBtn.addEventListener('click', toggle);
+
+  const addMsg = (text, role) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'chat-msg ' + role;
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble';
+    bubble.textContent = text;
+    wrap.appendChild(bubble);
+    msgs.appendChild(wrap);
+    msgs.scrollTop = msgs.scrollHeight;
+  };
+
+  const showTyping = () => {
+    const wrap = document.createElement('div');
+    wrap.className = 'chat-msg ai'; wrap.id = 'chat-typing';
+    wrap.innerHTML = '<div class="chat-bubble"><div class="chat-typing"><span></span><span></span><span></span></div></div>';
+    msgs.appendChild(wrap); msgs.scrollTop = msgs.scrollHeight;
+  };
+  const hideTyping = () => { const t = document.getElementById('chat-typing'); if (t) t.remove(); };
+
+  const send = async () => {
+    const text = input.value.trim();
+    if (!text || busy) return;
+    input.value = '';
+    addMsg(text, 'user');
+    history.push({ role: 'user', content: text });
+    busy = true; showTyping();
+
+    try {
+      const res = await fetch('https://text.pollinations.ai/openai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'openai',
+          messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history],
+          max_tokens: 300, temperature: 0.7
+        })
+      });
+      const data = await res.json();
+      const reply = data.choices?.[0]?.message?.content?.trim()
+        || "Sorry, I couldn't fetch a response. Reach Ramya at ys.ramya@gmail.com!";
+      hideTyping(); addMsg(reply, 'ai');
+      history.push({ role: 'assistant', content: reply });
+      if (history.length > 14) history.splice(0, 2);
+    } catch {
+      hideTyping();
+      addMsg("Something went wrong on my end. You can reach Ramya directly at ys.ramya@gmail.com!", 'ai');
+    }
+    busy = false;
+  };
+
+  sendBtn.addEventListener('click', send);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
+})();});
 </script>
+
+<!-- ── Chat Widget ── -->
+<div class="chat-widget" id="chat-widget">
+  <div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat with Ramya's assistant">
+    <div class="chat-header">
+      <div class="chat-hinfo">
+        <div class="chat-avatar">RY</div>
+        <div>
+          <div class="chat-hname">Ramya's Assistant</div>
+          <div class="chat-hstatus">● Ask me anything</div>
+        </div>
+      </div>
+      <button class="chat-close-btn" id="chat-close" aria-label="Close chat">✕</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-msg ai">
+        <div class="chat-bubble">Hi! I can tell you about Ramya's research, projects, and background. What would you like to know? 👋</div>
+      </div>
+    </div>
+    <div class="chat-footer">
+      <input class="chat-input" id="chat-input" type="text" placeholder="Ask about Ramya's work…" autocomplete="off" maxlength="300">
+      <button class="chat-send" id="chat-send" aria-label="Send message">↑</button>
+    </div>
+  </div>
+  <button class="chat-btn" id="chat-btn" aria-label="Chat with Ramya's assistant" aria-expanded="false">
+    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  </button>
+</div>
 </body>
 </html>
