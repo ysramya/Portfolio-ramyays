@@ -1493,6 +1493,9 @@ navLinks.querySelectorAll('a[href^="#"]').forEach(link => {
 
 /* ── Chatbot Widget ── */
 document.addEventListener('DOMContentLoaded', function(){(function(){
+  /* ── Get a FREE key in 30 sec: console.groq.com → API Keys → Create key ── */
+  const GROQ_API_KEY = '';
+
   const SYSTEM_PROMPT = `You are a helpful assistant on Ramya Yerramilli's portfolio website. Be warm, concise, and informative. Keep replies to 2–4 sentences.
 
 About Ramya:
@@ -1560,25 +1563,34 @@ If asked something you don't know, suggest emailing Ramya directly.`;
     history.push({ role: 'user', content: text });
     busy = true; showTyping();
 
+    if (!GROQ_API_KEY) {
+      setTimeout(() => {
+        hideTyping();
+        addMsg("The AI assistant needs a Groq API key to work. In the meantime, reach Ramya at ys.ramya@gmail.com!", 'ai');
+        busy = false;
+      }, 600);
+      return;
+    }
+
     try {
-      const res = await fetch('https://text.pollinations.ai/openai', {
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_API_KEY}` },
         body: JSON.stringify({
-          model: 'openai',
+          model: 'llama-3.1-8b-instant',
           messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history],
           max_tokens: 300, temperature: 0.7
         })
       });
       const data = await res.json();
       const reply = data.choices?.[0]?.message?.content?.trim()
-        || "Sorry, I couldn't fetch a response. Reach Ramya at ys.ramya@gmail.com!";
+        || "I had trouble responding. Reach Ramya at ys.ramya@gmail.com!";
       hideTyping(); addMsg(reply, 'ai');
       history.push({ role: 'assistant', content: reply });
       if (history.length > 14) history.splice(0, 2);
     } catch {
       hideTyping();
-      addMsg("Something went wrong on my end. You can reach Ramya directly at ys.ramya@gmail.com!", 'ai');
+      addMsg("Something went wrong. You can reach Ramya directly at ys.ramya@gmail.com!", 'ai');
     }
     busy = false;
   };
