@@ -128,46 +128,72 @@ p strong { color:#fff; }
 .dc-title { font-size:1rem;font-weight:600;color:#fff;margin-bottom:.6rem; }
 .dc-body { font-size:.85rem;line-height:1.7;color:rgba(255,255,255,0.5); }
 
-/* ── DASHBOARD MOCKUP (pure CSS) ── */
-.dash-mockup { background:#1e2a36;border:1px solid rgba(255,255,255,0.1);border-radius:var(--r);overflow:hidden;margin:2rem 0;font-family:'Inter',sans-serif; }
-.dash-header { background:#3a4a5c;padding:.9rem 1.4rem;display:flex;align-items:center;justify-content:space-between; }
-.dash-title { font-size:.85rem;font-weight:600;color:#fff; }
-.dash-subtitle { font-size:.65rem;color:rgba(255,255,255,0.55); }
-.dash-date { font-size:.65rem;color:rgba(255,255,255,0.45); }
-.dash-kpis { display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.08); }
-.dash-kpi { background:#1e2a36;padding:1rem 1.2rem; }
-.dash-kpi-label { font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:.3rem; }
-.dash-kpi-val { font-size:1.4rem;font-weight:700;color:#fff;line-height:1; }
-.dash-kpi-sub { font-size:.6rem;color:rgba(255,255,255,0.35);margin-top:.2rem; }
-.dash-charts { display:grid;grid-template-columns:1fr 160px 180px;gap:1px;background:rgba(255,255,255,0.08); }
-.dash-chart-box { background:#1e2a36;padding:1rem 1.2rem; }
-.dash-chart-title { font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:.7rem; }
-/* Mini bar chart */
-.mini-bars { display:flex;align-items:flex-end;gap:4px;height:64px;padding-bottom:2px; }
-.mini-bar { border-radius:2px 2px 0 0;flex:1;min-width:6px; }
-.mini-bar-label { font-size:.5rem;color:rgba(255,255,255,0.3);text-align:center;margin-top:2px;overflow:hidden;white-space:nowrap; }
-.mini-bar-wrap { display:flex;flex-direction:column;align-items:center;flex:1; }
-/* Mini pie */
-.mini-pie { position:relative;width:80px;height:80px;border-radius:50%;margin:0 auto;background:conic-gradient(#4B7A45 0% 58.7%, #2C3E50 58.7% 100%); }
-.mini-pie-label { font-size:.55rem;color:rgba(255,255,255,0.4);text-align:center;margin-top:.5rem; }
-.pie-legend { display:flex;flex-direction:column;gap:.3rem;margin-top:.6rem; }
-.pie-leg-item { display:flex;align-items:center;gap:.35rem;font-size:.6rem;color:rgba(255,255,255,0.45); }
-.pie-dot { width:8px;height:8px;border-radius:50%;flex-shrink:0; }
-/* Mini revenue bars */
-.rev-bars { display:flex;align-items:flex-end;gap:6px;height:64px; }
-.rev-bar-wrap { display:flex;flex-direction:column;align-items:center;gap:3px;flex:1; }
-.rev-bar { border-radius:2px 2px 0 0;width:100%; }
-.rev-bar-lbl { font-size:.5rem;color:rgba(255,255,255,0.35); }
+/* ── POWER BI DASHBOARD MOCKUP ── */
+.pbi-wrap{background:#f3f3f3;border-radius:6px;overflow:hidden;margin:2rem 0;font-family:'Segoe UI','Inter',sans-serif;box-shadow:0 6px 32px rgba(0,0,0,0.35);border:1px solid #ccc;}
+.pbi-hdr{background:#595959;padding:.55rem 1rem;display:flex;align-items:center;gap:.8rem;}
+.pbi-logo-svg{flex-shrink:0;}
+.pbi-logo-text{font-size:.42rem;text-transform:uppercase;color:rgba(255,255,255,0.8);letter-spacing:.06em;line-height:1.4;}
+.pbi-hdr-divider{width:1px;height:28px;background:rgba(255,255,255,0.25);flex-shrink:0;}
+.pbi-hdr-main{flex:1;}
+.pbi-hdr-title{font-size:.95rem;font-weight:400;color:#fff;line-height:1.2;}
+.pbi-hdr-sub{font-size:.58rem;color:rgba(255,255,255,0.65);margin-top:.1rem;}
+.pbi-hdr-date{margin-left:auto;text-align:right;}
+.pbi-date-lbl{font-size:.5rem;color:rgba(255,255,255,0.5);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.15rem;}
+.pbi-date-box{border:1px solid rgba(255,255,255,0.3);padding:.2rem .55rem;font-size:.55rem;color:rgba(255,255,255,0.4);min-width:60px;}
+/* KPI row */
+.pbi-kpis{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-bottom:2px solid #e8e8e8;}
+.pbi-kpi{padding:.75rem 1.1rem;text-align:center;border-right:1px solid #ebebeb;}
+.pbi-kpi:last-child{border-right:none;}
+.pbi-kpi-lbl{font-size:.58rem;color:#666;font-weight:500;margin-bottom:.2rem;}
+.pbi-kpi-val{font-size:1.55rem;font-weight:300;color:#1a1a1a;letter-spacing:-.02em;line-height:1.1;}
+.pbi-kpi-sub{font-size:.52rem;color:#999;margin-top:.18rem;}
+/* Charts */
+.pbi-charts{display:grid;grid-template-columns:200px 1fr 210px;background:#fff;border-bottom:2px solid #e8e8e8;min-height:190px;}
+.pbi-chart{padding:.65rem .9rem;border-right:1px solid #ebebeb;position:relative;}
+.pbi-chart:last-child{border-right:none;}
+.pbi-chart-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:.45rem;}
+.pbi-chart-title{font-size:.62rem;font-weight:600;color:#1a1a1a;}
+.pbi-filter-btn{display:inline-flex;align-items:center;gap:.2rem;border:1px solid #bbb;border-radius:2px;padding:.1rem .35rem;font-size:.5rem;color:#555;background:#fff;cursor:default;}
+/* Pie */
+.pbi-pie-wrap{display:flex;flex-direction:column;align-items:center;padding-top:.3rem;}
+.pbi-pie{width:100px;height:100px;border-radius:50%;background:conic-gradient(#9DC65A 0% 58.7%, #1D3D52 58.7% 100%);flex-shrink:0;}
+.pbi-pie-labels{position:relative;width:100px;height:100px;margin-top:-100px;}
+.pbi-pie-lbl1{position:absolute;left:10px;top:44px;font-size:.42rem;font-weight:600;color:#fff;line-height:1.2;text-align:center;}
+.pbi-pie-lbl2{position:absolute;right:4px;top:22px;font-size:.42rem;font-weight:600;color:#fff;line-height:1.2;text-align:center;}
+.pbi-legend{display:flex;flex-direction:column;gap:.28rem;margin-top:.5rem;width:100%;}
+.pbi-leg-item{display:flex;align-items:center;gap:.35rem;font-size:.52rem;color:#444;}
+.pbi-leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+/* Area chart */
+.pbi-area-svg{width:100%;display:block;}
+.pbi-slider{display:flex;align-items:center;gap:.3rem;margin-top:.3rem;}
+.pbi-slider-dot{width:10px;height:10px;border-radius:50%;border:2px solid #555;background:#fff;flex-shrink:0;}
+.pbi-slider-track{flex:1;height:2px;background:#bbb;position:relative;}
+.pbi-slider-fill{position:absolute;left:0;top:0;height:100%;background:#555;}
+.pbi-area-date{font-size:.5rem;color:#999;text-align:right;margin-top:.2rem;}
+/* Revenue bars */
+.pbi-rev-wrap{padding-top:.2rem;}
+.pbi-rev-chart{display:flex;align-items:flex-end;gap:8px;height:120px;padding:0 .2rem;position:relative;}
+.pbi-rev-yaxis{position:absolute;left:0;top:0;bottom:20px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;padding-right:4px;}
+.pbi-rev-yval{font-size:.45rem;color:#888;}
+.pbi-rev-bars-inner{display:flex;align-items:flex-end;gap:8px;height:100%;flex:1;padding-left:24px;padding-bottom:20px;}
+.pbi-rev-bar-g{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;}
+.pbi-rev-bar{border-radius:1px 1px 0 0;width:100%;}
+.pbi-rev-bar-top{font-size:.45rem;color:#444;font-weight:500;}
+.pbi-rev-bar-lbl{font-size:.48rem;color:#666;}
+.pbi-rev-ylabel{font-size:.45rem;color:#555;writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);position:absolute;left:-4px;top:50%;transform:translateY(-50%) rotate(180deg);letter-spacing:.05em;}
 /* Table */
-.dash-table-wrap { padding:0; }
-.dash-table { width:100%;border-collapse:collapse;font-size:.65rem; }
-.dash-table th { background:#273545;color:rgba(255,255,255,0.45);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;padding:.55rem .8rem;text-align:left;border-bottom:1px solid rgba(255,255,255,0.08);font-weight:500; }
-.dash-table td { padding:.5rem .8rem;color:rgba(255,255,255,0.7);border-bottom:1px solid rgba(255,255,255,0.05); }
-.dash-table tr:last-child td { border-bottom:none;color:rgba(255,255,255,0.45); }
-.dash-table tr.avg td { background:rgba(255,255,255,0.02); }
-.td-pos { color:#6aab62; }
-.td-neg { color:#e57373; }
-.td-bold { color:#fff;font-weight:600; }
+.pbi-table-wrap{background:#fff;}
+.pbi-tbl{width:100%;border-collapse:collapse;font-size:.6rem;}
+.pbi-tbl th{background:#3B5268;color:#fff;padding:.45rem .7rem;text-align:left;font-weight:500;font-size:.58rem;white-space:nowrap;}
+.pbi-tbl th.r{text-align:right;}
+.pbi-tbl td{padding:.38rem .7rem;border-bottom:1px solid #f0f0f0;color:#222;white-space:nowrap;}
+.pbi-tbl td.r{text-align:right;}
+.pbi-tbl tr.avg-row td{color:#555;border-top:1px solid #ddd;}
+.pbi-tbl tr.tot-row td{color:#333;font-weight:500;border-top:1px solid #ccc;}
+.pbi-tbl tr:hover td{background:#f9f9f9;}
+.pbi-tbl-foot{padding:.4rem .7rem;font-size:.5rem;color:#888;border-top:1px solid #e0e0e0;background:#fafafa;}
+.td-grn{color:#2e7d32;}
+.td-red{color:#c62828;}
 
 /* ── IMPACT STATS ── */
 .impact-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);overflow:hidden;margin:2rem 0; }
@@ -357,108 +383,202 @@ p strong { color:#fff; }
     <h2 class="display fi">Every section<br><em>earns its place</em></h2>
     <p class="fi" style="max-width:640px;margin-top:1rem;">The layout follows a top-to-bottom information hierarchy: headline numbers → trend context → wallet positioning → revenue breakdown → client-level detail.</p>
 
-    <!-- CSS Mockup -->
-    <div class="dash-mockup fi" style="margin-top:2rem;">
-      <div class="dash-header">
-        <div>
-          <div class="dash-title">PM Dashboard Overview</div>
-          <div class="dash-subtitle">Portfolio Manager — Sarah M. Chen</div>
+    <!-- Power BI Accurate Mockup -->
+    <div class="pbi-wrap fi" style="margin-top:2rem;">
+
+      <!-- Header -->
+      <div class="pbi-hdr">
+        <svg class="pbi-logo-svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect width="32" height="32" rx="3" fill="#fff" fill-opacity=".12"/>
+          <path d="M16 6 C10 6 7 10 7 16 C7 22 11 26 16 26 C18 26 19 25 20 24 L20 18 C19 19 17.5 20 16 20 C13 20 11 18 11 16 C11 13 13 12 16 12 C17.5 12 19 13 20 14 L20 8 C19 7 17.5 6 16 6Z" fill="#9DC65A"/>
+          <path d="M20 8 L20 24 C22 22 25 19 25 16 C25 12 23 9 20 8Z" fill="#fff" fill-opacity=".6"/>
+        </svg>
+        <div class="pbi-logo-text">MAINSTREET<br>ADVISORS</div>
+        <div class="pbi-hdr-divider"></div>
+        <div class="pbi-hdr-main">
+          <div class="pbi-hdr-title">PM Dashboard Overview</div>
+          <div class="pbi-hdr-sub">Portfolio Manager – Jordan R. Whitfield</div>
         </div>
-        <div class="dash-date">As of Aug 19, 2025</div>
+        <div class="pbi-hdr-date">
+          <div class="pbi-date-lbl">Date</div>
+          <div class="pbi-date-box"></div>
+        </div>
       </div>
 
-      <!-- KPI Row -->
-      <div class="dash-kpis">
-        <div class="dash-kpi">
-          <div class="dash-kpi-label">Total AUA</div>
-          <div class="dash-kpi-val">$1.04B</div>
-          <div class="dash-kpi-sub">Total Assets Under Advisement</div>
+      <!-- KPI Tiles -->
+      <div class="pbi-kpis">
+        <div class="pbi-kpi">
+          <div class="pbi-kpi-lbl">Total AUA</div>
+          <div class="pbi-kpi-val">$1,147,832K</div>
+          <div class="pbi-kpi-sub">Total Assets</div>
         </div>
-        <div class="dash-kpi">
-          <div class="dash-kpi-label">ARR</div>
-          <div class="dash-kpi-val">$748K</div>
-          <div class="dash-kpi-sub">Sum of Run Rate</div>
+        <div class="pbi-kpi">
+          <div class="pbi-kpi-lbl">ARR</div>
+          <div class="pbi-kpi-val">$748K</div>
+          <div class="pbi-kpi-sub">Sum of Run rate</div>
         </div>
-        <div class="dash-kpi">
-          <div class="dash-kpi-label"># of Clients</div>
-          <div class="dash-kpi-val">9</div>
-          <div class="dash-kpi-sub">Current Clients</div>
+        <div class="pbi-kpi">
+          <div class="pbi-kpi-lbl"># of Clients</div>
+          <div class="pbi-kpi-val">11</div>
+          <div class="pbi-kpi-sub">Current Clients</div>
         </div>
-        <div class="dash-kpi">
-          <div class="dash-kpi-label">Current Accounts</div>
-          <div class="dash-kpi-val">412</div>
-          <div class="dash-kpi-sub">Active Accounts</div>
+        <div class="pbi-kpi">
+          <div class="pbi-kpi-lbl">Current Accounts</div>
+          <div class="pbi-kpi-val">347</div>
+          <div class="pbi-kpi-sub">Active Accounts</div>
         </div>
       </div>
 
       <!-- Charts Row -->
-      <div class="dash-charts">
-        <!-- Trend line as bar chart approximation -->
-        <div class="dash-chart-box">
-          <div class="dash-chart-title">Relationship Trend over the Years</div>
-          <div class="mini-bars">
-            <div class="mini-bar-wrap"><div class="mini-bar" style="height:38%;background:#6aab62;"></div><div class="mini-bar-label">Apex</div></div>
-            <div class="mini-bar-wrap"><div class="mini-bar" style="height:52%;background:#8FA653;"></div><div class="mini-bar-label">Birch</div></div>
-            <div class="mini-bar-wrap"><div class="mini-bar" style="height:44%;background:#B5A48A;"></div><div class="mini-bar-label">Cedar</div></div>
-            <div class="mini-bar-wrap"><div class="mini-bar" style="height:61%;background:#6aab62;"></div><div class="mini-bar-label">Dune</div></div>
-            <div class="mini-bar-wrap"><div class="mini-bar" style="height:35%;background:#8FA653;"></div><div class="mini-bar-label">Elm</div></div>
-            <div class="mini-bar-wrap"><div class="mini-bar" style="height:78%;background:#6aab62;"></div><div class="mini-bar-label">Fern</div></div>
-            <div class="mini-bar-wrap"><div class="mini-bar" style="height:55%;background:#B5A48A;"></div><div class="mini-bar-label">Grove</div></div>
-            <div class="mini-bar-wrap"><div class="mini-bar" style="height:42%;background:#6aab62;"></div><div class="mini-bar-label">Haven</div></div>
-            <div class="mini-bar-wrap"><div class="mini-bar" style="height:88%;background:#8FA653;"></div><div class="mini-bar-label">Iris</div></div>
+      <div class="pbi-charts">
+
+        <!-- Share of Wallet (pie) -->
+        <div class="pbi-chart">
+          <div class="pbi-chart-hdr">
+            <span class="pbi-chart-title">Share of Wallet</span>
+            <span class="pbi-filter-btn">All ▾</span>
+          </div>
+          <div class="pbi-pie-wrap">
+            <div style="position:relative;width:110px;height:110px;">
+              <div class="pbi-pie" style="width:110px;height:110px;"></div>
+              <div class="pbi-pie-labels" style="width:110px;height:110px;margin-top:-110px;">
+                <div class="pbi-pie-lbl1" style="left:8px;top:52px;">$268M<br>(41.3%)</div>
+                <div class="pbi-pie-lbl2" style="right:5px;top:22px;">$381M<br>(58.7%)</div>
+              </div>
+            </div>
+            <div class="pbi-legend" style="margin-top:.6rem;">
+              <div class="pbi-leg-item"><div class="pbi-leg-dot" style="background:#9DC65A;"></div>Jordan's MSA Assets</div>
+              <div class="pbi-leg-item"><div class="pbi-leg-dot" style="background:#1D3D52;"></div>Total Market Value</div>
+            </div>
           </div>
         </div>
 
-        <!-- Pie -->
-        <div class="dash-chart-box" style="display:flex;flex-direction:column;align-items:center;justify-content:center;">
-          <div class="dash-chart-title" style="text-align:center;">Share of Wallet</div>
-          <div class="mini-pie"></div>
-          <div class="pie-legend">
-            <div class="pie-leg-item"><div class="pie-dot" style="background:#4B7A45;"></div>PM MSA Assets (58.7%)</div>
-            <div class="pie-leg-item"><div class="pie-dot" style="background:#2C3E50;"></div>Total Market Value (41.3%)</div>
+        <!-- Relationship Trend (area chart SVG) -->
+        <div class="pbi-chart">
+          <div class="pbi-chart-hdr">
+            <span class="pbi-chart-title">Relationship Trend over the years</span>
+            <span class="pbi-filter-btn">All ▾</span>
+          </div>
+          <svg class="pbi-area-svg" viewBox="0 0 380 118" xmlns="http://www.w3.org/2000/svg">
+            <!-- Y-axis gridlines -->
+            <line x1="32" y1="12" x2="372" y2="12" stroke="#e8e8e8" stroke-width="1"/>
+            <line x1="32" y1="42" x2="372" y2="42" stroke="#e8e8e8" stroke-width="1"/>
+            <line x1="32" y1="72" x2="372" y2="72" stroke="#e8e8e8" stroke-width="1"/>
+            <line x1="32" y1="97" x2="372" y2="97" stroke="#e8e8e8" stroke-width="1"/>
+            <!-- Y labels -->
+            <text x="28" y="14" text-anchor="end" font-size="7" fill="#999">1M</text>
+            <text x="28" y="44" text-anchor="end" font-size="7" fill="#999">752K</text>
+            <text x="28" y="74" text-anchor="end" font-size="7" fill="#999">0M</text>
+            <text x="28" y="99" text-anchor="end" font-size="7" fill="#999">0M</text>
+            <!-- Area fill -->
+            <path d="M32,94 C55,88 75,35 112,18 C148,10 170,11 202,12 C230,14 255,28 285,38 C315,48 345,54 372,58 L372,97 L32,97 Z" fill="#9aadbb" fill-opacity="0.55"/>
+            <!-- Area line -->
+            <path d="M32,94 C55,88 75,35 112,18 C148,10 170,11 202,12 C230,14 255,28 285,38 C315,48 345,54 372,58" fill="none" stroke="#6e8fa2" stroke-width="1.5"/>
+            <!-- Data point labels -->
+            <text x="112" y="13" text-anchor="middle" font-size="6.5" fill="#555">876K</text>
+            <text x="202" y="8" text-anchor="middle" font-size="6.5" fill="#555">879K</text>
+            <text x="285" y="33" text-anchor="middle" font-size="6.5" fill="#555">718K</text>
+            <text x="372" y="53" text-anchor="middle" font-size="6.5" fill="#555">616K</text>
+            <!-- Vertical indicator at 2022 -->
+            <line x1="202" y1="8" x2="202" y2="97" stroke="#555" stroke-width="1" stroke-dasharray="2,2"/>
+            <circle cx="202" cy="12" r="3" fill="#555"/>
+            <!-- Tooltip -->
+            <rect x="208" y="14" width="88" height="24" rx="2" fill="#fff" stroke="#ccc" stroke-width="1"/>
+            <circle cx="213" cy="22" r="3" fill="#555"/>
+            <text x="219" y="21" font-size="6" fill="#333" font-weight="600">2022</text>
+            <text x="219" y="31" font-size="5.5" fill="#666">Sum of Run Rate  878,987</text>
+            <!-- X axis labels -->
+            <text x="32"  y="108" text-anchor="middle" font-size="7" fill="#999">2020</text>
+            <text x="112" y="108" text-anchor="middle" font-size="7" fill="#999">2021</text>
+            <text x="202" y="108" text-anchor="middle" font-size="7" fill="#999">2022</text>
+            <text x="285" y="108" text-anchor="middle" font-size="7" fill="#999">2023</text>
+            <text x="372" y="108" text-anchor="middle" font-size="7" fill="#999">2024</text>
+          </svg>
+          <!-- Slider -->
+          <div class="pbi-slider">
+            <div class="pbi-slider-dot"></div>
+            <div class="pbi-slider-track"><div class="pbi-slider-fill" style="width:100%;"></div></div>
+            <div class="pbi-slider-dot"></div>
           </div>
         </div>
 
-        <!-- Revenue by Tier -->
-        <div class="dash-chart-box">
-          <div class="dash-chart-title">Revenue by Client Tier</div>
-          <div class="rev-bars">
-            <div class="rev-bar-wrap"><div class="rev-bar" style="height:88%;background:#8FA653;"></div><div class="rev-bar-lbl">A</div></div>
-            <div class="rev-bar-wrap"><div class="rev-bar" style="height:76%;background:#6aab62;"></div><div class="rev-bar-lbl">B</div></div>
-            <div class="rev-bar-wrap"><div class="rev-bar" style="height:52%;background:#B5A48A;"></div><div class="rev-bar-lbl">C</div></div>
-            <div class="rev-bar-wrap"><div class="rev-bar" style="height:24%;background:#7a8a6a;"></div><div class="rev-bar-lbl">D</div></div>
+        <!-- Revenue by Client Tier (bar chart) -->
+        <div class="pbi-chart">
+          <div class="pbi-chart-hdr">
+            <span class="pbi-chart-title">Revenue by Client Tier</span>
+          </div>
+          <div class="pbi-rev-wrap">
+            <div class="pbi-rev-chart">
+              <div class="pbi-rev-ylabel">Revenue</div>
+              <!-- Y gridlines via SVG overlay -->
+              <div style="position:absolute;left:24px;right:8px;top:0;bottom:20px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none;">
+                <div style="border-top:1px solid #e8e8e8;position:relative;"><span style="position:absolute;left:-22px;top:-5px;font-size:.42rem;color:#999;">200K</span></div>
+                <div style="border-top:1px solid #e8e8e8;position:relative;"><span style="position:absolute;left:-22px;top:-5px;font-size:.42rem;color:#999;">150K</span></div>
+                <div style="border-top:1px solid #e8e8e8;position:relative;"><span style="position:absolute;left:-22px;top:-5px;font-size:.42rem;color:#999;">100K</span></div>
+                <div style="border-top:1px solid #e8e8e8;position:relative;"><span style="position:absolute;left:-22px;top:-5px;font-size:.42rem;color:#999;">50K</span></div>
+                <div style="border-top:1px solid #e8e8e8;position:relative;"><span style="position:absolute;left:-22px;top:-5px;font-size:.42rem;color:#999;">0K</span></div>
+              </div>
+              <div class="pbi-rev-bars-inner">
+                <div class="pbi-rev-bar-g">
+                  <div class="pbi-rev-bar-top">196K</div>
+                  <div class="pbi-rev-bar" style="height:94%;background:#B8D978;"></div>
+                  <div class="pbi-rev-bar-lbl">B</div>
+                </div>
+                <div class="pbi-rev-bar-g">
+                  <div class="pbi-rev-bar-top">182K</div>
+                  <div class="pbi-rev-bar" style="height:86%;background:#4E8A3A;"></div>
+                  <div class="pbi-rev-bar-lbl">A</div>
+                </div>
+                <div class="pbi-rev-bar-g">
+                  <div class="pbi-rev-bar-top">154K</div>
+                  <div class="pbi-rev-bar" style="height:74%;background:#C4A97A;"></div>
+                  <div class="pbi-rev-bar-lbl">C</div>
+                </div>
+                <div class="pbi-rev-bar-g">
+                  <div class="pbi-rev-bar-top">58K</div>
+                  <div class="pbi-rev-bar" style="height:28%;background:#9E8A60;"></div>
+                  <div class="pbi-rev-bar-lbl">D</div>
+                </div>
+              </div>
+            </div>
+            <div class="pbi-area-date" style="font-size:.5rem;color:#666;text-align:right;padding:.1rem .2rem;">Thursday, August 28, 2025</div>
           </div>
         </div>
-      </div>
+
+      </div><!-- /pbi-charts -->
 
       <!-- Table -->
-      <div class="dash-table-wrap">
-        <table class="dash-table">
+      <div class="pbi-table-wrap">
+        <table class="pbi-tbl">
           <thead>
             <tr>
               <th>Institution Name</th>
               <th>State</th>
               <th>RM</th>
-              <th>Bank Assets YE24 ($k)</th>
-              <th>Current Accts</th>
-              <th>Current AUA</th>
-              <th>Growth Since</th>
-              <th>Run Rate</th>
-              <th>2025E</th>
+              <th class="r">Bank Assets 2024E</th>
+              <th class="r">Current Accts</th>
+              <th class="r">Current AUA</th>
+              <th class="r">Growth Since</th>
+              <th class="r">Accts</th>
+              <th class="r">Run Rate</th>
+              <th class="r">2025E</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td class="td-bold">Apex Community Bank</td><td>IL</td><td>AU</td><td>$158,729</td><td>88</td><td>$100,638,234</td><td class="td-pos">93%</td><td>$216,228</td><td>$219,895</td></tr>
-            <tr><td class="td-bold">Birch Valley Trust</td><td>GA</td><td>AU</td><td>—</td><td>1</td><td>$22,322,741</td><td class="td-pos">26%</td><td>$66,972</td><td>$65,370</td></tr>
-            <tr><td class="td-bold">Cedar Financial Group</td><td>PA</td><td>JG</td><td>$131,421</td><td>5</td><td>$22,311,800</td><td class="td-pos">15%</td><td>$62,472</td><td>$61,404</td></tr>
-            <tr><td class="td-bold">Dune State Bank</td><td>WY</td><td>JG</td><td>$73,015</td><td>18</td><td>$28,196,698</td><td class="td-pos">35%</td><td>$78,948</td><td>$76,623</td></tr>
-            <tr><td class="td-bold">Elm Park National</td><td>TX</td><td>JC</td><td>$352,519</td><td>2</td><td>$46,986,521</td><td class="td-neg">−12%</td><td>$100,248</td><td>$107,488</td></tr>
-            <tr><td class="td-bold">Fern Ridge Savings</td><td>IL</td><td>AU</td><td>$211,474</td><td>48</td><td>$31,972,954</td><td class="td-pos">128%</td><td>$89,520</td><td>$86,013</td></tr>
-            <tr class="avg"><td>Average</td><td></td><td></td><td>$185,432</td><td>27</td><td>$42,071,491</td><td class="td-neg">−8%</td><td>$102,398</td><td>$102,799</td></tr>
+            <tr><td>Apex Community Bank &amp; Trust</td><td>IL</td><td>AU</td><td class="r">$158,729</td><td class="r">88</td><td class="r">$100,638,234</td><td class="r td-grn">93%</td><td class="r">0</td><td class="r">$216,228</td><td class="r">$219,895</td></tr>
+            <tr><td>Birch Valley Trust</td><td>GA</td><td>AU</td><td class="r"></td><td class="r">1</td><td class="r">$22,322,741</td><td class="r td-grn">26%</td><td class="r">0</td><td class="r">$66,972</td><td class="r">$65,370</td></tr>
+            <tr><td>Cedar Financial Partners</td><td>PA</td><td>JG</td><td class="r">$131,421</td><td class="r">5</td><td class="r">$22,311,800</td><td class="r td-grn">15%</td><td class="r">0</td><td class="r">$62,472</td><td class="r">$61,404</td></tr>
+            <tr><td>Dune State Savings Bank</td><td>WY</td><td>JG</td><td class="r">$73,015</td><td class="r">18</td><td class="r">$28,196,698</td><td class="r td-grn">35%</td><td class="r">0</td><td class="r">$78,948</td><td class="r">$76,623</td></tr>
+            <tr><td>Elmwood Southwest Bank</td><td>TX</td><td>JC</td><td class="r">$352,519</td><td class="r">2</td><td class="r">$46,986,521</td><td class="r td-red">−445%</td><td class="r">0</td><td class="r">$100,248</td><td class="r">$107,488</td></tr>
+            <tr><td>Fern Ridge State Bank</td><td>IL</td><td>AU</td><td class="r">$211,474</td><td class="r">48</td><td class="r">$31,972,954</td><td class="r td-grn">128%</td><td class="r">2</td><td class="r">$89,520</td><td class="r">$86,013</td></tr>
+            <tr class="avg-row"><td>Average</td><td></td><td></td><td class="r">$236,859</td><td class="r">23</td><td class="r">$23,393,834</td><td class="r td-red">−12%</td><td class="r">0</td><td class="r">$67,014</td><td class="r">$66,619</td></tr>
+            <tr class="tot-row"><td>Totals / Weighted Averages</td><td>11</td><td></td><td class="r">$2,605,451</td><td class="r">303</td><td class="r">$304,119,838</td><td class="r td-red">−159%</td><td class="r">1</td><td class="r">$871,180</td><td class="r">$866,047</td></tr>
           </tbody>
         </table>
+        <div class="pbi-tbl-foot">Current Date Column = Current AUA &nbsp;|&nbsp; Growth Since = Growth Since Last Quarter</div>
       </div>
-    </div>
+
+    </div><!-- /pbi-wrap -->
     <p style="font-size:.68rem;color:rgba(255,255,255,0.25);text-align:center;margin-top:.5rem;letter-spacing:.04em;">All figures shown above are illustrative dummy data for portfolio demonstration purposes</p>
   </div>
 </div>
