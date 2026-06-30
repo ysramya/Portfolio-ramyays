@@ -301,11 +301,111 @@ p strong { color:#fff; }
     </div>
   </div>
 
-  <!-- Final dashboard image -->
-  <div class="hero-img fi">
-    <img src="img/mainstreet-dashboard.png" alt="PM Dashboard — Mainstreet Advisors final Power BI build">
+  <!-- Hero: mini dashboard thumbnail -->
+  <div class="fi" style="margin-top:2rem;border-radius:10px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,0.55);border:1px solid #ccc;font-family:'Segoe UI','Inter',sans-serif;background:#f3f3f3;">
+    <!-- Header -->
+    <div style="background:#595959;padding:.45rem .9rem;display:flex;align-items:center;gap:.6rem;">
+      <div style="width:22px;height:22px;border-radius:2px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="14" height="14" viewBox="0 0 32 32"><path d="M16 6C10 6 7 10 7 16C7 22 11 26 16 26C18 26 19 25 20 24L20 18C19 19 17.5 20 16 20C13 20 11 18 11 16C11 13 13 12 16 12C17.5 12 19 13 20 14L20 8C19 7 17.5 6 16 6Z" fill="#9DC65A"/><path d="M20 8L20 24C22 22 25 19 25 16C25 12 23 9 20 8Z" fill="rgba(255,255,255,.6)"/></svg>
+      </div>
+      <div style="font-size:.42rem;text-transform:uppercase;color:rgba(255,255,255,.7);letter-spacing:.05em;line-height:1.3;">MAINSTREET<br>ADVISORS</div>
+      <div style="width:1px;height:20px;background:rgba(255,255,255,.25);flex-shrink:0;"></div>
+      <div>
+        <div style="font-size:.78rem;font-weight:400;color:#fff;">PM Dashboard Overview</div>
+        <div style="font-size:.5rem;color:rgba(255,255,255,.6);margin-top:.05rem;">Portfolio Manager – Jordan R. Whitfield</div>
+      </div>
+    </div>
+    <!-- KPIs -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-bottom:1px solid #e8e8e8;">
+      <div style="padding:.55rem .9rem;text-align:center;border-right:1px solid #ebebeb;"><div style="font-size:.48rem;color:#666;margin-bottom:.15rem;">Total AUA</div><div style="font-size:1.1rem;font-weight:300;color:#1a1a1a;letter-spacing:-.01em;">$1,147,832K</div><div style="font-size:.42rem;color:#999;margin-top:.1rem;">Total Assets</div></div>
+      <div style="padding:.55rem .9rem;text-align:center;border-right:1px solid #ebebeb;"><div style="font-size:.48rem;color:#666;margin-bottom:.15rem;">ARR</div><div style="font-size:1.1rem;font-weight:300;color:#1a1a1a;">$748K</div><div style="font-size:.42rem;color:#999;margin-top:.1rem;">Sum of Run rate</div></div>
+      <div style="padding:.55rem .9rem;text-align:center;border-right:1px solid #ebebeb;"><div style="font-size:.48rem;color:#666;margin-bottom:.15rem;"># of Clients</div><div style="font-size:1.1rem;font-weight:300;color:#1a1a1a;">11</div><div style="font-size:.42rem;color:#999;margin-top:.1rem;">Current Clients</div></div>
+      <div style="padding:.55rem .9rem;text-align:center;"><div style="font-size:.48rem;color:#666;margin-bottom:.15rem;">Current Accounts</div><div style="font-size:1.1rem;font-weight:300;color:#1a1a1a;">347</div><div style="font-size:.42rem;color:#999;margin-top:.1rem;">Active Accounts</div></div>
+    </div>
+    <!-- Charts row preview -->
+    <div style="display:grid;grid-template-columns:180px 1fr 195px;background:#fff;border-bottom:1px solid #e8e8e8;">
+      <!-- Pie -->
+      <div style="padding:.55rem .8rem;border-right:1px solid #ebebeb;">
+        <div style="font-size:.52rem;font-weight:600;color:#1a1a1a;margin-bottom:.4rem;">Share of Wallet</div>
+        <div style="display:flex;align-items:center;gap:.6rem;">
+          <div style="width:68px;height:68px;border-radius:50%;background:conic-gradient(#9DC65A 0% 58.7%,#1D3D52 58.7% 100%);flex-shrink:0;"></div>
+          <div style="display:flex;flex-direction:column;gap:.22rem;">
+            <div style="display:flex;align-items:center;gap:.3rem;font-size:.46rem;color:#444;"><div style="width:8px;height:8px;border-radius:50%;background:#9DC65A;flex-shrink:0;"></div>Jordan's MSA (58.7%)</div>
+            <div style="display:flex;align-items:center;gap:.3rem;font-size:.46rem;color:#444;"><div style="width:8px;height:8px;border-radius:50%;background:#1D3D52;flex-shrink:0;"></div>Total Market (41.3%)</div>
+          </div>
+        </div>
+      </div>
+      <!-- Area chart -->
+      <div style="padding:.55rem .8rem;border-right:1px solid #ebebeb;">
+        <div style="font-size:.52rem;font-weight:600;color:#1a1a1a;margin-bottom:.4rem;">Relationship Trend over the years</div>
+        <svg viewBox="0 0 320 80" width="100%" xmlns="http://www.w3.org/2000/svg">
+          <line x1="20" y1="8" x2="312" y2="8" stroke="#e8e8e8" stroke-width="1"/>
+          <line x1="20" y1="28" x2="312" y2="28" stroke="#e8e8e8" stroke-width="1"/>
+          <line x1="20" y1="48" x2="312" y2="48" stroke="#e8e8e8" stroke-width="1"/>
+          <line x1="20" y1="64" x2="312" y2="64" stroke="#e8e8e8" stroke-width="1"/>
+          <text x="18" y="10" text-anchor="end" font-size="5" fill="#aaa">1M</text>
+          <text x="18" y="30" text-anchor="end" font-size="5" fill="#aaa">752K</text>
+          <text x="18" y="50" text-anchor="end" font-size="5" fill="#aaa">0M</text>
+          <path d="M20,60 C45,54 68,18 105,10 C138,6 160,7 193,8 C220,10 243,20 270,28 C292,34 306,38 312,40 L312,64 L20,64 Z" fill="#9aadbb" fill-opacity="0.55"/>
+          <path d="M20,60 C45,54 68,18 105,10 C138,6 160,7 193,8 C220,10 243,20 270,28 C292,34 306,38 312,40" fill="none" stroke="#6e8fa2" stroke-width="1.2"/>
+          <text x="105" y="7" text-anchor="middle" font-size="5" fill="#555">876K</text>
+          <text x="193" y="5" text-anchor="middle" font-size="5" fill="#555">879K</text>
+          <text x="270" y="24" text-anchor="middle" font-size="5" fill="#555">718K</text>
+          <text x="312" y="36" text-anchor="middle" font-size="5" fill="#555">616K</text>
+          <line x1="193" y1="5" x2="193" y2="64" stroke="#555" stroke-width="1" stroke-dasharray="2,2"/>
+          <text x="20" y="72" text-anchor="middle" font-size="5" fill="#aaa">2020</text>
+          <text x="105" y="72" text-anchor="middle" font-size="5" fill="#aaa">2021</text>
+          <text x="193" y="72" text-anchor="middle" font-size="5" fill="#aaa">2022</text>
+          <text x="270" y="72" text-anchor="middle" font-size="5" fill="#aaa">2023</text>
+          <text x="312" y="72" text-anchor="middle" font-size="5" fill="#aaa">2024</text>
+        </svg>
+      </div>
+      <!-- Revenue bar chart -->
+      <div style="padding:.55rem .8rem;">
+        <div style="font-size:.52rem;font-weight:600;color:#1a1a1a;margin-bottom:.4rem;">Revenue by Client Tier</div>
+        <svg viewBox="0 0 170 85" width="100%" xmlns="http://www.w3.org/2000/svg">
+          <text x="22" y="10" text-anchor="end" font-size="5" fill="#aaa">200K</text>
+          <line x1="24" y1="8" x2="165" y2="8" stroke="#e8e8e8" stroke-width="1"/>
+          <text x="22" y="28" text-anchor="end" font-size="5" fill="#aaa">150K</text>
+          <line x1="24" y1="26" x2="165" y2="26" stroke="#e8e8e8" stroke-width="1"/>
+          <text x="22" y="46" text-anchor="end" font-size="5" fill="#aaa">100K</text>
+          <line x1="24" y1="44" x2="165" y2="44" stroke="#e8e8e8" stroke-width="1"/>
+          <text x="22" y="64" text-anchor="end" font-size="5" fill="#aaa">50K</text>
+          <line x1="24" y1="62" x2="165" y2="62" stroke="#e8e8e8" stroke-width="1"/>
+          <line x1="24" y1="74" x2="165" y2="74" stroke="#e8e8e8" stroke-width="1"/>
+          <!-- B bar: 196K → 98% of 66px = 64.7 → y=74-64.7=9.3 -->
+          <rect x="30" y="9" width="24" height="65" fill="#B8D978"/>
+          <text x="42" y="6" text-anchor="middle" font-size="5" fill="#444">196K</text>
+          <text x="42" y="82" text-anchor="middle" font-size="5" fill="#666">B</text>
+          <!-- A bar: 182K → 91% → 60 → y=14 -->
+          <rect x="66" y="14" width="24" height="60" fill="#4E8A3A"/>
+          <text x="78" y="11" text-anchor="middle" font-size="5" fill="#444">182K</text>
+          <text x="78" y="82" text-anchor="middle" font-size="5" fill="#666">A</text>
+          <!-- C bar: 154K → 77% → 51 → y=23 -->
+          <rect x="102" y="23" width="24" height="51" fill="#C4A97A"/>
+          <text x="114" y="20" text-anchor="middle" font-size="5" fill="#444">154K</text>
+          <text x="114" y="82" text-anchor="middle" font-size="5" fill="#666">C</text>
+          <!-- D bar: 58K → 29% → 19 → y=55 -->
+          <rect x="138" y="55" width="24" height="19" fill="#9E8A60"/>
+          <text x="150" y="52" text-anchor="middle" font-size="5" fill="#444">58K</text>
+          <text x="150" y="82" text-anchor="middle" font-size="5" fill="#666">D</text>
+        </svg>
+      </div>
+    </div>
+    <!-- Table preview (2 rows) -->
+    <div style="background:#fff;">
+      <table style="width:100%;border-collapse:collapse;font-size:.52rem;">
+        <thead><tr style="background:#3B5268;color:#fff;"><th style="padding:.35rem .6rem;text-align:left;font-weight:500;">Institution Name</th><th style="padding:.35rem .4rem;">State</th><th style="padding:.35rem .4rem;">RM</th><th style="padding:.35rem .6rem;text-align:right;">Bank Assets 2024E</th><th style="padding:.35rem .6rem;text-align:right;">Current Accts</th><th style="padding:.35rem .6rem;text-align:right;">Current AUA</th><th style="padding:.35rem .6rem;text-align:right;">Growth Since</th><th style="padding:.35rem .6rem;text-align:right;">Run Rate</th><th style="padding:.35rem .6rem;text-align:right;">2025E</th></tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:.3rem .6rem;color:#222;">Apex Community Bank &amp; Trust</td><td style="padding:.3rem .4rem;text-align:center;color:#444;">IL</td><td style="padding:.3rem .4rem;text-align:center;color:#444;">AU</td><td style="padding:.3rem .6rem;text-align:right;color:#444;">$158,729</td><td style="padding:.3rem .6rem;text-align:right;color:#444;">88</td><td style="padding:.3rem .6rem;text-align:right;color:#444;">$100,638,234</td><td style="padding:.3rem .6rem;text-align:right;color:#2e7d32;">93%</td><td style="padding:.3rem .6rem;text-align:right;color:#444;">$216,228</td><td style="padding:.3rem .6rem;text-align:right;color:#444;">$219,895</td></tr>
+          <tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:.3rem .6rem;color:#222;">Birch Valley Trust</td><td style="padding:.3rem .4rem;text-align:center;color:#444;">GA</td><td style="padding:.3rem .4rem;text-align:center;color:#444;">AU</td><td style="padding:.3rem .6rem;text-align:right;color:#444;"></td><td style="padding:.3rem .6rem;text-align:right;color:#444;">1</td><td style="padding:.3rem .6rem;text-align:right;color:#444;">$22,322,741</td><td style="padding:.3rem .6rem;text-align:right;color:#2e7d32;">26%</td><td style="padding:.3rem .6rem;text-align:right;color:#444;">$66,972</td><td style="padding:.3rem .6rem;text-align:right;color:#444;">$65,370</td></tr>
+          <tr style="border-bottom:1px solid #f0f0f0;color:#555;"><td style="padding:.3rem .6rem;" colspan="3">Average</td><td style="padding:.3rem .6rem;text-align:right;">$236,859</td><td style="padding:.3rem .6rem;text-align:right;">23</td><td style="padding:.3rem .6rem;text-align:right;">$23,393,834</td><td style="padding:.3rem .6rem;text-align:right;color:#c62828;">−12%</td><td style="padding:.3rem .6rem;text-align:right;">$67,014</td><td style="padding:.3rem .6rem;text-align:right;">$66,619</td></tr>
+        </tbody>
+      </table>
+      <div style="padding:.3rem .6rem;font-size:.46rem;color:#888;border-top:1px solid #e0e0e0;background:#fafafa;">Current Date Column = Current AUA &nbsp;|&nbsp; Growth Since = Growth Since Last Quarter</div>
+    </div>
   </div>
-  <p style="font-size:.7rem;color:rgba(255,255,255,0.3);text-align:center;margin-top:.5rem;letter-spacing:.06em;">Final dashboard delivered in Power BI · Portfolio Manager: Bruce Simpson (dummy data shown)</p>
+  <p style="font-size:.7rem;color:rgba(255,255,255,0.3);text-align:center;margin-top:.5rem;letter-spacing:.06em;">Final dashboard delivered in Power BI · all figures are illustrative dummy data</p>
 </div>
 
 <!-- ── PROBLEM ── -->
@@ -508,39 +608,39 @@ p strong { color:#fff; }
             <span class="pbi-chart-title">Revenue by Client Tier</span>
           </div>
           <div class="pbi-rev-wrap">
-            <div class="pbi-rev-chart">
-              <div class="pbi-rev-ylabel">Revenue</div>
-              <!-- Y gridlines via SVG overlay -->
-              <div style="position:absolute;left:24px;right:8px;top:0;bottom:20px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none;">
-                <div style="border-top:1px solid #e8e8e8;position:relative;"><span style="position:absolute;left:-22px;top:-5px;font-size:.42rem;color:#999;">200K</span></div>
-                <div style="border-top:1px solid #e8e8e8;position:relative;"><span style="position:absolute;left:-22px;top:-5px;font-size:.42rem;color:#999;">150K</span></div>
-                <div style="border-top:1px solid #e8e8e8;position:relative;"><span style="position:absolute;left:-22px;top:-5px;font-size:.42rem;color:#999;">100K</span></div>
-                <div style="border-top:1px solid #e8e8e8;position:relative;"><span style="position:absolute;left:-22px;top:-5px;font-size:.42rem;color:#999;">50K</span></div>
-                <div style="border-top:1px solid #e8e8e8;position:relative;"><span style="position:absolute;left:-22px;top:-5px;font-size:.42rem;color:#999;">0K</span></div>
-              </div>
-              <div class="pbi-rev-bars-inner">
-                <div class="pbi-rev-bar-g">
-                  <div class="pbi-rev-bar-top">196K</div>
-                  <div class="pbi-rev-bar" style="height:94%;background:#B8D978;"></div>
-                  <div class="pbi-rev-bar-lbl">B</div>
-                </div>
-                <div class="pbi-rev-bar-g">
-                  <div class="pbi-rev-bar-top">182K</div>
-                  <div class="pbi-rev-bar" style="height:86%;background:#4E8A3A;"></div>
-                  <div class="pbi-rev-bar-lbl">A</div>
-                </div>
-                <div class="pbi-rev-bar-g">
-                  <div class="pbi-rev-bar-top">154K</div>
-                  <div class="pbi-rev-bar" style="height:74%;background:#C4A97A;"></div>
-                  <div class="pbi-rev-bar-lbl">C</div>
-                </div>
-                <div class="pbi-rev-bar-g">
-                  <div class="pbi-rev-bar-top">58K</div>
-                  <div class="pbi-rev-bar" style="height:28%;background:#9E8A60;"></div>
-                  <div class="pbi-rev-bar-lbl">D</div>
-                </div>
-              </div>
-            </div>
+            <svg viewBox="0 0 200 155" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+              <!-- Y-axis label -->
+              <text x="7" y="82" text-anchor="middle" font-size="6" fill="#666" transform="rotate(-90,7,82)">Revenue</text>
+              <!-- Gridlines + Y labels: max 200K, spacing 50K, plot area y=10..130, x=28..192 -->
+              <line x1="28" y1="10"  x2="192" y2="10"  stroke="#e8e8e8" stroke-width="0.8"/>
+              <text x="26" y="13"  text-anchor="end" font-size="5.5" fill="#aaa">200K</text>
+              <line x1="28" y1="40"  x2="192" y2="40"  stroke="#e8e8e8" stroke-width="0.8"/>
+              <text x="26" y="43"  text-anchor="end" font-size="5.5" fill="#aaa">150K</text>
+              <line x1="28" y1="70"  x2="192" y2="70"  stroke="#e8e8e8" stroke-width="0.8"/>
+              <text x="26" y="73"  text-anchor="end" font-size="5.5" fill="#aaa">100K</text>
+              <line x1="28" y1="100" x2="192" y2="100" stroke="#e8e8e8" stroke-width="0.8"/>
+              <text x="26" y="103" text-anchor="end" font-size="5.5" fill="#aaa">50K</text>
+              <line x1="28" y1="130" x2="192" y2="130" stroke="#e8e8e8" stroke-width="0.8"/>
+              <text x="26" y="133" text-anchor="end" font-size="5.5" fill="#aaa">0K</text>
+              <!-- B: 196K → 98% of 120px = 117.6 → y=130-117.6=12.4 -->
+              <rect x="36"  y="12" width="28" height="118" fill="#B8D978"/>
+              <text x="50"  y="9"  text-anchor="middle" font-size="5.5" fill="#444" font-weight="500">196K</text>
+              <text x="50"  y="142" text-anchor="middle" font-size="6" fill="#555">B</text>
+              <!-- A: 182K → 91% → 109.2 → y=20.8 -->
+              <rect x="80"  y="21" width="28" height="109" fill="#4E8A3A"/>
+              <text x="94"  y="18" text-anchor="middle" font-size="5.5" fill="#444" font-weight="500">182K</text>
+              <text x="94"  y="142" text-anchor="middle" font-size="6" fill="#555">A</text>
+              <!-- C: 154K → 77% → 92.4 → y=37.6 -->
+              <rect x="124" y="38" width="28" height="92" fill="#C4A97A"/>
+              <text x="138" y="35" text-anchor="middle" font-size="5.5" fill="#444" font-weight="500">154K</text>
+              <text x="138" y="142" text-anchor="middle" font-size="6" fill="#555">C</text>
+              <!-- D: 58K → 29% → 34.8 → y=95.2 -->
+              <rect x="168" y="95" width="28" height="35" fill="#9E8A60"/>
+              <text x="182" y="92" text-anchor="middle" font-size="5.5" fill="#444" font-weight="500">58K</text>
+              <text x="182" y="142" text-anchor="middle" font-size="6" fill="#555">D</text>
+              <!-- X axis -->
+              <line x1="28" y1="130" x2="192" y2="130" stroke="#ccc" stroke-width="1"/>
+            </svg>
             <div class="pbi-area-date" style="font-size:.5rem;color:#666;text-align:right;padding:.1rem .2rem;">Thursday, August 28, 2025</div>
           </div>
         </div>
