@@ -446,7 +446,38 @@ p strong { color:#fff; }
   <p class="pq-text">How might we give each Portfolio Manager a <em>single, live screen</em> that replaces their Monday morning spreadsheet ritual?</p>
 </div>
 
+<!-- ── RESEARCH ── -->
+<div class="wrap section">
+  <div class="eyebrow fi">Research · PM Interviews</div>
+  <h2 class="display fi">4 of 6 PMs said the<br><em>same thing.</em></h2>
+  <p class="fi" style="max-width:640px;margin-top:1rem;">Before building anything, I interviewed all 6 Portfolio Managers to understand their actual workflow. Their existing process: manually pulling daily updates from multiple Excel sheets — described as tedious, with figures easy to miss because everything lived in a single undifferentiated spreadsheet.</p>
+
+  <div class="callout fi" style="margin-top:2rem;">
+    <p class="callout-q">"The numbers are all there, but they're jumbled together. I wish I could see my progress in a structured, organized way — not just a wall of cells."</p>
+    <div class="callout-foot"><strong>Portfolio Manager</strong> — one of 4 who expressed this directly (paraphrased)</div>
+  </div>
+
+  <div class="insight-strip fi" style="margin-top:2rem;">
+    <div class="insight-cell">
+      <span class="insight-icon">🗣</span>
+      <div class="insight-lbl">Key finding</div>
+      <div class="insight-text">4 of 6 PMs independently said they wished they could see their progress in a structured, organized way. This was the finding that justified building the dashboard.</div>
+    </div>
+    <div class="insight-cell">
+      <span class="insight-icon">📋</span>
+      <div class="insight-lbl">Workflow pain</div>
+      <div class="insight-text">Every PM's daily update ritual started with Excel — pulling data manually, cross-referencing sheets, and doing calculations by hand before they could make a single portfolio decision.</div>
+    </div>
+    <div class="insight-cell">
+      <span class="insight-icon">🔍</span>
+      <div class="insight-lbl">The gap</div>
+      <div class="insight-text">Numbers weren't missing — they were buried. The problem was structure and visibility, not data availability. That distinction shaped every design decision.</div>
+    </div>
+  </div>
+</div>
+
 <!-- ── PROCESS ── -->
+<div class="bg-alt">
 <div class="wrap section">
   <div class="eyebrow fi">Process</div>
   <h2 class="display fi">From raw Excel<br><em>to live Power BI</em></h2>
@@ -475,11 +506,42 @@ p strong { color:#fff; }
     </div>
   </div>
 </div>
+</div><!-- /bg-alt process -->
+
+<!-- ── DESIGN RATIONALE ── -->
+<div class="wrap section">
+  <div class="eyebrow fi">Design Rationale</div>
+  <h2 class="display fi">Every decision<br><em>came from the PMs.</em></h2>
+  <p class="fi" style="max-width:640px;margin-top:1rem;">Tool choice, layout order, color-coding — each was grounded in what the interviews revealed about how PMs actually think through their portfolios.</p>
+
+  <div class="process-grid" style="margin-top:2.5rem;">
+    <div class="process-card fi">
+      <div class="proc-num">🛠</div>
+      <div class="proc-title">Why Power BI</div>
+      <div class="proc-body">Power BI was chosen because it integrates directly with Excel inside Mainstreet's existing Microsoft environment. The PMs already lived in Excel — the tool decision was grounded in their actual workflow, not a default preference.</div>
+    </div>
+    <div class="process-card fi">
+      <div class="proc-num">🎨</div>
+      <div class="proc-title">Why the existing design system</div>
+      <div class="proc-body">The dashboard followed Mainstreet's brand colors, typeface, and sizing conventions. Familiarity lowered adoption friction — PMs didn't need to learn a new visual language to trust the numbers.</div>
+    </div>
+    <div class="process-card fi">
+      <div class="proc-num">📐</div>
+      <div class="proc-title">Why narrative order</div>
+      <div class="proc-body">Charts were color-coded and sequenced to match how a PM actually reviews their book: headline AUA first, then trend context, then wallet positioning, then revenue breakdown, then client-level detail. Not all metrics uniformly.</div>
+    </div>
+    <div class="process-card fi">
+      <div class="proc-num">👤</div>
+      <div class="proc-title">Why 6 filtered views</div>
+      <div class="proc-body">Each PM sees only their own book. One shared dashboard with cross-PM data would have created noise and comparison anxiety. Individual filtered views came directly from the interview finding: PMs wanted to track their own progress, not rank against peers.</div>
+    </div>
+  </div>
+</div>
 
 <!-- ── DASHBOARD MOCKUP ── -->
 <div class="bg-alt">
   <div class="wrap section">
-    <div class="eyebrow fi">Dashboard Anatomy</div>
+    <div class="eyebrow fi">The Solution</div>
     <h2 class="display fi">Every section<br><em>earns its place</em></h2>
     <p class="fi" style="max-width:640px;margin-top:1rem;">The layout follows a top-to-bottom information hierarchy: headline numbers → trend context → wallet positioning → revenue breakdown → client-level detail.</p>
 
