@@ -260,28 +260,28 @@ img { max-width: 100%; display: block; }
   padding: 5rem 4rem 5rem 0; gap: 1.8rem; position: relative; z-index: 2;
 }
 .hero-name { color: var(--cream); }
-.hero-name em { font-style: normal; color: var(--coral); }
+.hero-name em { font-style: normal; color: var(--olive); }
 .hero-role { font-size: 1.05rem; font-weight: 400; color: rgba(253,241,213,.65); }
 .hero-value { font-size: 1.05rem; font-weight: 300; line-height: 1.75; color: rgba(253,241,213,.7); max-width: 460px; }
 .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: .4rem; }
 
-/* Right: botanical SVG illustration */
-.hero-botanical {
+/* Right: feather */
+.hero-feather-wrap {
   position: relative; display: flex; align-items: center; justify-content: center;
   overflow: hidden;
-  border-left: 1px solid rgba(136,133,48,.18);
+  border-left: 1px solid rgba(253,241,213,.08);
 }
-.botanical-svg {
-  width: 70%; max-width: 280px;
+#hero-feather {
+  width: 75%; max-width: 460px;
   position: relative; z-index: 1;
-  transform-origin: center bottom;
-  filter: drop-shadow(0 0 40px rgba(136,133,48,.18));
+  transform-origin: center center;
+  filter: drop-shadow(0 0 40px rgba(229,172,64,.22));
 }
 
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; min-height: auto; padding-left: 1.6rem; padding-right: 1.6rem; }
-  .hero-botanical { height: 44vw; max-height: 280px; border-left: none; border-top: 1px solid rgba(136,133,48,.15); order: -1; }
-  .botanical-svg { max-width: 160px; }
+  .hero-feather-wrap { height: 52vw; max-height: 320px; border-left: none; border-top: 1px solid rgba(253,241,213,.08); order: -1; }
+  #hero-feather { max-width: 240px; }
   .hero-copy { padding: 3.5rem 0 4rem; }
 }
 
@@ -511,28 +511,8 @@ img { max-width: 100%; display: block; }
         <a href="mailto:ys.ramya@gmail.com" class="btn-pill btn-outline band-dark">Say Hello ↗</a>
       </div>
     </div>
-    <div class="hero-botanical" aria-hidden="true">
-      <svg class="botanical-svg" viewBox="0 0 320 480" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Stem -->
-        <path d="M160 460 C155 380 148 300 160 200 C172 100 168 60 160 20" stroke="#888530" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-        <!-- Main leaves -->
-        <path d="M160 300 C120 260 80 240 60 200 C100 210 140 240 160 300Z" fill="#888530" opacity="0.45"/>
-        <path d="M160 300 C200 260 240 240 260 200 C220 210 180 240 160 300Z" fill="#888530" opacity="0.35"/>
-        <path d="M160 220 C115 175 75 155 52 110 C95 125 140 160 160 220Z" fill="#888530" opacity="0.5"/>
-        <path d="M160 220 C205 175 245 155 268 110 C225 125 180 160 160 220Z" fill="#888530" opacity="0.38"/>
-        <path d="M160 150 C128 115 100 95 84 60 C115 78 148 105 160 150Z" fill="#888530" opacity="0.55"/>
-        <path d="M160 150 C192 115 220 95 236 60 C205 78 172 105 160 150Z" fill="#888530" opacity="0.42"/>
-        <path d="M160 90 C142 65 130 48 126 28 C142 40 156 60 160 90Z" fill="#888530" opacity="0.6"/>
-        <path d="M160 90 C178 65 190 48 194 28 C178 40 164 60 160 90Z" fill="#888530" opacity="0.45"/>
-        <!-- Small accent leaves -->
-        <path d="M160 360 C140 340 118 330 104 310 C126 318 148 335 160 360Z" fill="#888530" opacity="0.3"/>
-        <path d="M160 360 C180 340 202 330 216 310 C194 318 172 335 160 360Z" fill="#888530" opacity="0.22"/>
-        <!-- Subtle dot accents -->
-        <circle cx="68" cy="196" r="3" fill="#E5AC40" opacity="0.5"/>
-        <circle cx="252" cy="196" r="3" fill="#E5AC40" opacity="0.4"/>
-        <circle cx="88" cy="106" r="2.5" fill="#E5AC40" opacity="0.45"/>
-        <circle cx="232" cy="106" r="2.5" fill="#E5AC40" opacity="0.35"/>
-      </svg>
+    <div class="hero-feather-wrap">
+      <img id="hero-feather" src="img/artwork/feather-clean.png" alt="" aria-hidden="true" draggable="false">
     </div>
   </div>
 </section>
@@ -765,12 +745,12 @@ gsap.registerPlugin(ScrollTrigger);
     .to('.hero-reveal', { opacity: 1, y: 0, duration: 0.8, stagger: 0.09, ease: 'power3.out' }, '-=0.7');
 })();
 
-/* ── Botanical: gentle float as hero scrolls out ── */
-const botanical = document.querySelector('.botanical-svg');
-if (botanical) {
-  gsap.to(botanical, {
-    yPercent: -12, scale: 1.04, ease: 'none',
-    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.4 }
+/* ── Feather: parallax as hero scrolls out ── */
+const feather = document.getElementById('hero-feather');
+if (feather) {
+  gsap.to(feather, {
+    yPercent: -18, rotation: 6, scale: 1.05, ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.2 }
   });
 }
 
@@ -863,13 +843,38 @@ dotSections.forEach((id, i) => {
 /* Activate first dot on load */
 if (dots[0]) dots[0].classList.add('active');
 
-/* ── Nav band: darken/lighten nav bg as light sections scroll under it ── */
-ScrollTrigger.create({
-  trigger: '#work', start: 'top top', end: 'bottom top',
-  onEnter: ()     => document.querySelector('.nav').style.background = 'var(--cream)',
-  onLeave: ()     => document.querySelector('.nav').style.background = 'var(--navy)',
-  onEnterBack: () => document.querySelector('.nav').style.background = 'var(--cream)',
-  onLeaveBack: () => document.querySelector('.nav').style.background = 'var(--navy)',
+/* ── Nav: switch theme when light sections scroll under it ── */
+const nav = document.querySelector('.nav');
+function navLight() {
+  nav.style.background = 'var(--cream)';
+  nav.style.borderBottomColor = 'rgba(90,60,60,0.12)';
+  nav.querySelectorAll('.nav-links a').forEach(a => {
+    a.style.color = 'rgba(90,60,60,0.65)';
+  });
+  nav.querySelectorAll('.nav-links a:hover').forEach(a => a.style.color = '#888530');
+  const logoText = nav.querySelector('.nav-logo-text');
+  if (logoText) logoText.style.color = 'var(--navy)';
+  const cta = nav.querySelector('.nav-cta');
+  if (cta) { cta.style.borderColor = 'rgba(90,60,60,0.3)'; cta.style.color = 'rgba(90,60,60,0.65)'; }
+}
+function navDark() {
+  nav.style.background = 'var(--navy)';
+  nav.style.borderBottomColor = 'rgba(253,241,213,0.1)';
+  nav.querySelectorAll('.nav-links a').forEach(a => {
+    a.style.color = 'rgba(253,241,213,0.6)';
+  });
+  const logoText = nav.querySelector('.nav-logo-text');
+  if (logoText) logoText.style.color = 'var(--cream)';
+  const cta = nav.querySelector('.nav-cta');
+  if (cta) { cta.style.borderColor = 'rgba(253,241,213,0.25)'; cta.style.color = 'rgba(253,241,213,0.6)'; }
+}
+/* Observe all light-band sections */
+document.querySelectorAll('.band-light').forEach(section => {
+  ScrollTrigger.create({
+    trigger: section, start: 'top top', end: 'bottom top',
+    onEnter: navLight, onLeave: navDark,
+    onEnterBack: navLight, onLeaveBack: navDark,
+  });
 });
 
 /* Refresh after all images loaded */

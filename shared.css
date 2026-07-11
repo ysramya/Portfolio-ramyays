@@ -158,12 +158,12 @@ body {
   padding: .85rem 2rem; border-radius: 100px; cursor: pointer; white-space: nowrap;
   transition: transform .2s, filter .2s; font-family: inherit;
 }
-.btn-fill { background: var(--coral); color: #fff; border: 1px solid var(--coral); }
-.btn-fill:hover { filter: brightness(1.1); transform: translateY(-2px); }
+.btn-fill { background: var(--olive); color: #fff; border: 1px solid var(--olive); }
+.btn-fill:hover { filter: brightness(1.12); transform: translateY(-2px); }
 .btn-outline { background: transparent; border: 1px solid rgba(253,241,213,.35); color: var(--cream); }
-.btn-outline:hover { border-color: var(--coral); color: var(--coral); transform: translateY(-2px); }
+.btn-outline:hover { border-color: var(--olive); color: var(--olive); transform: translateY(-2px); }
 .band-light .btn-outline { border-color: rgba(90,60,60,.3); color: var(--navy); }
-.band-light .btn-outline:hover { border-color: var(--coral); color: var(--coral); }
+.band-light .btn-outline:hover { border-color: var(--olive); color: var(--olive); }
 
 /* ── Scroll reveal ── */
 .reveal { animation: reveal-fallback .01s 1.5s forwards; }
@@ -324,14 +324,14 @@ body                 { background: var(--navy) !important; color: var(--cream) !
 /* Stat numbers */
 .stat-n,
 .stat-number,
-.stat-num            { color: var(--coral) !important; }
+.stat-num            { color: var(--olive) !important; }
 
-/* Buttons — primary becomes coral */
+/* Buttons — primary becomes olive */
 .btn-primary,
-.btn.btn-primary     { background: var(--coral) !important; border-color: var(--coral) !important; color: #fff !important; }
+.btn.btn-primary     { background: var(--olive) !important; border-color: var(--olive) !important; color: #fff !important; }
 .btn-secondary,
 .btn.btn-secondary   { background: transparent !important; border-color: rgba(253,241,213,0.3) !important; color: var(--cream) !important; }
-.btn-primary:hover   { filter: brightness(1.1); }
+.btn-primary:hover   { filter: brightness(1.12); }
 
 /* Anton headings — base white, em/i/span accent in coral */
 h1.cs-title,
@@ -442,7 +442,7 @@ h2.display {
 .btn-primary:hover,
 .btn.btn-primary:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 24px rgba(229,172,64,0.35) !important;
+  box-shadow: 0 8px 24px rgba(136,133,48,0.4) !important;
 }
 .btn-outline, .btn-secondary, .btn.btn-secondary {
   transition: border-color .22s ease, color .22s ease, transform .22s ease,
