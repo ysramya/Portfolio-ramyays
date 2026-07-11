@@ -258,3 +258,105 @@ body {
   text-align: center;
 }
 .cs-footer p { font-size: .82rem; opacity: .45; margin-top: .5rem; }
+
+/* ══════════════════════════════════════════════════════════════════
+   PALETTE ENFORCEMENT — override old black/gold scheme on every page
+   These run last (shared.css loads after inline styles) so they win.
+══════════════════════════════════════════════════════════════════ */
+
+/* Body & bare section backgrounds */
+body                 { background: var(--navy) !important; color: var(--cream) !important; }
+.bg-alt              { background: rgba(15,24,36,0.55) !important; }
+.section-dark        { background: var(--navy) !important; }
+.section-alt         { background: rgba(15,24,36,0.45) !important; }
+
+/* Case study hero */
+.cs-hero             { background: var(--navy) !important; }
+
+/* Sections with hardcoded #000 / #111 backgrounds */
+.section             { background: transparent; }
+
+/* Gold → Coral: accent color on every element that used #E5B55C */
+.eyebrow,
+.cs-badge-text,
+.sec-label,
+.phase-num,
+.stat-label,
+.wcard-tag,
+.reflect-label,
+.rat-label           { color: var(--coral) !important; }
+
+/* Dot badge */
+.cs-badge            { background: rgba(201,117,82,0.1) !important; border-color: rgba(201,117,82,0.3) !important; }
+.cs-badge-dot        { background: var(--coral) !important; }
+
+/* Status / live dot keeps its green */
+.status-dot          { background: #4CAF50 !important; }
+
+/* Meta info cards */
+.cs-meta-item,
+.process-card,
+.phase-card,
+.reflect-card,
+.rat-card,
+.decision-card       { background: rgba(241,233,216,0.06) !important; border-color: rgba(241,233,216,0.1) !important; }
+.cs-meta-lbl         { color: rgba(241,233,216,0.4) !important; }
+.cs-meta-val         { color: rgba(241,233,216,0.75) !important; }
+
+/* Callout / insight boxes */
+.callout             { background: rgba(201,117,82,0.08) !important; border-left-color: var(--coral) !important; border-color: rgba(241,233,216,0.1) !important; }
+.callout-q           { color: rgba(241,233,216,0.88) !important; font-style: italic; }
+.callout cite,
+.callout .attr       { color: rgba(241,233,216,0.45) !important; }
+
+/* Insight row */
+.insight-cell        { background: rgba(15,24,36,0.4) !important; }
+
+/* Stat numbers */
+.stat-n,
+.stat-number,
+.stat-num            { color: var(--coral) !important; }
+
+/* Buttons — primary becomes coral */
+.btn-primary,
+.btn.btn-primary     { background: var(--coral) !important; border-color: var(--coral) !important; color: #fff !important; }
+.btn-secondary,
+.btn.btn-secondary   { background: transparent !important; border-color: rgba(241,233,216,0.3) !important; color: var(--cream) !important; }
+.btn-primary:hover   { filter: brightness(1.1); }
+
+/* Anton headings — base white, em/i/span accent in coral */
+h1.cs-title,
+h2.display           { color: var(--cream) !important; }
+h1.cs-title em,
+h1.cs-title i,
+h1.cs-title span.accent { color: var(--coral) !important; font-style: normal; }
+h2.display em,
+h2.display i         { color: var(--coral) !important; font-style: normal; }
+
+/* Section dividers */
+.sec-div,
+hr                   { border-color: rgba(241,233,216,0.12) !important; }
+
+/* Reflect / process section headings */
+.reflect-num,
+.proc-num            { color: rgba(201,117,82,0.2) !important; }
+
+/* Project nav prev/next pills */
+.proj-nav-prev,
+.proj-nav-next       { background: var(--navy) !important; color: var(--cream) !important; border-color: rgba(241,233,216,0.2) !important; }
+.proj-nav-prev:hover,
+.proj-nav-next:hover { border-color: var(--coral) !important; color: var(--coral) !important; }
+
+/* Fixed-bottom project nav (Raahi, Wellnut, etc.) */
+#proj-nav-fixed .proj-nav-prev,
+#proj-nav-fixed .proj-nav-next { background: var(--navy) !important; }
+
+/* Old gold resume link in old nav (replaced but just in case) */
+.resume-link         { color: var(--coral) !important; border-color: rgba(201,117,82,0.35) !important; }
+
+/* Decision card top stripe */
+.decision-card::before { background: var(--coral) !important; }
+
+/* Scroll-reveal */
+.fi { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.fi.visible { opacity: 1; transform: none; }
