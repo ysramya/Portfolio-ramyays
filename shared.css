@@ -56,7 +56,7 @@ body {
   font-size: 0.6rem; font-weight: 600; letter-spacing: 0.32em; text-transform: uppercase;
   color: rgba(128,128,128,0.55); pointer-events: auto; transition: color .2s;
 }
-.rail-wordmark:hover { color: var(--coral); }
+.rail-wordmark:hover { color: var(--olive); }
 .rail-nav { display: flex; flex-direction: column; gap: 2.4rem; align-items: center; pointer-events: auto; }
 .rail-nav a {
   writing-mode: vertical-lr; transform: rotate(180deg);
@@ -118,12 +118,21 @@ body {
 .band-dark  { background: var(--navy);  color: var(--cream); }
 .band-light { background: var(--cream); color: var(--navy);  }
 .band-deep  { background: var(--ink-dk); color: var(--cream); }
+.band-olive { background: #1e1f0a; color: var(--cream); }
 .band-dark  .muted { color: rgba(253,241,213,.55); }
 .band-light .muted { color: rgba(90,60,60,.55);    }
 .band-dark  .faint { color: rgba(253,241,213,.35); }
 .band-light .faint { color: rgba(90,60,60,.35);    }
 .band-dark  hr, .band-dark  .line { border-color: rgba(253,241,213,.12); }
 .band-light hr, .band-light .line { border-color: rgba(90,60,60,.12);    }
+.band-olive hr, .band-olive .line { border-color: rgba(136,133,48,.25); }
+
+/* ── Olive accent strip (section divider) ── */
+.stripe-olive {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--olive) 30%, var(--coral) 70%, transparent);
+  opacity: 0.55;
+}
 
 /* ── Section transitions ── */
 .tri { position: relative; height: 60px; overflow: hidden; line-height: 0; }
@@ -193,10 +202,10 @@ body {
 .cs-tag {
   font-size: .6rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
   padding: .4rem .85rem; border-radius: 100px;
-  background: rgba(253,241,213,.1); color: rgba(253,241,213,.75);
-  border: 1px solid rgba(253,241,213,.2);
+  background: rgba(136,133,48,.18); color: rgba(209,211,120,.9);
+  border: 1px solid rgba(136,133,48,.35);
 }
-.band-light .cs-tag { background: rgba(90,60,60,.07); color: rgba(90,60,60,.6); border-color: rgba(90,60,60,.15); }
+.band-light .cs-tag { background: rgba(136,133,48,.10); color: #5a5a10; border-color: rgba(136,133,48,.28); }
 .cs-why { font-size: 1rem; font-weight: 500; color: var(--coral); margin-bottom: .6rem; border-left: 2px solid var(--coral); padding-left: .9rem; }
 .cs-stat { display: inline-flex; align-items: baseline; gap: .5rem; }
 .cs-stat-num { font-size: clamp(2rem,4vw,3.2rem); font-weight: 700; letter-spacing: -.03em; color: var(--cream); }
@@ -224,8 +233,8 @@ body {
 
 /* ── Insight callout ── */
 .insight-box {
-  border-left: 3px solid var(--coral); padding: 1.2rem 1.6rem; margin: 2rem 0;
-  background: rgba(229,172,64,.08); border-radius: 0 8px 8px 0;
+  border-left: 3px solid var(--olive); padding: 1.2rem 1.6rem; margin: 2rem 0;
+  background: rgba(136,133,48,.10); border-radius: 0 8px 8px 0;
 }
 .insight-box p { font-size: 1rem; font-weight: 400; line-height: 1.65; }
 .insight-box cite { display: block; font-size: .78rem; font-style: normal; opacity: .55; margin-top: .5rem; }
@@ -233,7 +242,7 @@ body {
 /* ── Stat row ── */
 .stat-row { display: flex; flex-wrap: wrap; gap: 2rem 3rem; margin: 2rem 0; }
 .stat-item { display: flex; flex-direction: column; gap: .2rem; }
-.stat-n { font-size: clamp(2rem,3.5vw,2.8rem); font-weight: 700; letter-spacing: -.03em; color: var(--coral); }
+.stat-n { font-size: clamp(2rem,3.5vw,2.8rem); font-weight: 700; letter-spacing: -.03em; color: var(--olive); }
 .stat-desc { font-size: .78rem; font-weight: 300; opacity: .65; max-width: 18ch; line-height: 1.4; }
 
 /* ── Card grid ── */
@@ -355,7 +364,28 @@ hr                   { border-color: rgba(253,241,213,0.12) !important; }
 .resume-link         { color: var(--coral) !important; border-color: rgba(229,172,64,0.35) !important; }
 
 /* Decision card top stripe */
-.decision-card::before { background: var(--coral) !important; }
+.decision-card::before { background: var(--olive) !important; }
+
+/* Tags / badges — olive on dark */
+.cs-tag,
+.wcard-tag,
+.tag,
+.badge { background: rgba(136,133,48,.18) !important; color: rgba(209,211,120,.9) !important; border-color: rgba(136,133,48,.35) !important; }
+.band-light .cs-tag,
+.band-light .wcard-tag,
+.band-light .tag,
+.band-light .badge { background: rgba(136,133,48,.10) !important; color: #4a4a0e !important; border-color: rgba(136,133,48,.28) !important; }
+
+/* Insight box — olive left border */
+.insight-box { border-left-color: var(--olive) !important; background: rgba(136,133,48,.09) !important; }
+
+/* Stat numbers — olive */
+.stat-n,
+.cs-stat-num { color: var(--olive) !important; }
+
+/* Process / reflect section numbers — more olive presence */
+.reflect-num,
+.proc-num { color: rgba(136,133,48,.25) !important; }
 
 /* Scroll-reveal */
 .fi { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
@@ -396,7 +426,7 @@ h2.display {
   content: '';
   position: absolute; bottom: -2px; left: 0;
   width: 0; height: 1px;
-  background: var(--coral);
+  background: linear-gradient(90deg, var(--olive), var(--coral));
   transition: width .28s cubic-bezier(.4,0,.2,1);
 }
 .nav-links a:hover::after,

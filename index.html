@@ -265,23 +265,23 @@ img { max-width: 100%; display: block; }
 .hero-value { font-size: 1.05rem; font-weight: 300; line-height: 1.75; color: rgba(253,241,213,.7); max-width: 460px; }
 .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: .4rem; }
 
-/* Right: feather fills the panel */
-.hero-feather-wrap {
+/* Right: botanical SVG illustration */
+.hero-botanical {
   position: relative; display: flex; align-items: center; justify-content: center;
   overflow: hidden;
-  border-left: 1px solid rgba(253,241,213,.08);
+  border-left: 1px solid rgba(136,133,48,.18);
 }
-#hero-feather {
-  width: 90%; max-width: 520px;
-  mix-blend-mode: screen;
+.botanical-svg {
+  width: 70%; max-width: 280px;
   position: relative; z-index: 1;
-  transform-origin: center center;
+  transform-origin: center bottom;
+  filter: drop-shadow(0 0 40px rgba(136,133,48,.18));
 }
 
 @media (max-width: 900px) {
   .hero-inner { grid-template-columns: 1fr; min-height: auto; padding-left: 1.6rem; padding-right: 1.6rem; }
-  .hero-feather-wrap { height: 52vw; max-height: 360px; border-left: none; border-top: 1px solid rgba(253,241,213,.08); order: -1; }
-  #hero-feather { max-width: 260px; }
+  .hero-botanical { height: 44vw; max-height: 280px; border-left: none; border-top: 1px solid rgba(136,133,48,.15); order: -1; }
+  .botanical-svg { max-width: 160px; }
   .hero-copy { padding: 3.5rem 0 4rem; }
 }
 
@@ -511,8 +511,28 @@ img { max-width: 100%; display: block; }
         <a href="mailto:ys.ramya@gmail.com" class="btn-pill btn-outline band-dark">Say Hello ↗</a>
       </div>
     </div>
-    <div class="hero-feather-wrap">
-      <img id="hero-feather" src="img/artwork/feather-single.webp" alt="" aria-hidden="true" draggable="false">
+    <div class="hero-botanical" aria-hidden="true">
+      <svg class="botanical-svg" viewBox="0 0 320 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Stem -->
+        <path d="M160 460 C155 380 148 300 160 200 C172 100 168 60 160 20" stroke="#888530" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+        <!-- Main leaves -->
+        <path d="M160 300 C120 260 80 240 60 200 C100 210 140 240 160 300Z" fill="#888530" opacity="0.45"/>
+        <path d="M160 300 C200 260 240 240 260 200 C220 210 180 240 160 300Z" fill="#888530" opacity="0.35"/>
+        <path d="M160 220 C115 175 75 155 52 110 C95 125 140 160 160 220Z" fill="#888530" opacity="0.5"/>
+        <path d="M160 220 C205 175 245 155 268 110 C225 125 180 160 160 220Z" fill="#888530" opacity="0.38"/>
+        <path d="M160 150 C128 115 100 95 84 60 C115 78 148 105 160 150Z" fill="#888530" opacity="0.55"/>
+        <path d="M160 150 C192 115 220 95 236 60 C205 78 172 105 160 150Z" fill="#888530" opacity="0.42"/>
+        <path d="M160 90 C142 65 130 48 126 28 C142 40 156 60 160 90Z" fill="#888530" opacity="0.6"/>
+        <path d="M160 90 C178 65 190 48 194 28 C178 40 164 60 160 90Z" fill="#888530" opacity="0.45"/>
+        <!-- Small accent leaves -->
+        <path d="M160 360 C140 340 118 330 104 310 C126 318 148 335 160 360Z" fill="#888530" opacity="0.3"/>
+        <path d="M160 360 C180 340 202 330 216 310 C194 318 172 335 160 360Z" fill="#888530" opacity="0.22"/>
+        <!-- Subtle dot accents -->
+        <circle cx="68" cy="196" r="3" fill="#E5AC40" opacity="0.5"/>
+        <circle cx="252" cy="196" r="3" fill="#E5AC40" opacity="0.4"/>
+        <circle cx="88" cy="106" r="2.5" fill="#E5AC40" opacity="0.45"/>
+        <circle cx="232" cy="106" r="2.5" fill="#E5AC40" opacity="0.35"/>
+      </svg>
     </div>
   </div>
 </section>
@@ -745,12 +765,12 @@ gsap.registerPlugin(ScrollTrigger);
     .to('.hero-reveal', { opacity: 1, y: 0, duration: 0.8, stagger: 0.09, ease: 'power3.out' }, '-=0.7');
 })();
 
-/* ── Feather: parallax + gentle rotation as hero scrolls out ── */
-const feather = document.getElementById('hero-feather');
-if (feather) {
-  gsap.to(feather, {
-    yPercent: -18, rotation: 10, scale: 1.06, ease: 'none',
-    scrollTrigger: { trigger: 'section#hero, .band-dark#hero, [id="hero"]', start: 'top top', end: 'bottom top', scrub: 1.2 }
+/* ── Botanical: gentle float as hero scrolls out ── */
+const botanical = document.querySelector('.botanical-svg');
+if (botanical) {
+  gsap.to(botanical, {
+    yPercent: -12, scale: 1.04, ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.4 }
   });
 }
 
