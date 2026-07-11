@@ -549,7 +549,7 @@ img { max-width: 100%; display: block; }
       </a>
 
       <a href="asap.html" class="wcard reveal" style="--accent:#D39474;">
-        <div class="wcard-img"><img src="img/ASAP/Thumbnail%20image.jpeg" alt="ASAP — AI Scaffolded Action Planner" style="object-position: center 33%;"></div>
+        <div class="wcard-img"><img src="img/ASAP/Happy%20path%20.png" alt="ASAP — AI Scaffolded Action Planner" loading="lazy" style="object-position: center top; object-fit: cover;"></div>
         <p class="wcard-tag">Academic Planning · AI UX</p>
         <p class="wcard-title">ASAP</p>
         <p class="wcard-desc">AI-scaffolded academic planner. 6 research interviews, 4 usability scenarios, live Claude API integration.</p>
@@ -754,7 +754,14 @@ if (feather) {
   });
 }
 
-/* All content visible by default — no scroll-gated text */
+/* ── Scroll reveal for .reveal elements ── */
+gsap.set('.reveal', { opacity: 0, y: 22 });
+gsap.utils.toArray('.reveal').forEach(el => {
+  ScrollTrigger.create({
+    trigger: el, start: 'top 90%', once: true,
+    onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out' })
+  });
+});
 
 /* ── Triangle shape transitions: grow on scroll ── */
 document.querySelectorAll('.js-tri').forEach(el => {

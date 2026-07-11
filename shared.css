@@ -521,24 +521,31 @@ a.proj-nav-next {
 }
 
 /* ── Section-enter reveal (JS adds .sr-visible) ── */
+/* Elements start visible — reveal adds a polished entrance, never gates content */
 .sr-hidden {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity .65s cubic-bezier(.4,0,.2,1),
-              transform .65s cubic-bezier(.4,0,.2,1);
+  transform: translateY(20px);
+  transition: opacity .7s cubic-bezier(.22,1,.36,1),
+              transform .7s cubic-bezier(.22,1,.36,1);
 }
-.sr-hidden.sr-visible { opacity: 1; transform: none; }
+.sr-hidden.sr-visible {
+  opacity: 1;
+  transform: none;
+}
 
-/* Stagger children of a reveal group */
-.sr-stagger > * { opacity: 0; transform: translateY(20px);
-  transition: opacity .55s cubic-bezier(.4,0,.2,1),
-              transform .55s cubic-bezier(.4,0,.2,1); }
-.sr-stagger.sr-visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:.05s; }
-.sr-stagger.sr-visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:.13s; }
-.sr-stagger.sr-visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:.21s; }
-.sr-stagger.sr-visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:.29s; }
-.sr-stagger.sr-visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:.37s; }
-.sr-stagger.sr-visible > *:nth-child(n+6) { opacity:1; transform:none; transition-delay:.45s; }
+/* Stagger grid children */
+.sr-stagger > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .6s cubic-bezier(.22,1,.36,1),
+              transform .6s cubic-bezier(.22,1,.36,1);
+}
+.sr-stagger.sr-visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:.04s; }
+.sr-stagger.sr-visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:.10s; }
+.sr-stagger.sr-visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:.16s; }
+.sr-stagger.sr-visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:.22s; }
+.sr-stagger.sr-visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:.28s; }
+.sr-stagger.sr-visible > *:nth-child(n+6) { opacity:1; transform:none; transition-delay:.34s; }
 
 /* ── Reduced motion: turn off everything ── */
 @media (prefers-reduced-motion: reduce) {

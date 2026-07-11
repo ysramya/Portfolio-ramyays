@@ -300,22 +300,81 @@ footer { background:#0a0a0a; border-top:1px solid var(--border); padding:2.5rem;
 <link rel="stylesheet" href="shared.css">
 <!-- PAGE-THEME-OVERRIDE -->
 <style>
-body { background: #FDF1D5 !important; color: #2A1A1A !important; }
-.nav { background: #FDF1D5f0 !important; border-bottom-color: rgba(42,26,26,0.15) !important; }
-.nav-links a { color: rgba(42,26,26,0.7) !important; }
+/* ── Page palette: #E5AC40 (light) ── */
+body, html {
+  background: #E5AC40 !important;
+  color: #2A1A1A !important;
+}
+/* Nav */
+.nav, nav {
+  background: rgba(229,172,64,0.96) !important;
+  border-bottom-color: rgba(42,26,26,0.14) !important;
+}
 .nav-logo-text { color: #2A1A1A !important; }
-.band-dark, .cs-hero, .bg-alt, section { background: #FDF1D5 !important; }
-p, li, span, div { color: inherit; }
-h1, h2, h3, h4 { color: #2A1A1A !important; }
-h1.cs-title em, h1.cs-title i, h1.cs-title span.accent { color: #888530 !important; }
-.cs-meta-item { background: rgba(0,0,0,0.08) !important; border-color: rgba(42,26,26,0.15) !important; }
-.cs-meta-lbl { color: rgba(42,26,26,0.65) !important; }
-.cs-meta-val { color: #2A1A1A !important; }
-.cs-tag { background: rgba(0,0,0,0.1) !important; color: #2A1A1A !important; border-color: rgba(42,26,26,0.15) !important; }
-.callout, .insight-box { background: rgba(0,0,0,0.08) !important; border-left-color: #888530 !important; }
-hr, .sec-div { border-color: rgba(42,26,26,0.15) !important; }
-.proj-nav-prev, .proj-nav-next { background: rgba(0,0,0,0.12) !important; color: #2A1A1A !important; border-color: rgba(42,26,26,0.15) !important; }
-.sec-label, .eyebrow, .wcard-tag { color: #888530 !important; }
+.nav-links a { color: rgba(42,26,26,0.62) !important; }
+.nav-links a:hover { color: #5A3C3C !important; }
+/* Burger lines → dark */
+.burger span { background: #2A1A1A !important; }
+/* All bands */
+.cs-hero, .bg-alt, .section, section, .band-dark {
+  background: #E5AC40 !important;
+}
+/* All text → dark */
+h1, h2, h3, h4, h5, h6,
+h1.cs-title, h2.display,
+p, li, span, blockquote,
+a:not(.btn-primary):not(.btn-ghost):not(.nav-links a),
+.wcard-title, .wcard-desc, .wcard-tag,
+.cs-meta-lbl, .cs-meta-val,
+.sec-label, .eyebrow, .stat-label,
+.footer-name, .footer-sub, .footer-copy,
+.reflect-label, .rat-label, .phase-num,
+.callout-q, .callout cite {
+  color: #2A1A1A !important;
+}
+/* Accented em/i */
+h1.cs-title em, h1.cs-title i, h1.cs-title span.accent,
+h2.display em, h2.display i { color: #5A3C3C !important; }
+/* Muted text */
+.muted, .faint, .eyebrow,
+.cs-meta-lbl, .stat-desc, .wcard-year {
+  color: rgba(42,26,26,0.62) !important;
+  opacity: 1 !important;
+}
+/* Cards */
+.cs-meta-item, .process-card, .phase-card,
+.reflect-card, .rat-card, .decision-card {
+  background: rgba(42,26,26,0.06) !important;
+  border-color: rgba(42,26,26,0.14) !important;
+  color: #2A1A1A !important;
+}
+/* Dividers */
+hr, .sec-div, .line { border-color: rgba(42,26,26,0.14) !important; }
+/* Callout / insight */
+.callout, .insight-box {
+  background: rgba(42,26,26,0.06) !important;
+  border-left-color: #5A3C3C !important;
+}
+/* Stats */
+.stat-n, .stat-number, .cs-stat-num { color: #5A3C3C !important; }
+/* Tags — dark on light */
+.cs-tag, .wcard-tag, .tag, .badge {
+  background: rgba(42,26,26,0.10) !important;
+  color: rgba(42,26,26,0.62) !important;
+  border-color: rgba(42,26,26,0.14) !important;
+}
+/* Buttons */
+.btn-primary { background: #5A3C3C !important; border-color: #5A3C3C !important; color: #FDF1D5 !important; }
+.btn-ghost { background: transparent !important; border-color: rgba(42,26,26,0.14) !important; color: #2A1A1A !important; }
+/* Proj nav */
+.proj-nav-prev, .proj-nav-next {
+  background: rgba(42,26,26,0.10) !important;
+  border-color: rgba(42,26,26,0.14) !important;
+  color: #2A1A1A !important;
+}
+/* cs-badge */
+.cs-badge { background: rgba(42,26,26,0.08) !important; border-color: rgba(42,26,26,0.14) !important; }
+.cs-badge-text, .cs-badge-dot { color: #2A1A1A !important; background: #5A3C3C !important; }
 </style>
 <!-- /PAGE-THEME-OVERRIDE -->
 </head>

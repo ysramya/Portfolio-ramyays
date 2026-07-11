@@ -424,22 +424,64 @@ footer { background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.08);padding:
 <link rel="stylesheet" href="shared.css">
 <!-- PAGE-THEME-OVERRIDE -->
 <style>
-body { background: #5A3C3C !important; color: #FDF1D5 !important; }
-.nav { background: #5A3C3Cf0 !important; border-bottom-color: rgba(253,241,213,0.15) !important; }
-.nav-links a { color: rgba(253,241,213,0.65) !important; }
+/* ── Page palette: #888530 ── */
+body, html {
+  background: #888530 !important;
+  color: #FDF1D5 !important;
+}
+/* Nav */
+.nav, nav {
+  background: rgba(136,133,48,0.96) !important;
+  border-bottom-color: rgba(253,241,213,0.12) !important;
+}
 .nav-logo-text { color: #FDF1D5 !important; }
-.band-dark, .cs-hero, .bg-alt, section { background: #5A3C3C !important; }
-p, li, span, div { color: inherit; }
-h1, h2, h3, h4 { color: #FDF1D5 !important; }
-h1.cs-title em, h1.cs-title i, h1.cs-title span.accent { color: #888530 !important; }
-.cs-meta-item { background: rgba(0,0,0,0.08) !important; border-color: rgba(253,241,213,0.15) !important; }
-.cs-meta-lbl { color: rgba(253,241,213,0.65) !important; }
-.cs-meta-val { color: #FDF1D5 !important; }
-.cs-tag { background: rgba(0,0,0,0.1) !important; color: #FDF1D5 !important; border-color: rgba(253,241,213,0.15) !important; }
-.callout, .insight-box { background: rgba(0,0,0,0.08) !important; border-left-color: #888530 !important; }
-hr, .sec-div { border-color: rgba(253,241,213,0.15) !important; }
-.proj-nav-prev, .proj-nav-next { background: rgba(0,0,0,0.12) !important; color: #FDF1D5 !important; border-color: rgba(253,241,213,0.15) !important; }
-.sec-label, .eyebrow, .wcard-tag { color: #888530 !important; }
+.nav-links a { color: rgba(253,241,213,0.62) !important; }
+.nav-links a:hover { color: #E5AC40 !important; }
+/* All bands take the page color */
+.cs-hero, .bg-alt, .section, section, .band-dark {
+  background: #888530 !important;
+}
+/* Text universally */
+h1, h2, h3, h4, h5, h6,
+h1.cs-title, h2.display,
+p, li, span, a:not(.btn-primary):not(.btn-ghost):not(.nav-links a),
+.wcard-title, .wcard-desc, .wcard-tag,
+.cs-meta-lbl, .cs-meta-val,
+.sec-label, .eyebrow, .stat-label,
+.footer-name, .footer-sub, .footer-copy {
+  color: #FDF1D5 !important;
+}
+/* Accented em/i */
+h1.cs-title em, h1.cs-title i, h1.cs-title span.accent,
+h2.display em, h2.display i { color: #E5AC40 !important; }
+/* Muted text */
+.muted, .faint, .eyebrow,
+.cs-meta-lbl, .stat-desc, .wcard-year {
+  color: rgba(253,241,213,0.62) !important;
+  opacity: 1 !important;
+}
+/* Cards */
+.cs-meta-item, .process-card, .phase-card,
+.reflect-card, .rat-card, .decision-card {
+  background: rgba(253,241,213,0.07) !important;
+  border-color: rgba(253,241,213,0.12) !important;
+}
+/* Dividers */
+hr, .sec-div, .line { border-color: rgba(253,241,213,0.12) !important; }
+/* Callout */
+.callout, .insight-box {
+  background: rgba(253,241,213,0.06) !important;
+  border-left-color: #E5AC40 !important;
+}
+/* Buttons */
+.btn-primary { background: #E5AC40 !important; border-color: #E5AC40 !important; color: #2A1A1A !important; }
+.btn-ghost { background: transparent !important; border-color: rgba(253,241,213,0.12) !important; color: #FDF1D5 !important; }
+/* Proj nav */
+.proj-nav-prev, .proj-nav-next {
+  background: #888530 !important;
+  border-color: rgba(253,241,213,0.12) !important;
+  color: #FDF1D5 !important;
+}
 </style>
 <!-- /PAGE-THEME-OVERRIDE -->
 </head>
