@@ -222,7 +222,7 @@ img { max-width: 100%; display: block; }
 .body-sm { font-size: .88rem; font-weight: 300; line-height: 1.7; }
 
 /* Scrub text: words start dim, brighten as they pass focus zone */
-.scrub-word { opacity: .18; transition: none; }
+.scrub-word { opacity: 1; }
 
 /* ══════════════════════════════════════════════════
    BUTTONS — coral CTA, monochrome ghost
@@ -549,7 +549,7 @@ img { max-width: 100%; display: block; }
       </a>
 
       <a href="asap.html" class="wcard reveal" style="--accent:#D39474;">
-        <div class="wcard-img"><img src="img/ASAP/Thumbnail%20image.jpeg" alt="ASAP — AI Scaffolded Action Planner" style="object-position: top center;"></div>
+        <div class="wcard-img"><img src="img/ASAP/Thumbnail%20image.jpeg" alt="ASAP — AI Scaffolded Action Planner" style="object-position: center 33%;"></div>
         <p class="wcard-tag">Academic Planning · AI UX</p>
         <p class="wcard-title">ASAP</p>
         <p class="wcard-desc">AI-scaffolded academic planner. 6 research interviews, 4 usability scenarios, live Claude API integration.</p>
@@ -557,7 +557,7 @@ img { max-width: 100%; display: block; }
       </a>
 
       <a href="mainstreet.html" class="wcard reveal" style="--accent:#5A3C3C;">
-        <div class="wcard-img"><img src="img/mainstreet-dashboard.png" alt="Mainstreet PM Dashboard" loading="lazy" style="object-position: left center;"></div>
+        <div class="wcard-img"><img src="img/mainstreet-dashboard.jpg" alt="Mainstreet PM Dashboard" loading="lazy" style="object-position: center top;"></div>
         <p class="wcard-tag">Data Analytics · Power BI</p>
         <p class="wcard-title">PM Dashboard — Mainstreet</p>
         <p class="wcard-desc">Real-time Power BI dashboard giving 6 Portfolio Managers a single-screen view of $1B+ AUA — built from PM interviews.</p>
@@ -754,67 +754,7 @@ if (feather) {
   });
 }
 
-/* ── Scroll-scrubbed per-word text reveal ── */
-function splitIntoWordSpans(el) {
-  const html = el.innerHTML;
-  /* Split on whitespace but preserve <br>, <strong>, <em> */
-  const tmp = document.createElement('div');
-  tmp.innerHTML = html;
-  function processNode(node) {
-    if (node.nodeType === 3) { /* text */
-      const words = node.textContent.split(/(\s+)/);
-      const frag = document.createDocumentFragment();
-      words.forEach(w => {
-        if (/\s+/.test(w)) { frag.appendChild(document.createTextNode(w)); }
-        else if (w) {
-          const s = document.createElement('span');
-          s.className = 'scrub-word'; s.textContent = w;
-          frag.appendChild(s);
-        }
-      });
-      node.parentNode.replaceChild(frag, node);
-    } else if (node.nodeType === 1 && !['STRONG','EM','BR'].includes(node.tagName)) {
-      Array.from(node.childNodes).forEach(processNode);
-    } else if (node.nodeType === 1) {
-      Array.from(node.childNodes).forEach(processNode);
-    }
-  }
-  Array.from(tmp.childNodes).forEach(processNode);
-  el.innerHTML = tmp.innerHTML;
-}
-
-document.querySelectorAll('.scrub-text').forEach(para => {
-  splitIntoWordSpans(para);
-  const words = para.querySelectorAll('.scrub-word');
-  if (!words.length) return;
-  gsap.fromTo(words,
-    { opacity: 0.15 },
-    {
-      opacity: 1,
-      stagger: { each: 0.04 },
-      ease: 'none',
-      scrollTrigger: { trigger: para, start: 'top 80%', end: 'bottom 30%', scrub: 0.6 }
-    }
-  );
-});
-
-/* ── Below-fold .reveal elements ── */
-gsap.set('.reveal', { opacity: 0, y: 28 });
-document.querySelectorAll('.reveal').forEach(el => {
-  gsap.to(el, {
-    opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-    scrollTrigger: { trigger: el, start: 'top 92%', toggleActions: 'play none none none' }
-  });
-});
-
-/* Staggered work cards */
-gsap.utils.toArray('.wcard').forEach((el, i) => {
-  gsap.set(el, { opacity: 0, y: 32 });
-  gsap.to(el, {
-    opacity: 1, y: 0, duration: 0.75, delay: (i % 3) * 0.1, ease: 'power3.out',
-    scrollTrigger: { trigger: el, start: 'top 94%', toggleActions: 'play none none none' }
-  });
-});
+/* All content visible by default — no scroll-gated text */
 
 /* ── Triangle shape transitions: grow on scroll ── */
 document.querySelectorAll('.js-tri').forEach(el => {
