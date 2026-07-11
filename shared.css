@@ -560,3 +560,50 @@ a.proj-nav-next {
 
 /* ── Shared scroll-reveal JS (injected by inline script) ── */
 /* The script below observes .sr-hidden and .sr-stagger and fires .sr-visible */
+
+/* ── At a Glance: recruiter Q&A section ── */
+.glance-section {
+  padding: 3.5rem 0 4rem;
+  background: #FDF1D5;
+}
+.glance-label {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(42,26,26,.45);
+  margin-bottom: 1.5rem;
+}
+.glance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.glance-item {
+  background: #fff;
+  border: 1px solid rgba(42,26,26,.1);
+  border-radius: 12px;
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.glance-q {
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(42,26,26,.45);
+}
+.glance-a {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2A1A1A;
+  line-height: 1.25;
+  margin: 0;
+}
+.glance-detail {
+  font-size: .82rem;
+  color: rgba(42,26,26,.6);
+  line-height: 1.6;
+}

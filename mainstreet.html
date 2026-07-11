@@ -245,81 +245,45 @@ p strong { color:#fff; }
 <link rel="stylesheet" href="shared.css">
 <!-- PAGE-THEME-OVERRIDE -->
 <style>
-/* ── Page palette: #D39474 (light) ── */
-body, html {
-  background: #D39474 !important;
-  color: #2A1A1A !important;
-}
-/* Nav */
-.nav, nav {
-  background: rgba(211,148,116,0.96) !important;
-  border-bottom-color: rgba(42,26,26,0.14) !important;
-}
-.nav-logo-text { color: #2A1A1A !important; }
-.nav-links a { color: rgba(42,26,26,0.62) !important; }
+/* ── Page: ivory body, peach dahlia hero ── */
+body, html { background: #FDF1D5 !important; color: #2A1A1A !important; }
+.nav, nav { background: rgba(253,241,213,0.96) !important; border-bottom-color: rgba(42,26,26,0.1) !important; }
+.nav-logo-text { color: #5A3C3C !important; }
+.nav-links a { color: rgba(90,60,60,0.65) !important; }
 .nav-links a:hover { color: #5A3C3C !important; }
-/* Burger lines → dark */
 .burger span { background: #2A1A1A !important; }
-/* All bands */
-.cs-hero, .bg-alt, .section, section, .band-dark {
-  background: #D39474 !important;
-}
-/* All text → dark */
-h1, h2, h3, h4, h5, h6,
-h1.cs-title, h2.display,
-p, li, span, blockquote,
-a:not(.btn-primary):not(.btn-ghost):not(.nav-links a),
-.wcard-title, .wcard-desc, .wcard-tag,
-.cs-meta-lbl, .cs-meta-val,
-.sec-label, .eyebrow, .stat-label,
-.footer-name, .footer-sub, .footer-copy,
-.reflect-label, .rat-label, .phase-num,
-.callout-q, .callout cite {
-  color: #2A1A1A !important;
-}
-/* Accented em/i */
-h1.cs-title em, h1.cs-title i, h1.cs-title span.accent,
+/* Hero band: peach dahlia */
+.cs-hero { background: #D39474 !important; }
+.cs-hero h1, .cs-hero h2, .cs-hero p, .cs-hero .lead,
+.cs-hero .cs-badge-text, .cs-hero span, .cs-hero li { color: #2A1A1A !important; }
+.cs-hero h1.cs-title em { color: #5A3C3C !important; }
+.cs-hero .cs-badge { background: rgba(42,26,26,0.1) !important; border-color: rgba(42,26,26,0.2) !important; }
+.cs-hero .cs-meta-item { background: rgba(42,26,26,0.07) !important; border-color: rgba(42,26,26,0.12) !important; }
+.cs-hero .cs-meta-lbl { color: rgba(42,26,26,0.55) !important; }
+.cs-hero .cs-meta-val { color: rgba(42,26,26,0.8) !important; }
+.cs-hero .cs-meta-val strong { color: #2A1A1A !important; }
+/* Content: ivory / white */
+.bg-alt, section.bg-alt, .section { background: #fff !important; }
+section:not(.cs-hero):not(.bg-alt) { background: #FDF1D5 !important; }
+/* All content text: dark */
+h1, h2, h3, h4, h5, h6, h2.display,
+p, li, blockquote, .wcard-title, .wcard-desc, .cs-meta-lbl, .cs-meta-val,
+.stat-label, .footer-name, .footer-sub, .footer-copy, .sec-label,
+.reflect-label, .rat-label, .phase-num, .callout-q { color: #2A1A1A !important; }
 h2.display em, h2.display i { color: #5A3C3C !important; }
-/* Muted text */
-.muted, .faint, .eyebrow,
-.cs-meta-lbl, .stat-desc, .wcard-year {
-  color: rgba(42,26,26,0.62) !important;
-  opacity: 1 !important;
-}
-/* Cards */
-.cs-meta-item, .process-card, .phase-card,
-.reflect-card, .rat-card, .decision-card {
-  background: rgba(42,26,26,0.06) !important;
-  border-color: rgba(42,26,26,0.14) !important;
-  color: #2A1A1A !important;
-}
-/* Dividers */
-hr, .sec-div, .line { border-color: rgba(42,26,26,0.14) !important; }
-/* Callout / insight */
-.callout, .insight-box {
-  background: rgba(42,26,26,0.06) !important;
-  border-left-color: #5A3C3C !important;
-}
-/* Stats */
-.stat-n, .stat-number, .cs-stat-num { color: #5A3C3C !important; }
-/* Tags — dark on light */
-.cs-tag, .wcard-tag, .tag, .badge {
-  background: rgba(42,26,26,0.10) !important;
-  color: rgba(42,26,26,0.62) !important;
-  border-color: rgba(42,26,26,0.14) !important;
-}
-/* Buttons */
+.muted, .faint, .cs-meta-lbl, .stat-desc, .wcard-year { color: rgba(42,26,26,0.55) !important; opacity: 1 !important; }
+.cs-meta-item, .process-card, .phase-card, .reflect-card, .rat-card, .decision-card {
+  background: #fff !important; border-color: rgba(42,26,26,0.1) !important; color: #2A1A1A !important; }
+hr, .sec-div, .line { border-color: rgba(42,26,26,0.1) !important; }
+.callout, .insight-box { background: rgba(211,148,116,0.1) !important; border-left-color: #D39474 !important; }
+.stat-n, .stat-num, .cs-stat-num { color: #5A3C3C !important; }
+.eyebrow { color: #5A3C3C !important; }
+.cs-tag, .wcard-tag, .tag, .badge { background: rgba(42,26,26,0.08) !important; color: rgba(42,26,26,0.65) !important; border-color: rgba(42,26,26,0.12) !important; }
 .btn-primary { background: #5A3C3C !important; border-color: #5A3C3C !important; color: #FDF1D5 !important; }
-.btn-ghost { background: transparent !important; border-color: rgba(42,26,26,0.14) !important; color: #2A1A1A !important; }
-/* Proj nav */
-.proj-nav-prev, .proj-nav-next {
-  background: rgba(42,26,26,0.10) !important;
-  border-color: rgba(42,26,26,0.14) !important;
-  color: #2A1A1A !important;
-}
-/* cs-badge */
-.cs-badge { background: rgba(42,26,26,0.08) !important; border-color: rgba(42,26,26,0.14) !important; }
-.cs-badge-text, .cs-badge-dot { color: #2A1A1A !important; background: #5A3C3C !important; }
+.btn-ghost { background: transparent !important; border-color: rgba(42,26,26,0.25) !important; color: #2A1A1A !important; }
+footer, .footer { background: #2A1A1A !important; }
+footer *, .footer * { color: rgba(253,241,213,0.7) !important; }
+.proj-nav-prev, .proj-nav-next { background: #5A3C3C !important; border-color: #5A3C3C !important; color: #FDF1D5 !important; }
 </style>
 <!-- /PAGE-THEME-OVERRIDE -->
 </head>
@@ -498,6 +462,40 @@ hr, .sec-div, .line { border-color: rgba(42,26,26,0.14) !important; }
   </div>
   <p style="font-size:.7rem;color:rgba(255,255,255,0.3);text-align:center;margin-top:.5rem;letter-spacing:.06em;">Final dashboard delivered in Power BI · all figures are illustrative dummy data</p>
 </div>
+
+<!-- ── AT A GLANCE ── -->
+<section class="glance-section">
+  <div class="wrap">
+    <p class="glance-label">At a Glance</p>
+    <div class="glance-grid">
+      <div class="glance-item">
+        <span class="glance-q">What role are you targeting?</span>
+        <p class="glance-a">Product Designer with data fluency</p>
+        <span class="glance-detail">Roles bridging UX and BI in financial or enterprise contexts.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-q">Is your work relevant to that role?</span>
+        <p class="glance-a">Stakeholder-driven BI design</p>
+        <span class="glance-detail">Built from PM interviews to solve a real daily problem for 6 Portfolio Managers overseeing $1B+ AUA.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-q">Can I quickly understand your contribution?</span>
+        <p class="glance-a">Sole UX & BI Designer</p>
+        <span class="glance-detail">I interviewed all 6 PMs, synthesized their mental models, and delivered the live Power BI dashboard.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-q">Is there evidence of thinking, not just polish?</span>
+        <p class="glance-a">Research found 3 conflicting mental models</p>
+        <span class="glance-detail">Dashboard hierarchy resolves all three in a single view — that insight is the design.</span>
+      </div>
+      <div class="glance-item">
+        <span class="glance-q">Do outcomes look credible?</span>
+        <p class="glance-a">Live and used daily</p>
+        <span class="glance-detail">Dashboard deployed internally at Mainstreet Advisors, in active use by the portfolio management team.</span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ── PROBLEM ── -->
 <div class="bg-alt">
@@ -991,5 +989,7 @@ hr, .sec-div, .line { border-color: rgba(42,26,26,0.14) !important; }
 })();
 </script>
 <script src="shared.js"></script>
+<a href="asap.html" class="proj-nav-prev">← ASAP</a>
+<a href="cost-of-a-click.html" class="proj-nav-next">Cost of a Click →</a>
 </body>
 </html>

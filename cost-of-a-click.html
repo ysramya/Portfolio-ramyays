@@ -424,64 +424,43 @@ footer { background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.08);padding:
 <link rel="stylesheet" href="shared.css">
 <!-- PAGE-THEME-OVERRIDE -->
 <style>
-/* ── Page palette: #2A1A1A ── */
-body, html {
-  background: #2A1A1A !important;
-  color: #FDF1D5 !important;
-}
-/* Nav */
-.nav, nav {
-  background: rgba(42,26,26,0.96) !important;
-  border-bottom-color: rgba(253,241,213,0.12) !important;
-}
-.nav-logo-text { color: #FDF1D5 !important; }
-.nav-links a { color: rgba(253,241,213,0.62) !important; }
-.nav-links a:hover { color: #E5AC40 !important; }
-/* All bands take the page color */
-.cs-hero, .bg-alt, .section, section, .band-dark {
-  background: #2A1A1A !important;
-}
-/* Text universally */
-h1, h2, h3, h4, h5, h6,
-h1.cs-title, h2.display,
-p, li, span, a:not(.btn-primary):not(.btn-ghost):not(.nav-links a),
-.wcard-title, .wcard-desc, .wcard-tag,
-.cs-meta-lbl, .cs-meta-val,
-.sec-label, .eyebrow, .stat-label,
-.footer-name, .footer-sub, .footer-copy {
-  color: #FDF1D5 !important;
-}
-/* Accented em/i */
-h1.cs-title em, h1.cs-title i, h1.cs-title span.accent,
-h2.display em, h2.display i { color: #E5AC40 !important; }
-/* Muted text */
-.muted, .faint, .eyebrow,
-.cs-meta-lbl, .stat-desc, .wcard-year {
-  color: rgba(253,241,213,0.62) !important;
-  opacity: 1 !important;
-}
-/* Cards */
-.cs-meta-item, .process-card, .phase-card,
-.reflect-card, .rat-card, .decision-card {
-  background: rgba(253,241,213,0.07) !important;
-  border-color: rgba(253,241,213,0.12) !important;
-}
-/* Dividers */
-hr, .sec-div, .line { border-color: rgba(253,241,213,0.12) !important; }
-/* Callout */
-.callout, .insight-box {
-  background: rgba(253,241,213,0.06) !important;
-  border-left-color: #E5AC40 !important;
-}
-/* Buttons */
-.btn-primary { background: #E5AC40 !important; border-color: #E5AC40 !important; color: #2A1A1A !important; }
-.btn-ghost { background: transparent !important; border-color: rgba(253,241,213,0.12) !important; color: #FDF1D5 !important; }
-/* Proj nav */
-.proj-nav-prev, .proj-nav-next {
-  background: #2A1A1A !important;
-  border-color: rgba(253,241,213,0.12) !important;
-  color: #FDF1D5 !important;
-}
+/* ── Page: ivory body, deep raisin hero ── */
+body, html { background: #FDF1D5 !important; color: #2A1A1A !important; }
+.nav, nav { background: rgba(253,241,213,0.96) !important; border-bottom-color: rgba(42,26,26,0.1) !important; }
+.nav-logo-text { color: #5A3C3C !important; }
+.nav-links a { color: rgba(90,60,60,0.65) !important; }
+.nav-links a:hover { color: #2A1A1A !important; }
+/* Hero band: deep raisin */
+.cs-hero, .case-hero-grid, .coac-hero-grid { background: #2A1A1A !important; }
+.cs-hero h1, .cs-hero h2, .cs-hero p, .cs-hero .lead,
+.cs-hero .cs-badge-text, .cs-hero span, .cs-hero li { color: #FDF1D5 !important; }
+.cs-hero h1.cs-title em { color: #E5AC40 !important; }
+.cs-hero .cs-badge { background: rgba(253,241,213,0.08) !important; border-color: rgba(229,172,64,0.3) !important; }
+.cs-hero .cs-meta-item { background: rgba(253,241,213,0.06) !important; border-color: rgba(253,241,213,0.12) !important; }
+.cs-hero .cs-meta-lbl { color: rgba(253,241,213,0.5) !important; }
+.cs-hero .cs-meta-val { color: rgba(253,241,213,0.8) !important; }
+.cs-hero .cs-meta-val strong { color: #FDF1D5 !important; }
+/* Content: ivory / white */
+.bg-alt, section.bg-alt { background: #fff !important; }
+section:not(.cs-hero):not(.bg-alt) { background: #FDF1D5 !important; }
+/* All content text: dark */
+h1, h2, h3, h4, h5, h6, h2.display,
+p, li, .wcard-title, .wcard-desc, .cs-meta-lbl, .cs-meta-val,
+.stat-label, .footer-name, .footer-sub, .footer-copy, .sec-label { color: #2A1A1A !important; }
+.cs-hero h1, .cs-hero h2, .cs-hero p, .cs-hero span { color: #FDF1D5 !important; }
+h2.display em, h2.display i { color: #2A1A1A !important; }
+.muted, .faint, .cs-meta-lbl, .stat-desc, .wcard-year { color: rgba(42,26,26,0.55) !important; opacity: 1 !important; }
+.cs-meta-item, .process-card, .phase-card, .reflect-card, .rat-card, .decision-card {
+  background: #fff !important; border-color: rgba(42,26,26,0.1) !important; color: #2A1A1A !important; }
+hr, .sec-div, .line { border-color: rgba(42,26,26,0.1) !important; }
+.callout, .insight-box { background: rgba(42,26,26,0.05) !important; border-left-color: #E5AC40 !important; }
+.stat-n, .stat-num, .cs-stat-num { color: #2A1A1A !important; }
+.eyebrow { color: #2A1A1A !important; }
+.btn-primary { background: #2A1A1A !important; border-color: #2A1A1A !important; color: #FDF1D5 !important; }
+.btn-ghost { background: transparent !important; border-color: rgba(42,26,26,0.25) !important; color: #2A1A1A !important; }
+footer, .footer { background: #2A1A1A !important; }
+footer *, .footer * { color: rgba(253,241,213,0.7) !important; }
+.proj-nav-prev, .proj-nav-next { background: #2A1A1A !important; border-color: #2A1A1A !important; color: #FDF1D5 !important; }
 </style>
 <!-- /PAGE-THEME-OVERRIDE -->
 </head>
@@ -588,6 +567,40 @@ hr, .sec-div, .line { border-color: rgba(253,241,213,0.12) !important; }
       .coac-hero-img { height:60vw!important; }
     }
   </style>
+
+  <!-- ── AT A GLANCE ── -->
+  <section class="glance-section">
+    <div class="wrap">
+      <p class="glance-label">At a Glance</p>
+      <div class="glance-grid">
+        <div class="glance-item">
+          <span class="glance-q">What role are you targeting?</span>
+          <p class="glance-a">Experience Designer / UX Researcher</p>
+          <span class="glance-detail">Civic tech, sustainability, or physical-digital interaction design roles.</span>
+        </div>
+        <div class="glance-item">
+          <span class="glance-q">Is your work relevant to that role?</span>
+          <p class="glance-a">Sensor-driven experience design</p>
+          <span class="glance-detail">Designed an AI-powered installation that makes water cost felt, not just read.</span>
+        </div>
+        <div class="glance-item">
+          <span class="glance-q">Can I quickly understand your contribution?</span>
+          <p class="glance-a">Lead UX Researcher & Designer</p>
+          <span class="glance-detail">Led research, sensor integration design, and the full 10-week experience design process.</span>
+        </div>
+        <div class="glance-item">
+          <span class="glance-q">Is there evidence of thinking, not just polish?</span>
+          <p class="glance-a">Abstract stats don't change behavior</p>
+          <span class="glance-detail">Research showed awareness campaigns fail at feeling — so we designed for the felt cost, not the number.</span>
+        </div>
+        <div class="glance-item">
+          <span class="glance-q">Do outcomes look credible?</span>
+          <p class="glance-a">Google Summer Impact Grant Winner</p>
+          <span class="glance-detail">Won the Google Summer Impact Grant 2025, demonstrated 85% increase in environmental awareness.</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ── PROBLEM ── -->
   <section class="section bg-alt">
@@ -1018,8 +1031,8 @@ document.querySelectorAll('.fi').forEach(el=>io.observe(el));
 </script>
 
 <!-- ── PREVIOUS / NEXT PROJECT NAVIGATION ── -->
-<a href="raahi.html" class="proj-nav-prev">← Raahi</a>
-<a href="wellnut.html" class="proj-nav-next">Wellnut →</a>
+<a href="mainstreet.html" class="proj-nav-prev">← Dashboard</a>
+<a href="raahi.html" class="proj-nav-next">Raahi →</a>
 
 <script src="shared.js"></script>
 </body>

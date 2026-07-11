@@ -475,64 +475,51 @@ footer { background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.08);padding:
 <link rel="stylesheet" href="shared.css">
 <!-- PAGE-THEME-OVERRIDE -->
 <style>
-/* ── Page palette: #5A3C3C ── */
+/* ── Page: ivory body, raisin bloom hero ── */
 body, html {
-  background: #5A3C3C !important;
-  color: #FDF1D5 !important;
+  background: #FDF1D5 !important;
+  color: #2A1A1A !important;
 }
-/* Nav */
 .nav, nav {
-  background: rgba(90,60,60,0.96) !important;
-  border-bottom-color: rgba(253,241,213,0.12) !important;
+  background: rgba(253,241,213,0.96) !important;
+  border-bottom-color: rgba(42,26,26,0.1) !important;
 }
-.nav-logo-text { color: #FDF1D5 !important; }
-.nav-links a { color: rgba(253,241,213,0.62) !important; }
-.nav-links a:hover { color: #E5AC40 !important; }
-/* All bands take the page color */
-.cs-hero, .bg-alt, .section, section, .band-dark {
-  background: #5A3C3C !important;
-}
-/* Text universally */
-h1, h2, h3, h4, h5, h6,
-h1.cs-title, h2.display,
-p, li, span, a:not(.btn-primary):not(.btn-ghost):not(.nav-links a),
-.wcard-title, .wcard-desc, .wcard-tag,
-.cs-meta-lbl, .cs-meta-val,
-.sec-label, .eyebrow, .stat-label,
-.footer-name, .footer-sub, .footer-copy {
-  color: #FDF1D5 !important;
-}
-/* Accented em/i */
-h1.cs-title em, h1.cs-title i, h1.cs-title span.accent,
-h2.display em, h2.display i { color: #E5AC40 !important; }
-/* Muted text */
-.muted, .faint, .eyebrow,
-.cs-meta-lbl, .stat-desc, .wcard-year {
-  color: rgba(253,241,213,0.62) !important;
-  opacity: 1 !important;
-}
-/* Cards */
+.nav-logo-text { color: #5A3C3C !important; }
+.nav-links a { color: rgba(90,60,60,0.65) !important; }
+.nav-links a:hover { color: #5A3C3C !important; }
+/* Hero band: raisin bloom */
+.cs-hero, .case-hero-grid { background: #5A3C3C !important; }
+.cs-hero h1, .cs-hero h2, .cs-hero p,
+.cs-hero .lead, .cs-hero .cs-badge-text,
+.cs-hero span, .cs-hero li { color: #FDF1D5 !important; }
+.cs-hero h1.cs-title em { color: #E5AC40 !important; }
+.cs-hero .cs-badge { background: rgba(253,241,213,0.12) !important; border-color: rgba(229,172,64,0.3) !important; }
+.cs-hero .cs-meta-item { background: rgba(253,241,213,0.1) !important; border-color: rgba(253,241,213,0.15) !important; }
+.cs-hero .cs-meta-lbl { color: rgba(253,241,213,0.6) !important; }
+.cs-hero .cs-meta-val { color: rgba(253,241,213,0.85) !important; }
+.cs-hero .cs-meta-val strong { color: #FDF1D5 !important; }
+/* Content sections: ivory / white */
+.bg-alt, section.bg-alt { background: #fff !important; }
+section:not(.cs-hero):not(.bg-alt) { background: #FDF1D5 !important; }
+/* All content text: dark */
+h1, h2, h3, h4, h5, h6, h2.display,
+p, li, .wcard-title, .wcard-desc, .wcard-tag,
+.cs-meta-lbl, .cs-meta-val, .stat-label,
+.footer-name, .footer-sub, .footer-copy, .sec-label { color: #2A1A1A !important; }
+.cs-hero h1, .cs-hero h2, .cs-hero p, .cs-hero span { color: #FDF1D5 !important; }
+h2.display em, h2.display i { color: #5A3C3C !important; }
+.muted, .faint, .cs-meta-lbl, .stat-desc, .wcard-year { color: rgba(42,26,26,0.55) !important; opacity: 1 !important; }
 .cs-meta-item, .process-card, .phase-card,
-.reflect-card, .rat-card, .decision-card {
-  background: rgba(253,241,213,0.07) !important;
-  border-color: rgba(253,241,213,0.12) !important;
-}
-/* Dividers */
-hr, .sec-div, .line { border-color: rgba(253,241,213,0.12) !important; }
-/* Callout */
-.callout, .insight-box {
-  background: rgba(253,241,213,0.06) !important;
-  border-left-color: #E5AC40 !important;
-}
-/* Buttons */
-.btn-primary { background: #E5AC40 !important; border-color: #E5AC40 !important; color: #2A1A1A !important; }
-.btn-ghost { background: transparent !important; border-color: rgba(253,241,213,0.12) !important; color: #FDF1D5 !important; }
-/* Proj nav */
-.proj-nav-prev, .proj-nav-next {
-  background: #5A3C3C !important;
-  border-color: rgba(253,241,213,0.12) !important;
-  color: #FDF1D5 !important;
-}
+.reflect-card, .rat-card, .decision-card { background: #fff !important; border-color: rgba(42,26,26,0.1) !important; color: #2A1A1A !important; }
+hr, .sec-div, .line { border-color: rgba(42,26,26,0.1) !important; }
+.callout, .insight-box { background: rgba(90,60,60,0.07) !important; border-left-color: #5A3C3C !important; }
+.stat-n, .stat-num, .cs-stat-num { color: #5A3C3C !important; }
+.eyebrow { color: #5A3C3C !important; }
+.btn-primary { background: #5A3C3C !important; border-color: #5A3C3C !important; color: #FDF1D5 !important; }
+.btn-ghost { background: transparent !important; border-color: rgba(42,26,26,0.25) !important; color: #2A1A1A !important; }
+footer, .footer { background: #2A1A1A !important; }
+footer *, .footer * { color: rgba(253,241,213,0.7) !important; }
+.proj-nav-prev, .proj-nav-next { background: #5A3C3C !important; border-color: #5A3C3C !important; color: #FDF1D5 !important; }
 </style>
 <!-- /PAGE-THEME-OVERRIDE -->
 </head>
@@ -634,6 +621,40 @@ hr, .sec-div, .line { border-color: rgba(253,241,213,0.12) !important; }
            style="width:100%;max-height:calc(100vh - 100px);object-fit:contain;object-position:top;border-radius:var(--r);display:block;box-shadow:0 24px 64px rgba(0,0,0,.35);">
     </div>
   </div>
+
+  <!-- ── AT A GLANCE ── -->
+  <section class="glance-section">
+    <div class="wrap">
+      <p class="glance-label">At a Glance</p>
+      <div class="glance-grid">
+        <div class="glance-item">
+          <span class="glance-q">What role are you targeting?</span>
+          <p class="glance-a">XR / UX Designer</p>
+          <span class="glance-detail">Emerging tech and health UX roles that value mixed-methods research and cross-disciplinary collaboration.</span>
+        </div>
+        <div class="glance-item">
+          <span class="glance-q">Is your work relevant to that role?</span>
+          <p class="glance-a">Research-first VR design</p>
+          <span class="glance-detail">4-phase mixed-methods process, including a licensed therapist consultation, drove every design decision.</span>
+        </div>
+        <div class="glance-item">
+          <span class="glance-q">Can I quickly understand your contribution?</span>
+          <p class="glance-a">UX Researcher + Project Coordinator</p>
+          <span class="glance-detail">I led all 4 research phases, created the therapeutic framework, and coordinated a 5-person cross-discipline team.</span>
+        </div>
+        <div class="glance-item">
+          <span class="glance-q">Is there evidence of thinking, not just polish?</span>
+          <p class="glance-a">One expert interview → entire framework</p>
+          <span class="glance-detail">The full conversational structure emerged from a single therapist session — not assumption, not best practice.</span>
+        </div>
+        <div class="glance-item">
+          <span class="glance-q">Do outcomes look credible?</span>
+          <p class="glance-a">Externally showcased</p>
+          <span class="glance-detail">Presented at Jarvis Innovation Challenge and DePaul's Spring 2025 showcase.</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ── PROBLEM ── -->
   <section class="section bg-alt">
@@ -1186,8 +1207,8 @@ document.querySelectorAll('.fi').forEach(el=>io.observe(el));
 </script>
 
 <!-- ── PREVIOUS / NEXT PROJECT NAVIGATION ── -->
-<a href="cost-of-a-click.html" class="proj-nav-prev">← Cost of a Click</a>
-<a href="index.html" class="proj-nav-next">Back to Home →</a>
+<a href="raahi.html" class="proj-nav-prev">← Raahi</a>
+<a href="asap.html" class="proj-nav-next">ASAP →</a>
 
 <script src="shared.js"></script>
 </body>
