@@ -1,0 +1,166 @@
+{
+  "global": {
+    "color": {
+      "navy": {
+        "value": "#5A3C3C",
+        "type": "color",
+        "description": "Anchors Aweigh SW 9179 — primary dark background & text on light bands"
+      },
+      "cream": {
+        "value": "#FDF1D5",
+        "type": "color",
+        "description": "Crisp Linen SW 6378 — lightest band background & text on dark bands"
+      },
+      "coral": {
+        "value": "#E5AC40",
+        "type": "color",
+        "description": "Caribbean Coral SW 2854 — site-wide CTA & accent, every band"
+      },
+      "olive": {
+        "value": "#888530",
+        "type": "color",
+        "description": "Inverness SW 6433 — secondary accent"
+      },
+      "slate": {
+        "value": "#D39474",
+        "type": "color",
+        "description": "Daphne SW 9151 — muted text, meta labels"
+      },
+      "ink-deep": {
+        "value": "#2A1A1A",
+        "type": "color",
+        "description": "Footer & deepest dark band"
+      }
+    },
+    "typography": {
+      "family-display": {
+        "value": "Space Grotesk",
+        "type": "fontFamilies",
+        "description": "Single typeface for all display and body roles"
+      },
+      "family-body": {
+        "value": "Space Grotesk",
+        "type": "fontFamilies"
+      },
+      "weight-light": { "value": "300", "type": "fontWeights" },
+      "weight-regular": { "value": "400", "type": "fontWeights" },
+      "weight-medium": { "value": "500", "type": "fontWeights" },
+      "weight-semibold": { "value": "600", "type": "fontWeights" },
+      "weight-bold": { "value": "700", "type": "fontWeights" },
+      "size-xs": { "value": "10", "type": "fontSizes", "description": "Eyebrow / label" },
+      "size-sm": { "value": "14", "type": "fontSizes", "description": "Body small" },
+      "size-md": { "value": "17", "type": "fontSizes", "description": "Body default" },
+      "size-lg": { "value": "18", "type": "fontSizes", "description": "Body large / lead" },
+      "size-display-md": { "value": "32", "type": "fontSizes", "description": "Section headings" },
+      "size-display-lg": { "value": "54", "type": "fontSizes", "description": "Page-level headings" },
+      "size-display-xl": { "value": "96", "type": "fontSizes", "description": "Hero name / hero headline" },
+      "tracking-tight": { "value": "-0.025em", "type": "letterSpacing", "description": "Display headings" },
+      "tracking-wide": { "value": "0.28em", "type": "letterSpacing", "description": "Eyebrow uppercase labels" },
+      "tracking-mid": { "value": "0.12em", "type": "letterSpacing", "description": "Nav links, buttons" },
+      "leading-tight": { "value": "0.93", "type": "lineHeights", "description": "Display-xl" },
+      "leading-snug": { "value": "1.05", "type": "lineHeights", "description": "Display headings" },
+      "leading-body": { "value": "1.75", "type": "lineHeights", "description": "Body copy" }
+    },
+    "spacing": {
+      "rail-width": { "value": "56", "type": "spacing", "description": "Fixed side-rail width (desktop)" },
+      "nav-height": { "value": "68", "type": "spacing", "description": "Sticky top nav height" },
+      "wrap-padding-desktop": { "value": "112", "type": "spacing", "description": "Wrap horizontal padding at rail-width + 3.5rem" },
+      "wrap-padding-tablet": { "value": "42", "type": "spacing", "description": "Wrap padding ≤1100px" },
+      "wrap-padding-mobile": { "value": "22", "type": "spacing", "description": "Wrap padding ≤640px" },
+      "wrap-max-width": { "value": "1260", "type": "spacing", "description": "Content column max-width" },
+      "section-pad-v": { "value": "80", "type": "spacing", "description": "Default section vertical padding" },
+      "hero-pad-v": { "value": "88", "type": "spacing", "description": "Hero top/bottom padding" },
+      "card-pad": { "value": "29", "type": "spacing", "description": "Card inner padding" },
+      "gap-sm": { "value": "8", "type": "spacing" },
+      "gap-md": { "value": "16", "type": "spacing" },
+      "gap-lg": { "value": "28", "type": "spacing" },
+      "gap-xl": { "value": "48", "type": "spacing" }
+    },
+    "borderRadius": {
+      "pill": { "value": "100", "type": "borderRadius", "description": "Buttons, tags, nav CTA pills" },
+      "card": { "value": "10", "type": "borderRadius", "description": "Cards and meta panels" },
+      "logo": { "value": "8", "type": "borderRadius", "description": "Brand logo lockup" },
+      "badge": { "value": "20", "type": "borderRadius", "description": "CS badge / discipline tags" }
+    },
+    "opacity": {
+      "rail-line": { "value": "0.2", "type": "opacity", "description": "Side-rail hairline rule" },
+      "text-muted-dark": { "value": "0.55", "type": "opacity", "description": "Muted text on dark bands" },
+      "text-muted-light": { "value": "0.55", "type": "opacity", "description": "Muted text on light bands" },
+      "text-faint-dark": { "value": "0.35", "type": "opacity", "description": "Faint/placeholder text on dark" },
+      "divider-dark": { "value": "0.12", "type": "opacity", "description": "Divider on dark bands" },
+      "divider-light": { "value": "0.12", "type": "opacity", "description": "Divider on light bands" }
+    }
+  },
+  "semantic": {
+    "background": {
+      "band-dark": { "value": "{global.color.navy}", "type": "color" },
+      "band-light": { "value": "{global.color.cream}", "type": "color" },
+      "band-deep": { "value": "{global.color.ink-deep}", "type": "color" },
+      "card-on-dark": { "value": "rgba(253,241,213,0.06)", "type": "color" },
+      "card-on-light": { "value": "rgba(90,60,60,0.05)", "type": "color" },
+      "callout": { "value": "rgba(229,172,64,0.08)", "type": "color" }
+    },
+    "text": {
+      "on-dark-primary": { "value": "{global.color.cream}", "type": "color" },
+      "on-dark-secondary": { "value": "rgba(253,241,213,0.72)", "type": "color" },
+      "on-dark-muted": { "value": "rgba(253,241,213,0.55)", "type": "color" },
+      "on-dark-faint": { "value": "rgba(253,241,213,0.35)", "type": "color" },
+      "on-light-primary": { "value": "{global.color.navy}", "type": "color" },
+      "on-light-secondary": { "value": "rgba(90,60,60,0.75)", "type": "color" },
+      "on-light-muted": { "value": "rgba(90,60,60,0.55)", "type": "color" }
+    },
+    "accent": {
+      "default": { "value": "{global.color.coral}", "type": "color", "description": "Caribbean Coral — CTA, links, eyebrows, borders" },
+      "secondary": { "value": "{global.color.olive}", "type": "color" },
+      "tertiary": { "value": "{global.color.slate}", "type": "color" }
+    },
+    "border": {
+      "on-dark": { "value": "rgba(253,241,213,0.12)", "type": "color" },
+      "on-light": { "value": "rgba(90,60,60,0.12)", "type": "color" },
+      "accent": { "value": "{global.color.coral}", "type": "color" },
+      "rail": { "value": "rgba(128,128,128,0.2)", "type": "color" }
+    }
+  },
+  "component": {
+    "nav": {
+      "height": { "value": "{global.spacing.nav-height}", "type": "spacing" },
+      "background": { "value": "{global.color.navy}", "type": "color" },
+      "text": { "value": "rgba(253,241,213,0.6)", "type": "color" },
+      "text-hover": { "value": "{global.color.coral}", "type": "color" },
+      "border": { "value": "rgba(253,241,213,0.1)", "type": "color" }
+    },
+    "button-primary": {
+      "background": { "value": "{global.color.coral}", "type": "color" },
+      "text": { "value": "#FFFFFF", "type": "color" },
+      "border": { "value": "{global.color.coral}", "type": "color" },
+      "radius": { "value": "{global.borderRadius.pill}", "type": "borderRadius" },
+      "padding-h": { "value": "32", "type": "spacing" },
+      "padding-v": { "value": "14", "type": "spacing" }
+    },
+    "button-outline-dark": {
+      "background": { "value": "transparent", "type": "color" },
+      "text": { "value": "{global.color.cream}", "type": "color" },
+      "border": { "value": "rgba(253,241,213,0.35)", "type": "color" },
+      "radius": { "value": "{global.borderRadius.pill}", "type": "borderRadius" }
+    },
+    "button-outline-light": {
+      "background": { "value": "transparent", "type": "color" },
+      "text": { "value": "{global.color.navy}", "type": "color" },
+      "border": { "value": "rgba(90,60,60,0.3)", "type": "color" },
+      "radius": { "value": "{global.borderRadius.pill}", "type": "borderRadius" }
+    },
+    "card": {
+      "background-dark": { "value": "{semantic.background.card-on-dark}", "type": "color" },
+      "background-light": { "value": "{semantic.background.card-on-light}", "type": "color" },
+      "border-dark": { "value": "rgba(253,241,213,0.1)", "type": "color" },
+      "border-light": { "value": "rgba(90,60,60,0.1)", "type": "color" },
+      "radius": { "value": "{global.borderRadius.card}", "type": "borderRadius" },
+      "padding": { "value": "{global.spacing.card-pad}", "type": "spacing" }
+    },
+    "callout": {
+      "background": { "value": "{semantic.background.callout}", "type": "color" },
+      "border-left": { "value": "{global.color.coral}", "type": "color" },
+      "border-width": { "value": "3", "type": "borderWidth" }
+    }
+  }
+}
