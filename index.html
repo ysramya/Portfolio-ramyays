@@ -383,8 +383,8 @@ img { max-width: 100%; display: block; }
   font-weight: 700; text-transform: uppercase; letter-spacing: -.01em;
   font-size: clamp(2.2rem,5.5vw,5rem); line-height: .96; margin-bottom: 2.4rem;
 }
-.footer-cta a { color: var(--cream); border-bottom: 3px solid var(--coral); }
-.footer-cta a:hover { color: var(--coral); }
+.footer-cta a { color: #888530; border-bottom: 3px solid #888530; }
+.footer-cta a:hover { color: #b0ae4a; }
 .footer-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; padding-top: 2rem; border-top: 1px solid rgba(253,241,213,.12); }
 .footer-name { font-weight: 700; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; }
 .footer-sub  { font-size: .68rem; font-weight: 300; letter-spacing: .08em; color: rgba(253,241,213,.5); margin-top: .3rem; }
@@ -413,7 +413,7 @@ img { max-width: 100%; display: block; }
    CHAT WIDGET — uses legacy --orange / --paper vars
 ══════════════════════════════════════════════════ */
 .chat-widget { position: fixed; bottom: 1.6rem; right: 1.6rem; z-index: 6001; display: flex; flex-direction: column; align-items: flex-end; gap: .75rem; }
-.chat-btn { width: 52px; height: 52px; border-radius: 50%; background: var(--coral); color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(229,172,64,.4); transition: transform .3s cubic-bezier(.34,1.56,.64,1); flex-shrink: 0; }
+.chat-btn { width: 52px; height: 52px; border-radius: 50%; background: #888530; color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(136,133,48,.45); transition: transform .3s cubic-bezier(.34,1.56,.64,1); flex-shrink: 0; }
 .chat-btn:hover { transform: scale(1.08); }
 .chat-btn svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .chat-panel { width: 330px; background: var(--cream); border: 1px solid rgba(90,60,60,.15); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 24px 64px rgba(42,26,26,.4); transform-origin: bottom right; transform: scale(.9) translateY(10px); opacity: 0; pointer-events: none; transition: transform .3s cubic-bezier(.34,1.56,.64,1), opacity .2s; position: absolute; bottom: 64px; right: 0; }
@@ -549,7 +549,7 @@ img { max-width: 100%; display: block; }
       </a>
 
       <a href="asap.html" class="wcard reveal" style="--accent:#D39474;">
-        <div class="wcard-img"><img src="img/ASAP/Thumbnail%20image.jpeg" alt="ASAP — AI Scaffolded Action Planner"></div>
+        <div class="wcard-img"><img src="img/ASAP/Thumbnail%20image.jpeg" alt="ASAP — AI Scaffolded Action Planner" style="object-position: top center;"></div>
         <p class="wcard-tag">Academic Planning · AI UX</p>
         <p class="wcard-title">ASAP</p>
         <p class="wcard-desc">AI-scaffolded academic planner. 6 research interviews, 4 usability scenarios, live Claude API integration.</p>
@@ -557,7 +557,7 @@ img { max-width: 100%; display: block; }
       </a>
 
       <a href="mainstreet.html" class="wcard reveal" style="--accent:#5A3C3C;">
-        <div class="wcard-img"><img src="img/mainstreet-dashboard.jpg" alt="Mainstreet PM Dashboard" loading="lazy"></div>
+        <div class="wcard-img"><img src="img/mainstreet-dashboard.png" alt="Mainstreet PM Dashboard" loading="lazy" style="object-position: left center;"></div>
         <p class="wcard-tag">Data Analytics · Power BI</p>
         <p class="wcard-title">PM Dashboard — Mainstreet</p>
         <p class="wcard-desc">Real-time Power BI dashboard giving 6 Portfolio Managers a single-screen view of $1B+ AUA — built from PM interviews.</p>
