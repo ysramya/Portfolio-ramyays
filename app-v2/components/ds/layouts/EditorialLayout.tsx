@@ -13,14 +13,17 @@ import type { ReactNode } from "react";
 export default function EditorialLayout({
   children,
   className = "",
+  maxWidth = "1280px",
 }: {
   children: ReactNode;
   className?: string;
+  /** Override the default 1280px canvas — pass "1440px" etc. for sections that need more room (statistics, research). */
+  maxWidth?: string;
 }) {
   return (
     <section
       className={`py-20 md:py-28 px-6 md:px-10 ${className}`}
-      style={{ maxWidth: "1280px", marginInline: "auto" }}
+      style={{ maxWidth, marginInline: "auto" }}
     >
       <div
         className="grid gap-x-6 gap-y-10"

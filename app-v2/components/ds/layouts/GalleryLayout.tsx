@@ -12,14 +12,17 @@ import type { ReactNode } from "react";
 export default function GalleryLayout({
   children,
   className = "",
+  maxWidth = "1440px",
 }: {
   children: ReactNode;
   className?: string;
+  /** Override the default 1440px canvas — pass "1600px" for wider research/collage moments. */
+  maxWidth?: string;
 }) {
   return (
     <section
       className={`py-20 md:py-28 px-6 md:px-10 ${className}`}
-      style={{ maxWidth: "1440px", marginInline: "auto" }}
+      style={{ maxWidth, marginInline: "auto" }}
     >
       <div
         className="grid gap-4"

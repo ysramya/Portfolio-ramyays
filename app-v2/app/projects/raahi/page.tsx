@@ -336,7 +336,7 @@ export default function RaahiPage() {
         minHeight="60dvh"
         overlayClassName="items-center justify-items-center text-center"
       >
-        <Link href="/#work" className="group">
+        <Link href="/projects/wellnut" className="group">
           <span
             className="inline-flex rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.22em] uppercase mb-6"
             style={tintedGlass(accent)}
