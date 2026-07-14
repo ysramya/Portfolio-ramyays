@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+:root {
+  --color-green: #4caf50;
+  --color-yellow: #ffdd44;
+
+  --color-bg: #0e0e0e;
+  --color-bg-secondary: #171717;
+  --color-surface: #1f1f1f;
+  --color-border: #2b2b2b;
+
+  --color-ink: #f5f5f5;
+  --color-ink-muted: #b5b5b5;
+  --color-ink-faint: #8a8a8a;
+
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-inter);
+
+  --nav-h: 76px;
+  --wrap-max: 1240px;
+}
+
+@theme inline {
+  --color-green: var(--color-green);
+  --color-yellow: var(--color-yellow);
+  --color-bg: var(--color-bg);
+  --color-bg-secondary: var(--color-bg-secondary);
+  --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-ink-faint: var(--color-ink-faint);
+  --color-surface: var(--color-surface);
+  --color-border: var(--color-border);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.wrap {
+  max-width: var(--wrap-max);
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), serif;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* ── Liquid glass ──
+   Translucent, blurred surfaces with a soft top sheen and hairline edge,
+   used purposefully on floating/interactive chrome (nav, buttons, chips,
+   the chat panel) — never on the editorial project rows, which stay flat
+   per their own spec. */
+.glass {
+  background: rgba(20, 20, 20, 0.6);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.28);
+}
+
+.glass-strong {
+  background: rgba(20, 20, 20, 0.72);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 16px 48px rgba(0, 0, 0, 0.36);
+}
+
+.glass-nav {
+  background: rgba(14, 14, 14, 0.6);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
