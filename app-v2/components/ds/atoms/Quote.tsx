@@ -62,14 +62,16 @@ export default function Quote({
       >
         {text}
       </p>
-      <div
-        className={`relative mt-6 inline-flex items-center gap-3 rounded-full px-4 py-2 ${attributionAlign}`}
-        style={tintedGlass(accent)}
-      >
-        <span className="text-xs tracking-wide text-[var(--color-ink-muted)]">
-          {attribution}
-        </span>
-      </div>
+      {attribution && (
+        <div
+          className={`relative mt-6 inline-flex items-center gap-3 rounded-full px-4 py-2 ${attributionAlign}`}
+          style={tintedGlass(accent)}
+        >
+          <span className="text-xs tracking-wide text-[var(--color-ink-muted)]">
+            {attribution}
+          </span>
+        </div>
+      )}
     </motion.div>
   );
 }
