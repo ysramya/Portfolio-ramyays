@@ -239,14 +239,14 @@ export default function WellnutPage() {
       </GradientField>
 
       {/* 8 — Large editorial quote: standalone, centered, 56-72px, full-width canvas */}
-      <EditorialLayout>
-        <div style={{ gridColumn: "2 / 12" }}>
+      <EditorialLayout maxWidth="1600px">
+        <div style={{ gridColumn: "1 / 13" }}>
           <Quote
-            size="large"
             align="center"
             accent={accent}
-            text="61% of students who experience a mental health need rarely or never seek support — yet 71% said VR meditation could help them."
+            text={"61% of students who experience a mental health need rarely or never seek\nsupport — yet 71% said VR meditation could help them."}
             attribution="Primary research synthesis — 33-participant student survey, Dec 2024"
+            style={{ maxWidth: "100%" }}
           />
         </div>
         <div style={{ gridColumn: "3 / 11", justifySelf: "center" }}>
