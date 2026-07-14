@@ -747,34 +747,24 @@ export default function AsapPage() {
             <ImageFrame src={s.src} alt={s.alt} aspect="9/19.5" objectFit="contain" style={{ backgroundColor: asapPalette.charcoal }} />
           </div>
         ))}
-        <div style={{ gridColumn: "1 / 13", marginTop: "1rem" }}>
+        <div style={{ gridColumn: "3 / 11", marginTop: "1rem" }}>
           <Eyebrow color={gold}>Team Alignment Activity</Eyebrow>
-          <div className="mt-4">
+          <p className="mt-2 text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
+            Figma — component library, design tokens, and the full screen set. Also the
+            board used for the in-class alignment activity: collaborative problem
+            framing and feature prioritisation.
+          </p>
+          <div className="mt-4" style={{ maxWidth: "640px" }}>
             <ImageFrame
               src="/img/asap/figma-overview.png"
-              alt="ASAP in-class design alignment activity"
+              alt="ASAP Figma component library, screen overview, and in-class design alignment activity"
               aspect="1.525/1"
               objectFit="contain"
-              caption="In-class alignment activity — collaborative problem framing and feature prioritisation"
+              caption="Figma component library and design tokens — also the in-class alignment activity board"
             />
           </div>
         </div>
       </GalleryLayout>
-
-      <EditorialLayout maxWidth="1440px">
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow>Figma Design System Overview</Eyebrow>
-          <div className="mt-4">
-            <ImageFrame
-              src="/img/asap/figma-overview.png"
-              alt="ASAP Figma component library and screen overview"
-              aspect="1.525/1"
-              objectFit="contain"
-              caption="Figma — component library, design tokens, and full screen set"
-            />
-          </div>
-        </div>
-      </EditorialLayout>
 
       {/* 13 — 07 Usability Findings: heading, tension quote, wins/gaps (sage vs. amber) */}
       <EditorialLayout maxWidth="1440px">
