@@ -18,6 +18,7 @@ export default function ImageFrame({
   caption,
   aspect = "4/3",
   rotate,
+  objectFit = "cover",
   style,
   className = "",
 }: {
@@ -26,6 +27,10 @@ export default function ImageFrame({
   caption?: string;
   aspect?: string;
   rotate?: number;
+  /** Use "contain" for screenshots/boards where content near the edges
+   * matters — cropping them via "cover" trims real information. Reserve
+   * "cover" (the default) for photos, where a light crop is fine. */
+  objectFit?: "cover" | "contain";
   style?: CSSProperties;
   className?: string;
 }) {
@@ -39,7 +44,13 @@ export default function ImageFrame({
       style={{ borderRadius: radius.card, ...style }}
     >
       <div className="relative w-full h-full" style={{ aspectRatio: aspect }}>
-        <Image src={src} alt={alt} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className={objectFit === "contain" ? "object-contain" : "object-cover"}
+        />
       </div>
       {caption && (
         <figcaption className="absolute bottom-0 inset-x-0 p-3 text-xs text-white/80 bg-gradient-to-t from-black/70 to-transparent">

@@ -31,8 +31,8 @@ export default function Quote({
       whileInView={{ y: 0 }}
       viewport={{ once: true, margin: "-15% 0px" }}
       transition={{ duration: motionTokens.duration.slow, ease: motionTokens.ease }}
-      className={`relative ${align === "right" ? "text-right" : ""}`}
-      style={style}
+      className={`relative ${align === "right" ? "text-right ml-auto" : ""}`}
+      style={{ maxWidth: "56ch", ...style }}
     >
       <span
         aria-hidden
@@ -41,7 +41,10 @@ export default function Quote({
       >
         &ldquo;
       </span>
-      <p className="relative font-[family-name:var(--font-display)] italic font-medium leading-[1.08] text-[clamp(1.6rem,3.6vw,3rem)]">
+      {/* Capped at 2.25rem (not the display-title scale) and given a wide
+          measure (56ch) so real quotes land close to two lines instead of
+          wrapping into a five/six-line block. */}
+      <p className="relative font-[family-name:var(--font-display)] italic font-medium leading-[1.15] text-[clamp(1.35rem,2.6vw,2.25rem)]">
         {text}
       </p>
       <div

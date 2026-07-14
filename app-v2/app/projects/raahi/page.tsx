@@ -81,6 +81,17 @@ export default function RaahiPage() {
         </dl>
       </EditorialLayout>
 
+      {/* 2.5 — Metrics: EditorialLayout, hero stat col 1-7, 2 supporting stacked col 9-13 */}
+      <EditorialLayout>
+        <div style={{ gridColumn: "1 / 8" }}>
+          <MetricStat size="hero" accent={accent} value="78.9%" label="of surveyed practitioners regularly encounter dark patterns" />
+        </div>
+        <div className="flex flex-col gap-8" style={{ gridColumn: "9 / 13", alignSelf: "end" }}>
+          <MetricStat accent={accent} value="57+" label="Practitioners surveyed, US & India" />
+          <MetricStat accent={accent} value="12" label="In-depth interviews" />
+        </div>
+      </EditorialLayout>
+
       {/* 3 — The Problem: Split, image narrower-left 5:7 */}
       <SplitLayout
         ratio={[5, 7]}
@@ -88,7 +99,9 @@ export default function RaahiPage() {
           <ImageFrame
             src="/img/raahi/research-framework.png"
             alt="Research and workshop board mapping the problem"
-            aspect="4/5"
+            aspect="2.23/1"
+            objectFit="contain"
+            style={{ maxWidth: "85%" }}
           />
         }
         right={
@@ -118,7 +131,6 @@ export default function RaahiPage() {
           accent={accent}
           text="I know dark patterns when I see them — but I have no systematic way to document or prove it to a stakeholder."
           attribution="The insight that started it — senior UX practitioner, March 2025"
-          style={{ maxWidth: "44ch" }}
         />
       </FullBleedLayout>
 
@@ -148,14 +160,14 @@ export default function RaahiPage() {
 
       {/* 6 — Research collage: GalleryLayout, large + two staggered/overlapping */}
       <GalleryLayout>
-        <div style={{ gridColumn: "1 / 8" }}>
-          <ImageFrame src="/img/raahi/survey-results.png" alt="Survey results and taxonomy page" aspect="16/11" />
+        <div style={{ gridColumn: "1 / 7" }}>
+          <ImageFrame src="/img/raahi/survey-results.png" alt="Survey results and taxonomy page" aspect="1.87/1" objectFit="contain" />
         </div>
-        <div style={{ gridColumn: "8 / 13" }}>
-          <ImageFrame src="/img/raahi/design-workflow.png" alt="Decision-making workshop board" aspect="4/5" />
+        <div style={{ gridColumn: "8 / 12" }}>
+          <ImageFrame src="/img/raahi/design-workflow.png" alt="Decision-making workshop board" aspect="4/3" objectFit="contain" />
         </div>
-        <div style={{ gridColumn: "5 / 11", marginTop: "-8%" }}>
-          <ImageFrame src="/img/raahi/product-specs.png" alt="Product specs and brand board" aspect="16/9" />
+        <div style={{ gridColumn: "6 / 10", marginTop: "-6%" }}>
+          <ImageFrame src="/img/raahi/product-specs.png" alt="Product specs and brand board" aspect="0.83/1" objectFit="contain" />
         </div>
       </GalleryLayout>
 
@@ -227,11 +239,11 @@ export default function RaahiPage() {
 
       {/* 10 — Decisions collage: GalleryLayout with rotation */}
       <GalleryLayout>
-        <div style={{ gridColumn: "1 / 8" }}>
+        <div style={{ gridColumn: "1 / 7" }}>
           <ImageFrame src="/img/raahi/IMG_8877.jpg" alt="Testing decisions with practitioners" aspect="4/5" rotate={-2} />
         </div>
-        <div style={{ gridColumn: "7 / 13", marginTop: "10%" }}>
-          <ImageFrame src="/img/raahi/design-workflow.png" alt="Decision workshop board" aspect="4/3" rotate={2} />
+        <div style={{ gridColumn: "8 / 13", marginTop: "10%" }}>
+          <ImageFrame src="/img/raahi/design-workflow.png" alt="Decision workshop board" aspect="4/3" objectFit="contain" rotate={2} />
         </div>
       </GalleryLayout>
 
@@ -283,26 +295,6 @@ export default function RaahiPage() {
           </p>
         </div>
       </FullBleedLayout>
-
-      {/* 13 — Metrics: EditorialLayout, hero stat col 1-7, 3 supporting stacked col 8-13 */}
-      <EditorialLayout>
-        <div style={{ gridColumn: "1 / 8" }}>
-          <MetricStat size="hero" accent={accent} value="78.9%" label="of surveyed practitioners regularly encounter dark patterns" />
-        </div>
-        <div className="flex flex-col gap-8" style={{ gridColumn: "9 / 13", alignSelf: "end" }}>
-          <MetricStat accent={accent} value="57+" label="Practitioners surveyed, US & India" />
-          <MetricStat accent={accent} value="12" label="In-depth interviews" />
-          <MetricStat accent={accent} value="iD Lab" label="Shark Tank — competitively funded" />
-        </div>
-      </EditorialLayout>
-
-      {/* 14 — Timeline: ReadingLayout, narrow centered pacing line */}
-      <ReadingLayout className="text-center">
-        <div className="h-px w-12 mx-auto mb-6" style={{ backgroundColor: accent }} />
-        <p className="text-[0.62rem] font-semibold tracking-[0.28em] uppercase text-[var(--color-ink-faint)]">
-          Feb–Mar 2025 · Research — April 2025 · iD Lab Funded — May 2025 · Validated
-        </p>
-      </ReadingLayout>
 
       {/* 15 — Now: ReadingLayout, pure text, no image */}
       <ReadingLayout>
