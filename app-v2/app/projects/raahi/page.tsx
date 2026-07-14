@@ -296,6 +296,24 @@ export default function RaahiPage() {
         </div>
       </FullBleedLayout>
 
+      {/* 13.5 — Demo: EditorialLayout, video spanning most of the grid */}
+      <EditorialLayout>
+        <div style={{ gridColumn: "1 / 13" }}>
+          <Eyebrow>Watch It Work</Eyebrow>
+          <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight max-w-[20ch]">
+            Raahi, spotting a dark pattern in real time.
+          </h3>
+          <video
+            className="mt-8 w-full rounded-2xl"
+            style={{ maxWidth: "980px" }}
+            src="/img/raahi/raahi-demo.mp4"
+            controls
+            playsInline
+            preload="metadata"
+          />
+        </div>
+      </EditorialLayout>
+
       {/* 15 — Now: ReadingLayout, pure text, no image */}
       <ReadingLayout>
         <Eyebrow>Now</Eyebrow>
