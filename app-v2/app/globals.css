@@ -60,10 +60,26 @@ img {
   display: block;
 }
 
+/* Three container widths — pick per section, don't force everything into one.
+   Reading: pure prose, no companion image. Content (.wrap): the default,
+   most sections. Full: collages/full-bleed moments that should feel like
+   they escape the grid rather than sit inside a column. */
+.wrap-reading {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+}
+
 .wrap {
   max-width: var(--wrap-max);
   margin: 0 auto;
   padding: 0 clamp(1.5rem, 5vw, 4rem);
+}
+
+.wrap-full {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2.5rem);
 }
 
 h1,

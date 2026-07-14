@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import {
   Spotlight,
-  Narrative,
   Evidence,
   Gallery,
   FeatureReveal,
@@ -11,6 +10,7 @@ import {
   Transition,
   NextProject,
 } from "@/components/ds/editorial";
+import { SplitLayout } from "@/components/ds";
 import { tintedGlass } from "@/components/ds/tokens";
 import { raahiTheme } from "./theme";
 
@@ -40,15 +40,15 @@ export default function RaahiPage() {
         accent={accent}
       />
 
-      {/* Detail strip: description + role/duration/team/tools, composed from the
-          same glass-chip language Evidence and Quote already use — not a new
-          layout, just content inside the existing visual vocabulary. */}
-      <div className="wrap py-14">
-        <p className="text-xl max-w-[52ch] text-[var(--color-ink-muted)]">
+      {/* Meta strip: intro text left, glass fact-panel right — a real
+          two-column split instead of a lone narrow text block, using glass
+          for metadata exactly as the liquid-glass guidance intends. */}
+      <div className="wrap py-16 md:py-20 grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-10 items-start">
+        <p className="text-2xl md:text-3xl leading-snug max-w-[24ch]">
           A browser plugin that catches dark and manipulative patterns on
           the web.
         </p>
-        <dl className="mt-8 flex flex-wrap gap-3">
+        <dl className="grid grid-cols-2 gap-3">
           {[
             { label: "Role", value: "Product Designer + Co-founder" },
             { label: "Duration", value: "16 Weeks" },
@@ -65,10 +65,13 @@ export default function RaahiPage() {
         </dl>
       </div>
 
-      <Narrative
-        chapter="The Problem"
-        pullLine="Dark patterns are everywhere. No one's watching for them."
+      <SplitLayout
+        eyebrow="The Problem"
+        title="Dark patterns are everywhere. No one's watching for them."
         body="Raahi is an AI browser plugin that detects dark and manipulative patterns on any website, in real time."
+        image="/img/raahi/research-framework.png"
+        imageAlt="Research and workshop board mapping the problem"
+        imageSide="right"
         accent={accent}
       />
 
@@ -101,20 +104,21 @@ export default function RaahiPage() {
         accent={accent}
       />
 
-      <Transition label="Research" accent={accent} />
-
       <Gallery
         images={[
-          { src: "/img/raahi/research-framework.png", alt: "Research and workshop board", size: "large" },
-          { src: "/img/raahi/survey-results.png", alt: "Survey results and taxonomy page" },
+          { src: "/img/raahi/survey-results.png", alt: "Survey results and taxonomy page", size: "large" },
+          { src: "/img/raahi/design-workflow.png", alt: "Decision-making workshop board" },
           { src: "/img/raahi/product-specs.png", alt: "Product specs and brand board" },
         ]}
       />
 
-      <Narrative
-        pullLine="12 interviews. 57+ surveys. One shared vocabulary."
+      <SplitLayout
+        eyebrow="Research"
+        title="12 interviews. 57+ surveys. One shared vocabulary."
         body="Affinity mapping across 12 practitioner interviews and 57 survey responses — practitioners confirmed the problem and their intent to use a dedicated tool."
-        align="right"
+        image="/img/raahi/IMG_8875.jpg"
+        imageAlt="Presenting practitioner research findings"
+        imageSide="left"
         accent={accent}
       />
 
@@ -123,11 +127,16 @@ export default function RaahiPage() {
         attribution="What confirmed the bet — practitioner survey, Feb–Mar 2025"
         accent={accent}
       />
-      <p className="wrap -mt-8 pb-8 text-xs text-[var(--color-ink-faint)] max-w-[60ch]">
-        Methodological limitation. Participants were self-selected through a
-        university network — these figures are directional, not
-        statistically representative.
-      </p>
+      <div className="wrap -mt-16 pb-8 flex justify-center">
+        <p
+          className="inline-block max-w-[60ch] text-center rounded-xl px-5 py-3 text-xs text-[var(--color-ink-faint)]"
+          style={tintedGlass(accent, 0.05)}
+        >
+          Methodological limitation. Participants were self-selected
+          through a university network — these figures are directional,
+          not statistically representative.
+        </p>
+      </div>
 
       <Evidence
         title="What the data made undeniable."
@@ -159,8 +168,8 @@ export default function RaahiPage() {
       <Workshop
         label="Decisions"
         images={[
-          { src: "/img/raahi/design-workflow.png", alt: "Decision-making workshop board" },
-          { src: "/img/raahi/IMG_8875.jpg", alt: "Testing decisions with practitioners" },
+          { src: "/img/raahi/IMG_8877.jpg", alt: "Testing decisions with practitioners" },
+          { src: "/img/raahi/design-workflow.png", alt: "Decision workshop board" },
         ]}
         accent={accent}
       />
@@ -209,10 +218,13 @@ export default function RaahiPage() {
 
       <Transition label="Feb–Mar 2025 · Research — April 2025 · iD Lab Funded — May 2025 · Validated" accent={accent} />
 
-      <Narrative
-        chapter="Now"
-        pullLine="This project is becoming an academic research paper."
+      <SplitLayout
+        eyebrow="Now"
+        title="This project is becoming an academic research paper."
         body="I'm leading a team of five — a PhD student and three master's students — alongside two faculty advisors, studying how dark patterns emerge in generative AI. The study is in data collection now, targeting CHI 2027."
+        image="/img/profile/ramya.jpg"
+        imageAlt="Ramya Yerramilli"
+        imageSide="right"
         accent={accent}
       />
 

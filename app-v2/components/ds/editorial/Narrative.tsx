@@ -13,9 +13,12 @@ import { motion as motionTokens } from "../tokens";
  * Ideal imagery: none — this block is text-only by design.
  * Ideal typography: a large italic pull-line (the chapter's thesis)
  * followed by a body paragraph at a comfortable reading measure.
- * Spacing: the text column is deliberately offset (not centered, not
- * full-width) — `align` alternates left/right per call site so a run of
- * Narrative blocks down a page doesn't all look like the same template.
+ * Spacing: sits in the reading-width container (~760px), centered — a
+ * narrow column inside a wide viewport reads as unfinished unless the
+ * container itself commits to being narrow. `align` still offers a
+ * left/right text-align variant for the rare run of two Narrative blocks
+ * back to back, but this block should be used sparingly — most "text
+ * about an image" moments belong in SplitLayout, not here.
  * Animation: line-by-line typography reveal (translateY, staggered).
  * Responsive: offset collapses to full-width on mobile — there's no room
  * for an asymmetric margin at 375px.
@@ -34,10 +37,8 @@ export default function Narrative({
   accent: string;
 }) {
   return (
-    <section className="wrap py-20 md:py-28">
-      <div
-        className={`max-w-[62ch] ${align === "right" ? "md:ml-auto md:text-right" : ""}`}
-      >
+    <section className="wrap-reading py-20 md:py-28">
+      <div className={align === "right" ? "md:text-right" : ""}>
         {chapter && (
           <motion.p
             initial={{ y: 10 }}
