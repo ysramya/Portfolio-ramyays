@@ -16,7 +16,7 @@ import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 
 const links = [
-  { href: "/projects", label: "Projects" },
+  { href: "/#work", label: "Projects" },
   { href: "/about", label: "About" },
   { href: "/resume.pdf", label: "Resume", external: true },
 ];
