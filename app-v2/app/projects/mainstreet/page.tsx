@@ -271,15 +271,14 @@ export default function MainstreetPage() {
         </EditorialLayout>
       </GradientField>
 
-      {/* 4 — Pull quote: standalone large editorial quote */}
-      <ReadingLayout className="text-center">
+      {/* 4 — Pull quote: standalone editorial quote, compact — a pause, not a full screen */}
+      <ReadingLayout className="text-center py-16 md:py-20">
         <Quote
           align="center"
-          size="large"
           accent={accent}
-          text={"How might we give each Portfolio Manager a single, live screen\nthat replaces their Monday morning spreadsheet ritual?"}
+          text="How might we give each Portfolio Manager a single, live screen that replaces their Monday morning spreadsheet ritual?"
           attribution=""
-          style={{ maxWidth: "100%" }}
+          style={{ maxWidth: "48ch" }}
         />
       </ReadingLayout>
 
@@ -413,52 +412,28 @@ export default function MainstreetPage() {
         </div>
       </GalleryLayout>
 
-      {/* 9 — Feature Breakdown: editorial splits pairing the dashboard with explanation */}
-      <SplitLayout
-        ratio={[6, 6]}
-        left={
-          <ImageFrame
-            src="/img/mainstreet/dashboard.jpg"
-            alt="PM Dashboard — trend and wallet-share detail"
-            aspect="1.778/1"
-            objectFit="contain"
-          />
-        }
-        right={
-          <div>
-            <Eyebrow>Trend Context — Relationship Trend</Eyebrow>
-            <p className="mt-3 text-[var(--color-ink-muted)] leading-relaxed">
-              Immediately after the headline tiles, the trend chart answers the next
-              question a PM has: is this book growing or shrinking? Wallet share sits
-              beside it — the same visual weight, because both questions get asked in
-              the same breath during a review.
-            </p>
-          </div>
-        }
-      />
-
-      <SplitLayout
-        ratio={[6, 6]}
-        left={
-          <div>
-            <Eyebrow color={olive}>Client-Level Detail — The Table</Eyebrow>
-            <p className="mt-3 text-[var(--color-ink-muted)] leading-relaxed">
-              The table is deliberately last. It's where a PM goes to investigate a
-              number the tiles and charts surfaced — not where they start. Growth
-              percentages are color-coded green/red so outliers are visible without
-              reading every row.
-            </p>
-          </div>
-        }
-        right={
-          <ImageFrame
-            src="/img/mainstreet/dashboard.jpg"
-            alt="PM Dashboard — client-level detail table"
-            aspect="1.778/1"
-            objectFit="contain"
-          />
-        }
-      />
+      {/* 9 — Feature Breakdown: reads the same screenshot above, top to bottom —
+          no repeated image, just the two callouts that walk through it */}
+      <EditorialLayout maxWidth="1500px">
+        <div className="rounded-2xl p-8" style={{ gridColumn: "1 / 7", ...tintedGlass(accent, 0.07) }}>
+          <Eyebrow>Trend Context — Relationship Trend</Eyebrow>
+          <p className="mt-3 text-[var(--color-ink-muted)] leading-relaxed">
+            Immediately after the headline tiles, the trend chart answers the next
+            question a PM has: is this book growing or shrinking? Wallet share sits
+            beside it — the same visual weight, because both questions get asked in
+            the same breath during a review.
+          </p>
+        </div>
+        <div className="rounded-2xl p-8" style={{ gridColumn: "7 / 13", ...tintedGlass(olive, 0.07) }}>
+          <Eyebrow color={olive}>Client-Level Detail — The Table</Eyebrow>
+          <p className="mt-3 text-[var(--color-ink-muted)] leading-relaxed">
+            The table is deliberately last. It's where a PM goes to investigate a
+            number the tiles and charts surfaced — not where they start. Growth
+            percentages are color-coded green/red so outliers are visible without
+            reading every row.
+          </p>
+        </div>
+      </EditorialLayout>
 
       {/* 10 — Before vs After: two glass panels, animated-ready divider */}
       <EditorialLayout maxWidth="1500px">
@@ -571,10 +546,7 @@ export default function MainstreetPage() {
           className="absolute w-[500px] h-[500px] rounded-full blur-[120px] opacity-30 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
           style={{ background: `radial-gradient(circle, ${accent} 0%, transparent 70%)` }}
         />
-        <div className="relative z-10 grid px-6 md:px-10 py-24 items-center justify-items-center text-center gap-6" style={{ minHeight: "60dvh" }}>
-          <div className="w-[60%] max-w-[420px] opacity-90">
-            <ImageFrame src="/img/mainstreet/dashboard.jpg" alt="PM Dashboard Overview" aspect="1.778/1" objectFit="contain" />
-          </div>
+        <div className="relative z-10 grid px-6 md:px-10 py-24 items-center justify-items-center text-center" style={{ minHeight: "60dvh" }}>
           <h2 className="font-[family-name:var(--font-display)] font-semibold leading-[0.95] text-[clamp(2rem,5.5vw,4rem)] text-[var(--color-ink)]">
             One screen. Six managers. Zero spreadsheets.
           </h2>
