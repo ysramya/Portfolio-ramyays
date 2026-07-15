@@ -33,6 +33,7 @@ function SectionIntro({
 export default function BeyondTheScreenPage() {
   const paintings = getGalleryImages("paintings");
   const photography = getGalleryImages("photography");
+  const interiors = getGalleryImages("interiors");
   const cooking = getGalleryImages("cooking");
 
   return (
@@ -93,10 +94,22 @@ export default function BeyondTheScreenPage() {
         </div>
       </section>
 
-      {/* 03 — Cooking */}
+      {/* 03 — Interiors */}
       <section style={sectionStyle}>
         <SectionIntro
-          eyebrow="03 · Cooking"
+          eyebrow="03 · Interiors"
+          title="Interiors"
+          description="Rooms hold the same questions I ask in research — how does a space guide attention, invite pause, or shape a mood before anyone notices why. Interior photography is where that instinct started."
+        />
+        <div className="mx-auto px-6 mt-14" style={{ maxWidth: "1500px" }}>
+          <MasonryGallery images={interiors} emptyLabel="Interiors coming soon." />
+        </div>
+      </section>
+
+      {/* 04 — Cooking */}
+      <section style={{ ...sectionStyle, background: "var(--color-bg-secondary)" }}>
+        <SectionIntro
+          eyebrow="04 · Cooking"
           title="Cooking"
           description="Cooking is another form of design. Every meal is a balance of experimentation, iteration, and intuition. It's where planning meets improvisation, and where small decisions come together to create something meaningful."
         />
