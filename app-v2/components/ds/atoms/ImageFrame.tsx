@@ -41,9 +41,13 @@ export default function ImageFrame({
       viewport={{ once: true, margin: "-10% 0px" }}
       transition={{ duration: motionTokens.duration.slow, ease: motionTokens.ease }}
       className={`relative overflow-hidden ${className}`}
-      style={{ borderRadius: radius.card, ...style }}
+      style={{ borderRadius: radius.card, alignSelf: "start", ...style }}
     >
-      <div className="relative w-full h-full" style={{ aspectRatio: aspect }}>
+      {/* w-full only (no h-full) — a definite height would override
+          aspect-ratio per the CSS spec. alignSelf:"start" above stops
+          CSS Grid's default row-stretch from giving this figure a
+          height that isn't its own aspect ratio. */}
+      <div className="relative w-full" style={{ aspectRatio: aspect }}>
         <Image
           src={src}
           alt={alt}
