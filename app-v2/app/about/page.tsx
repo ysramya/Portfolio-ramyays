@@ -19,7 +19,7 @@ export default function AboutPage() {
         className="mx-auto grid grid-cols-1 md:grid-cols-[45%_55%] gap-12 md:gap-16 lg:gap-20 items-center px-6"
         style={{ maxWidth: "1400px", padding: "clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem)" }}
       >
-        <AboutPortrait src="/img/profile/ramya.jpg" alt="Portrait of Ramya Yerramilli" />
+        <AboutPortrait src="/img/about/IMG_8578.jpeg" alt="Portrait of Ramya Yerramilli" />
 
         <div style={{ maxWidth: "700px" }}>
           <p className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase text-[var(--color-green)]">
