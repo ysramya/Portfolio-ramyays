@@ -18,6 +18,7 @@ import Logo from "./Logo";
 const links = [
   { href: "/#work", label: "Projects" },
   { href: "/about", label: "About" },
+  { href: "/beyond-the-screen", label: "Beyond the Screen" },
   { href: "/resume.pdf", label: "Resume", external: true },
 ];
 

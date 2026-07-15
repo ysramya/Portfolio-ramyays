@@ -379,7 +379,33 @@ export default function InvisibleImpactsPage() {
         </div>
       </EditorialLayout>
 
-      {/* 14 — Next project: FullBleed, loops back to Raahi */}
+      {/* 14 — Continuing Research: the project's academic follow-on, under review */}
+      <GradientField gradient={impactsGradients.deepBlueCharcoal}>
+        <ReadingLayout>
+          <Eyebrow>Continuing Research</Eyebrow>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl leading-[1.05] text-[var(--color-ink)]">
+            Now under review <span className="italic" style={{ color: accent }}>for AIES 2026.</span>
+          </h2>
+          <p className="mt-5 text-[var(--color-ink-muted)] leading-relaxed">
+            Further work on this project has been developed into a research paper,
+            currently under review at the AAAI/ACM Conference on AI, Ethics, and
+            Society.
+          </p>
+          <div className="mt-6 rounded-2xl p-6" style={tintedGlass(accent, 0.08)}>
+            <p className="text-sm leading-relaxed text-[var(--color-ink)]">
+              Cunningham, J. L., Iqbal, S., Nacu, D., Caplan, B., Yerramilli, R., &amp;
+              Mukkamala, D. D. (2026). &ldquo;Making AI Infrastructure Visible:
+              Interactive Art as a Public-Facing AI Ethics Interface.&rdquo;{" "}
+              <em>AAAI/ACM Conference on AI, Ethics, and Society (AIES 2026)</em>.
+            </p>
+            <p className="mt-3 text-xs font-semibold tracking-[0.1em] uppercase" style={{ color: accent }}>
+              Paper #343 · Under Review
+            </p>
+          </div>
+        </ReadingLayout>
+      </GradientField>
+
+      {/* 15 — Next project: FullBleed, loops back to Raahi */}
       <FullBleedLayout
         image="/img/raahi/brand-splash.png"
         imageAlt="Raahi, an AI browser plugin that catches dark patterns"
