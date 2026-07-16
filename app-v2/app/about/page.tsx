@@ -177,7 +177,7 @@ export default function AboutPage() {
 
       {/* 05 — Beyond the Screen: full-bleed editorial CTA */}
       <FullBleedLayout
-        image="/img/beyond-the-screen/photography/IMG_0341.JPG"
+        image="/img/beyond-the-screen/Cityscape/IMG_0341.JPG"
         imageAlt="A photograph from Beyond the Screen"
         minHeight="60dvh"
         imageOpacity={0.55}

@@ -1,8 +1,9 @@
-Drop images for the "Beyond the Screen" page into these four folders:
+Drop images for the "Beyond the Screen" page into these five folders:
 
   paintings/    — digital paintings
-  photography/  — photography (city, landscape, general)
-  interiors/    — interior photography (its own section)
+  Cityscape/    — cityscapes (streets, skylines, architecture)
+  Nature/       — nature and landscape photography
+  interiors/    — interior photography
   cooking/      — food photography
 
 Supported formats: .jpg, .jpeg, .png, .webp

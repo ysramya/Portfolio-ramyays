@@ -5,7 +5,7 @@ import MasonryGallery from "@/components/beyond-the-screen/MasonryGallery";
 export const metadata: Metadata = {
   title: "Beyond the Screen — Ramya Yerramilli",
   description:
-    "Outside of research and design, I explore creativity through digital painting, photography, and cooking.",
+    "Outside of research and design, I explore creativity through digital painting, cityscapes, nature, interiors, and cooking.",
 };
 
 const sectionStyle: React.CSSProperties = { padding: "clamp(4rem, 12vw, 11.25rem) 0" };
@@ -32,7 +32,8 @@ function SectionIntro({
 
 export default function BeyondTheScreenPage() {
   const paintings = getGalleryImages("paintings");
-  const photography = getGalleryImages("photography");
+  const cityscapes = getGalleryImages("Cityscape");
+  const nature = getGalleryImages("Nature");
   const interiors = getGalleryImages("interiors");
   const cooking = getGalleryImages("cooking");
 
@@ -57,9 +58,9 @@ export default function BeyondTheScreenPage() {
         </h1>
         <p className="mt-8 text-lg md:text-xl leading-relaxed text-[var(--color-ink-muted)]" style={{ maxWidth: "62ch" }}>
           Outside of research and design, I explore creativity through digital
-          painting, photography, and cooking. These practices keep me curious,
-          observant, and grounded — qualities that continue to shape how I
-          approach every project.
+          painting, photography — cityscapes, nature, and interiors — and
+          cooking. These practices keep me curious, observant, and grounded —
+          qualities that continue to shape how I approach every project.
         </p>
 
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
@@ -82,22 +83,34 @@ export default function BeyondTheScreenPage() {
         </div>
       </section>
 
-      {/* 02 — Photography */}
+      {/* 02 — Cityscapes */}
       <section style={{ ...sectionStyle, background: "var(--color-bg-secondary)" }}>
         <SectionIntro
-          eyebrow="02 · Photography"
-          title="Photography"
-          description="I enjoy documenting quiet moments — city streets, architecture, landscapes, and changing light. Photography has taught me to slow down, notice patterns, and appreciate the details that often go unseen."
+          eyebrow="02 · Cityscapes"
+          title="Cityscapes"
+          description="I enjoy documenting quiet moments in the city — streets, skylines, architecture, and changing light. Photography has taught me to slow down, notice patterns, and appreciate the details that often go unseen."
         />
         <div className="mx-auto px-6 mt-14" style={{ maxWidth: "1500px" }}>
-          <MasonryGallery images={photography} emptyLabel="Photography coming soon." />
+          <MasonryGallery images={cityscapes} emptyLabel="Cityscapes coming soon." />
         </div>
       </section>
 
-      {/* 03 — Interiors */}
+      {/* 03 — Nature */}
       <section style={sectionStyle}>
         <SectionIntro
-          eyebrow="03 · Interiors"
+          eyebrow="03 · Nature"
+          title="Nature"
+          description="Landscapes, light, and the outdoors — a different pace from the city, but the same instinct to notice and observe before reaching for a camera."
+        />
+        <div className="mx-auto px-6 mt-14" style={{ maxWidth: "1500px" }}>
+          <MasonryGallery images={nature} emptyLabel="Nature photos coming soon." />
+        </div>
+      </section>
+
+      {/* 04 — Interiors */}
+      <section style={{ ...sectionStyle, background: "var(--color-bg-secondary)" }}>
+        <SectionIntro
+          eyebrow="04 · Interiors"
           title="Interiors"
           description="Rooms hold the same questions I ask in research — how does a space guide attention, invite pause, or shape a mood before anyone notices why. Interior photography is where that instinct started."
         />
@@ -106,10 +119,10 @@ export default function BeyondTheScreenPage() {
         </div>
       </section>
 
-      {/* 04 — Cooking */}
-      <section style={{ ...sectionStyle, background: "var(--color-bg-secondary)" }}>
+      {/* 05 — Cooking */}
+      <section style={sectionStyle}>
         <SectionIntro
-          eyebrow="04 · Cooking"
+          eyebrow="05 · Cooking"
           title="Cooking"
           description="Cooking is another form of design. Every meal is a balance of experimentation, iteration, and intuition. It's where planning meets improvisation, and where small decisions come together to create something meaningful."
         />
