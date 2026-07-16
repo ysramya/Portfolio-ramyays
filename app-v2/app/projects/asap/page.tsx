@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import TrackedLink from "@/components/TrackedLink";
 import {
   ReadingLayout,
   EditorialLayout,
@@ -896,7 +897,8 @@ export default function AsapPage() {
           <h2 className="font-[family-name:var(--font-display)] font-semibold leading-[0.95] text-[clamp(2.2rem,6vw,4.5rem)] text-[var(--color-ink)]">
             Try ASAP for yourself.
           </h2>
-          <a
+          <TrackedLink
+            label="Live Prototype"
             href="https://asap-flame.vercel.app/"
             target="_blank"
             rel="noopener"
@@ -904,7 +906,7 @@ export default function AsapPage() {
             style={{ backgroundColor: accent, color: asapPalette.black }}
           >
             Live Prototype ↗
-          </a>
+          </TrackedLink>
         </div>
       </section>
 

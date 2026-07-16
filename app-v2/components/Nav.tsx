@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
+import { trackClick } from "@/lib/analyticsClient";
 
 const links = [
   { href: "/#work", label: "Projects" },
@@ -56,6 +57,7 @@ export default function Nav({ hasLogo }: { hasLogo: boolean }) {
                     href={l.href}
                     target={l.external ? "_blank" : undefined}
                     rel={l.external ? "noopener" : undefined}
+                    onClick={() => l.external && trackClick(l.label)}
                     className={`text-[0.72rem] font-semibold tracking-[0.14em] uppercase transition-colors hover:text-[var(--color-green)] ${
                       active ? "text-[var(--color-ink)]" : "text-[var(--color-ink-muted)]"
                     }`}
@@ -77,6 +79,7 @@ export default function Nav({ hasLogo }: { hasLogo: boolean }) {
           href="https://www.linkedin.com/in/ramyays"
           target="_blank"
           rel="noopener"
+          onClick={() => trackClick("LinkedIn")}
           className="hidden md:inline-flex items-center gap-2 rounded-full bg-[var(--color-green)] px-5 py-2 text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-black transition-transform hover:-translate-y-0.5"
         >
           Contact ↗
@@ -110,7 +113,10 @@ export default function Nav({ hasLogo }: { hasLogo: boolean }) {
                   href={l.href}
                   target={l.external ? "_blank" : undefined}
                   rel={l.external ? "noopener" : undefined}
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpen(false);
+                    if (l.external) trackClick(l.label);
+                  }}
                   className="block py-3 text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-ink)]"
                 >
                   {l.label}
@@ -122,7 +128,10 @@ export default function Nav({ hasLogo }: { hasLogo: boolean }) {
                 href="https://www.linkedin.com/in/ramyays"
                 target="_blank"
                 rel="noopener"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                  trackClick("LinkedIn");
+                }}
                 className="block py-3 text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-green)]"
               >
                 Contact ↗

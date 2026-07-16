@@ -5,6 +5,7 @@ import { join } from "node:path";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
+import Analytics from "@/components/Analytics";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -41,6 +42,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer hasLogo={hasLogo} />
         <ChatWidget />
+        <Analytics />
       </body>
     </html>
   );

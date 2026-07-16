@@ -6,7 +6,10 @@
  * components/ds/. See components/ds/README.md for the full catalog.
  */
 
+"use client";
+
 import Logo from "./Logo";
+import { trackClick } from "@/lib/analyticsClient";
 
 export default function Footer({ hasLogo }: { hasLogo: boolean }) {
   return (
@@ -28,6 +31,7 @@ export default function Footer({ hasLogo }: { hasLogo: boolean }) {
               target="_blank"
               rel="noopener"
               aria-label="LinkedIn"
+              onClick={() => trackClick("LinkedIn")}
               className="glass w-9 h-9 rounded-full flex items-center justify-center text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-green)]"
             >
               in
@@ -35,6 +39,7 @@ export default function Footer({ hasLogo }: { hasLogo: boolean }) {
             <a
               href="mailto:ys.ramya@gmail.com"
               aria-label="Email"
+              onClick={() => trackClick("Email")}
               className="glass w-9 h-9 rounded-full flex items-center justify-center text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-yellow)]"
             >
               ✉
