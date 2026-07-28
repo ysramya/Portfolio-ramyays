@@ -20,9 +20,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Ramya Yerramilli — Experience Designer",
+  title: "Ramya Yerramilli — UX Researcher, Human-AI Interaction",
   description:
-    "Experience Designer with deep expertise in UX Research, Human-AI Interaction, and Responsible AI. Creating thoughtful experiences through research, systems thinking, and human-centered AI.",
+    "UX Researcher specializing in Human-AI Interaction and Responsible AI. Graduate Research Assistant at DePaul's RAISE Lab, with six years leading architecture and interior design projects before UX.",
 };
 
 export default function RootLayout({

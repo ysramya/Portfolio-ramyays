@@ -5,6 +5,15 @@ import { motion } from "framer-motion";
 
 const chips = [
   {
+    label: "Mixed-Methods Research",
+    icon: (
+      <>
+        <circle cx="11" cy="11" r="7" />
+        <path d="M21 21l-4.3-4.3" />
+      </>
+    ),
+  },
+  {
     label: "Human-AI Interaction",
     icon: (
       <>
@@ -16,28 +25,19 @@ const chips = [
     ),
   },
   {
-    label: "Experience Design",
+    label: "Responsible AI",
+    icon: (
+      <path d="M12 2 3 6v6c0 5 3.8 8.7 9 10 5.2-1.3 9-5 9-10V6l-9-4Zm-1.2 12.6-2.6-2.6 1.4-1.4 1.2 1.2 4-4 1.4 1.4-5.4 5.4Z" />
+    ),
+  },
+  {
+    label: "Systems Thinking",
     icon: (
       <>
         <path d="M12 3 3 8l9 5 9-5-9-5Z" />
         <path d="M3 12l9 5 9-5" />
         <path d="M3 16l9 5 9-5" />
       </>
-    ),
-  },
-  {
-    label: "Research Strategy",
-    icon: (
-      <>
-        <circle cx="11" cy="11" r="7" />
-        <path d="M21 21l-4.3-4.3" />
-      </>
-    ),
-  },
-  {
-    label: "AI Safety",
-    icon: (
-      <path d="M12 2 3 6v6c0 5 3.8 8.7 9 10 5.2-1.3 9-5 9-10V6l-9-4Zm-1.2 12.6-2.6-2.6 1.4-1.4 1.2 1.2 4-4 1.4 1.4-5.4 5.4Z" />
     ),
   },
 ];
@@ -47,9 +47,12 @@ export default function Hero() {
     <section
       className="wrap grid grid-cols-1 md:grid-cols-[1.15fr_0.85fr] gap-12 items-center"
       style={{
+        // Bottom padding is deliberately tight: it lets the credibility
+        // strip below peek above the fold, so the first screen carries both
+        // the positioning and the proof.
         minHeight: "calc(100dvh - var(--nav-h))",
         paddingTop: "calc(var(--nav-h) + 2rem)",
-        paddingBottom: "5rem",
+        paddingBottom: "2rem",
       }}
     >
       <motion.div
@@ -62,15 +65,20 @@ export default function Hero() {
           <br />
           <span className="text-[var(--color-green)]">Ramya</span>,
           <br />
-          <span className="text-[var(--color-yellow)]">Experience Designer.</span>
+          <span className="text-[var(--color-yellow)]">UX Researcher.</span>
         </h1>
+        <p className="mt-5 text-sm font-semibold tracking-[0.14em] uppercase text-[var(--color-ink-muted)]">
+          Human-AI Interaction &middot; Responsible AI
+        </p>
         <p className="mt-6 text-lg text-[var(--color-ink-muted)] max-w-[52ch]">
-          Creating thoughtful experiences through research, systems thinking,
-          and human-centered AI.
+          I study how people understand and trust AI systems, then turn that
+          evidence into product decisions. Six years leading $250K+ design
+          projects taught me to work through ambiguity and competing
+          stakeholders before I ever ran a usability study.
         </p>
         <p className="mt-3 text-sm text-[var(--color-ink-faint)] max-w-[52ch]">
-          Currently a Research Assistant at{" "}
-          <span className="text-[var(--color-green)]">DePaul University</span>
+          Graduate Research Assistant at{" "}
+          <span className="text-[var(--color-green)]">DePaul&rsquo;s RAISE Lab</span>
           , previously at{" "}
           <span className="text-[var(--color-green)]">MainStreet Advisors</span>.
         </p>
@@ -121,12 +129,12 @@ export default function Hero() {
             className="object-cover grayscale-[35%] contrast-[1.05]"
           />
         </div>
-        <div className="glass-strong absolute -bottom-6 -left-6 rounded-2xl px-5 py-4 max-w-[190px]">
+        <div className="glass-strong absolute -bottom-6 -left-6 rounded-2xl px-5 py-4 max-w-[195px]">
           <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--color-yellow)]">
-            6+
+            6 yrs
           </p>
           <p className="mt-1 text-xs text-[var(--color-ink-muted)] leading-relaxed">
-            Years of experience from Spatial Design to Experience Design
+            Leading $250K+ design projects before UX
           </p>
         </div>
       </motion.div>

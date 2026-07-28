@@ -18,8 +18,7 @@ export default function Footer({ hasLogo }: { hasLogo: boolean }) {
         <div>
           <Logo hasLogo={hasLogo} className="text-xl font-[family-name:var(--font-display)] font-semibold" />
           <p className="mt-2 text-sm text-[var(--color-ink-muted)] max-w-[340px]">
-            Creating thoughtful experiences through research, systems
-            thinking, and human-centered AI.
+            UX Researcher working on Human-AI Interaction and Responsible AI.
           </p>
         </div>
 

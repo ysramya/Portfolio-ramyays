@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Hero from "@/components/Hero";
+import CredibilityStrip from "@/components/CredibilityStrip";
 import ProjectRow from "@/components/ProjectRow";
 import PrinciplesRow from "@/components/PrinciplesRow";
 import { projects } from "@/lib/projects";
@@ -8,6 +9,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <CredibilityStrip />
 
       <section id="work" className="wrap py-16 md:py-20 border-t border-[var(--color-border)]">
         <div className="flex flex-wrap items-end justify-between gap-6">
@@ -16,8 +18,9 @@ export default function Home() {
               Projects
             </h2>
             <p className="mt-3 text-[var(--color-ink-muted)] max-w-[52ch]">
-              A selection of research and design projects exploring the
-              intersection of humans and AI.
+              Research and design work across healthcare, finance, and
+              responsible AI — each one starts with a question and ends in a
+              decision.
             </p>
           </div>
           <Link
