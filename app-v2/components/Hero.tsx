@@ -71,10 +71,8 @@ export default function Hero() {
           Human-AI Interaction &middot; Responsible AI
         </p>
         <p className="mt-6 text-lg text-[var(--color-ink-muted)] max-w-[52ch]">
-          I study how people understand and trust AI systems, then turn that
-          evidence into product decisions. Six years leading $250K+ design
-          projects taught me to work through ambiguity and competing
-          stakeholders before I ever ran a usability study.
+          Designing trustworthy AI experiences informed by mixed-methods
+          research and six years of complex stakeholder-driven design.
         </p>
         <p className="mt-3 text-sm text-[var(--color-ink-faint)] max-w-[52ch]">
           Graduate Research Assistant at{" "}
@@ -130,11 +128,8 @@ export default function Hero() {
           />
         </div>
         <div className="glass-strong absolute -bottom-6 -left-6 rounded-2xl px-5 py-4 max-w-[195px]">
-          <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--color-yellow)]">
-            6 yrs
-          </p>
-          <p className="mt-1 text-xs text-[var(--color-ink-muted)] leading-relaxed">
-            Leading $250K+ design projects before UX
+          <p className="font-[family-name:var(--font-display)] text-xl font-semibold leading-snug text-[var(--color-yellow)]">
+            6 Years Leading Complex Design Projects
           </p>
         </div>
       </motion.div>
