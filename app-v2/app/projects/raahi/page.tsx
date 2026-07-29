@@ -180,7 +180,7 @@ export default function RaahiPage() {
                 "Designed the in-browser detection card and toolbar that surface flags on a live site.",
                 "Designed the flag-to-evidence flow: one click logs a pattern against the taxonomy.",
                 "Built the taxonomy into the information architecture for how every flag is classified.",
-                "Produced the brand identity and product specs the team designed and built against.",
+                "Produced the brand identity and product specs the team designed and prototyped against.",
               ]}
             />
             <ContributionCard
@@ -396,13 +396,13 @@ export default function RaahiPage() {
               assumption="A standalone review app where practitioners could document the patterns they found."
               finding="Practitioners review live sites inside the browser — a tool that lives anywhere else doesn't get used."
               change="Moved detection into a browser plugin and rejected the standalone app, even though it solved the same problem."
-              outcome="Raahi runs where the review already happens, flagging patterns on the live site in real time."
+              outcome="The prototype runs where the review already happens, flagging patterns on the live site in real time."
             />
             <IterationFlow
               assumption="“Dark pattern” was a term practitioners already shared."
               finding="It meant something different to every practitioner interviewed — there was no common vocabulary to detect against."
               change="Defined a three-tier taxonomy — Coercive, Deceptive, Addictive — before building detection on top of it."
-              outcome="Every flag Raahi raises resolves to the same shared label, which is what makes it defensible to a stakeholder."
+              outcome="Every flag the prototype raises resolves to the same shared label, which is what makes it defensible to a stakeholder."
             />
           </div>
         </div>
@@ -572,6 +572,11 @@ export default function RaahiPage() {
           <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight max-w-[20ch]">
             What I&rsquo;d watch for.
           </h3>
+          <p className="mt-4 text-[var(--color-ink-muted)] leading-relaxed">
+            Raahi is a working prototype — it hasn&rsquo;t shipped, so there
+            are no adoption numbers to report. What follows is how I&rsquo;d
+            judge it if it did.
+          </p>
           <div className="mt-8 flex flex-col">
             {[
               {
