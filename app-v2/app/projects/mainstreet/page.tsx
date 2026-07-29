@@ -944,15 +944,15 @@ export default function MainstreetPage() {
         </div>
       </section>
 
-      {/* 15 — Next project: FullBleed, centered overlay, loops to Invisible Impacts */}
+      {/* 15 — Next project: FullBleed, centered overlay, follows the homepage order into Raahi */}
       <FullBleedLayout
-        image="/img/coac/laptop-mockup.png"
-        imageAlt="Invisible Impacts, a sensor-powered installation making AI's water cost tangible"
+        image="/img/raahi/laptop-mockup.png"
+        imageAlt="Raahi, a browser plugin that catches dark and manipulative patterns on the web"
         imageOpacity={0.35}
         minHeight="60dvh"
         overlayClassName="items-center justify-items-center text-center"
       >
-        <Link href="/projects/invisible-impacts" className="group">
+        <Link href="/projects/raahi" className="group">
           <span
             className="inline-flex rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.22em] uppercase mb-6"
             style={tintedGlass(accent)}
@@ -960,7 +960,7 @@ export default function MainstreetPage() {
             <span style={{ color: olive }}>Next Project</span>
           </span>
           <h2 className="font-[family-name:var(--font-display)] font-semibold leading-[0.95] text-[clamp(2.5rem,7vw,5.5rem)] text-[var(--color-ink)]">
-            Invisible Impacts
+            Raahi
             <span
               className="block h-[2px] w-0 group-hover:w-full mx-auto mt-4 transition-[width] duration-500 ease-out"
               style={{ backgroundColor: accent }}
