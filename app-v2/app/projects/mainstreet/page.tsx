@@ -55,13 +55,42 @@ function GradientField({ gradient, children }: { gradient: string; children: Rea
   return <div style={{ background: gradient }}>{children}</div>;
 }
 
-function FeatureCard({ icon, label, title, text, color = accent }: { icon: string; label: string; title: string; text: string; color?: string }) {
+/** A labelled rationale block nested inside a FeatureCard ("Why this decision?" / "Tradeoff"). */
+function DecisionNote({ label, text, color }: { label: string; text: string; color: string }) {
+  return (
+    <div className="mt-4 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+      <p className="text-[0.55rem] font-semibold tracking-[0.24em] uppercase" style={{ color }}>{label}</p>
+      <p className="mt-1.5 text-sm leading-relaxed text-[var(--color-ink-muted)]">{text}</p>
+    </div>
+  );
+}
+
+function FeatureCard({ icon, label, title, text, color = accent, why, tradeoff }: { icon: string; label: string; title: string; text: string; color?: string; why?: string; tradeoff?: string }) {
   return (
     <div className="rounded-2xl p-6 transition-colors hover:border-white/20" style={tintedGlass(color, 0.07)}>
       <span className="text-xl">{icon}</span>
       <p className="mt-3 text-[0.6rem] font-semibold tracking-[0.28em] uppercase" style={{ color }}>{label}</p>
       <p className="mt-2 font-[family-name:var(--font-display)] font-semibold text-lg text-[var(--color-ink)]">{title}</p>
       <p className="mt-2 text-sm leading-relaxed text-[var(--color-ink-muted)]">{text}</p>
+      {why && <DecisionNote label="Why this decision?" text={why} color={color} />}
+      {tradeoff && <DecisionNote label="Tradeoff" text={tradeoff} color={color} />}
+    </div>
+  );
+}
+
+/** One of the five "My Contributions" cards — glass surface, list body. */
+function ContributionCard({ label, items, color = accent }: { label: string; items: string[]; color?: string }) {
+  return (
+    <div className="rounded-2xl p-6 h-full" style={tintedGlass(color, 0.08)}>
+      <p className="text-[0.6rem] font-semibold tracking-[0.28em] uppercase" style={{ color }}>{label}</p>
+      <ul className="mt-4 flex flex-col gap-2.5">
+        {items.map((item) => (
+          <li key={item} className="text-sm leading-relaxed text-[var(--color-ink-muted)] pl-4 relative">
+            <span className="absolute left-0 top-0" style={{ color }}>·</span>
+            {item}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -75,17 +104,37 @@ const glance = [
 ];
 
 const processSteps = [
-  { n: "01", title: "Discovery", text: "Interviewed 4 of the 6 PMs to map their weekly reporting ritual. Identified the 6 core metrics they returned to most: AUA, ARR, # clients, account count, wallet share, and growth since last quarter." },
-  { n: "02", title: "Data Pipeline", text: "Extracted raw data from multiple Excel workbooks and the internal CRM. Cleaned, normalised, and structured it into a relational model in Power BI using DAX calculated columns and measures." },
-  { n: "03", title: "Design Iterations", text: "Built 3 layout iterations with PM feedback after each round. Key tension: information density vs. at-a-glance readability. Early versions were too table-heavy; final version led with KPI tiles and visuals." },
-  { n: "04", title: "Delivery", text: "Delivered 6 personalised dashboards — one per PM — filtered to their own book. Conducted a 30-minute walkthrough with each manager and incorporated final feedback before handoff." },
+  { n: "01", title: "Discovery", text: "I ran six 30-minute interviews with the Portfolio Managers to map their weekly reporting ritual. I identified the 6 core metrics they returned to most: AUA, ARR, # clients, account count, wallet share, and growth since last quarter." },
+  { n: "02", title: "Data Pipeline", text: "I extracted raw data from multiple Excel workbooks and the internal CRM. I cleaned, normalised, and structured it into a relational model in Power BI using DAX calculated columns and measures." },
+  { n: "03", title: "Design Iterations", text: "I started with low-fidelity concepts before exploring mid- and high-fidelity layouts, taking PM and executive feedback after each round. Key tension: information density vs. at-a-glance readability. Early versions were too table-heavy; the final version led with KPI tiles and visuals." },
+  { n: "04", title: "Delivery", text: "I delivered 6 personalised dashboards — one per PM — filtered to their own book. I ran a 30-minute walkthrough with each manager and incorporated final feedback before handoff." },
 ];
 
 const rationale = [
-  { icon: "🛠", label: "Why Power BI", text: "Power BI was chosen because it integrates directly with Excel inside Mainstreet's existing Microsoft environment. The PMs already lived in Excel — the tool decision was grounded in their actual workflow, not a default preference." },
-  { icon: "🎨", label: "Why the existing design system", text: "The dashboard followed Mainstreet's brand colors, typeface, and sizing conventions. Familiarity lowered adoption friction — PMs didn't need to learn a new visual language to trust the numbers." },
-  { icon: "📐", label: "Why narrative order", text: "Charts were color-coded and sequenced to match how a PM actually reviews their book: headline AUA first, then trend context, then wallet positioning, then revenue breakdown, then client-level detail. Not all metrics uniformly." },
-  { icon: "👤", label: "Why 6 filtered views", text: "Each PM sees only their own book. One shared dashboard with cross-PM data would have created noise and comparison anxiety. Individual filtered views came directly from the interview finding: PMs wanted to track their own progress, not rank against peers." },
+  {
+    icon: "🛠",
+    label: "Why Power BI",
+    text: "Power BI was chosen because it integrates directly with Excel inside Mainstreet's existing Microsoft environment. The PMs already lived in Excel — the tool decision was grounded in their actual workflow, not a default preference.",
+    why: "Every PM described starting their daily update in Excel. Choosing a tool inside the Microsoft environment they already worked in meant the dashboard could connect to live source data without asking anyone to adopt an unfamiliar system — which would have added a second adoption problem on top of the reporting one.",
+  },
+  {
+    icon: "🎨",
+    label: "Why the existing design system",
+    text: "The dashboard followed Mainstreet's brand colors, typeface, and sizing conventions. Familiarity lowered adoption friction — PMs didn't need to learn a new visual language to trust the numbers.",
+    why: "The research finding was that numbers weren't missing, they were buried — the problem was trust and legibility at a glance. Reusing the brand system PMs already recognised from internal materials meant the dashboard read as an internal tool immediately, so credibility didn't have to be established separately from the data.",
+  },
+  {
+    icon: "📐",
+    label: "Why narrative order",
+    text: "Charts were color-coded and sequenced to match how a PM actually reviews their book: headline AUA first, then trend context, then wallet positioning, then revenue breakdown, then client-level detail. Not all metrics uniformly.",
+    why: "Interviews surfaced a consistent review sequence: PMs check the headline number, then whether it's moving, then where they stand, then why. Sequencing the dashboard to match meant it answers questions in the order they're actually asked, rather than forcing PMs to hunt across the screen mid-review.",
+  },
+  {
+    icon: "👤",
+    label: "Why 6 filtered views",
+    text: "Each PM sees only their own book. One shared dashboard with cross-PM data would have created noise and comparison anxiety. Individual filtered views came directly from the interview finding: PMs wanted to track their own progress, not rank against peers.",
+    why: "PMs consistently framed their goal as tracking their own progress — nobody asked to see how they compared to colleagues. Scoping each report to a single book removed cross-PM data entirely rather than relying on a filter someone could change by accident.",
+  },
 ];
 
 const beforeList = [
@@ -107,10 +156,38 @@ const afterList = [
 ];
 
 const decisions = [
-  { icon: "🎨", label: "Colour System", title: "Brand greens, not generic blues", text: "Mainstreet Advisors' brand palette centres on earthy greens and tans — forest green for primary data, olive for secondary, tan for tertiary tiers. This made the dashboard immediately feel like an internal tool, not a generic BI template, and helped PMs orient quickly by tier." },
-  { icon: "📌", label: "Layout Hierarchy", title: "Headline numbers before charts", text: "Early iterations buried the KPI tiles midway down the page. PM feedback was clear: \"I need to see my total AUA the moment I open this.\" The final layout puts four headline tiles at the very top — Total AUA, ARR, # Clients, Active Accounts — before any visualisation." },
-  { icon: "🔢", label: "Number Format", title: "No decimals, dollar signs everywhere", text: "Stakeholder feedback on early iterations specifically called out inconsistent formatting — some figures had decimals, some didn't; dollar signs appeared in some columns but not others. The final version enforces a strict format: whole dollar figures with $ prefix, growth as clean percentages, no trailing zeros." },
-  { icon: "🔍", label: "Personalisation", title: "One dashboard per PM, not a shared view", text: "Rather than a single all-PM dashboard with filters, each PM received their own report page scoped to their book. This eliminated the risk of accidentally viewing another manager's data and made the dashboard feel like a personal tool rather than a shared report." },
+  {
+    icon: "🎨",
+    label: "Colour System",
+    title: "Brand greens, not generic blues",
+    text: "Mainstreet Advisors' brand palette centres on earthy greens and tans — forest green for primary data, olive for secondary, tan for tertiary tiers. This made the dashboard immediately feel like an internal tool, not a generic BI template, and helped PMs orient quickly by tier.",
+    why: "Brand guidelines were a fixed constraint, so the question was how to use them rather than whether to. Mapping the existing palette onto data tiers turned a constraint into a wayfinding system — PMs could tell tier by colour without consulting a legend.",
+    tradeoff: "Gained instant familiarity and tier legibility; gave up the wider contrast range a purpose-built data palette would have offered. Acceptable because adoption depended on the dashboard reading as an internal tool, and tier distinction only needed three levels.",
+  },
+  {
+    icon: "📌",
+    label: "Layout Hierarchy",
+    title: "Headline numbers before charts",
+    text: "Early iterations buried the KPI tiles midway down the page. PM feedback was clear: \"I need to see my total AUA the moment I open this.\" The final layout puts four headline tiles at the very top — Total AUA, ARR, # Clients, Active Accounts — before any visualisation.",
+    why: "This came straight from PM feedback on an early iteration. Burying the tiles meant the most-asked question required a scroll — which reintroduced exactly the friction the dashboard existed to remove.",
+    tradeoff: "Gained an immediate answer to the first question every PM asks; gave up prime vertical space that trend visuals could have occupied. Acceptable because the trend chart sits directly beneath the tiles, still within the same screen.",
+  },
+  {
+    icon: "🔢",
+    label: "Number Format",
+    title: "No decimals, dollar signs everywhere",
+    text: "Stakeholder feedback on early iterations specifically called out inconsistent formatting — some figures had decimals, some didn't; dollar signs appeared in some columns but not others. The final version enforces a strict format: whole dollar figures with $ prefix, growth as clean percentages, no trailing zeros.",
+    why: "Inconsistent formatting made figures slower to scan and harder to trust on sight — and trust at a glance was the whole point, since the research finding was that data was buried rather than absent.",
+    tradeoff: "Gained scannability and consistency across all six dashboards; gave up decimal-level precision in the headline figures. Acceptable because the tiles are for orientation — the client table below carries the exact numbers when a PM needs to investigate.",
+  },
+  {
+    icon: "🔍",
+    label: "Personalisation",
+    title: "One dashboard per PM, not a shared view",
+    text: "Rather than a single all-PM dashboard with filters, I scoped each PM their own report page covering only their book. This eliminated the risk of accidentally viewing another manager's data and made the dashboard feel like a personal tool rather than a shared report.",
+    why: "Interviews framed the goal as tracking personal progress, not peer ranking. A shared view with filters would have left another manager's book one misclick away, so scoping the report removed the possibility rather than guarding against it.",
+    tradeoff: "Gained privacy and a tool that feels personal; gave up cross-PM comparison and created six reports to maintain instead of one. Acceptable because no PM asked for peer comparison, and the maintenance cost was understood before committing to it.",
+  },
 ];
 
 const reflections = [
@@ -219,6 +296,72 @@ export default function MainstreetPage() {
         ))}
       </EditorialLayout>
 
+      {/* 2.5 — My Contributions: five cards, what I personally owned across UX, data, and stakeholders */}
+      <EditorialLayout maxWidth="1500px">
+        <div style={{ gridColumn: "1 / 13" }}>
+          <Eyebrow>My Contributions</Eyebrow>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            What I <span className="italic" style={{ color: accent }}>owned.</span>
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ gridColumn: "1 / 13" }}>
+          <ContributionCard
+            label="Research"
+            color={accent}
+            items={[
+              "Conducted six 30-minute interviews with Portfolio Managers.",
+              "Identified reporting workflows.",
+              "Synthesized recurring operational pain points.",
+              "Validated dashboard concepts throughout the project.",
+            ]}
+          />
+          <ContributionCard
+            label="Product Strategy"
+            color={olive}
+            items={[
+              "Prioritized dashboard KPIs.",
+              "Defined dashboard information hierarchy.",
+              "Translated research insights into dashboard requirements.",
+              "Balanced executive requests with user workflows throughout multiple approval cycles.",
+            ]}
+          />
+          <ContributionCard
+            label="Design"
+            color={olive}
+            items={[
+              "Designed dashboard architecture.",
+              "Created dashboard layouts.",
+              "Designed interaction hierarchy.",
+              "Created low-fidelity concepts before exploring mid- and high-fidelity designs.",
+              "Used UXPilot only after defining the dashboard structure, to rapidly generate and explore mid- and high-fidelity wireframe variations.",
+              "Evaluated and manually refined every generated concept based on stakeholder feedback.",
+            ]}
+          />
+          <ContributionCard
+            label="Data & Power BI"
+            color={accent}
+            items={[
+              "Cleaned raw Excel datasets.",
+              "Built the Power BI data model from scratch.",
+              "Created relationships between tables.",
+              "Built DAX measures.",
+              "Connected data sources.",
+              "Designed the dashboard visualizations.",
+            ]}
+          />
+          <div className="md:col-span-2">
+            <ContributionCard
+              label="Collaboration"
+              color={gold}
+              items={[
+                "Worked closely with the CEO, Head of Operations, Director, and the Portfolio Managers.",
+                "Feedback was continuous throughout the project rather than a single review at the end — each round of executive input reshaped requirements before the next iteration.",
+              ]}
+            />
+          </div>
+        </div>
+      </EditorialLayout>
+
       {/* 3 — The Problem: metric-forward, gradient field, stakeholder quote, insight strip */}
       <GradientField gradient={mainstreetGradients.tealCharcoal}>
         <EditorialLayout maxWidth="1500px">
@@ -319,7 +462,62 @@ export default function MainstreetPage() {
             </div>
           ))}
         </div>
+        <div className="rounded-2xl p-8" style={{ gridColumn: "1 / 13", ...tintedGlass(olive, 0.07) }}>
+          <Eyebrow color={olive}>How this changed the product</Eyebrow>
+          <p className="mt-3 text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "80ch" }}>
+            The finding that reframed the project was that the numbers weren&rsquo;t
+            missing — they were buried. That ruled out adding more data and pointed
+            the work at structure instead, which is why the dashboard leads with four
+            headline KPI tiles rather than a fuller table. The six metrics PMs named
+            in interviews became the KPIs I prioritised, and the review sequence they
+            described — headline figure, then movement, then positioning, then detail
+            — became the top-to-bottom order of the dashboard itself. Their stated
+            goal of tracking personal progress, not peer standing, is why I scoped six
+            filtered reports rather than one shared view. Each of those decisions is
+            documented in Design Rationale and Design Decisions below.
+          </p>
+        </div>
       </EditorialLayout>
+
+      {/* 5.5 — Designing in a Moving Target: requirement churn as normal enterprise work */}
+      <GradientField gradient={mainstreetGradients.oliveCharcoal}>
+        <EditorialLayout maxWidth="1500px">
+          <div style={{ gridColumn: "1 / 8" }}>
+            <Eyebrow color={olive}>Designing in a Moving Target</Eyebrow>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              The requirements <span className="italic" style={{ color: olive }}>kept moving.</span>
+            </h2>
+            <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
+              The dashboard I was briefed on in week one is not the dashboard that was
+              approved. Requirements evolved throughout the project — every executive
+              review introduced additional reporting needs, workflow considerations, or
+              business requirements, and stakeholders continuously refined what they
+              expected as the dashboard matured and they could react to something real.
+            </p>
+            <p className="mt-4 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
+              Business requirements shifted during the engagement. Data availability
+              shaped several design decisions — some views I wanted to build weren&rsquo;t
+              supportable by the data that existed. Power BI&rsquo;s technical constraints
+              meant redesigning solutions that worked on paper but not in the tool.
+              Close to 100 iterations were explored before the final dashboard was
+              approved.
+            </p>
+            <p className="mt-4 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
+              None of that was rework in the sense of correcting mistakes. It is what
+              designing inside a live business looks like: the brief is a hypothesis,
+              and each review replaces part of it with something better informed.
+            </p>
+          </div>
+          <div className="flex flex-col gap-4" style={{ gridColumn: "9 / 13", alignSelf: "start" }}>
+            <MetricStat size="hero" accent={olive} value="~100" label="Iterations explored before final approval" />
+            <GlassNote
+              color={olive}
+              label="What kept moving"
+              text="Reporting needs, business requirements, data availability, and Power BI's technical limits — each one surfaced through a review cycle, not upfront."
+            />
+          </div>
+        </EditorialLayout>
+      </GradientField>
 
       {/* 6 — Process: horizontal timeline, four glass cards, on a slate→black field */}
       <GradientField gradient={mainstreetGradients.slateBlack}>
@@ -359,6 +557,36 @@ export default function MainstreetPage() {
         </EditorialLayout>
       </GradientField>
 
+      {/* 6.5 — Constraints: the fixed conditions every decision had to survive */}
+      <EditorialLayout maxWidth="1500px">
+        <div style={{ gridColumn: "1 / 13" }}>
+          <Eyebrow>Constraints</Eyebrow>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            What I had to <span className="italic" style={{ color: accent }}>design around</span>
+          </h2>
+          <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
+            None of these were negotiable. Every decision documented below had to work
+            inside all seven of them at once.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style={{ gridColumn: "1 / 13" }}>
+          {[
+            { label: "Microsoft ecosystem", text: "Mainstreet ran on Microsoft. Any tool outside that stack would have added an integration and licensing problem on top of the reporting one." },
+            { label: "Existing business workflows", text: "The dashboard had to fit the review ritual PMs already had. It could replace the manual effort, but not ask them to work in a new sequence." },
+            { label: "Existing branding", text: "Mainstreet's brand colours, typeface, and sizing conventions were fixed. The visual system was inherited, not chosen." },
+            { label: "Raw Excel data quality", text: "Source data arrived with inconsistent column naming, merged cells, and missing values. What could be built downstream was limited by what could be cleaned upstream." },
+            { label: "Power BI technical limits", text: "Some layouts and interactions that worked as concepts weren't supportable in Power BI, and had to be redesigned to fit what the tool could actually render." },
+            { label: "Internship timeline", text: "Eight weeks, covering research, data modelling, design iteration, and delivery — including the executive approval cycles in between." },
+            { label: "Executive approval cycles", text: "Nothing shipped without executive sign-off, and each review round introduced new requirements. The schedule had to absorb revision, not assume approval." },
+          ].map((c, i) => (
+            <div key={c.label} className="rounded-2xl p-6" style={tintedGlass(i % 3 === 0 ? accent : i % 3 === 1 ? olive : sand, 0.07)}>
+              <p className="text-[0.6rem] font-semibold tracking-[0.28em] uppercase" style={{ color: i % 3 === 0 ? accent : i % 3 === 1 ? olive : gold }}>{c.label}</p>
+              <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{c.text}</p>
+            </div>
+          ))}
+        </div>
+      </EditorialLayout>
+
       {/* 7 — Design Rationale: premium feature cards */}
       <EditorialLayout maxWidth="1500px">
         <div style={{ gridColumn: "1 / 13" }}>
@@ -373,7 +601,7 @@ export default function MainstreetPage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ gridColumn: "1 / 13" }}>
           {rationale.map((r, i) => (
-            <FeatureCard key={r.label} icon={r.icon} label={r.label} title={r.label} text={r.text} color={i % 2 === 0 ? accent : olive} />
+            <FeatureCard key={r.label} icon={r.icon} label={r.label} title={r.label} text={r.text} why={r.why} color={i % 2 === 0 ? accent : olive} />
           ))}
         </div>
       </EditorialLayout>
@@ -482,11 +710,82 @@ export default function MainstreetPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ gridColumn: "1 / 13" }}>
             {decisions.map((d, i) => (
-              <FeatureCard key={d.label} icon={d.icon} label={d.label} title={d.title} text={d.text} color={i % 2 === 0 ? olive : accent} />
+              <FeatureCard key={d.label} icon={d.icon} label={d.label} title={d.title} text={d.text} why={d.why} tradeoff={d.tradeoff} color={i % 2 === 0 ? olive : accent} />
             ))}
           </div>
         </EditorialLayout>
       </GradientField>
+
+      {/* 11.5 — Key Decisions I Drove: 3-col table, hairline rows only, stacks on mobile */}
+      <EditorialLayout maxWidth="1500px">
+        <div style={{ gridColumn: "1 / 13" }}>
+          <Eyebrow>Key Decisions I Drove</Eyebrow>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            The calls, and <span className="italic" style={{ color: accent }}>what rode on them</span>
+          </h2>
+        </div>
+
+        <div style={{ gridColumn: "1 / 13" }}>
+          <div className="mt-4 hidden md:grid md:grid-cols-[1fr_1.3fr_1.3fr] gap-x-8">
+            {["Decision", "Reasoning", "Expected product impact"].map((h) => (
+              <p key={h} className="pb-3 text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">{h}</p>
+            ))}
+          </div>
+
+          <div className="md:grid md:grid-cols-[1fr_1.3fr_1.3fr] md:gap-x-8">
+            {[
+              {
+                decision: "Build in Power BI, inside the Microsoft stack",
+                reasoning: "PMs already worked in Excel, and Mainstreet ran on Microsoft — a tool outside that stack would have added an adoption problem on top of the reporting one.",
+                impact: "The dashboard connects to live source data instead of static exports, so figures reflect current state rather than whenever someone last updated a sheet.",
+              },
+              {
+                decision: "Lead with four KPI tiles, before any chart",
+                reasoning: "PM feedback on an early iteration: \"I need to see my total AUA the moment I open this.\" Burying the tiles reintroduced the friction the dashboard existed to remove.",
+                impact: "The most-asked question is answered on load, with no scroll — which is what makes the ten-second review possible.",
+              },
+              {
+                decision: "Sequence the dashboard to match the review ritual",
+                reasoning: "Interviews described a consistent order: headline figure, then movement, then positioning, then detail.",
+                impact: "The screen answers questions in the order PMs ask them, rather than making them hunt across the layout mid-review.",
+              },
+              {
+                decision: "Ship six scoped reports, not one shared view",
+                reasoning: "PMs framed their goal as tracking their own progress; nobody asked for peer comparison.",
+                impact: "Another manager's book is structurally unreachable rather than one misclick away, and each dashboard reads as a personal tool.",
+              },
+              {
+                decision: "Inherit the Mainstreet brand system",
+                reasoning: "Brand guidelines were fixed, and the research finding was that data was buried rather than absent — trust at a glance mattered more than visual novelty.",
+                impact: "The dashboard reads as an internal tool from first open, so credibility doesn't have to be established separately from the numbers.",
+              },
+              {
+                decision: "Enforce one strict number format",
+                reasoning: "Executive review of early iterations flagged inconsistent decimals and dollar signs across columns.",
+                impact: "Figures are scannable and consistent across all six dashboards, which is what lets a PM trust a number without re-reading it.",
+              },
+            ].map((row) => (
+              <div key={row.decision} className="contents">
+                <div className="pt-5 pb-2 md:py-5 border-t border-white/10">
+                  <p className="font-semibold text-[var(--color-ink)]">{row.decision}</p>
+                </div>
+                <div className="pb-2 md:py-5 md:border-t md:border-white/10">
+                  <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+                    <span className="md:hidden block text-[0.55rem] font-semibold tracking-[0.24em] uppercase mb-1" style={{ color: accent }}>Reasoning</span>
+                    {row.reasoning}
+                  </p>
+                </div>
+                <div className="pb-5 md:py-5 md:border-t md:border-white/10">
+                  <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+                    <span className="md:hidden block text-[0.55rem] font-semibold tracking-[0.24em] uppercase mb-1" style={{ color: accent }}>Expected product impact</span>
+                    {row.impact}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </EditorialLayout>
 
       {/* 12 — Impact: floating KPI cards, executive reporting feel */}
       <EditorialLayout maxWidth="1500px">
@@ -507,6 +806,74 @@ export default function MainstreetPage() {
             <p className="mt-3 text-sm text-[var(--color-ink-muted)] leading-relaxed">{s.desc}</p>
           </div>
         ))}
+      </EditorialLayout>
+
+      {/* 12.5 — Learning Beyond UX: the technical half of the project, learned in-flight */}
+      <GradientField gradient={mainstreetGradients.tealCharcoal}>
+        <EditorialLayout maxWidth="1500px">
+          <div style={{ gridColumn: "1 / 8" }}>
+            <Eyebrow>Learning Beyond UX</Eyebrow>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              I had never built a <span className="italic" style={{ color: accent }}>data model before.</span>
+            </h2>
+            <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
+              I started this internship with no prior experience in Power BI data
+              modelling. The dashboard couldn&rsquo;t be designed around that gap — there
+              was no separate data engineer, and the design was only as good as the
+              model underneath it. So I learned it as I built it.
+            </p>
+            <p className="mt-4 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
+              That turned out to be the most useful thing I took from the project. Once
+              I understood how the data was structured, I could tell which design ideas
+              were actually buildable and which would have collapsed on contact with the
+              source files — and I could design to what the model could support instead
+              of handing off a layout and hoping.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3" style={{ gridColumn: "9 / 13", alignSelf: "start" }}>
+            {[
+              "Cleaning raw Excel data into something modellable",
+              "Structuring datasets for a relational model",
+              "Building relationships between tables",
+              "Writing DAX measures",
+              "Connecting live data sources into Power BI",
+              "Translating all of it into a dashboard people could actually use",
+            ].map((s, i) => (
+              <div key={s} className="rounded-xl px-5 py-4" style={tintedGlass(i % 2 === 0 ? accent : olive, 0.07)}>
+                <p className="text-sm leading-relaxed text-[var(--color-ink)]">{s}</p>
+              </div>
+            ))}
+          </div>
+        </EditorialLayout>
+      </GradientField>
+
+      {/* 12.75 — If This Dashboard Continued to Evolve: forward-looking, no invented metrics */}
+      <EditorialLayout maxWidth="1500px">
+        <div style={{ gridColumn: "1 / 13" }}>
+          <Eyebrow>If This Dashboard Continued to Evolve</Eyebrow>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            Where I&rsquo;d <span className="italic" style={{ color: accent }}>take it next</span>
+          </h2>
+          <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
+            The dashboard shipped at the end of an eight-week internship. These are the
+            threads I&rsquo;d pull if the work continued.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ gridColumn: "1 / 13" }}>
+          {[
+            { label: "Validation with Portfolio Managers", text: "The walkthroughs captured reactions at handoff, not habits. I'd want to sit with PMs after a few months of real Mondays to see which sections they actually use, which they skip, and whether anyone has quietly gone back to a spreadsheet for something the dashboard doesn't answer." },
+            { label: "Long-term adoption", text: "Six PMs used it at delivery. The real question is whether it survives contact with edge cases — a client moving tiers, an unusual quarter, a figure that looks wrong. Adoption holds or breaks on what happens the first time someone doubts a number." },
+            { label: "Additional reporting", text: "Requirements kept surfacing through executive reviews right up to approval, which suggests more would surface with use. The structure supports adding views; the discipline would be keeping the top of the screen as sparse as it is now." },
+            { label: "Scalability", text: "Six scoped reports is maintainable by hand. It wouldn't stay that way — a larger team would need those views generated from a single model with row-level security rather than maintained as separate reports." },
+            { label: "Operational improvements", text: "Data quality was the bottleneck throughout. The durable fix is upstream: consistent column naming and fewer merged cells at the source would remove most of the cleaning work before it reaches Power BI." },
+            { label: "What I'd measure", text: "Not opens. Whether the Monday reporting ritual actually stopped — and whether PMs bring the dashboard into client and internal conversations rather than rebuilding numbers for them. That was the job it was built to do." },
+          ].map((c, i) => (
+            <div key={c.label} className="rounded-2xl p-6" style={tintedGlass(i % 2 === 0 ? accent : olive, 0.07)}>
+              <p className="text-[0.6rem] font-semibold tracking-[0.28em] uppercase" style={{ color: i % 2 === 0 ? accent : olive }}>{c.label}</p>
+              <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{c.text}</p>
+            </div>
+          ))}
+        </div>
       </EditorialLayout>
 
       {/* 13 — Reflection: masonry glass cards, alternating heights */}
