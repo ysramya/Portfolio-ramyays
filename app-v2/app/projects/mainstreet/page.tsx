@@ -200,7 +200,7 @@ const reflections = [
 const kpiCallouts = [
   { label: "Total AUA", value: "$902,367K", sub: "Total Assets" },
   { label: "ARR", value: "$622K", sub: "Sum of Run Rate" },
-  { label: "Share of Wallet", value: "58.7%", sub: "Bruce's MSA Assets" },
+  { label: "Share of Wallet", value: "58.7%", sub: "MSA assets vs. market value" },
   { label: "Revenue — Tier B", value: "$209K", sub: "Highest client tier" },
   { label: "# of Clients", value: "13", sub: "Current Clients" },
 ];
@@ -262,7 +262,7 @@ export default function MainstreetPage() {
           </div>
         </div>
         <p className="text-center text-xs text-[var(--color-ink-faint)] mt-4">
-          Final dashboard delivered in Power BI · all figures are illustrative dummy data
+          Final dashboard delivered in Power BI · client names and identifying details redacted
         </p>
       </section>
 
@@ -516,6 +516,30 @@ export default function MainstreetPage() {
               text="Reporting needs, business requirements, data availability, and Power BI's technical limits — each one surfaced through a review cycle, not upfront."
             />
           </div>
+
+          <div style={{ gridColumn: "1 / 13", marginTop: "1rem" }}>
+            <ImageFrame
+              src="/img/mainstreet/iterations.png"
+              alt="A printed version of the PM Dashboard marked up by hand during an executive review round"
+              aspect="4/3"
+              objectFit="contain"
+              caption="One review round, marked up on a printed version — a single stage in a process of roughly 100 iterations, not a summary of it. Client names and identifying details are redacted."
+            />
+          </div>
+
+          <div className="rounded-2xl p-8" style={{ gridColumn: "1 / 13", ...tintedGlass(olive, 0.07) }}>
+            <Eyebrow color={olive}>What a review round actually looked like</Eyebrow>
+            <p className="mt-3 text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "80ch" }}>
+              This is one printout from one round. The annotations are the kind of
+              feedback that arrived every cycle: dollar signs marked against columns
+              that were missing them, a question mark over a growth percentage whose
+              definition wasn&rsquo;t obvious, &ldquo;MTD&rdquo; next to a figure that
+              needed a different time frame, and a note to change how account counts
+              were presented. Individually they&rsquo;re small. Collectively they are
+              why the Number Format decision below exists — and why the dashboard went
+              through roughly 100 iterations rather than three.
+            </p>
+          </div>
         </EditorialLayout>
       </GradientField>
 
@@ -626,7 +650,7 @@ export default function MainstreetPage() {
             alt="PM Dashboard Overview — real Power BI screenshot"
             aspect="1.778/1"
             objectFit="contain"
-            caption="All figures shown are illustrative dummy data for portfolio demonstration purposes"
+            caption="Client names and identifying details redacted"
           />
         </div>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3" style={{ gridColumn: "1 / 13", marginTop: "1rem" }}>
