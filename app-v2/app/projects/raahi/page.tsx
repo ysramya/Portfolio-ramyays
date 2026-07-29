@@ -38,6 +38,73 @@ function GlassNote({ label, text, style }: { label: string; text: string; style?
   );
 }
 
+/** One of the four "My Contributions" cards — same glass surface as GlassNote, list body instead of a paragraph. */
+function ContributionCard({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div className="rounded-2xl p-6 h-full" style={tintedGlass(accent, 0.06)}>
+      <p className="text-[0.62rem] font-semibold tracking-[0.2em] uppercase" style={{ color: accent }}>
+        {title}
+      </p>
+      <ul className="mt-4 flex flex-col gap-3">
+        {items.map((item) => (
+          <li key={item} className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/** A labelled rationale block nested inside a decision list item (the "Why this decision?" / "Tradeoff" pairs). */
+function DecisionNote({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="mt-4">
+      <p className="text-[0.58rem] font-semibold tracking-[0.2em] uppercase" style={{ color: accent }}>
+        {label}
+      </p>
+      <p className="mt-1.5 text-sm text-[var(--color-ink-muted)] leading-relaxed">{children}</p>
+    </div>
+  );
+}
+
+/** The four-step progression for a change the research forced. Arrows are decorative, hence aria-hidden. */
+function IterationFlow({
+  assumption,
+  finding,
+  change,
+  outcome,
+}: {
+  assumption: string;
+  finding: string;
+  change: string;
+  outcome: string;
+}) {
+  const steps = [
+    { label: "Original assumption", text: assumption },
+    { label: "Research finding", text: finding },
+    { label: "Design change", text: change },
+    { label: "Final outcome", text: outcome },
+  ];
+  return (
+    <div className="rounded-2xl p-6" style={tintedGlass(accent, 0.06)}>
+      {steps.map((step, i) => (
+        <div key={step.label}>
+          <p className="text-[0.58rem] font-semibold tracking-[0.2em] uppercase" style={{ color: accent }}>
+            {step.label}
+          </p>
+          <p className="mt-1.5 text-sm leading-relaxed">{step.text}</p>
+          {i < steps.length - 1 && (
+            <p className="my-3 text-lg leading-none text-[var(--color-ink-faint)]" aria-hidden>
+              ↓
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function RaahiPage() {
   return (
     <div style={{ backgroundColor: raahiTheme.secondary }}>
@@ -79,6 +146,54 @@ export default function RaahiPage() {
             </div>
           ))}
         </dl>
+      </EditorialLayout>
+
+      {/* 2.2 — My Contributions: four cards, what I personally owned on a cross-functional founding team */}
+      <EditorialLayout>
+        <div style={{ gridColumn: "1 / 13" }}>
+          <Eyebrow>My Contributions</Eyebrow>
+          <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight max-w-[20ch]">
+            What I owned.
+          </h3>
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5">
+            <ContributionCard
+              title="Research"
+              items={[
+                "Conducted 12 in-depth interviews with UX practitioners across the US and India.",
+                "Designed and fielded the practitioner survey that reached 57+ respondents (Feb–Mar 2025).",
+                "Synthesized both datasets through affinity mapping into the five findings this project runs on.",
+                "Documented the study's sampling limitation rather than presenting the numbers as representative.",
+              ]}
+            />
+            <ContributionCard
+              title="Product Strategy"
+              items={[
+                "Scoped the product to practitioners rather than end users — one reviewer protects thousands of users downstream.",
+                "Prioritized in-browser detection over a standalone review app, and recorded why the alternative was rejected.",
+                "Defined the three-tier taxonomy — Coercive, Deceptive, Addictive — as the product's shared vocabulary.",
+                "Translated the \"strong instinct, no proof\" finding into the flag-as-evidence workflow.",
+              ]}
+            />
+            <ContributionCard
+              title="Design"
+              items={[
+                "Designed the in-browser detection card and toolbar that surface flags on a live site.",
+                "Designed the flag-to-evidence flow: one click logs a pattern against the taxonomy.",
+                "Built the taxonomy into the information architecture for how every flag is classified.",
+                "Produced the brand identity and product specs the team designed and built against.",
+              ]}
+            />
+            <ContributionCard
+              title="Collaboration"
+              items={[
+                "Worked on a cross-functional founding team spanning design, engineering, legal, and data science.",
+                "Facilitated the decision workshops where scope and taxonomy were tested with practitioners.",
+                "Presented research findings back to practitioners to validate the direction before building.",
+                "Now leading a team of five, with two faculty advisors, on the follow-on academic study.",
+              ]}
+            />
+          </div>
+        </div>
       </EditorialLayout>
 
       {/* 2.5 — Metrics: EditorialLayout, hero stat col 1-7, 2 supporting stacked col 9-13 */}
@@ -181,10 +296,24 @@ export default function RaahiPage() {
               12 interviews. 57+ surveys. One shared vocabulary.
             </h3>
             <p className="mt-4 text-[var(--color-ink-muted)] text-lg leading-relaxed">
-              Affinity mapping across 12 practitioner interviews and 57
-              survey responses — practitioners confirmed the problem and
-              their intent to use a dedicated tool.
+              I affinity-mapped 12 practitioner interviews against 57 survey
+              responses — practitioners confirmed the problem and their
+              intent to use a dedicated tool.
             </p>
+
+            <div className="mt-8">
+              <Eyebrow>How this changed the product</Eyebrow>
+              <p className="mt-3 text-[var(--color-ink-muted)] leading-relaxed">
+                Confirming intent to use a tool wasn&rsquo;t the useful part —
+                who would use it was. Practitioners described reviewing live
+                sites and catching manipulation they couldn&rsquo;t prove,
+                which pointed the product at the reviewer rather than the
+                person being manipulated. That set the scope before anything
+                was designed: practitioner-first, in the browser, built to
+                produce evidence. Every decision in the Decisions section
+                follows from that scope.
+              </p>
+            </div>
           </div>
         }
         right={<ImageFrame src="/img/raahi/IMG_8875.jpg" alt="Presenting practitioner research findings" aspect="4/5" />}
@@ -235,6 +364,48 @@ export default function RaahiPage() {
             </li>
           ))}
         </ol>
+
+        <div className="mt-10" style={{ gridColumn: "1 / 9" }}>
+          <Eyebrow>How this changed the product</Eyebrow>
+          <p className="mt-3 text-[var(--color-ink-muted)] leading-relaxed">
+            Each finding resolved into a specific decision rather than a
+            general principle. That &ldquo;dark pattern&rdquo; meant something
+            different to every practitioner made shared vocabulary the first
+            thing to build, not a detail to settle later — so the three-tier
+            taxonomy became the product&rsquo;s backbone and the thing every
+            flag resolves to. That practitioners work in-browser ruled out a
+            standalone app and made the plugin the only form that would get
+            used. That they already knew but couldn&rsquo;t prove it turned
+            detection into documentation: flagging alone wasn&rsquo;t enough,
+            so every flag had to log as evidence. Prioritization followed the
+            same order — vocabulary first, because without it nothing
+            downstream could be classified consistently.
+          </p>
+        </div>
+      </EditorialLayout>
+
+      {/* 9.5 — How the design evolved: the two progressions the research forced */}
+      <EditorialLayout>
+        <div style={{ gridColumn: "1 / 13" }}>
+          <Eyebrow>How the design evolved</Eyebrow>
+          <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight max-w-[22ch]">
+            Two things research changed my mind about.
+          </h3>
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5">
+            <IterationFlow
+              assumption="A standalone review app where practitioners could document the patterns they found."
+              finding="Practitioners review live sites inside the browser — a tool that lives anywhere else doesn't get used."
+              change="Moved detection into a browser plugin and rejected the standalone app, even though it solved the same problem."
+              outcome="Raahi runs where the review already happens, flagging patterns on the live site in real time."
+            />
+            <IterationFlow
+              assumption="“Dark pattern” was a term practitioners already shared."
+              finding="It meant something different to every practitioner interviewed — there was no common vocabulary to detect against."
+              change="Defined a three-tier taxonomy — Coercive, Deceptive, Addictive — before building detection on top of it."
+              outcome="Every flag Raahi raises resolves to the same shared label, which is what makes it defensible to a stakeholder."
+            />
+          </div>
+        </div>
       </EditorialLayout>
 
       {/* 10 — Decisions collage: GalleryLayout with rotation */}
@@ -255,13 +426,30 @@ export default function RaahiPage() {
           </h3>
           <ol className="mt-8 flex flex-col">
             {[
-              { label: "Browser plugin, not standalone app", detail: "Practitioners work inside the browser — anything outside it doesn't get used." },
-              { label: "Practitioner-first, not end-user", detail: "One practitioner protects thousands of users downstream." },
-              { label: "A three-tier detection taxonomy", detail: "Coercive, Deceptive, Addictive — one shared vocabulary for every pattern Raahi flags." },
+              {
+                label: "Browser plugin, not standalone app",
+                detail: "Practitioners work inside the browser — anything outside it doesn't get used.",
+                why: "Interviews put practitioners on live sites, reviewing in-browser. A separate destination would have asked them to leave the workflow at the exact moment a pattern appears, so the plugin was the only form that fit how the review actually happens.",
+                tradeoff: "Gained a tool that lives inside the existing workflow; gave up the freedom of a dedicated surface built purely for review. Acceptable because a tool that isn't opened protects no one — fit mattered more than range.",
+              },
+              {
+                label: "Practitioner-first, not end-user",
+                detail: "One practitioner protects thousands of users downstream.",
+                why: "Research put the leverage upstream: practitioners review patterns before they ship, while end users meet them only after. Arming the reviewer reaches every user of whatever they approve.",
+                tradeoff: "Gained upstream reach through the person who can stop a pattern shipping; gave up directly helping the user meeting one today. Acceptable because the downstream multiplier is larger than anything one-user-at-a-time protection reaches.",
+              },
+              {
+                label: "A three-tier detection taxonomy",
+                detail: "Coercive, Deceptive, Addictive — one shared vocabulary for every pattern Raahi flags.",
+                why: "The term meant something different to every practitioner interviewed. Without one vocabulary there was nothing stable to detect against, and no way for two people to agree a flag was the same thing.",
+                tradeoff: "Gained flags that are comparable and defensible in a stakeholder conversation; gave up the nuance of the individual vocabularies practitioners had built for themselves. Acceptable because those private definitions were exactly what stopped detection from scaling.",
+              },
             ].map((item) => (
               <li key={item.label} className="py-5 border-t border-white/10 first:border-t-0">
                 <p className="font-semibold">{item.label}</p>
                 <p className="mt-1 text-sm text-[var(--color-ink-muted)] leading-relaxed">{item.detail}</p>
+                <DecisionNote label="Why this decision?">{item.why}</DecisionNote>
+                <DecisionNote label="Tradeoff">{item.tradeoff}</DecisionNote>
               </li>
             ))}
           </ol>
@@ -271,6 +459,69 @@ export default function RaahiPage() {
             label="Rejected — a standalone review app"
             text="Solved the same problem, but broke the in-browser workflow practitioners actually use."
           />
+        </div>
+      </EditorialLayout>
+
+      {/* 11.5 — Key Decisions I Drove: 3-col table, hairline rows only (no vertical rules), stacks on mobile */}
+      <EditorialLayout>
+        <div style={{ gridColumn: "1 / 13" }}>
+          <Eyebrow>Key Decisions I Drove</Eyebrow>
+          <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight max-w-[20ch]">
+            The calls, and what rode on them.
+          </h3>
+
+          <div className="mt-8 hidden md:grid md:grid-cols-[1fr_1.3fr_1.3fr] gap-x-8">
+            <p className="pb-3 text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">Decision</p>
+            <p className="pb-3 text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">Reasoning</p>
+            <p className="pb-3 text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">Expected product impact</p>
+          </div>
+
+          <div className="md:grid md:grid-cols-[1fr_1.3fr_1.3fr] md:gap-x-8">
+            {[
+              {
+                decision: "Build in the browser, not as a standalone app",
+                reasoning: "Practitioners review live sites in-browser; a tool outside it doesn't get opened.",
+                impact: "Detection meets practitioners inside the workflow they already have, instead of asking them to adopt a second one.",
+              },
+              {
+                decision: "Aim the product at practitioners, not end users",
+                reasoning: "The reviewer can stop a pattern before it ships; the end user only meets it afterward.",
+                impact: "Effort concentrates upstream, where one person's review carries to everyone downstream of what they approve.",
+              },
+              {
+                decision: "Define a three-tier taxonomy first",
+                reasoning: "“Dark pattern” meant something different to every practitioner — detection had nothing stable to resolve to.",
+                impact: "Every flag lands on the same shared label, making findings comparable between practitioners and defensible to a stakeholder.",
+              },
+              {
+                decision: "Log every flag as evidence, not just a warning",
+                reasoning: "Practitioners had strong instinct but no proof a stakeholder would accept.",
+                impact: "A hunch becomes documentation, which is what the stakeholder conversation actually needs to act on.",
+              },
+            ].map((row) => (
+              <div key={row.decision} className="contents">
+                <div className="pt-5 pb-2 md:py-5 border-t border-white/10">
+                  <p className="font-semibold">{row.decision}</p>
+                </div>
+                <div className="pb-2 md:py-5 md:border-t md:border-white/10">
+                  <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+                    <span className="md:hidden text-[0.58rem] font-semibold tracking-[0.2em] uppercase block mb-1" style={{ color: accent }}>
+                      Reasoning
+                    </span>
+                    {row.reasoning}
+                  </p>
+                </div>
+                <div className="pb-5 md:py-5 md:border-t md:border-white/10">
+                  <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+                    <span className="md:hidden text-[0.58rem] font-semibold tracking-[0.2em] uppercase block mb-1" style={{ color: accent }}>
+                      Expected product impact
+                    </span>
+                    {row.impact}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </EditorialLayout>
 
@@ -310,6 +561,51 @@ export default function RaahiPage() {
             controls
             playsInline
             preload="metadata"
+          />
+        </div>
+      </EditorialLayout>
+
+      {/* 14.5 — If This Product Shipped: forward-looking, grounded only in what the research already established */}
+      <EditorialLayout>
+        <div style={{ gridColumn: "1 / 8" }}>
+          <Eyebrow>If This Product Shipped</Eyebrow>
+          <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight max-w-[20ch]">
+            What I&rsquo;d watch for.
+          </h3>
+          <div className="mt-8 flex flex-col">
+            {[
+              {
+                label: "Success criteria",
+                detail: "Not installs. The survey captured stated intent to use a tool like this, and stated intent is the weakest kind of evidence — the real test is whether a flag ever makes it into a stakeholder conversation. That's the job the product was scoped to do.",
+              },
+              {
+                label: "How adoption would be evaluated",
+                detail: "By whether practitioners keep it on after the novelty passes, and whether flags get logged during real reviews rather than trial runs. Sustained in-workflow use is the signal; a spike at launch isn't.",
+              },
+              {
+                label: "Future iterations",
+                detail: "The taxonomy is the backbone, and three tiers were enough to make flags comparable — not enough to describe everything practitioners named. It would need to grow as new patterns appear, without losing the shared vocabulary that made it work.",
+              },
+              {
+                label: "Long-term validation",
+                detail: "The follow-on study on dark patterns in generative AI feeds directly back here: patterns emerging in AI interfaces are exactly the kind the current taxonomy was never built against.",
+              },
+              {
+                label: "Operational considerations",
+                detail: "Detection accuracy would need ongoing review. A false flag is more expensive than a missed one here — the product's whole value is being credible enough to bring to a stakeholder, and a wrong flag spends that credibility.",
+              },
+            ].map((item) => (
+              <div key={item.label} className="py-5 border-t border-white/10 first:border-t-0">
+                <p className="font-semibold">{item.label}</p>
+                <p className="mt-1 text-sm text-[var(--color-ink-muted)] leading-relaxed">{item.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div style={{ gridColumn: "9 / 13", alignSelf: "start" }}>
+          <GlassNote
+            label="What would need re-testing first"
+            text="The sample was self-selected through a university network. Before trusting these numbers to justify a roadmap, I'd want a broader one."
           />
         </div>
       </EditorialLayout>
