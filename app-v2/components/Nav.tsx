@@ -43,8 +43,18 @@ export default function Nav({ hasLogo }: { hasLogo: boolean }) {
       style={{ height: "var(--nav-h)" }}
     >
       <div className="wrap h-full flex items-center justify-between">
-        <Link href="/" onClick={() => setOpen(false)}>
-          <Logo hasLogo={hasLogo} />
+        {/* The brand PNG is a gold wordmark on a black square canvas with a
+            lot of padding. At 44px over the transparent dark header that
+            canvas has nothing to separate it from the page, so on phones it
+            reads as empty space — mobile gets the high-contrast text lockup
+            instead, desktop keeps the mark. */}
+        <Link href="/" onClick={() => setOpen(false)} aria-label="Ramya Yerramilli — home">
+          <span className="md:hidden">
+            <Logo hasLogo={false} className="font-[family-name:var(--font-display)] text-2xl font-semibold" />
+          </span>
+          <span className="hidden md:block">
+            <Logo hasLogo={hasLogo} />
+          </span>
         </Link>
 
         <nav aria-label="Primary" className="hidden md:block">
@@ -105,7 +115,7 @@ export default function Nav({ hasLogo }: { hasLogo: boolean }) {
       </div>
 
       {open && (
-        <nav aria-label="Mobile" className="md:hidden glass-nav border-t border-white/10">
+        <nav aria-label="Mobile" className="md:hidden glass-menu border-t border-white/10">
           <ul className="wrap flex flex-col gap-1 py-4">
             {links.map((l) => (
               <li key={l.href}>

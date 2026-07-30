@@ -119,9 +119,18 @@ p {
 }
 
 .glass-nav {
-  background: rgba(14, 14, 14, 0.6);
-  backdrop-filter: blur(18px) saturate(150%);
-  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  background: rgba(14, 14, 14, 0.7);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+}
+
+/* The open mobile menu sits over live page content, so it needs more
+   backing than the slim nav bar — at 60% the text behind it bled through
+   and the links were hard to read. */
+.glass-menu {
+  background: rgba(14, 14, 14, 0.94);
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
 }
 
 /* ── Editorial grid: collapse to one column on mobile ──
