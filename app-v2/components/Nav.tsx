@@ -43,18 +43,11 @@ export default function Nav({ hasLogo }: { hasLogo: boolean }) {
       style={{ height: "var(--nav-h)" }}
     >
       <div className="wrap h-full flex items-center justify-between">
-        {/* The brand PNG is a gold wordmark on a black square canvas with a
-            lot of padding. At 44px over the transparent dark header that
-            canvas has nothing to separate it from the page, so on phones it
-            reads as empty space — mobile gets the high-contrast text lockup
-            instead, desktop keeps the mark. */}
+        {/* The brand mark is a gold wordmark on a black canvas with generous
+            padding, so it renders a touch larger on mobile to stay legible
+            against the dark header — same asset at both breakpoints. */}
         <Link href="/" onClick={() => setOpen(false)} aria-label="Ramya Yerramilli — home">
-          <span className="md:hidden">
-            <Logo hasLogo={false} className="font-[family-name:var(--font-display)] text-2xl font-semibold" />
-          </span>
-          <span className="hidden md:block">
-            <Logo hasLogo={hasLogo} />
-          </span>
+          <Logo hasLogo={hasLogo} imageClassName="w-12 h-12 md:w-11 md:h-11 rounded-lg object-cover" />
         </Link>
 
         <nav aria-label="Primary" className="hidden md:block">
