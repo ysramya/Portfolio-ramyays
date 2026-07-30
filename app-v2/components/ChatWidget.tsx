@@ -30,9 +30,15 @@ export default function ChatWidget() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ history: next.slice(-14) }),
       });
-      const data = await res.json();
-      const reply: string =
-        data.reply ?? "Something went wrong. You can reach Ramya at ys.ramya@gmail.com!";
+      const data = await res.json().catch(() => ({}));
+      // 503 means the server has no API key configured — that's a setup
+      // problem, not a transient one, so retrying won't help and the copy
+      // shouldn't imply it might.
+      const fallback =
+        res.status === 503
+          ? "The chat assistant is offline right now, but Ramya reads every email — ys.ramya@gmail.com."
+          : "Something went wrong on my end. You can reach Ramya at ys.ramya@gmail.com!";
+      const reply: string = data.reply ?? fallback;
       setMessages((m) => [...m, { role: "assistant", content: reply }]);
     } catch {
       setMessages((m) => [

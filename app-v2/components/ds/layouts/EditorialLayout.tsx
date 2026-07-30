@@ -25,8 +25,11 @@ export default function EditorialLayout({
       className={`py-20 md:py-28 px-6 md:px-10 ${className}`}
       style={{ maxWidth, marginInline: "auto" }}
     >
+      {/* ds-grid: below md, globals.css forces every child to span the full
+          row — call sites place children with inline gridColumn, which a
+          utility class can't override. */}
       <div
-        className="grid gap-x-6 gap-y-10"
+        className="ds-grid grid gap-x-6 gap-y-10"
         style={{ gridTemplateColumns: "repeat(12, 1fr)" }}
       >
         {children}

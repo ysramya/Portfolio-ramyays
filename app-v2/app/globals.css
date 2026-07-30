@@ -124,6 +124,22 @@ p {
   -webkit-backdrop-filter: blur(18px) saturate(150%);
 }
 
+/* ── Editorial grid: collapse to one column on mobile ──
+   EditorialLayout and GalleryLayout are 12-column canvases, and call
+   sites place children with inline `style={{ gridColumn: "1 / 7" }}`.
+   Inline styles outrank utility classes, so a desktop placement would
+   otherwise survive onto a 375px screen and squeeze a paragraph into a
+   ~165px column. Below md every child spans the full row instead, which
+   fixes all ~184 placements at once rather than per call site. The
+   stagger offsets (negative/positive marginTop) only make sense in a
+   collage, so they're zeroed here too — stacked cards shouldn't overlap. */
+@media (max-width: 767px) {
+  .ds-grid > * {
+    grid-column: 1 / -1 !important;
+    margin-top: 0 !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

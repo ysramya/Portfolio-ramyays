@@ -24,8 +24,11 @@ export default function GalleryLayout({
       className={`py-20 md:py-28 px-6 md:px-10 ${className}`}
       style={{ maxWidth, marginInline: "auto" }}
     >
+      {/* ds-grid: below md, globals.css collapses children to full-row and
+          zeroes the collage stagger offsets — overlapping cards don't work
+          once the grid is a single stacked column. */}
       <div
-        className="grid gap-4"
+        className="ds-grid grid gap-4"
         style={{ gridTemplateColumns: "repeat(12, 1fr)", gridAutoRows: "minmax(80px, auto)" }}
       >
         {children}
