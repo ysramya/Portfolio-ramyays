@@ -405,20 +405,20 @@ export default function InvisibleImpactsPage() {
         </ReadingLayout>
       </GradientField>
 
-      {/* 15 — Next project: FullBleed, loops back to Raahi */}
+      {/* 15 — End of the project sequence: the last case study hands off to About, not another project */}
       <FullBleedLayout
-        image="/img/raahi/brand-splash.png"
-        imageAlt="Raahi, an AI browser plugin that catches dark patterns"
-        imageOpacity={0.35}
+        image="/img/about/IMG_8578.jpeg"
+        imageAlt="Portrait of Ramya Yerramilli"
+        imageOpacity={0.3}
         minHeight="60dvh"
         overlayClassName="items-center justify-items-center text-center"
       >
-        <Link href="/projects/raahi" className="group">
+        <Link href="/about" className="group">
           <span className="inline-flex rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.22em] uppercase mb-6" style={tintedGlass(accent)}>
-            <span style={{ color: silver }}>Next Project</span>
+            <span style={{ color: silver }}>That&rsquo;s the work</span>
           </span>
           <h2 className="font-[family-name:var(--font-display)] font-semibold leading-[0.95] text-[clamp(2.5rem,7vw,5.5rem)] text-[var(--color-ink)]">
-            Raahi
+            About Me
             <span className="block h-[2px] w-0 group-hover:w-full mx-auto mt-4 transition-[width] duration-500 ease-out" style={{ backgroundColor: accent }} />
           </h2>
         </Link>

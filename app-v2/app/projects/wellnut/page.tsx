@@ -539,15 +539,15 @@ export default function WellnutPage() {
         </p>
       </ReadingLayout>
 
-      {/* 21 — Next project: FullBleed, centered overlay, loops to ASAP */}
+      {/* 21 — Next project: FullBleed, centered overlay, follows the project order into Invisible Impacts */}
       <FullBleedLayout
-        image="/img/asap/phone-mockup.png"
-        imageAlt="ASAP, an AI-scaffolded academic planner"
+        image="/img/coac/laptop-mockup.png"
+        imageAlt="Invisible Impacts, a sensor-powered installation making AI's water cost tangible"
         imageOpacity={0.4}
         minHeight="60dvh"
         overlayClassName="items-center justify-items-center text-center"
       >
-        <Link href="/projects/asap" className="group">
+        <Link href="/projects/invisible-impacts" className="group">
           <span
             className="inline-flex rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.22em] uppercase mb-6"
             style={tintedGlass(accent)}
@@ -555,7 +555,7 @@ export default function WellnutPage() {
             <span style={{ color: lavender }}>Next Project</span>
           </span>
           <h2 className="font-[family-name:var(--font-display)] font-semibold leading-[0.95] text-[clamp(2.5rem,7vw,5.5rem)] text-[var(--color-ink)]">
-            ASAP
+            Invisible Impacts
             <span
               className="block h-[2px] w-0 group-hover:w-full mx-auto mt-4 transition-[width] duration-500 ease-out"
               style={{ backgroundColor: accent }}
