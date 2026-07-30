@@ -114,6 +114,102 @@ function FeatureCard({ title, use, text, color = accent }: { title: string; use?
   );
 }
 
+/** Vertical step flow with ↓ connectors — used for the research→direction, conversation, and prompt-architecture diagrams. */
+function FlowChain({
+  steps,
+  color = accent,
+  compact = false,
+}: {
+  steps: { label: string; detail?: string }[];
+  color?: string;
+  compact?: boolean;
+}) {
+  return (
+    <div className="flex flex-col">
+      {steps.map((s, i) => (
+        <div key={s.label + i}>
+          <div className="rounded-xl px-5 py-3" style={tintedGlass(color, 0.08)}>
+            <p
+              className={`font-semibold text-[var(--color-ink)] ${compact ? "text-sm" : "text-base"}`}
+            >
+              {s.label}
+            </p>
+            {s.detail && (
+              <p className="mt-1 text-sm leading-relaxed text-[var(--color-ink-muted)]">{s.detail}</p>
+            )}
+          </div>
+          {i < steps.length - 1 && (
+            <p className="my-1.5 text-center text-base leading-none text-[var(--color-ink-faint)]" aria-hidden>
+              ↓
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** An AI design principle: the rule, then the behaviour it produces as a ↓ chain. */
+function PrincipleCard({
+  name,
+  body,
+  chain,
+  color = accent,
+}: {
+  name: string;
+  body: string;
+  chain: string[];
+  color?: string;
+}) {
+  return (
+    <div className="rounded-2xl p-6 h-full flex flex-col" style={tintedGlass(color, 0.08)}>
+      <p className="font-[family-name:var(--font-display)] font-semibold text-xl text-[var(--color-ink)]">{name}</p>
+      <p className="mt-3 text-sm leading-relaxed text-[var(--color-ink-muted)]">{body}</p>
+      <div className="mt-5 pt-5 flex flex-col" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+        {chain.map((c, i) => (
+          <div key={c}>
+            <p className="text-sm text-[var(--color-ink)]">{c}</p>
+            {i < chain.length - 1 && (
+              <p className="my-1 text-sm leading-none" style={{ color }} aria-hidden>↓</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Problem / Decision / Reason card for the AI Design Decisions grid. */
+function DecisionCard({
+  title,
+  problem,
+  decision,
+  reason,
+  color = accent,
+}: {
+  title: string;
+  problem: string;
+  decision: string;
+  reason: string;
+  color?: string;
+}) {
+  return (
+    <div className="rounded-2xl p-6 h-full" style={tintedGlass(color, 0.07)}>
+      <p className="font-[family-name:var(--font-display)] font-semibold text-lg text-[var(--color-ink)]">{title}</p>
+      {[
+        { k: "Problem", v: problem },
+        { k: "Decision", v: decision },
+        { k: "Reason", v: reason },
+      ].map((row) => (
+        <div key={row.k} className="mt-3">
+          <p className="text-[0.55rem] font-semibold tracking-[0.22em] uppercase" style={{ color }}>{row.k}</p>
+          <p className="mt-1 text-sm leading-relaxed text-[var(--color-ink-muted)]">{row.v}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 const phases = [
   { n: "01", status: "done", label: "Complete", title: "Problem Definition", desc: "Literature review, competitive analysis, problem framing" },
   { n: "02", status: "done", label: "Complete", title: "Early Ideation", desc: "Lo-fi wireframes, screen flows, AI-assisted initial output via Figma Make" },
@@ -157,6 +253,148 @@ const roadmap = [
   { n: "04", title: "Onboarding tutorial", detail: "surface the clarification flow and confidence labels on first use" },
   { n: "05", title: "Sub-role granularity", detail: "engineer vs. nurse vs. sales rep need meaningfully different scaffolding" },
   { n: "06", title: "Round 2 usability testing", detail: "post-deployment to validate iteration decisions" },
+];
+
+/** Literature review reframed as design rationale: theory → the product decision it justified. */
+const theoryMap = [
+  { theory: "Scaffolding", decision: "Coach behaviour", note: "Support the person doing the thinking instead of doing it for them." },
+  { theory: "Decision fatigue", decision: "One-step interface", note: "Every visible choice costs something when someone is already overloaded." },
+  { theory: "Trust calibration", decision: "Confidence labels", note: "Users can only calibrate trust if the system signals its own uncertainty." },
+];
+
+const aiPrinciples = [
+  {
+    name: "Coach, not assistant",
+    body: "The AI is not there to finish the task. It exists to get someone unstuck and hand the work back to them, because a tool that does everything creates dependency rather than capability.",
+    chain: ["Asks questions", "Guides thinking", "Doesn't complete the work"],
+  },
+  {
+    name: "One thing at a time",
+    body: "A full plan revealed at once re-creates the overwhelm the product exists to relieve. Steps are surfaced sequentially so the next action is always singular and obvious.",
+    chain: ["Shows one step", "Hides the rest", "Reduces cognitive load"],
+  },
+  {
+    name: "Honest AI",
+    body: "The AI states how sure it is and says when a request is outside what it can do. Confidence is communicated rather than performed, and refusals redirect instead of dismissing.",
+    chain: ["Labels confidence", "Admits limits", "Redirects, not rejects"],
+  },
+];
+
+/** The core mapping: every AI behaviour traced from finding → decision → prompt strategy → behaviour → what testing showed. */
+const researchToBehavior = [
+  {
+    finding: "Users freeze at the blank page",
+    decision: "Generate a first actionable step",
+    prompt: "Prompt requests context before planning",
+    behavior: "AI asks clarifying questions",
+    validation: "Participants preferred clarification over generic advice",
+  },
+  {
+    finding: "Users already use Notion and Calendar",
+    decision: "Don't replace task managers",
+    prompt: "Prompt focused on planning, not storage",
+    behavior: "AI generates plans instead of storing tasks",
+    validation: "Participants described existing tools as containers, not coaches",
+  },
+  {
+    finding: "Users distrust generic AI",
+    decision: "Collect context first",
+    prompt: "Role-aware prompts",
+    behavior: "More personalised plans",
+    validation: "Participants praised the clarification flow",
+  },
+  {
+    finding: "Users feel overwhelmed",
+    decision: "Reduce visible choices",
+    prompt: "Sequential planning",
+    behavior: "One-step workflow",
+    validation: "Lower cognitive load",
+  },
+  {
+    finding: "Users distrust overconfident AI",
+    decision: "Confidence labels",
+    prompt: "Prompt returns a confidence level",
+    behavior: "Honest AI",
+    validation: "Participants appreciated the uncertainty signal",
+  },
+];
+
+const aiDecisions = [
+  {
+    title: "Clarifying Questions",
+    problem: "Vague input produces generic plans, and users freeze before typing anything specific.",
+    decision: "The AI asks a clarifying question before it plans anything.",
+    reason: "One participant called the flow a hidden gem — being asked beat being advised.",
+  },
+  {
+    title: "Confidence Labels",
+    problem: "AI that sounds equally certain about everything gives users nothing to calibrate against.",
+    decision: "Every generated step carries a confidence level.",
+    reason: "Participants found the labels refreshingly different from other AI tools.",
+  },
+  {
+    title: "Soft Refusals",
+    problem: "A flat refusal reads as dismissive to someone already overwhelmed.",
+    decision: "Out-of-scope requests get redirected rather than rejected.",
+    reason: "Participants described the fallback responses as supportive, not dismissive.",
+  },
+  {
+    title: "Role-based Planning",
+    problem: "A nurse, an engineer, and a founder don't need the same breakdown of the same goal.",
+    decision: "Transition type is captured at onboarding and carried into planning as context.",
+    reason: "Round 1 showed every persona receiving near-identical output — the fix is context, not more steps.",
+  },
+  {
+    title: "One-step Flow",
+    problem: "Revealing a whole plan at once re-triggers the paralysis the product exists to relieve.",
+    decision: "Surface a single step; keep the remainder out of view until it's next.",
+    reason: "Participants who freeze at blank screens moved forward under this pattern.",
+  },
+  {
+    title: "Coach Drawer",
+    problem: "Users stall mid-step and abandon the plan rather than asking for help.",
+    decision: "Coaching is available on demand and contextual, not pushed onto every screen.",
+    reason: "Keeps the interface calm while leaving support one tap away.",
+  },
+];
+
+const riteRounds = [
+  {
+    n: "01",
+    issue: "Generic plans — all four personas received near-identical breakdowns",
+    prompt: "Prompt tuned to use role and task context before generating a plan",
+    validation: "More personalised breakdowns",
+  },
+  {
+    n: "02",
+    issue: "Coach failures — coaching responses stalled or failed to return",
+    prompt: "Reliability of the coaching call improved",
+    validation: "Retested and confirmed",
+  },
+  {
+    n: "03",
+    issue: "Navigation confusion — users lost track of where they were in a plan",
+    ui: "Navigation and screen affordances updated",
+    validation: "Validated in follow-up testing",
+  },
+];
+
+const aiInsights = [
+  "Good AI asks before it answers.",
+  "Planning is a behavioural problem before it is a productivity problem.",
+  "Trust goes up when the AI admits uncertainty.",
+  "Emotion matters as much as functionality.",
+  "Scaffolding should fade as capability grows.",
+];
+
+/** Each Round 1 gap paired with the design response it drove. */
+const changesMade = [
+  { gap: "Subtasks too surface-level — all personas got roughly the same output", change: "Role-aware breakdowns that read transition type as planning context" },
+  { gap: "Clarification flow powerful but hidden", change: "Surface it during onboarding so users know it exists" },
+  { gap: "5 steps insufficient for multi-day or complex projects", change: "Deeper decomposition for longer-horizon goals" },
+  { gap: "No due date functionality breaks the planning loop", change: "Due dates plus calendar integration to close the loop" },
+  { gap: "Calendar only reachable inside Deep Focus", change: "Move calendar access earlier in the flow" },
+  { gap: "Edit button ambiguous; no save progress indicator", change: "Clearer edit affordance and an explicit save state" },
 ];
 
 export default function AsapPage() {
@@ -537,6 +775,264 @@ export default function AsapPage() {
         </div>
       </EditorialLayout>
 
+      {/* 9.1 — What changed because of the research: closes the research section with consequence, not description */}
+      <EditorialLayout maxWidth="1440px">
+        <div className="rounded-2xl p-8" style={{ gridColumn: "1 / 8", ...tintedGlass(accent, 0.08) }}>
+          <Eyebrow>What changed because we learned this</Eyebrow>
+          <p className="mt-3 text-[var(--color-ink-muted)] leading-relaxed">
+            Interviews didn&rsquo;t reveal a missing feature — they revealed that the
+            product we&rsquo;d framed was the wrong one. Participants already owned task
+            managers. What they lacked was a way to begin. That moved the work from
+            building an interface for storing tasks to designing an AI that could get
+            someone unstuck, and every decision downstream follows from it.
+          </p>
+        </div>
+        <div style={{ gridColumn: "8 / 13", alignSelf: "start" }}>
+          <GlassNote
+            color={gold}
+            label="The reframe"
+            text="Not a productivity problem with a UI solution. A behavioural problem with an AI-behaviour solution."
+          />
+        </div>
+      </EditorialLayout>
+
+      {/* 9.2 — Literature review as design rationale: theory → the decision it justified */}
+      <EditorialLayout maxWidth="1440px">
+        <div style={{ gridColumn: "1 / 13" }}>
+          <Eyebrow>Literature Review as Design Rationale</Eyebrow>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            Theory, and what it <span className="italic" style={{ color: accent }}>decided.</span>
+          </h2>
+          <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
+            The literature wasn&rsquo;t background reading. Each concept resolved into a
+            specific product decision.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ gridColumn: "1 / 13" }}>
+          {theoryMap.map((t, i) => (
+            <div key={t.theory} className="rounded-2xl p-6" style={tintedGlass(i % 2 === 0 ? accent : gold, 0.07)}>
+              <p className="text-[0.55rem] font-semibold tracking-[0.22em] uppercase text-[var(--color-ink-faint)]">Theory</p>
+              <p className="mt-1 font-[family-name:var(--font-display)] font-semibold text-lg text-[var(--color-ink)]">{t.theory}</p>
+              <p className="my-3 text-base leading-none" style={{ color: i % 2 === 0 ? accent : gold }} aria-hidden>↓</p>
+              <p className="text-[0.55rem] font-semibold tracking-[0.22em] uppercase text-[var(--color-ink-faint)]">Product decision</p>
+              <p className="mt-1 font-semibold text-[var(--color-ink)]">{t.decision}</p>
+              <p className="mt-3 text-sm leading-relaxed text-[var(--color-ink-muted)]">{t.note}</p>
+            </div>
+          ))}
+        </div>
+      </EditorialLayout>
+
+      {/* 9.3 — From Research to Product Strategy: the pivot, as a flow */}
+      <GradientField gradient={asapGradients.charcoalGraphite}>
+        <EditorialLayout maxWidth="1440px">
+          <div style={{ gridColumn: "1 / 8" }}>
+            <Eyebrow>From Research to Product Strategy</Eyebrow>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              We were building <span className="italic" style={{ color: accent }}>the wrong product.</span>
+            </h2>
+            <div className="mt-6 flex flex-col gap-4">
+              <div className="rounded-xl px-5 py-4" style={tintedGlass(asapPalette.slate, 0.06)}>
+                <p className="text-[0.55rem] font-semibold tracking-[0.22em] uppercase text-[var(--color-ink-faint)]">Originally</p>
+                <p className="mt-1 text-[var(--color-ink)]">A general productivity app.</p>
+              </div>
+              <div className="rounded-xl px-5 py-4" style={tintedGlass(gold, 0.08)}>
+                <p className="text-[0.55rem] font-semibold tracking-[0.22em] uppercase" style={{ color: gold }}>Research revealed</p>
+                <p className="mt-1 text-[var(--color-ink)]">People already had productivity tools.</p>
+              </div>
+              <div className="rounded-xl px-5 py-4" style={tintedGlass(accent, 0.09)}>
+                <p className="text-[0.55rem] font-semibold tracking-[0.22em] uppercase" style={{ color: accent }}>Their real problem</p>
+                <ul className="mt-2 flex flex-col gap-1.5">
+                  {[
+                    "Not knowing where to start",
+                    "Lack of planning skills",
+                    "Cognitive overload",
+                    "Loss of external structure during major life transitions",
+                  ].map((p) => (
+                    <li key={p} className="text-sm text-[var(--color-ink-muted)] leading-relaxed pl-4 relative">
+                      <span className="absolute left-0 top-[0.55em] w-1.5 h-1.5 rounded-full" style={{ backgroundColor: accent }} />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-xl px-5 py-4 text-center" style={tintedGlass(sage, 0.1)}>
+                <p className="text-sm text-[var(--color-ink-muted)]">
+                  So the product became an{" "}
+                  <strong className="text-[var(--color-ink)] font-semibold">AI coach</strong> instead of an{" "}
+                  <span className="line-through opacity-60">AI task manager</span>.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div style={{ gridColumn: "9 / 13", alignSelf: "center" }}>
+            <FlowChain
+              color={accent}
+              steps={[
+                { label: "Research", detail: "6 interviews, 4 transition types" },
+                { label: "Problem", detail: "Can't start — not can't track" },
+                { label: "Product opportunity", detail: "Coach the planning, don't store the tasks" },
+                { label: "Design direction", detail: "Design the AI's behaviour first" },
+              ]}
+            />
+          </div>
+        </EditorialLayout>
+      </GradientField>
+
+      {/* 9.4 — Designing AI Behavior: the three principles and the behaviour each produces */}
+      <EditorialLayout maxWidth="1440px">
+        <div style={{ gridColumn: "1 / 13" }}>
+          <Eyebrow>Designing AI Behaviour</Eyebrow>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            The product is the <span className="italic" style={{ color: accent }}>AI&rsquo;s behaviour.</span>
+          </h2>
+          <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
+            Three principles governed how the AI acts. They were decided before any hi-fi
+            screen existed, and the interface is downstream of them.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ gridColumn: "1 / 13" }}>
+          {aiPrinciples.map((p, i) => (
+            <PrincipleCard key={p.name} {...p} color={i === 1 ? gold : i === 2 ? sage : accent} />
+          ))}
+        </div>
+      </EditorialLayout>
+
+      {/* 9.5 — Translating Research into AI Behavior: the 5-col mapping table, scrolls on narrow screens */}
+      <GradientField gradient={asapGradients.goldCharcoal}>
+        <EditorialLayout maxWidth="1600px">
+          <div style={{ gridColumn: "1 / 13" }}>
+            <Eyebrow>Translating Research into AI Behaviour</Eyebrow>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              Every behaviour <span className="italic" style={{ color: accent }}>traces to a finding.</span>
+            </h2>
+          </div>
+          <div style={{ gridColumn: "1 / 13" }} className="overflow-x-auto">
+            <div style={{ minWidth: "980px" }}>
+              <div className="grid grid-cols-5 gap-x-6">
+                {["Research finding", "Design decision", "Prompt strategy", "AI behaviour", "Validation"].map((h) => (
+                  <p key={h} className="pb-3 text-[0.55rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">
+                    {h}
+                  </p>
+                ))}
+              </div>
+              <div className="grid grid-cols-5 gap-x-6">
+                {researchToBehavior.map((r) => (
+                  <div key={r.finding} className="contents">
+                    {[r.finding, r.decision, r.prompt, r.behavior, r.validation].map((cell, ci) => (
+                      <div key={ci} className="py-5 border-t border-white/10">
+                        <p
+                          className={`text-sm leading-relaxed ${ci === 0 || ci === 3 ? "text-[var(--color-ink)] font-medium" : "text-[var(--color-ink-muted)]"}`}
+                        >
+                          {cell}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </EditorialLayout>
+      </GradientField>
+
+      {/* 9.6 — Conversation Design: the architecture as a flow, with the clarification branch */}
+      <EditorialLayout maxWidth="1440px">
+        <div style={{ gridColumn: "1 / 7" }}>
+          <Eyebrow>Conversation Design</Eyebrow>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            The AI earns context <span className="italic" style={{ color: accent }}>before it plans.</span>
+          </h2>
+          <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "50ch" }}>
+            The clarification branch is the most important part of this architecture. It
+            exists for one reason: a plan generated from a vague goal is a generic plan,
+            and generic advice was the thing participants distrusted most.
+          </p>
+          <div className="mt-6">
+            <GlassNote
+              color={gold}
+              label="Why clarification exists"
+              text="It converts a one-line goal into enough context to plan against — which is what separates a tailored breakdown from a template."
+            />
+          </div>
+        </div>
+        <div style={{ gridColumn: "8 / 13" }}>
+          <FlowChain
+            compact
+            color={accent}
+            steps={[
+              { label: "User enters a goal" },
+              { label: "AI evaluates specificity" },
+              { label: "Needs clarification?", detail: "If yes — ask follow-up questions, then continue" },
+              { label: "Generate tailored plan" },
+              { label: "Sequential execution", detail: "One step surfaced at a time" },
+              { label: "Coach available when stuck" },
+              { label: "Completion" },
+            ]}
+          />
+        </div>
+      </EditorialLayout>
+
+      {/* 9.7 — Prompt Design: architecture only, no prompt text exposed */}
+      <GradientField gradient={asapGradients.charcoalGraphite}>
+        <EditorialLayout maxWidth="1440px">
+          <div style={{ gridColumn: "1 / 7" }}>
+            <Eyebrow>Prompt Design</Eyebrow>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              Prompts as <span className="italic" style={{ color: accent }}>architecture.</span>
+            </h2>
+            <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "50ch" }}>
+              The prompt layer is where the coaching principles become enforceable. Each
+              stage has a job, and the tone is a constraint of the system rather than a
+              flourish in the copy.
+            </p>
+            <ul className="mt-6 flex flex-col gap-2.5">
+              {[
+                "Collect missing context before planning",
+                "Generate personalised plans, not templates",
+                "Hold the coaching tone across every response",
+                "Avoid generic advice",
+                "Communicate uncertainty",
+                "Redirect unsupported requests instead of refusing flatly",
+              ].map((p) => (
+                <li key={p} className="text-sm text-[var(--color-ink-muted)] leading-relaxed pl-4 relative">
+                  <span className="absolute left-0 top-[0.55em] w-1.5 h-1.5 rounded-full" style={{ backgroundColor: accent }} />
+                  {p}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div style={{ gridColumn: "8 / 13", alignSelf: "center" }}>
+            <FlowChain
+              compact
+              color={gold}
+              steps={[
+                { label: "Input", detail: "The user's stated goal" },
+                { label: "Context", detail: "Transition type, role, task specifics" },
+                { label: "Reasoning", detail: "Is there enough to plan against?" },
+                { label: "Planning", detail: "Sequenced, role-aware steps" },
+                { label: "Coaching", detail: "Tone and stance held throughout" },
+                { label: "Response", detail: "Plan plus a confidence signal" },
+              ]}
+            />
+          </div>
+        </EditorialLayout>
+      </GradientField>
+
+      {/* 9.8 — AI Design Decisions: six problem/decision/reason cards */}
+      <EditorialLayout maxWidth="1440px">
+        <div style={{ gridColumn: "1 / 13" }}>
+          <Eyebrow>AI Design Decisions</Eyebrow>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            Six calls that shaped <span className="italic" style={{ color: accent }}>how it behaves.</span>
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style={{ gridColumn: "1 / 13" }}>
+          {aiDecisions.map((d, i) => (
+            <DecisionCard key={d.title} {...d} color={i % 3 === 0 ? accent : i % 3 === 1 ? gold : sage} />
+          ))}
+        </div>
+      </EditorialLayout>
+
       {/* 10 — 05 AI in Our Process: heading, task-entry split, AI tool cards, honest callout */}
       <GradientField gradient={asapGradients.goldCharcoal}>
         <EditorialLayout maxWidth="1440px">
@@ -605,6 +1101,13 @@ export default function AsapPage() {
             The core principle: the app must not add to the noise. Users are already
             overwhelmed. Every decision — color, type, layout — reduces cognitive load.
           </p>
+          <div className="mt-6" style={{ maxWidth: "62ch" }}>
+            <GlassNote
+              color={sage}
+              label="The interface is the output, not the argument"
+              text="Everything from here on is what the AI's behaviour required: one primary action per screen because steps surface one at a time, muted secondary text because confidence labels need to be readable without shouting, and coaching that appears contextually rather than everywhere."
+            />
+          </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ gridColumn: "1 / 13" }}>
           <FeatureCard title="Slate Teal Primary" use="Color" color={accent} text="Grounded, non-stimulating palette. Warm neutrals with earthy sage and amber accents. Built for both light and dark modes." />
@@ -767,6 +1270,59 @@ export default function AsapPage() {
         </div>
       </GalleryLayout>
 
+      {/* 12.5 — RITE Iteration: the prototype changed continuously, shown as a timeline */}
+      <GradientField gradient={asapGradients.goldCharcoal}>
+        <EditorialLayout maxWidth="1440px">
+          <div style={{ gridColumn: "1 / 13" }}>
+            <Eyebrow>RITE Iteration</Eyebrow>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              The prototype changed <span className="italic" style={{ color: accent }}>between sessions.</span>
+            </h2>
+            <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
+              Rather than testing a frozen build and reporting on it afterwards, fixes went
+              in as issues surfaced and were retested. Some rounds changed the prompt, some
+              changed the interface — the distinction matters, because most of these were
+              AI-behaviour problems, not layout problems.
+            </p>
+          </div>
+          <div style={{ gridColumn: "1 / 13" }} className="relative">
+            <div
+              className="hidden md:block absolute top-[2.4rem] left-[8%] right-[8%] h-px"
+              style={{ background: `linear-gradient(90deg, transparent, ${accent}55, ${accent}55, transparent)` }}
+              aria-hidden
+            />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {riteRounds.map((r) => (
+                <div key={r.n} className="relative rounded-2xl p-6" style={tintedGlass(accent, 0.07)}>
+                  <span
+                    className="flex items-center justify-center w-9 h-9 rounded-full font-[family-name:var(--font-display)] font-semibold text-sm mb-4"
+                    style={{ backgroundColor: accent, color: asapPalette.black }}
+                  >
+                    {r.n}
+                  </span>
+                  {[
+                    { k: "Issue", v: r.issue },
+                    ...(r.prompt ? [{ k: "Prompt change", v: r.prompt }] : []),
+                    ...(r.ui ? [{ k: "UI change", v: r.ui }] : []),
+                    { k: "Validation", v: r.validation },
+                  ].map((row, i, arr) => (
+                    <div key={row.k}>
+                      <p className="text-[0.55rem] font-semibold tracking-[0.22em] uppercase" style={{ color: row.k === "Validation" ? sage : gold }}>
+                        {row.k}
+                      </p>
+                      <p className="mt-1 text-sm leading-relaxed text-[var(--color-ink-muted)]">{row.v}</p>
+                      {i < arr.length - 1 && (
+                        <p className="my-2 text-sm leading-none text-[var(--color-ink-faint)]" aria-hidden>↓</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </EditorialLayout>
+      </GradientField>
+
       {/* 13 — 07 Usability Findings: heading, tension quote, wins/gaps (sage vs. amber) */}
       <EditorialLayout maxWidth="1440px">
         <div style={{ gridColumn: "1 / 13" }}>
@@ -814,6 +1370,63 @@ export default function AsapPage() {
         </div>
       </EditorialLayout>
 
+      {/* 13.5 — Changes Made: every gap paired with the design response it drove */}
+      <EditorialLayout maxWidth="1440px">
+        <div style={{ gridColumn: "1 / 13" }}>
+          <Eyebrow color={sage}>Changes Made</Eyebrow>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-[1.02] text-[var(--color-ink)]">
+            Each gap has a <span className="italic" style={{ color: sage }}>response.</span>
+          </h2>
+        </div>
+        <div style={{ gridColumn: "1 / 13" }}>
+          <div className="hidden md:grid md:grid-cols-2 gap-x-8">
+            {["What testing surfaced", "Design response"].map((h) => (
+              <p key={h} className="pb-3 text-[0.55rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">{h}</p>
+            ))}
+          </div>
+          <div className="md:grid md:grid-cols-2 md:gap-x-8">
+            {changesMade.map((c) => (
+              <div key={c.gap} className="contents">
+                <div className="pt-5 pb-2 md:py-5 border-t border-white/10">
+                  <p className="text-sm leading-relaxed text-[var(--color-ink)]">{c.gap}</p>
+                </div>
+                <div className="pb-5 md:py-5 md:border-t md:border-white/10">
+                  <p className="text-sm leading-relaxed text-[var(--color-ink-muted)]">
+                    <span className="md:hidden block text-[0.55rem] font-semibold tracking-[0.22em] uppercase mb-1" style={{ color: sage }}>
+                      Design response
+                    </span>
+                    {c.change}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </EditorialLayout>
+
+      {/* 13.6 — Key AI Insights: what designing AI behaviour taught, as compact cards */}
+      <EditorialLayout maxWidth="1440px">
+        <div style={{ gridColumn: "1 / 13" }}>
+          <Eyebrow>Key AI Insights</Eyebrow>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            What designing AI <span className="italic" style={{ color: accent }}>taught me.</span>
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ gridColumn: "1 / 13" }}>
+          {aiInsights.map((insight, i) => (
+            <div
+              key={insight}
+              className="rounded-2xl p-6"
+              style={tintedGlass(i % 3 === 0 ? accent : i % 3 === 1 ? gold : sage, 0.08)}
+            >
+              <p className="font-[family-name:var(--font-display)] font-semibold text-lg leading-snug text-[var(--color-ink)]">
+                {insight}
+              </p>
+            </div>
+          ))}
+        </div>
+      </EditorialLayout>
+
       {/* 14 — 08 Roadmap: premium glass timeline */}
       <GradientField gradient={asapGradients.charcoalGraphite}>
         <EditorialLayout maxWidth="1440px">
@@ -852,7 +1465,58 @@ export default function AsapPage() {
         </EditorialLayout>
       </GradientField>
 
-      {/* 15 — Takeaway / Reflection: standalone large editorial quote, centered */}
+      {/* 15 — Reflection: professional product reflection, then the standalone takeaway line */}
+      <GradientField gradient={asapGradients.charcoalGraphite}>
+        <EditorialLayout maxWidth="1440px">
+          <div style={{ gridColumn: "1 / 13" }}>
+            <Eyebrow>Reflection</Eyebrow>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              What this project <span className="italic" style={{ color: accent }}>actually was.</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ gridColumn: "1 / 13" }}>
+            {[
+              {
+                label: "Designing behaviour, not screens",
+                text: "Most of the meaningful decisions here weren't layout decisions. Whether the AI asks before it answers, how it signals uncertainty, what it declines to do — none of that lives in a Figma frame, and all of it determines whether the product works.",
+                color: accent,
+              },
+              {
+                label: "Guidance versus autonomy",
+                text: "The tension the whole product sits on. Too little structure and users stay frozen; too much and the AI does the thinking, which builds dependency rather than skill. Coaching was the resolution, but it needs constant policing in the prompt layer.",
+                color: gold,
+              },
+              {
+                label: "Trust is designed",
+                text: "Confidence labels were the clearest lesson: users trusted the AI more when it admitted what it wasn't sure about. Transparency read as competence, not weakness — the opposite of what a polished demo instinct suggests.",
+                color: sage,
+              },
+              {
+                label: "Research-driven prompt design",
+                text: "The prompt was a design surface, and it was written from interview findings rather than tuned by intuition. When Round 1 showed every persona getting the same plan, the fix belonged in the prompt's use of context — not in another screen.",
+                color: gold,
+              },
+              {
+                label: "Conversation as structure",
+                text: "The clarification branch does more work than any interface element. Deciding when the AI should ask instead of answer turned out to be the core architectural choice of the product.",
+                color: accent,
+              },
+              {
+                label: "Scaffolding should fade",
+                text: "The unresolved question, and the most interesting one. Support that never recedes becomes a crutch. A mature version of this would notice growing capability and step back — which is a behaviour to design, not a feature to ship.",
+                color: sage,
+              },
+            ].map((r) => (
+              <div key={r.label} className="rounded-2xl p-6" style={tintedGlass(r.color, 0.07)}>
+                <p className="text-[0.6rem] font-semibold tracking-[0.24em] uppercase" style={{ color: r.color }}>{r.label}</p>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--color-ink-muted)]">{r.text}</p>
+              </div>
+            ))}
+          </div>
+        </EditorialLayout>
+      </GradientField>
+
+      {/* 15.5 — Takeaway: standalone large editorial quote, centered */}
       <ReadingLayout className="text-center">
         <Eyebrow>Takeaway</Eyebrow>
         <p
@@ -864,7 +1528,7 @@ export default function AsapPage() {
           the north star.
         </p>
         <div className="flex flex-wrap gap-2 justify-center mt-8">
-          {["UX Research", "AI-Native Design", "Mobile UX", "Usability Testing", "EdTech", "Executive Function"].map((tag) => (
+          {["AI Experience Design", "Human-AI Interaction", "Conversation Design", "Prompt Design", "UX Research", "AI Trust & Transparency", "Usability Testing", "Executive Function"].map((tag) => (
             <span
               key={tag}
               className="text-[0.6rem] font-medium tracking-[0.14em] uppercase rounded-full px-3 py-1.5"
