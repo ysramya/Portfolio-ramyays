@@ -63,9 +63,9 @@ export default function Hero() {
         <h1 className="font-[family-name:var(--font-display)] font-semibold leading-[0.98] tracking-[-0.02em] text-[clamp(2.4rem,5.6vw,4.6rem)]">
           Hi, I&rsquo;m
           <br />
-          <span className="text-[var(--color-green)]">Ramya</span>,
+          <span className="text-[var(--color-green)]">Ramya Yerramilli</span>,
           <br />
-          <span className="text-[var(--color-yellow)]">UX Researcher.</span>
+          a <span className="text-[var(--color-yellow)]">Product Designer!</span>
         </h1>
         <p className="mt-5 text-sm font-semibold tracking-[0.14em] uppercase text-[var(--color-ink-muted)]">
           Human-AI Interaction &middot; Responsible AI
