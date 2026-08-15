@@ -10,6 +10,15 @@ export const metadata: Metadata = {
 
 const sectionStyle: React.CSSProperties = { padding: "clamp(4rem, 12vw, 11.25rem) 0" };
 
+/* The first section sits directly under the hero. It gets a tighter top
+   padding than the rest so the opening gallery breaks the fold — landing
+   on a full-height hero with nothing showing below gave no signal that
+   the page continues. Later sections keep the roomier rhythm. */
+const firstSectionStyle: React.CSSProperties = {
+  ...sectionStyle,
+  paddingTop: "clamp(2rem, 4vw, 3.5rem)",
+};
+
 function SectionIntro({
   eyebrow,
   title,
@@ -41,8 +50,8 @@ export default function BeyondTheScreenPage() {
     <div>
       {/* Hero */}
       <section
-        className="relative flex flex-col items-center justify-center text-center px-6"
-        style={{ minHeight: "92dvh", paddingTop: "var(--nav-h)" }}
+        className="relative flex flex-col items-center justify-center text-center px-6 min-h-[54dvh] md:min-h-[66dvh]"
+        style={{ paddingTop: "var(--nav-h)", paddingBottom: "2rem" }}
       >
         <div
           className="absolute inset-0 -z-10"
@@ -63,7 +72,10 @@ export default function BeyondTheScreenPage() {
           qualities that continue to shape how I approach every project.
         </p>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+        {/* Hidden on phones: the hero paragraph wraps tall enough there that
+            an absolutely-positioned cue collides with it, and the section
+            heading below is already visible so the cue earns nothing. */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 animate-bounce">
           <span className="text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">Scroll</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-ink-faint)" strokeWidth="1.5">
             <path d="M6 9l6 6 6-6" />
@@ -72,13 +84,15 @@ export default function BeyondTheScreenPage() {
       </section>
 
       {/* 01 — Digital Paintings */}
-      <section style={sectionStyle}>
+      <section style={firstSectionStyle}>
         <SectionIntro
           eyebrow="01 · Digital Paintings"
           title="Digital Paintings"
           description="Ideas often begin long before they're structured into systems. Digital painting gives me space to experiment with color, composition, and atmosphere without constraints, exploring emotion before function."
         />
-        <div className="mx-auto px-6 mt-14" style={{ maxWidth: "1500px" }}>
+        {/* Tighter than the other galleries' mt-14 — this one needs to clear
+            the fold so the page reads as having more below it. */}
+        <div className="mx-auto px-6 mt-6" style={{ maxWidth: "1500px" }}>
           <MasonryGallery images={paintings} emptyLabel="Paintings coming soon." />
         </div>
       </section>
