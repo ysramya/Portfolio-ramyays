@@ -16,7 +16,7 @@ const sectionStyle: React.CSSProperties = { padding: "clamp(4rem, 12vw, 11.25rem
    the page continues. Later sections keep the roomier rhythm. */
 const firstSectionStyle: React.CSSProperties = {
   ...sectionStyle,
-  paddingTop: "clamp(2rem, 4vw, 3.5rem)",
+  paddingTop: "clamp(1.5rem, 2.5vw, 2rem)",
 };
 
 function SectionIntro({
@@ -50,8 +50,8 @@ export default function BeyondTheScreenPage() {
     <div>
       {/* Hero */}
       <section
-        className="relative flex flex-col items-center justify-center text-center px-6 min-h-[54dvh] md:min-h-[66dvh]"
-        style={{ paddingTop: "var(--nav-h)", paddingBottom: "2rem" }}
+        className="relative flex flex-col items-center justify-center text-center px-6 min-h-[46dvh] md:min-h-[56dvh] pb-8 md:pb-[4.5rem]"
+        style={{ paddingTop: "var(--nav-h)" }}
       >
         <div
           className="absolute inset-0 -z-10"
@@ -65,7 +65,7 @@ export default function BeyondTheScreenPage() {
           <br />
           <span className="italic" style={{ color: "var(--color-green)" }}>Screen</span>
         </h1>
-        <p className="mt-8 text-lg md:text-xl leading-relaxed text-[var(--color-ink-muted)]" style={{ maxWidth: "62ch" }}>
+        <p className="mt-5 md:mt-8 text-base md:text-xl leading-relaxed text-[var(--color-ink-muted)]" style={{ maxWidth: "62ch" }}>
           Outside of research and design, I explore creativity through digital
           painting, photography — cityscapes, nature, and interiors — and
           cooking. These practices keep me curious, observant, and grounded —
@@ -90,9 +90,9 @@ export default function BeyondTheScreenPage() {
           title="Digital Paintings"
           description="Ideas often begin long before they're structured into systems. Digital painting gives me space to experiment with color, composition, and atmosphere without constraints, exploring emotion before function."
         />
-        {/* Tighter than the other galleries' mt-14 — this one needs to clear
-            the fold so the page reads as having more below it. */}
-        <div className="mx-auto px-6 mt-6" style={{ maxWidth: "1500px" }}>
+        {/* Tighter than the other galleries' mt-14 — this one needs real
+            image area above the fold, not just a sliver. */}
+        <div className="mx-auto px-6 mt-4" style={{ maxWidth: "1500px" }}>
           <MasonryGallery images={paintings} emptyLabel="Paintings coming soon." />
         </div>
       </section>
