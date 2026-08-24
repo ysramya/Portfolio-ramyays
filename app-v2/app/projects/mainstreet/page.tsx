@@ -110,49 +110,17 @@ const processSteps = [
   { n: "04", title: "Delivery", text: "I delivered 6 personalised dashboards — one per PM — filtered to their own book. I ran a 30-minute walkthrough with each manager and incorporated final feedback before handoff." },
 ];
 
-const rationale = [
-  {
-    icon: "🛠",
-    label: "Why Power BI",
-    text: "Power BI was chosen because it integrates directly with Excel inside Mainstreet's existing Microsoft environment. The PMs already lived in Excel — the tool decision was grounded in their actual workflow, not a default preference.",
-    why: "Every PM described starting their daily update in Excel. Choosing a tool inside the Microsoft environment they already worked in meant the dashboard could connect to live source data without asking anyone to adopt an unfamiliar system — which would have added a second adoption problem on top of the reporting one.",
-  },
-  {
-    icon: "🎨",
-    label: "Why the existing design system",
-    text: "The dashboard followed Mainstreet's brand colors, typeface, and sizing conventions. Familiarity lowered adoption friction — PMs didn't need to learn a new visual language to trust the numbers.",
-    why: "The research finding was that numbers weren't missing, they were buried — the problem was trust and legibility at a glance. Reusing the brand system PMs already recognised from internal materials meant the dashboard read as an internal tool immediately, so credibility didn't have to be established separately from the data.",
-  },
-  {
-    icon: "📐",
-    label: "Why narrative order",
-    text: "Charts were color-coded and sequenced to match how a PM actually reviews their book: headline AUA first, then trend context, then wallet positioning, then revenue breakdown, then client-level detail. Not all metrics uniformly.",
-    why: "Interviews surfaced a consistent review sequence: PMs check the headline number, then whether it's moving, then where they stand, then why. Sequencing the dashboard to match meant it answers questions in the order they're actually asked, rather than forcing PMs to hunt across the screen mid-review.",
-  },
-  {
-    icon: "👤",
-    label: "Why 6 filtered views",
-    text: "Each PM sees only their own book. One shared dashboard with cross-PM data would have created noise and comparison anxiety. Individual filtered views came directly from the interview finding: PMs wanted to track their own progress, not rank against peers.",
-    why: "PMs consistently framed their goal as tracking their own progress — nobody asked to see how they compared to colleagues. Scoping each report to a single book removed cross-PM data entirely rather than relying on a filter someone could change by accident.",
-  },
-];
 
 const beforeList = [
   "3–4 hours every Monday morning gathering and cross-referencing data",
   "No single view — at least 3 spreadsheets open simultaneously",
   "Data was days old by the time it was compiled",
-  "Each PM used a different format — no cross-team consistency",
-  "Growth calculations done by hand, prone to formula errors",
-  "No visual context — everything in raw numbers",
 ];
 
 const afterList = [
   "Full portfolio picture available in under 10 seconds on load",
   "One screen: KPIs, trend charts, wallet share, and client table",
   "Live data connected to source — always reflects current state",
-  "Standardised format across all 6 PMs — consistent review meetings",
-  "DAX-calculated growth rates — no manual formulas, no errors",
-  "Visual hierarchy guides attention: tiles → charts → detail table",
 ];
 
 const decisions = [
@@ -160,33 +128,33 @@ const decisions = [
     icon: "🎨",
     label: "Colour System",
     title: "Brand greens, not generic blues",
-    text: "Mainstreet Advisors' brand palette centres on earthy greens and tans — forest green for primary data, olive for secondary, tan for tertiary tiers. This made the dashboard immediately feel like an internal tool, not a generic BI template, and helped PMs orient quickly by tier.",
-    why: "Brand guidelines were a fixed constraint, so the question was how to use them rather than whether to. Mapping the existing palette onto data tiers turned a constraint into a wayfinding system — PMs could tell tier by colour without consulting a legend.",
-    tradeoff: "Gained instant familiarity and tier legibility; gave up the wider contrast range a purpose-built data palette would have offered. Acceptable because adoption depended on the dashboard reading as an internal tool, and tier distinction only needed three levels.",
+    text: "Forest green for primary data, olive for secondary, tan for tertiary tiers — Mainstreet's own palette, mapped onto the data hierarchy.",
+    why: "Brand guidelines were fixed, so the question was how to use them. Mapping the palette onto tiers turned a constraint into wayfinding — PMs read tier by colour, no legend needed.",
+    tradeoff: "Gained familiarity; gave up the contrast range a purpose-built data palette offers. Fine, because tier only needed three levels.",
   },
   {
     icon: "📌",
     label: "Layout Hierarchy",
     title: "Headline numbers before charts",
-    text: "Early iterations buried the KPI tiles midway down the page. PM feedback was clear: \"I need to see my total AUA the moment I open this.\" The final layout puts four headline tiles at the very top — Total AUA, ARR, # Clients, Active Accounts — before any visualisation.",
-    why: "This came straight from PM feedback on an early iteration. Burying the tiles meant the most-asked question required a scroll — which reintroduced exactly the friction the dashboard existed to remove.",
-    tradeoff: "Gained an immediate answer to the first question every PM asks; gave up prime vertical space that trend visuals could have occupied. Acceptable because the trend chart sits directly beneath the tiles, still within the same screen.",
+    text: "Four tiles at the very top — Total AUA, ARR, # Clients, Active Accounts — before any visualisation.",
+    why: "Straight from PM feedback on an early build: \"I need to see my total AUA the moment I open this.\" Burying the tiles put a scroll in front of the most-asked question.",
+    tradeoff: "Gained an instant answer; gave up prime space for charts. The trend chart sits directly beneath, still on the same screen.",
   },
   {
     icon: "🔢",
     label: "Number Format",
     title: "No decimals, dollar signs everywhere",
-    text: "Stakeholder feedback on early iterations specifically called out inconsistent formatting — some figures had decimals, some didn't; dollar signs appeared in some columns but not others. The final version enforces a strict format: whole dollar figures with $ prefix, growth as clean percentages, no trailing zeros.",
-    why: "Inconsistent formatting made figures slower to scan and harder to trust on sight — and trust at a glance was the whole point, since the research finding was that data was buried rather than absent.",
-    tradeoff: "Gained scannability and consistency across all six dashboards; gave up decimal-level precision in the headline figures. Acceptable because the tiles are for orientation — the client table below carries the exact numbers when a PM needs to investigate.",
+    text: "Whole dollar figures with a $ prefix, growth as clean percentages, no trailing zeros — enforced across all six dashboards.",
+    why: "Executive review flagged inconsistent decimals and dollar signs. Mixed formatting slows scanning, and scanning was the point.",
+    tradeoff: "Gained consistency; gave up decimal precision in the tiles. The client table below carries exact numbers.",
   },
   {
     icon: "🔍",
     label: "Personalisation",
     title: "One dashboard per PM, not a shared view",
-    text: "Rather than a single all-PM dashboard with filters, I scoped each PM their own report page covering only their book. This eliminated the risk of accidentally viewing another manager's data and made the dashboard feel like a personal tool rather than a shared report.",
-    why: "Interviews framed the goal as tracking personal progress, not peer ranking. A shared view with filters would have left another manager's book one misclick away, so scoping the report removed the possibility rather than guarding against it.",
-    tradeoff: "Gained privacy and a tool that feels personal; gave up cross-PM comparison and created six reports to maintain instead of one. Acceptable because no PM asked for peer comparison, and the maintenance cost was understood before committing to it.",
+    text: "Six report pages, each scoped to a single book, instead of one dashboard with filters.",
+    why: "PMs framed the goal as tracking their own progress — nobody asked for peer comparison. Scoping removed the possibility rather than guarding against it.",
+    tradeoff: "Gained privacy; gave up cross-PM comparison and took on six reports to maintain instead of one. The cost was known upfront.",
   },
 ];
 
@@ -474,7 +442,7 @@ export default function MainstreetPage() {
             — became the top-to-bottom order of the dashboard itself. Their stated
             goal of tracking personal progress, not peer standing, is why I scoped six
             filtered reports rather than one shared view. Each of those decisions is
-            documented in Design Rationale and Design Decisions below.
+            documented in Design Decisions below.
           </p>
         </div>
       </EditorialLayout>
@@ -611,25 +579,6 @@ export default function MainstreetPage() {
         </div>
       </EditorialLayout>
 
-      {/* 7 — Design Rationale: premium feature cards */}
-      <EditorialLayout maxWidth="1500px">
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow>Design Rationale</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            Every decision <span className="italic" style={{ color: accent }}>came from the PMs.</span>
-          </h2>
-          <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
-            Tool choice, layout order, color-coding — each was grounded in what the
-            interviews revealed about how PMs actually think through their portfolios.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ gridColumn: "1 / 13" }}>
-          {rationale.map((r, i) => (
-            <FeatureCard key={r.label} icon={r.icon} label={r.label} title={r.label} text={r.text} why={r.why} color={i % 2 === 0 ? accent : olive} />
-          ))}
-        </div>
-      </EditorialLayout>
-
       {/* 8 — Dashboard Showcase: the real screenshot as visual centerpiece, 1700px,
           floating KPI callouts connected below it */}
       <GalleryLayout maxWidth="1700px">
@@ -739,77 +688,6 @@ export default function MainstreetPage() {
           </div>
         </EditorialLayout>
       </GradientField>
-
-      {/* 11.5 — Key Decisions I Drove: 3-col table, hairline rows only, stacks on mobile */}
-      <EditorialLayout maxWidth="1500px">
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow>Key Decisions I Drove</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            The calls, and <span className="italic" style={{ color: accent }}>what rode on them</span>
-          </h2>
-        </div>
-
-        <div style={{ gridColumn: "1 / 13" }}>
-          <div className="mt-4 hidden md:grid md:grid-cols-[1fr_1.3fr_1.3fr] gap-x-8">
-            {["Decision", "Reasoning", "Expected product impact"].map((h) => (
-              <p key={h} className="pb-3 text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">{h}</p>
-            ))}
-          </div>
-
-          <div className="md:grid md:grid-cols-[1fr_1.3fr_1.3fr] md:gap-x-8">
-            {[
-              {
-                decision: "Build in Power BI, inside the Microsoft stack",
-                reasoning: "PMs already worked in Excel, and Mainstreet ran on Microsoft — a tool outside that stack would have added an adoption problem on top of the reporting one.",
-                impact: "The dashboard connects to live source data instead of static exports, so figures reflect current state rather than whenever someone last updated a sheet.",
-              },
-              {
-                decision: "Lead with four KPI tiles, before any chart",
-                reasoning: "PM feedback on an early iteration: \"I need to see my total AUA the moment I open this.\" Burying the tiles reintroduced the friction the dashboard existed to remove.",
-                impact: "The most-asked question is answered on load, with no scroll — which is what makes the ten-second review possible.",
-              },
-              {
-                decision: "Sequence the dashboard to match the review ritual",
-                reasoning: "Interviews described a consistent order: headline figure, then movement, then positioning, then detail.",
-                impact: "The screen answers questions in the order PMs ask them, rather than making them hunt across the layout mid-review.",
-              },
-              {
-                decision: "Ship six scoped reports, not one shared view",
-                reasoning: "PMs framed their goal as tracking their own progress; nobody asked for peer comparison.",
-                impact: "Another manager's book is structurally unreachable rather than one misclick away, and each dashboard reads as a personal tool.",
-              },
-              {
-                decision: "Inherit the Mainstreet brand system",
-                reasoning: "Brand guidelines were fixed, and the research finding was that data was buried rather than absent — trust at a glance mattered more than visual novelty.",
-                impact: "The dashboard reads as an internal tool from first open, so credibility doesn't have to be established separately from the numbers.",
-              },
-              {
-                decision: "Enforce one strict number format",
-                reasoning: "Executive review of early iterations flagged inconsistent decimals and dollar signs across columns.",
-                impact: "Figures are scannable and consistent across all six dashboards, which is what lets a PM trust a number without re-reading it.",
-              },
-            ].map((row) => (
-              <div key={row.decision} className="contents">
-                <div className="pt-5 pb-2 md:py-5 border-t border-white/10">
-                  <p className="font-semibold text-[var(--color-ink)]">{row.decision}</p>
-                </div>
-                <div className="pb-2 md:py-5 md:border-t md:border-white/10">
-                  <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
-                    <span className="md:hidden block text-[0.55rem] font-semibold tracking-[0.24em] uppercase mb-1" style={{ color: accent }}>Reasoning</span>
-                    {row.reasoning}
-                  </p>
-                </div>
-                <div className="pb-5 md:py-5 md:border-t md:border-white/10">
-                  <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
-                    <span className="md:hidden block text-[0.55rem] font-semibold tracking-[0.24em] uppercase mb-1" style={{ color: accent }}>Expected product impact</span>
-                    {row.impact}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </EditorialLayout>
 
       {/* 12 — Impact: floating KPI cards, executive reporting feel */}
       <EditorialLayout maxWidth="1500px">

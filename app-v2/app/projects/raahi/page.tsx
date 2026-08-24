@@ -462,69 +462,6 @@ export default function RaahiPage() {
         </div>
       </EditorialLayout>
 
-      {/* 11.5 — Key Decisions I Drove: 3-col table, hairline rows only (no vertical rules), stacks on mobile */}
-      <EditorialLayout>
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow>Key Decisions I Drove</Eyebrow>
-          <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight max-w-[20ch]">
-            The calls, and what rode on them.
-          </h3>
-
-          <div className="mt-8 hidden md:grid md:grid-cols-[1fr_1.3fr_1.3fr] gap-x-8">
-            <p className="pb-3 text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">Decision</p>
-            <p className="pb-3 text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">Reasoning</p>
-            <p className="pb-3 text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">Expected product impact</p>
-          </div>
-
-          <div className="md:grid md:grid-cols-[1fr_1.3fr_1.3fr] md:gap-x-8">
-            {[
-              {
-                decision: "Build in the browser, not as a standalone app",
-                reasoning: "Practitioners review live sites in-browser; a tool outside it doesn't get opened.",
-                impact: "Detection meets practitioners inside the workflow they already have, instead of asking them to adopt a second one.",
-              },
-              {
-                decision: "Aim the product at practitioners, not end users",
-                reasoning: "The reviewer can stop a pattern before it ships; the end user only meets it afterward.",
-                impact: "Effort concentrates upstream, where one person's review carries to everyone downstream of what they approve.",
-              },
-              {
-                decision: "Define a three-tier taxonomy first",
-                reasoning: "“Dark pattern” meant something different to every practitioner — detection had nothing stable to resolve to.",
-                impact: "Every flag lands on the same shared label, making findings comparable between practitioners and defensible to a stakeholder.",
-              },
-              {
-                decision: "Log every flag as evidence, not just a warning",
-                reasoning: "Practitioners had strong instinct but no proof a stakeholder would accept.",
-                impact: "A hunch becomes documentation, which is what the stakeholder conversation actually needs to act on.",
-              },
-            ].map((row) => (
-              <div key={row.decision} className="contents">
-                <div className="pt-5 pb-2 md:py-5 border-t border-white/10">
-                  <p className="font-semibold">{row.decision}</p>
-                </div>
-                <div className="pb-2 md:py-5 md:border-t md:border-white/10">
-                  <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
-                    <span className="md:hidden text-[0.58rem] font-semibold tracking-[0.2em] uppercase block mb-1" style={{ color: accent }}>
-                      Reasoning
-                    </span>
-                    {row.reasoning}
-                  </p>
-                </div>
-                <div className="pb-5 md:py-5 md:border-t md:border-white/10">
-                  <p className="text-sm text-[var(--color-ink-muted)] leading-relaxed">
-                    <span className="md:hidden text-[0.58rem] font-semibold tracking-[0.2em] uppercase block mb-1" style={{ color: accent }}>
-                      Expected product impact
-                    </span>
-                    {row.impact}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </EditorialLayout>
-
       {/* 12 — Solution: FullBleed, product screenshot near-edge, text overlay chip */}
       <FullBleedLayout
         image="/img/raahi/product-specs.png"
