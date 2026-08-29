@@ -21,7 +21,7 @@ const intake = [
     title: "See my work",
     body: "Projects, case studies and designs that solve real problems.",
     href: "#work",
-    tint: "var(--pink)",
+    tint: "color-mix(in oklab, var(--rose) 48%, var(--paper))",
     art: "/img/collage/intake-work.png",
     artLabel: "Pomegranate / botanical",
   },
@@ -30,7 +30,7 @@ const intake = [
     title: "Learn about me",
     body: "My background, design journey and what drives me.",
     href: "/about",
-    tint: "var(--ochre)",
+    tint: "color-mix(in oklab, var(--turmeric) 42%, var(--paper))",
     art: "/img/collage/intake-about.png",
     artLabel: "Vintage radio",
   },
@@ -39,7 +39,7 @@ const intake = [
     title: "Research interests",
     body: "Human-AI interaction, AI safety, vulnerable users and more.",
     href: "#research",
-    tint: "var(--sage)",
+    tint: "color-mix(in oklab, var(--peacock) 30%, var(--paper))",
     art: "/img/collage/intake-research.png",
     artLabel: "Peacock",
   },
@@ -48,7 +48,7 @@ const intake = [
     title: "Just curious",
     body: "Field notes, thoughts, random joys and things I'm into.",
     href: "/beyond-the-screen",
-    tint: "var(--paper-2)",
+    tint: "var(--muted-sand)",
     art: "/img/collage/intake-curious.png",
     artLabel: "Chai cup",
   },
@@ -106,8 +106,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
     <div className="flex items-center gap-4">
       <span className="rule-ornament flex-1" aria-hidden />
       <p
-        className="font-[family-name:var(--font-type)] text-[0.7rem] font-bold tracking-[0.28em] uppercase whitespace-nowrap text-center"
-        style={{ color: "var(--red)" }}
+        className="font-[family-name:var(--font-body-collage)] text-[0.7rem] font-bold tracking-[0.28em] uppercase whitespace-nowrap text-center"
+        style={{ color: "var(--vermilion)" }}
       >
         {children}
       </p>
@@ -125,11 +125,11 @@ export default function Home() {
       <section className="relative" style={{ paddingTop: "calc(var(--nav-h) + 2rem)", paddingBottom: "3.5rem" }}>
         <div className="mx-auto grid gap-10 px-6 md:px-12 lg:grid-cols-[1.05fr_1fr] items-center" style={{ maxWidth: "1400px" }}>
           <div className="lg:pl-10">
-            <p className="font-[family-name:var(--font-type)] text-sm tracking-[0.28em] uppercase" style={{ color: "var(--ink-soft)" }}>
+            <p className="font-[family-name:var(--font-body-collage)] text-sm tracking-[0.28em] uppercase" style={{ color: "var(--ink-soft)" }}>
               Hi, I&rsquo;m
             </p>
             <h1
-              className="mt-2 font-[family-name:var(--font-slab)] leading-[0.88] text-[clamp(2.6rem,7.5vw,5.4rem)]"
+              className="mt-2 font-[family-name:var(--font-display-collage)] leading-[0.88] text-[clamp(2.6rem,7.5vw,5.4rem)]"
               style={{ color: "var(--ink)" }}
             >
               Ramya
@@ -138,14 +138,14 @@ export default function Home() {
             </h1>
 
             <p
-              className="mt-5 font-[family-name:var(--font-type)] font-bold text-[0.95rem] md:text-base tracking-[0.06em] uppercase leading-relaxed"
-              style={{ color: "var(--red)", maxWidth: "26ch" }}
+              className="mt-5 font-[family-name:var(--font-body-collage)] font-bold text-[0.95rem] md:text-base tracking-[0.06em] uppercase leading-relaxed"
+              style={{ color: "var(--vermilion)", maxWidth: "26ch" }}
             >
               UX Researcher investigating the human impact of AI
             </p>
 
             <div
-              className="mt-5 flex flex-col gap-4 font-[family-name:var(--font-type)] text-[0.9rem] leading-[1.75]"
+              className="mt-5 flex flex-col gap-4 font-[family-name:var(--font-body-collage)] text-[0.9rem] leading-[1.75]"
               style={{ color: "var(--ink-soft)", maxWidth: "46ch" }}
             >
               <p>
@@ -172,12 +172,12 @@ export default function Home() {
             <div className="relative mx-auto" style={{ maxWidth: "400px" }}>
               <div
                 className="absolute inset-x-6 top-8 bottom-10 rounded-[14px]"
-                style={{ background: "var(--teal)", opacity: 0.9 }}
+                style={{ background: "var(--peacock)", opacity: 0.9 }}
                 aria-hidden
               />
               <div
                 className="absolute left-1/2 -translate-x-1/2 top-12 w-[180px] h-[180px] rounded-full"
-                style={{ background: "var(--ochre)", opacity: 0.85 }}
+                style={{ background: "var(--turmeric)", opacity: 0.85 }}
                 aria-hidden
               />
               <ArtSlot
@@ -206,14 +206,14 @@ export default function Home() {
             </div>
 
             <div className="absolute top-[24%] right-0 w-[88px] rotate-[4deg] hidden md:block">
-              <div className="collage-card px-2 py-3 text-center" style={{ borderColor: "var(--ochre)" }}>
-                <p className="font-[family-name:var(--font-type)] text-[0.58rem] tracking-[0.16em]" style={{ color: "var(--red)" }}>
+              <div className="collage-card px-2 py-3 text-center" style={{ borderColor: "var(--turmeric)" }}>
+                <p className="font-[family-name:var(--font-body-collage)] text-[0.58rem] tracking-[0.16em]" style={{ color: "var(--vermilion)" }}>
                   A 13407
                 </p>
                 <div className="my-2">
                   <ArtSlot src="/img/collage/ticket-motif.png" alt="Floral ticket motif" label="Motif" aspect="1/1" />
                 </div>
-                <p className="font-[family-name:var(--font-type)] text-[0.58rem] leading-tight" style={{ color: "var(--ink-soft)" }}>
+                <p className="font-[family-name:var(--font-body-collage)] text-[0.58rem] leading-tight" style={{ color: "var(--ink-soft)" }}>
                   खेलेगा
                   <br />
                   खिलेगा
@@ -224,7 +224,7 @@ export default function Home() {
             </div>
 
             <p
-              className="absolute top-1 right-0 md:right-[104px] font-[family-name:var(--font-type)] text-[0.6rem] tracking-[0.14em] uppercase text-right leading-relaxed hidden sm:block"
+              className="absolute top-1 right-0 md:right-[104px] font-[family-name:var(--font-body-collage)] text-[0.6rem] tracking-[0.14em] uppercase text-right leading-relaxed hidden sm:block"
               style={{ color: "var(--ink-soft)" }}
             >
               Chicago, IL
@@ -238,7 +238,7 @@ export default function Home() {
       </section>
 
       {/* ── Intake ─────────────────────────────────────────────── */}
-      <section className="px-6 md:px-12 py-10" style={{ borderTop: "1px solid rgba(36,31,26,0.14)" }}>
+      <section className="px-6 md:px-12 py-10" style={{ borderTop: "1px solid rgba(29,27,24,0.14)" }}>
         <div className="mx-auto" style={{ maxWidth: "1400px" }}>
           <SectionLabel>✦ What are you here for today? ✦</SectionLabel>
 
@@ -250,21 +250,21 @@ export default function Home() {
                 className="collage-card group relative block p-6 transition-transform duration-300 hover:-translate-y-1"
                 style={{ background: c.tint, transform: `rotate(${i % 2 === 0 ? -0.6 : 0.6}deg)` }}
               >
-                <p className="font-[family-name:var(--font-slab)] text-2xl" style={{ color: "var(--red)" }}>
+                <p className="font-[family-name:var(--font-display-collage)] text-2xl" style={{ color: "var(--vermilion)" }}>
                   {c.n}
                 </p>
                 <p
-                  className="mt-3 font-[family-name:var(--font-type)] font-bold text-[0.92rem] tracking-[0.1em] uppercase"
+                  className="mt-3 font-[family-name:var(--font-body-collage)] font-bold text-[0.92rem] tracking-[0.1em] uppercase"
                   style={{ color: "var(--ink)" }}
                 >
                   {c.title}
                 </p>
-                <p className="mt-2 font-[family-name:var(--font-type)] text-[0.78rem] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+                <p className="mt-2 font-[family-name:var(--font-body-collage)] text-[0.78rem] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
                   {c.body}
                 </p>
                 <p
-                  className="mt-5 font-[family-name:var(--font-type)] text-[0.7rem] tracking-[0.2em] uppercase inline-flex items-center gap-2"
-                  style={{ color: "var(--red)" }}
+                  className="mt-5 font-[family-name:var(--font-body-collage)] text-[0.7rem] tracking-[0.2em] uppercase inline-flex items-center gap-2"
+                  style={{ color: "var(--vermilion)" }}
                 >
                   Explore
                   <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -282,13 +282,13 @@ export default function Home() {
       <section id="research" className="px-6 md:px-12 py-10" style={{ scrollMarginTop: "var(--nav-h)" }}>
         <div className="mx-auto collage-card p-6 md:p-8" style={{ maxWidth: "1400px" }}>
           <div className="flex flex-wrap items-baseline justify-between gap-4">
-            <p className="font-[family-name:var(--font-type)] text-[0.7rem] font-bold tracking-[0.26em] uppercase" style={{ color: "var(--ink)" }}>
+            <p className="font-[family-name:var(--font-body-collage)] text-[0.7rem] font-bold tracking-[0.26em] uppercase" style={{ color: "var(--ink)" }}>
               Featured investigations ✦
             </p>
             <Link
               href="#work"
-              className="font-[family-name:var(--font-type)] text-[0.7rem] tracking-[0.18em] uppercase hover:underline"
-              style={{ color: "var(--red)" }}
+              className="font-[family-name:var(--font-body-collage)] text-[0.7rem] tracking-[0.18em] uppercase hover:underline"
+              style={{ color: "var(--vermilion)" }}
             >
               Or explore everything →
             </Link>
@@ -312,11 +312,11 @@ export default function Home() {
                     <ArtSlot src={p.art!} alt={p.title} label={p.artLabel!} aspect="4/3" />
                   )}
                 </div>
-                <p className="mt-3 font-[family-name:var(--font-type)] text-[0.6rem] tracking-[0.18em]" style={{ color: "var(--ink-soft)" }}>
+                <p className="mt-3 font-[family-name:var(--font-body-collage)] text-[0.6rem] tracking-[0.18em]" style={{ color: "var(--ink-soft)" }}>
                   {p.n}
                 </p>
                 <p
-                  className="mt-1 font-[family-name:var(--font-type)] font-bold text-[0.85rem] tracking-[0.08em] uppercase"
+                  className="mt-1 font-[family-name:var(--font-body-collage)] font-bold text-[0.85rem] tracking-[0.08em] uppercase"
                   style={{ color: "var(--ink)" }}
                 >
                   {p.title}
@@ -325,14 +325,14 @@ export default function Home() {
                   {p.tags.map((t) => (
                     <span
                       key={t}
-                      className="font-[family-name:var(--font-type)] text-[0.55rem] tracking-[0.12em] uppercase px-2 py-0.5"
-                      style={{ border: "1px solid rgba(36,31,26,0.25)", color: "var(--ink-soft)" }}
+                      className="font-[family-name:var(--font-body-collage)] text-[0.55rem] tracking-[0.12em] uppercase px-2 py-0.5"
+                      style={{ border: "1px solid rgba(29,27,24,0.25)", color: "var(--ink-soft)" }}
                     >
                       {t}
                     </span>
                   ))}
                 </div>
-                <p className="mt-2 font-[family-name:var(--font-type)] text-[0.76rem] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+                <p className="mt-2 font-[family-name:var(--font-body-collage)] text-[0.76rem] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
                   {p.body}
                 </p>
                 {p.note && (
@@ -370,12 +370,12 @@ export default function Home() {
                   </div>
                 </div>
                 <p
-                  className="mt-3 font-[family-name:var(--font-type)] font-bold text-[0.82rem] tracking-[0.08em] uppercase"
+                  className="mt-3 font-[family-name:var(--font-body-collage)] font-bold text-[0.82rem] tracking-[0.08em] uppercase"
                   style={{ color: "var(--ink)" }}
                 >
                   {p.title}
                 </p>
-                <p className="mt-1 font-[family-name:var(--font-type)] text-[0.72rem] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
+                <p className="mt-1 font-[family-name:var(--font-body-collage)] text-[0.72rem] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
                   {p.description}
                 </p>
               </Link>
@@ -388,27 +388,27 @@ export default function Home() {
       <section className="px-6 md:px-12 py-12">
         <div className="mx-auto grid gap-10 md:grid-cols-3" style={{ maxWidth: "1400px" }}>
           <div>
-            <p className="font-[family-name:var(--font-slab)] text-4xl leading-none" style={{ color: "var(--red)" }} aria-hidden>
+            <p className="font-[family-name:var(--font-display-collage)] text-4xl leading-none" style={{ color: "var(--vermilion)" }} aria-hidden>
               &ldquo;
             </p>
-            <p className="mt-2 font-[family-name:var(--font-type)] text-[0.9rem] leading-[1.8]" style={{ color: "var(--ink)" }}>
+            <p className="mt-2 font-[family-name:var(--font-body-collage)] text-[0.9rem] leading-[1.8]" style={{ color: "var(--ink)" }}>
               The goal of my research is simple: make the invisible consequences of
               technology visible enough to design for them.
             </p>
           </div>
 
           <div>
-            <p className="font-[family-name:var(--font-type)] text-[0.66rem] font-bold tracking-[0.22em] uppercase" style={{ color: "var(--red)" }}>
+            <p className="font-[family-name:var(--font-body-collage)] text-[0.66rem] font-bold tracking-[0.22em] uppercase" style={{ color: "var(--vermilion)" }}>
               Currently thinking about
             </p>
             <ul className="mt-4 flex flex-col gap-2">
               {thinkingAbout.map((t) => (
                 <li
                   key={t}
-                  className="font-[family-name:var(--font-type)] text-[0.83rem] pl-5 relative"
+                  className="font-[family-name:var(--font-body-collage)] text-[0.83rem] pl-5 relative"
                   style={{ color: "var(--ink-soft)" }}
                 >
-                  <span className="absolute left-0" style={{ color: "var(--red)" }} aria-hidden>
+                  <span className="absolute left-0" style={{ color: "var(--vermilion)" }} aria-hidden>
                     ✦
                   </span>
                   {t}
@@ -418,10 +418,10 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col items-start gap-5">
-            <div className="collage-card px-5 py-4 rotate-[-2deg] text-center" style={{ background: "var(--pink)" }}>
+            <div className="collage-card px-5 py-4 rotate-[-2deg] text-center" style={{ background: "var(--rose)" }}>
               <p
-                className="font-[family-name:var(--font-type)] font-bold text-[0.7rem] tracking-[0.12em] uppercase leading-relaxed"
-                style={{ color: "var(--red)" }}
+                className="font-[family-name:var(--font-body-collage)] font-bold text-[0.7rem] tracking-[0.12em] uppercase leading-relaxed"
+                style={{ color: "var(--vermilion)" }}
               >
                 Every question
                 <br />
@@ -431,10 +431,10 @@ export default function Home() {
               </p>
             </div>
             <div>
-              <p className="font-[family-name:var(--font-type)] text-[0.66rem] font-bold tracking-[0.22em] uppercase" style={{ color: "var(--red)" }}>
+              <p className="font-[family-name:var(--font-body-collage)] text-[0.66rem] font-bold tracking-[0.22em] uppercase" style={{ color: "var(--vermilion)" }}>
                 Find me
               </p>
-              <div className="mt-3 flex items-center gap-4 font-[family-name:var(--font-type)] text-sm">
+              <div className="mt-3 flex items-center gap-4 font-[family-name:var(--font-body-collage)] text-sm">
                 <a href="https://www.linkedin.com/in/ramyays" target="_blank" rel="noopener" className="hover:underline" style={{ color: "var(--ink)" }}>
                   LinkedIn
                 </a>

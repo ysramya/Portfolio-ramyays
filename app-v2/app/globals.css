@@ -133,87 +133,130 @@ p {
   -webkit-backdrop-filter: blur(28px) saturate(140%);
 }
 
-/* ── Collage homepage ──
-   The scrapbook look is built from CSS rather than image assets: paper
-   grain, stamp perforations, tape strips and a postmark. Illustrations
-   (portrait, ornaments, project art) still need real files — these only
-   supply the surfaces they sit on. Scoped to .collage so nothing here
-   leaks into the dark case-study pages. */
+/* ── Collage design system ──
+   Ramya's "Design System / Version A": Indian ephemera, textiles and field
+   notes. Palette, textures and pattern system live here; typography comes
+   from the Bodoni/Manrope/Caveat stack wired up in layout.tsx. Everything
+   is scoped to .collage so none of it leaks into the dark case-study
+   pages, which still run the original green/yellow system. */
 .collage {
-  --paper: #f4ede0;
-  --paper-2: #efe6d6;
-  --ink: #241f1a;
-  --ink-soft: #5b5147;
-  --red: #b3392c;
-  --teal: #3e8a8c;
-  --ochre: #e0a02e;
-  --pink: #e7b5c1;
-  --sage: #9fb89a;
-  --plum: #7b4ba8;
+  /* 01 — Colour palette (exact values from the spec sheet) */
+  --paper: #f5ebdd;
+  --ink: #1d1b18;
+  --deep-green: #24483b;
+  --vermilion: #a93427;
+  --indigo: #394477;
+  --turmeric: #d99a32;
+  --peacock: #3f7770;
+  --rose: #c9827f;
+  --gold: #bb8a3b;
+  --muted-sand: #e6d6bf;
+
+  /* derived, for text hierarchy on paper */
+  --ink-soft: rgba(29, 27, 24, 0.72);
+  --ink-faint: rgba(29, 27, 24, 0.48);
+  --hairline: rgba(29, 27, 24, 0.18);
+
   background-color: var(--paper);
   color: var(--ink);
-  /* faint fibre grain so large cream areas don't read as flat #fff */
+  font-family: var(--font-body-collage), system-ui, sans-serif;
+
+  /* T1 Paper Grain — the always-on base texture. Kept very low contrast:
+     "use textures sparingly for depth, not distraction". */
   background-image:
-    radial-gradient(circle at 20% 30%, rgba(179, 57, 44, 0.035) 0 1px, transparent 1px),
-    radial-gradient(circle at 70% 60%, rgba(62, 138, 140, 0.035) 0 1px, transparent 1px),
-    radial-gradient(circle at 45% 85%, rgba(36, 31, 26, 0.03) 0 1px, transparent 1px);
-  background-size: 140px 140px, 190px 190px, 110px 110px;
+    radial-gradient(circle at 18% 26%, rgba(169, 52, 39, 0.03) 0 1px, transparent 1px),
+    radial-gradient(circle at 72% 58%, rgba(63, 119, 112, 0.03) 0 1px, transparent 1px),
+    radial-gradient(circle at 44% 84%, rgba(29, 27, 24, 0.025) 0 1px, transparent 1px);
+  background-size: 130px 130px, 180px 180px, 100px 100px;
 }
 
-/* Torn/aged card surface */
+/* 02 — Typography. The global `h1,h2,h3 { font-family: var(--font-display) }`
+   rule sets Fraunces on every heading, and an element selector beats the
+   utility class on these headings — so the collage display face has to be
+   asserted here or headings silently fall back to the dark system's serif. */
+.collage h1,
+.collage h2,
+.collage h3 {
+  font-family: var(--font-display-collage), serif;
+}
+
+/* 03 — Textures. T1 is on .collage itself; these are the opt-in layers. */
+.tex-handmade {
+  background-color: var(--muted-sand);
+  background-image:
+    repeating-linear-gradient(102deg, rgba(29, 27, 24, 0.022) 0 2px, transparent 2px 5px),
+    repeating-linear-gradient(8deg, rgba(29, 27, 24, 0.018) 0 3px, transparent 3px 7px);
+}
+.tex-vintage-print {
+  background-color: var(--paper);
+  background-image: radial-gradient(circle, rgba(29, 27, 24, 0.07) 0.5px, transparent 0.6px);
+  background-size: 4px 4px;
+}
+.tex-newsprint {
+  background-color: #efe7d7;
+  background-image: repeating-linear-gradient(180deg, rgba(29, 27, 24, 0.05) 0 1px, transparent 1px 6px);
+}
+
+/* 04 — Pattern system. C (micro) is the safe default for large areas;
+   A/B/D are accents for borders, blocks and dividers. */
+.pat-micro {
+  background-image: radial-gradient(circle, rgba(169, 52, 39, 0.16) 1px, transparent 1.2px);
+  background-size: 14px 14px;
+}
+.pat-block {
+  background-image:
+    repeating-linear-gradient(45deg, rgba(36, 72, 59, 0.14) 0 6px, transparent 6px 12px),
+    repeating-linear-gradient(-45deg, rgba(169, 52, 39, 0.12) 0 6px, transparent 6px 12px);
+}
+
+/* Aged card surface — the base for project cards and note panels */
 .collage-card {
-  background: var(--paper-2);
-  border: 1px solid rgba(36, 31, 26, 0.16);
-  box-shadow: 2px 3px 0 rgba(36, 31, 26, 0.08);
+  background: var(--muted-sand);
+  border: 1px solid var(--hairline);
+  box-shadow: 2px 3px 0 rgba(29, 27, 24, 0.07);
 }
 
-/* Perforated postage-stamp edge */
+/* 07 — Stamp system: perforated postage edge */
 .stamp-edge {
-  background: var(--paper-2);
-  padding: 10px;
-  filter: drop-shadow(2px 3px 0 rgba(36, 31, 26, 0.1));
-  -webkit-mask:
-    radial-gradient(circle at 5px 5px, transparent 4px, #000 4.5px) -5px -5px / 10px 10px round;
-  mask:
-    radial-gradient(circle at 5px 5px, transparent 4px, #000 4.5px) -5px -5px / 10px 10px round;
+  background: var(--paper);
+  padding: 9px;
+  filter: drop-shadow(2px 3px 0 rgba(29, 27, 24, 0.1));
+  -webkit-mask: radial-gradient(circle at 5px 5px, transparent 4px, #000 4.5px) -5px -5px / 10px 10px round;
+  mask: radial-gradient(circle at 5px 5px, transparent 4px, #000 4.5px) -5px -5px / 10px 10px round;
 }
 
-/* A strip of masking tape, for taped-on notes */
+/* 10 — Image treatment: masking tape strip */
 .tape {
   position: absolute;
-  width: 92px;
-  height: 26px;
-  background: rgba(224, 200, 148, 0.55);
-  border-left: 1px dashed rgba(36, 31, 26, 0.16);
-  border-right: 1px dashed rgba(36, 31, 26, 0.16);
-  box-shadow: 0 1px 2px rgba(36, 31, 26, 0.12);
+  width: 88px;
+  height: 24px;
+  background: rgba(214, 190, 140, 0.6);
+  border-left: 1px dashed rgba(29, 27, 24, 0.16);
+  border-right: 1px dashed rgba(29, 27, 24, 0.16);
+  box-shadow: 0 1px 2px rgba(29, 27, 24, 0.12);
+}
+
+/* 08 — Dashed divider rule */
+.rule-ornament {
+  height: 1px;
+  background: repeating-linear-gradient(90deg, var(--hairline) 0 6px, transparent 6px 12px);
 }
 
 /* Nav over the cream homepage. The global nav is built for dark pages, so
    its ink colours invert here — overrides need !important because the
    utility classes set colour directly on each element. */
 .nav-paper a {
-  color: #241f1a !important;
+  color: #1d1b18 !important;
 }
 .nav-paper a[href*="linkedin"] {
-  color: #101010 !important;
+  color: #f5ebdd !important;
 }
 .nav-paper button span {
-  background-color: #241f1a !important;
+  background-color: #1d1b18 !important;
 }
 .nav-paper nav[aria-label="Mobile"] {
-  background: rgba(244, 237, 224, 0.97) !important;
-  border-color: rgba(36, 31, 26, 0.18) !important;
-}
-
-/* Ornamental divider rule used between homepage bands */
-.rule-ornament {
-  height: 1px;
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(36, 31, 26, 0.28) 0 6px,
-    transparent 6px 12px
-  );
+  background: rgba(245, 235, 221, 0.97) !important;
+  border-color: rgba(29, 27, 24, 0.18) !important;
 }
 
 /* ── Editorial grid: collapse to one column on mobile ──

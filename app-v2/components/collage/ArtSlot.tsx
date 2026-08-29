@@ -41,14 +41,14 @@ export default function ArtSlot({
       className={`relative w-full flex items-center justify-center text-center ${className}`}
       style={{
         aspectRatio: aspect,
-        border: "1px dashed rgba(36,31,26,0.3)",
+        border: "1px dashed rgba(29,27,24,0.3)",
         background:
-          "repeating-linear-gradient(45deg, rgba(36,31,26,0.03) 0 6px, transparent 6px 12px)",
+          "repeating-linear-gradient(45deg, rgba(29,27,24,0.03) 0 6px, transparent 6px 12px)",
       }}
     >
       <span
-        className="font-[family-name:var(--font-type)] text-[0.58rem] tracking-[0.14em] uppercase px-2 leading-snug"
-        style={{ color: "rgba(36,31,26,0.45)" }}
+        className="font-[family-name:var(--font-body-collage)] text-[0.58rem] tracking-[0.14em] uppercase px-2 leading-snug"
+        style={{ color: "rgba(29,27,24,0.45)" }}
       >
         {label}
       </span>

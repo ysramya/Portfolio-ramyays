@@ -14,16 +14,16 @@ export default function TextileBorder() {
       <svg width="26" height="100%" preserveAspectRatio="none">
         <defs>
           <pattern id="kilim" width="26" height="48" patternUnits="userSpaceOnUse">
-            <rect width="26" height="48" fill="#b3392c" />
+            <rect width="26" height="48" fill="#a93427" />
             {/* diamond lattice */}
-            <path d="M13 4 L22 16 L13 28 L4 16 Z" fill="none" stroke="#e0a02e" strokeWidth="1.6" />
-            <path d="M13 10 L18 16 L13 22 L8 16 Z" fill="#efe6d6" />
+            <path d="M13 4 L22 16 L13 28 L4 16 Z" fill="none" stroke="#d99a32" strokeWidth="1.6" />
+            <path d="M13 10 L18 16 L13 22 L8 16 Z" fill="#f5ebdd" />
             {/* zig-zag bands */}
-            <path d="M0 32 L6.5 36 L13 32 L19.5 36 L26 32" fill="none" stroke="#3e8a8c" strokeWidth="2" />
-            <path d="M0 41 L6.5 45 L13 41 L19.5 45 L26 41" fill="none" stroke="#efe6d6" strokeWidth="1.4" />
+            <path d="M0 32 L6.5 36 L13 32 L19.5 36 L26 32" fill="none" stroke="#3f7770" strokeWidth="2" />
+            <path d="M0 41 L6.5 45 L13 41 L19.5 45 L26 41" fill="none" stroke="#f5ebdd" strokeWidth="1.4" />
             {/* edge rules */}
-            <rect x="0" y="0" width="1.5" height="48" fill="#241f1a" opacity="0.35" />
-            <rect x="24.5" y="0" width="1.5" height="48" fill="#241f1a" opacity="0.35" />
+            <rect x="0" y="0" width="1.5" height="48" fill="#1d1b18" opacity="0.35" />
+            <rect x="24.5" y="0" width="1.5" height="48" fill="#1d1b18" opacity="0.35" />
           </pattern>
         </defs>
         <rect width="26" height="100%" fill="url(#kilim)" />

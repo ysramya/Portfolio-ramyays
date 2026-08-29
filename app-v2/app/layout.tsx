@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Alfa_Slab_One, Courier_Prime, Caveat } from "next/font/google";
+import { Fraunces, Inter, Bodoni_Moda, Manrope, Caveat } from "next/font/google";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import Nav from "@/components/Nav";
@@ -19,17 +19,15 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-/* Homepage collage typefaces — a woodtype slab for the name, a typewriter
-   for body copy, and a script for the handwritten marginalia. */
-const alfaSlab = Alfa_Slab_One({
-  variable: "--font-slab",
-  weight: "400",
+/* Collage design system type stack — Bodoni Moda for display, Manrope for
+   body, Caveat for the handwritten field-note marginalia. */
+const bodoni = Bodoni_Moda({
+  variable: "--font-display-collage",
   subsets: ["latin"],
 });
 
-const courierPrime = Courier_Prime({
-  variable: "--font-type",
-  weight: ["400", "700"],
+const manrope = Manrope({
+  variable: "--font-body-collage",
   subsets: ["latin"],
 });
 
@@ -54,7 +52,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${inter.variable} ${alfaSlab.variable} ${courierPrime.variable} ${caveat.variable}`}
+      className={`${fraunces.variable} ${inter.variable} ${bodoni.variable} ${manrope.variable} ${caveat.variable}`}
     >
       {/* suppressHydrationWarning: browser extensions (e.g. Dashlane) inject
           attributes like cz-shortcut-listen onto <body> after the server
