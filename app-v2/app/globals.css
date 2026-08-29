@@ -133,6 +133,89 @@ p {
   -webkit-backdrop-filter: blur(28px) saturate(140%);
 }
 
+/* ── Collage homepage ──
+   The scrapbook look is built from CSS rather than image assets: paper
+   grain, stamp perforations, tape strips and a postmark. Illustrations
+   (portrait, ornaments, project art) still need real files — these only
+   supply the surfaces they sit on. Scoped to .collage so nothing here
+   leaks into the dark case-study pages. */
+.collage {
+  --paper: #f4ede0;
+  --paper-2: #efe6d6;
+  --ink: #241f1a;
+  --ink-soft: #5b5147;
+  --red: #b3392c;
+  --teal: #3e8a8c;
+  --ochre: #e0a02e;
+  --pink: #e7b5c1;
+  --sage: #9fb89a;
+  --plum: #7b4ba8;
+  background-color: var(--paper);
+  color: var(--ink);
+  /* faint fibre grain so large cream areas don't read as flat #fff */
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(179, 57, 44, 0.035) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 60%, rgba(62, 138, 140, 0.035) 0 1px, transparent 1px),
+    radial-gradient(circle at 45% 85%, rgba(36, 31, 26, 0.03) 0 1px, transparent 1px);
+  background-size: 140px 140px, 190px 190px, 110px 110px;
+}
+
+/* Torn/aged card surface */
+.collage-card {
+  background: var(--paper-2);
+  border: 1px solid rgba(36, 31, 26, 0.16);
+  box-shadow: 2px 3px 0 rgba(36, 31, 26, 0.08);
+}
+
+/* Perforated postage-stamp edge */
+.stamp-edge {
+  background: var(--paper-2);
+  padding: 10px;
+  filter: drop-shadow(2px 3px 0 rgba(36, 31, 26, 0.1));
+  -webkit-mask:
+    radial-gradient(circle at 5px 5px, transparent 4px, #000 4.5px) -5px -5px / 10px 10px round;
+  mask:
+    radial-gradient(circle at 5px 5px, transparent 4px, #000 4.5px) -5px -5px / 10px 10px round;
+}
+
+/* A strip of masking tape, for taped-on notes */
+.tape {
+  position: absolute;
+  width: 92px;
+  height: 26px;
+  background: rgba(224, 200, 148, 0.55);
+  border-left: 1px dashed rgba(36, 31, 26, 0.16);
+  border-right: 1px dashed rgba(36, 31, 26, 0.16);
+  box-shadow: 0 1px 2px rgba(36, 31, 26, 0.12);
+}
+
+/* Nav over the cream homepage. The global nav is built for dark pages, so
+   its ink colours invert here — overrides need !important because the
+   utility classes set colour directly on each element. */
+.nav-paper a {
+  color: #241f1a !important;
+}
+.nav-paper a[href*="linkedin"] {
+  color: #101010 !important;
+}
+.nav-paper button span {
+  background-color: #241f1a !important;
+}
+.nav-paper nav[aria-label="Mobile"] {
+  background: rgba(244, 237, 224, 0.97) !important;
+  border-color: rgba(36, 31, 26, 0.18) !important;
+}
+
+/* Ornamental divider rule used between homepage bands */
+.rule-ornament {
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(36, 31, 26, 0.28) 0 6px,
+    transparent 6px 12px
+  );
+}
+
 /* ── Editorial grid: collapse to one column on mobile ──
    EditorialLayout and GalleryLayout are 12-column canvases, and call
    sites place children with inline `style={{ gridColumn: "1 / 7" }}`.

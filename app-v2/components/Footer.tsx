@@ -8,10 +8,16 @@
 
 "use client";
 
+import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 import { trackClick } from "@/lib/analyticsClient";
 
 export default function Footer({ hasLogo }: { hasLogo: boolean }) {
+  // The collage homepage closes with its own footer band (quote, current
+  // thinking, contact), so the dark global footer would double up and clash.
+  const pathname = usePathname();
+  if (pathname === "/") return null;
+
   return (
     <footer className="border-t border-[var(--color-border)] py-12">
       <div className="wrap flex flex-wrap items-center justify-between gap-8">

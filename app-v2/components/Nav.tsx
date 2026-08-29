@@ -27,6 +27,7 @@ export default function Nav({ hasLogo }: { hasLogo: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -37,10 +38,23 @@ export default function Nav({ hasLogo }: { hasLogo: boolean }) {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
-        scrolled || open ? "glass-nav border-b border-white/10" : "bg-transparent border-b border-transparent"
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${isHome ? "nav-paper " : ""}${
+        // The homepage is the cream collage design, so the nav takes a paper
+        // treatment there instead of the dark glass used on every other route.
+        isHome
+          ? scrolled || open
+            ? "border-b"
+            : "border-b border-transparent"
+          : scrolled || open
+            ? "glass-nav border-b border-white/10"
+            : "bg-transparent border-b border-transparent"
       }`}
-      style={{ height: "var(--nav-h)" }}
+      style={{
+        height: "var(--nav-h)",
+        ...(isHome && (scrolled || open)
+          ? { backgroundColor: "rgba(244,237,224,0.92)", backdropFilter: "blur(12px)", borderColor: "rgba(36,31,26,0.18)" }
+          : null),
+      }}
     >
       <div className="wrap h-full flex items-center justify-between">
         {/* The brand mark is a gold wordmark on a black canvas with generous
