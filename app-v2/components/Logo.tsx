@@ -1,33 +1,29 @@
-import Image from "next/image";
+/**
+ * Wordmark — design-system.md §2.
+ *
+ * Prata at 28–30px, `letter-spacing: .06em`, ink on cream.
+ *
+ * This replaced the previous `/img/brand/logo.png` mark, which is a gold
+ * wordmark on a solid black square. On the cream ground that block reads as a
+ * third background tone in every header and footer, which the two-tone rule
+ * (§1) rules out — and the system names a typographic wordmark instead. The
+ * image asset is still in `public/img/brand/` if it's wanted back.
+ */
 
 export default function Logo({
-  hasLogo,
-  className,
-  imageClassName,
+  size = 30,
+  className = "",
 }: {
-  hasLogo: boolean;
+  /** Rendered wordmark size in px. The system's range is 28–30. */
+  size?: number;
   className?: string;
-  imageClassName?: string;
 }) {
-  if (hasLogo) {
-    // The source mark is a full black square canvas with a large wordmark,
-    // so it needs a bit more display size than a typical square favicon to
-    // stay legible instead of reading as a solid block.
-    return (
-      <Image
-        src="/img/brand/logo.png"
-        alt="Ramya Yerramilli"
-        width={96}
-        height={96}
-        className={imageClassName ?? "w-11 h-11 rounded-lg object-cover"}
-      />
-    );
-  }
-
   return (
-    <span className={className ?? "font-[family-name:var(--font-display)] text-lg font-semibold"}>
-      <span className="text-[var(--color-ink)]">RY</span>
-      <span className="text-[var(--color-green)]">.</span>
+    <span
+      className={`font-[family-name:var(--font-display)] leading-none text-[var(--ink)] ${className}`}
+      style={{ fontSize: `${size}px`, letterSpacing: "0.06em" }}
+    >
+      RY
     </span>
   );
 }

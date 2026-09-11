@@ -1,35 +1,34 @@
 import type { ReactNode } from "react";
 
 /**
- * GalleryLayout — 1440px, a collage grid.
+ * GalleryLayout — a 12-column image grid on the site container.
  *
- * Wider than EditorialLayout on purpose — a collage needs room to stagger
- * and overlap. Children are placed via `gridColumn`/`gridRow` on each
- * child; giving two children overlapping row ranges (e.g. one spans rows
- * 1–2, another starts at row 2) plus a z-index is what produces real
- * overlap instead of a gapped grid.
+ * Children are placed via `gridColumn`/`gridRow`; giving two children
+ * overlapping row ranges plus a z-index still produces real overlap.
+ *
+ * Like EditorialLayout it now sits on `--wrap-max` / `--wrap-pad` so image
+ * sections align with the rest of the page instead of breaking out to
+ * 1440–1600px. `maxWidth` is accepted for existing call sites and ignored.
  */
 export default function GalleryLayout({
   children,
   className = "",
-  maxWidth = "1440px",
 }: {
   children: ReactNode;
   className?: string;
-  /** Override the default 1440px canvas — pass "1600px" for wider research/collage moments. */
+  /** Deprecated — accepted for existing call sites; the canvas always uses the site container. */
   maxWidth?: string;
 }) {
   return (
     <section
-      className={`py-20 md:py-28 px-6 md:px-10 ${className}`}
-      style={{ maxWidth, marginInline: "auto" }}
+      className={`py-12 md:py-[72px] ${className}`}
+      style={{ maxWidth: "var(--wrap-max)", marginInline: "auto", paddingInline: "var(--wrap-pad)" }}
     >
       {/* ds-grid: below md, globals.css collapses children to full-row and
-          zeroes the collage stagger offsets — overlapping cards don't work
-          once the grid is a single stacked column. */}
+          zeroes the collage stagger offsets. */}
       <div
         className="ds-grid grid gap-4"
-        style={{ gridTemplateColumns: "repeat(12, 1fr)", gridAutoRows: "minmax(80px, auto)" }}
+        style={{ gridTemplateColumns: "repeat(12, minmax(0, 1fr))", gridAutoRows: "minmax(80px, auto)" }}
       >
         {children}
       </div>

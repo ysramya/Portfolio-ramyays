@@ -18,8 +18,8 @@ const PROJECT_NAMES: Record<string, string> = {
 function StatTile({ label, value }: { label: string; value: number }) {
   return (
     <GlassCard className="p-6">
-      <p className="text-[0.65rem] font-semibold tracking-[0.16em] uppercase text-[var(--color-ink-faint)]">{label}</p>
-      <p className="mt-2 font-[family-name:var(--font-display)] font-semibold text-4xl text-[var(--color-ink)]">
+      <p className="text-[12px] font-medium tracking-[0.16em] uppercase text-[var(--color-ink-faint)]">{label}</p>
+      <p className="mt-2 font-[family-name:var(--font-display)] text-4xl text-[var(--color-ink)]">
         {value.toLocaleString()}
       </p>
     </GlassCard>
@@ -37,7 +37,7 @@ function RankedList({
 }) {
   return (
     <GlassCard className="p-6">
-      <p className="text-sm font-semibold tracking-[0.04em] text-[var(--color-ink)]">{title}</p>
+      <p className="text-sm font-medium tracking-[0.04em] text-[var(--color-ink)]">{title}</p>
       {rows.length === 0 ? (
         <p className="mt-4 text-sm text-[var(--color-ink-faint)]">{emptyLabel}</p>
       ) : (
@@ -49,7 +49,7 @@ function RankedList({
               style={{ borderTop: "1px solid var(--color-border)" }}
             >
               <span className="text-sm text-[var(--color-ink-muted)] truncate pr-4">{r.label}</span>
-              <span className="text-sm font-semibold text-[var(--color-ink)]">{r.count}</span>
+              <span className="text-sm font-medium text-[var(--color-ink)]">{r.count}</span>
             </div>
           ))}
         </div>
@@ -77,7 +77,7 @@ export default async function AdminAnalyticsPage() {
         style={{ minHeight: "100dvh", paddingTop: "var(--nav-h)", maxWidth: "600px" }}
       >
         <GlassCard className="p-8 text-center">
-          <h1 className="font-[family-name:var(--font-display)] font-semibold text-2xl text-[var(--color-ink)]">
+          <h1 className="font-[family-name:var(--font-display)] text-2xl text-[var(--color-ink)]">
             Analytics isn&rsquo;t configured yet
           </h1>
           <p className="mt-4 text-sm leading-relaxed text-[var(--color-ink-muted)]">
@@ -125,8 +125,8 @@ export default async function AdminAnalyticsPage() {
     <main className="mx-auto px-6" style={{ maxWidth: "1200px", paddingTop: "calc(var(--nav-h) + 3rem)", paddingBottom: "6rem" }}>
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase text-[var(--color-green)]">Admin</p>
-          <h1 className="mt-2 font-[family-name:var(--font-display)] font-semibold text-3xl text-[var(--color-ink)]">
+          <p className="text-[12px] font-medium tracking-[0.22em] uppercase text-[var(--color-green)]">Admin</p>
+          <h1 className="mt-2 font-[family-name:var(--font-display)] text-3xl text-[var(--color-ink)]">
             Analytics
           </h1>
         </div>
@@ -150,7 +150,7 @@ export default async function AdminAnalyticsPage() {
       <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
         <RankedList title="Button Clicks" rows={buttonClicks} emptyLabel="No clicks tracked yet." />
         <GlassCard className="p-6">
-          <p className="text-sm font-semibold tracking-[0.04em] text-[var(--color-ink)]">Traffic Sources</p>
+          <p className="text-sm font-medium tracking-[0.04em] text-[var(--color-ink)]">Traffic Sources</p>
           <div className="mt-2">
             <TrafficPie data={trafficSources} />
           </div>

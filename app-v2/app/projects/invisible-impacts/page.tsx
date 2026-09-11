@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import NextProjectBand from "@/components/ds/NextProjectBand";
+import { getNextProject } from "@/lib/projects";
 import {
   HeroLayout,
   ReadingLayout,
   EditorialLayout,
   SplitLayout,
-  FullBleedLayout,
 } from "@/components/ds/layouts";
 import { Quote, ImageFrame } from "@/components/ds/atoms";
 import { tintedGlass } from "@/components/ds/tokens";
@@ -21,9 +21,9 @@ const accent = impactsTheme.accent;
 const silver = impactsPalette.silver;
 const deepBlue = impactsPalette.deepBlue;
 
-function Eyebrow({ children, color = accent }: { children: React.ReactNode; color?: string }) {
+function Eyebrow({ children }: { children: React.ReactNode; color?: string }) {
   return (
-    <p className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase" style={{ color }}>
+    <p className="eyebrow">
       {children}
     </p>
   );
@@ -60,21 +60,18 @@ const takeaways = [
 
 export default function InvisibleImpactsPage() {
   return (
-    <div style={{ background: impactsGradients.page }}>
+    <div className="auto-number" style={{ background: impactsGradients.page }}>
       {/* 1 — Hero: real installation photo, full-bleed */}
       <HeroLayout image="/img/coac/hero-installation.jpg" imageAlt="Cost of a Click — physical installation at DePaul">
         <div>
-          <span className="inline-flex w-fit items-center gap-2 rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.22em] uppercase mb-6" style={tintedGlass(accent)}>
-            <span style={{ color: silver }}>DePaul Summer Impact Grant 2025 · Winner</span>
-          </span>
-          <h1 className="font-[family-name:var(--font-display)] font-semibold leading-[0.92] tracking-[-0.02em] text-[clamp(3rem,8vw,6.5rem)] max-w-[18ch] md:-ml-1 text-[var(--color-ink)]">
-            Cost of
-            <br />
-            <span className="italic" style={{ color: accent }}>a Click</span>
-          </h1>
+          <p className="eyebrow eyebrow-rule">DePaul Summer Impact Grant 2025 · Winner</p>
+          <h1 className="mt-4">Cost of</h1>
+          <h2 className="mt-5" style={{ fontSize: "clamp(28px, 3.1vw, 40px)", lineHeight: 1.22 }}>
+            a Click
+          </h2>
           <p className="mt-6 text-lg leading-relaxed text-[var(--color-ink-muted)]" style={{ maxWidth: "56ch" }}>
             Made AI&rsquo;s invisible water cost physically tangible — increasing
-            environmental awareness by <strong className="text-[var(--color-ink)] font-semibold">85%</strong> through
+            environmental awareness by <strong className="text-[var(--color-ink)] font-medium">85%</strong> through
             sensor-driven experience design.
           </p>
         </div>
@@ -90,7 +87,7 @@ export default function InvisibleImpactsPage() {
             { label: "Tools", value: "Figma · Framer · Arduino · VS Code" },
           ].map((m) => (
             <div key={m.label} className="rounded-xl px-4 py-3" style={tintedGlass(accent, 0.08)}>
-              <dt className="text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">{m.label}</dt>
+              <dt className="text-[10px] font-medium tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">{m.label}</dt>
               <dd className="mt-1 text-sm text-[var(--color-ink)]">{m.value}</dd>
             </div>
           ))}
@@ -105,14 +102,14 @@ export default function InvisibleImpactsPage() {
         <div style={{ gridColumn: "1 / 7" }}>
           <div style={tintedGlass(accent, 0.08)} className="rounded-2xl p-6 h-full">
             <p className="text-sm text-[var(--color-ink-faint)]">{glance[0].q}</p>
-            <p className="mt-2 font-[family-name:var(--font-display)] font-semibold text-xl text-[var(--color-ink)]">{glance[0].a}</p>
+            <p className="mt-2 font-[family-name:var(--font-display)] text-xl text-[var(--color-ink)]">{glance[0].a}</p>
             <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{glance[0].detail}</p>
           </div>
         </div>
         <div style={{ gridColumn: "7 / 13" }}>
           <div style={tintedGlass(silver, 0.08)} className="rounded-2xl p-6 h-full">
             <p className="text-sm text-[var(--color-ink-faint)]">{glance[1].q}</p>
-            <p className="mt-2 font-[family-name:var(--font-display)] font-semibold text-xl text-[var(--color-ink)]">{glance[1].a}</p>
+            <p className="mt-2 font-[family-name:var(--font-display)] text-xl text-[var(--color-ink)]">{glance[1].a}</p>
             <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{glance[1].detail}</p>
           </div>
         </div>
@@ -120,7 +117,7 @@ export default function InvisibleImpactsPage() {
           <div key={g.q} style={{ gridColumn: `${1 + i * 4} / ${5 + i * 4}` }}>
             <div style={tintedGlass(i === 1 ? accent : silver, 0.07)} className="rounded-2xl p-6 h-full">
               <p className="text-sm text-[var(--color-ink-faint)]">{g.q}</p>
-              <p className="mt-2 font-[family-name:var(--font-display)] font-semibold text-lg text-[var(--color-ink)]">{g.a}</p>
+              <p className="mt-2 font-[family-name:var(--font-display)] text-lg text-[var(--color-ink)]">{g.a}</p>
               <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{g.detail}</p>
             </div>
           </div>
@@ -134,10 +131,10 @@ export default function InvisibleImpactsPage() {
           left={
             <div>
               <Eyebrow>The Problem</Eyebrow>
-              <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
                 AI has a water bill.
                 <br />
-                <span className="italic" style={{ color: accent }}>Nobody knows.</span>
+                <span style={{ color: accent }}>Nobody knows.</span>
               </h2>
               <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed">
                 Every AI query consumes real water to cool data centre servers. In
@@ -168,7 +165,7 @@ export default function InvisibleImpactsPage() {
           ].map((c) => (
             <div key={c.label} className="rounded-2xl p-6" style={tintedGlass(silver, 0.06)}>
               <span className="text-2xl">{c.icon}</span>
-              <p className="mt-3 text-[0.6rem] font-semibold tracking-[0.28em] uppercase" style={{ color: accent }}>{c.label}</p>
+              <p className="mt-3 text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color: accent }}>{c.label}</p>
               <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{c.text}</p>
             </div>
           ))}
@@ -187,7 +184,7 @@ export default function InvisibleImpactsPage() {
       {/* 5 — How Might We: standalone quote */}
       <ReadingLayout className="text-center py-16 md:py-20">
         <Eyebrow>How Might We</Eyebrow>
-        <p className="mt-4 font-[family-name:var(--font-display)] italic font-medium leading-tight text-[clamp(1.6rem,3.4vw,2.6rem)] text-[var(--color-ink)]">
+        <p className="mt-4 font-[family-name:var(--font-display)] leading-tight text-[clamp(1.6rem,3.4vw,2.6rem)] text-[var(--color-ink)]">
           How might we make the <span style={{ color: accent }}>invisible cost</span> of
           AI felt — not just understood — so people can make informed choices?
         </p>
@@ -198,8 +195,8 @@ export default function InvisibleImpactsPage() {
         <EditorialLayout maxWidth="1500px">
           <div style={{ gridColumn: "1 / 13" }}>
             <Eyebrow>Research Process</Eyebrow>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-              Seven phases. <span className="italic" style={{ color: accent }}>One clear arc.</span>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              Seven phases. <span style={{ color: accent }}>One clear arc.</span>
             </h2>
             <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
               Each phase was sized to the problem — discovery-heavy at the start,
@@ -210,12 +207,12 @@ export default function InvisibleImpactsPage() {
             {phases.map((p, i) => (
               <div key={p.wk} className="rounded-2xl p-4" style={tintedGlass(i < 3 ? accent : silver, i < 3 ? 0.08 : 0.05)}>
                 <div className="h-1.5 rounded-full mb-3" style={{ backgroundColor: i < 3 ? accent : silver, opacity: i < 3 ? 1 - i * 0.15 : 1 - (i - 3) * 0.15 }} />
-                <p className="text-[0.62rem] font-semibold tracking-[0.1em] uppercase" style={{ color: i < 3 ? accent : silver }}>{p.wk}</p>
-                <p className="mt-1 font-[family-name:var(--font-display)] font-semibold text-sm text-[var(--color-ink)]">{p.name}</p>
-                <p className="text-xs font-semibold" style={{ color: i < 3 ? accent : silver }}>{p.pct}</p>
+                <p className="text-[12px] font-medium tracking-[0.1em] uppercase" style={{ color: i < 3 ? accent : silver }}>{p.wk}</p>
+                <p className="mt-1 font-[family-name:var(--font-display)] text-sm text-[var(--color-ink)]">{p.name}</p>
+                <p className="text-xs font-medium" style={{ color: i < 3 ? accent : silver }}>{p.pct}</p>
                 <ul className="mt-2 flex flex-col gap-1">
                   {p.acts.map((a) => (
-                    <li key={a} className="text-[0.68rem] text-[var(--color-ink-faint)] leading-snug">— {a}</li>
+                    <li key={a} className="text-[12px] text-[var(--color-ink-faint)] leading-snug">— {a}</li>
                   ))}
                 </ul>
               </div>
@@ -228,14 +225,14 @@ export default function InvisibleImpactsPage() {
       <EditorialLayout>
         <div style={{ gridColumn: "1 / 13" }}>
           <Eyebrow>Design Rationale</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            Why <span className="italic" style={{ color: accent }}>physical + digital?</span>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            Why <span style={{ color: accent }}>physical + digital?</span>
           </h2>
         </div>
         <div className="rounded-2xl p-8" style={{ gridColumn: "1 / 7", ...tintedGlass(accent, 0.07) }}>
           <span className="text-3xl">💧</span>
-          <p className="mt-3 text-[0.6rem] font-semibold tracking-[0.28em] uppercase" style={{ color: accent }}>The water metaphor</p>
-          <p className="mt-2 font-[family-name:var(--font-display)] font-semibold text-xl text-[var(--color-ink)]">Sensation over Statistics</p>
+          <p className="mt-3 text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color: accent }}>The water metaphor</p>
+          <p className="mt-2 font-[family-name:var(--font-display)] text-xl text-[var(--color-ink)]">Sensation over Statistics</p>
           <p className="mt-3 text-sm text-[var(--color-ink-muted)] leading-relaxed">
             Watching real water pour proportional to your query creates visceral,
             embodied understanding — impossible to achieve with a number on a screen.
@@ -246,8 +243,8 @@ export default function InvisibleImpactsPage() {
         </div>
         <div className="rounded-2xl p-8" style={{ gridColumn: "7 / 13", ...tintedGlass(silver, 0.07) }}>
           <span className="text-3xl">🌳</span>
-          <p className="mt-3 text-[0.6rem] font-semibold tracking-[0.28em] uppercase" style={{ color: silver }}>The dying tree</p>
-          <p className="mt-2 font-[family-name:var(--font-display)] font-semibold text-xl text-[var(--color-ink)]">Visible Consequence</p>
+          <p className="mt-3 text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color: silver }}>The dying tree</p>
+          <p className="mt-2 font-[family-name:var(--font-display)] text-xl text-[var(--color-ink)]">Visible Consequence</p>
           <p className="mt-3 text-sm text-[var(--color-ink-muted)] leading-relaxed">
             A tree withering on screen as users type creates a real-time cost
             metaphor — making systemic impact personal and immediate.
@@ -263,8 +260,8 @@ export default function InvisibleImpactsPage() {
       <EditorialLayout maxWidth="1440px">
         <div style={{ gridColumn: "1 / 13" }}>
           <Eyebrow>Behind the Build</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            From sensor <span className="italic" style={{ color: accent }}>to experience.</span>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            From sensor <span style={{ color: accent }}>to experience.</span>
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{ gridColumn: "1 / 13", marginTop: "1rem" }}>
@@ -280,8 +277,8 @@ export default function InvisibleImpactsPage() {
         <EditorialLayout maxWidth="1440px">
           <div style={{ gridColumn: "1 / 13" }}>
             <Eyebrow>Exhibition</Eyebrow>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-              DePaul Summer <span className="italic" style={{ color: accent }}>Showcase 2025</span>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              DePaul Summer <span style={{ color: accent }}>Showcase 2025</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{ gridColumn: "1 / 13", marginTop: "1rem" }}>
@@ -296,12 +293,12 @@ export default function InvisibleImpactsPage() {
       {/* 10 — Viral video */}
       <ReadingLayout className="text-center">
         <Eyebrow>6 Million Views</Eyebrow>
-        <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl leading-[1.05] text-[var(--color-ink)]">
-          The internet <span className="italic" style={{ color: accent }}>paid attention.</span>
+        <h2 className="mt-3 font-[family-name:var(--font-display)] text-3xl leading-[1.05] text-[var(--color-ink)]">
+          The internet <span style={{ color: accent }}>paid attention.</span>
         </h2>
         <p className="mt-5 text-[var(--color-ink-muted)] text-lg leading-relaxed">
           After the DePaul exhibition, footage of Cost of a Click spread on TikTok and
-          reached <strong className="text-[var(--color-ink)] font-semibold">6 million views</strong> — sparking a global
+          reached <strong className="text-[var(--color-ink)] font-medium">6 million views</strong> — sparking a global
           conversation about AI&rsquo;s hidden environmental cost.
         </p>
         <div className="mt-8 mx-auto rounded-2xl overflow-hidden" style={{ maxWidth: "320px", border: `2px solid ${accent}55` }}>
@@ -316,8 +313,8 @@ export default function InvisibleImpactsPage() {
       <EditorialLayout maxWidth="1440px">
         <div style={{ gridColumn: "1 / 13" }}>
           <Eyebrow>Impact</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            Numbers that <span className="italic" style={{ color: accent }}>moved people.</span>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            Numbers that <span style={{ color: accent }}>moved people.</span>
           </h2>
         </div>
         {[
@@ -326,8 +323,8 @@ export default function InvisibleImpactsPage() {
           { n: "30%", label: "More Informed Usage", desc: "Increase in self-reported informed decision-making about when to use AI tools.", color: accent },
         ].map((s, i) => (
           <div key={s.label} className="rounded-2xl p-8 text-center" style={{ gridColumn: `${1 + i * 4} / ${5 + i * 4}`, ...tintedGlass(s.color, 0.08) }}>
-            <p className="font-[family-name:var(--font-display)] font-semibold text-6xl" style={{ color: s.color }}>{s.n}</p>
-            <p className="mt-3 text-[0.62rem] font-semibold tracking-[0.24em] uppercase text-[var(--color-ink)]">{s.label}</p>
+            <p className="font-[family-name:var(--font-display)] text-6xl" style={{ color: s.color }}>{s.n}</p>
+            <p className="mt-3 text-[12px] font-medium tracking-[0.24em] uppercase text-[var(--color-ink)]">{s.label}</p>
             <p className="mt-3 text-sm text-[var(--color-ink-muted)] leading-relaxed">{s.desc}</p>
           </div>
         ))}
@@ -343,12 +340,12 @@ export default function InvisibleImpactsPage() {
               { date: "Social · Post-exhibition", title: "Viral on TikTok", body: "Exhibition footage circulated widely on social media — extending the research's reach beyond the academic context." },
             ].map((r) => (
               <li key={r.date} className="py-5 border-t first:border-t-0 grid grid-cols-1 md:grid-cols-[12rem_1fr] gap-2 md:gap-8" style={{ borderColor: impactsPalette.divider }}>
-                <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase" style={{ color: accent }}>
+                <p className="flex items-center gap-2 text-xs font-medium tracking-[0.18em] uppercase" style={{ color: accent }}>
                   <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: accent }} />
                   {r.date}
                 </p>
                 <div>
-                  <p className="font-[family-name:var(--font-display)] font-semibold text-[var(--color-ink)]">{r.title}</p>
+                  <p className="font-[family-name:var(--font-display)] text-[var(--color-ink)]">{r.title}</p>
                   <p className="mt-1 text-sm text-[var(--color-ink-muted)] leading-relaxed max-w-[60ch]">{r.body}</p>
                 </div>
               </li>
@@ -361,19 +358,19 @@ export default function InvisibleImpactsPage() {
       <EditorialLayout maxWidth="1440px">
         <div style={{ gridColumn: "1 / 13" }}>
           <Eyebrow>Key Takeaways</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            What this project <span className="italic" style={{ color: accent }}>taught me.</span>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            What this project <span style={{ color: accent }}>taught me.</span>
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ gridColumn: "1 / 13" }}>
           {takeaways.map((t, i) => (
             <div key={t.title} className="rounded-2xl p-6" style={tintedGlass(i % 2 === 0 ? accent : silver, 0.07)}>
               <span className="text-2xl">{t.icon}</span>
-              <p className="mt-3 font-[family-name:var(--font-display)] font-semibold text-lg text-[var(--color-ink)]">
-                {t.title} <span className="italic" style={{ color: i % 2 === 0 ? accent : silver }}>{t.em}</span>
+              <p className="mt-3 font-[family-name:var(--font-display)] text-lg text-[var(--color-ink)]">
+                {t.title} <span style={{ color: i % 2 === 0 ? accent : silver }}>{t.em}</span>
               </p>
               <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{t.text}</p>
-              <p className="mt-3 text-xs font-semibold" style={{ color: i % 2 === 0 ? accent : silver }}>{t.stat}</p>
+              <p className="mt-3 text-xs font-medium" style={{ color: i % 2 === 0 ? accent : silver }}>{t.stat}</p>
             </div>
           ))}
         </div>
@@ -383,8 +380,8 @@ export default function InvisibleImpactsPage() {
       <GradientField gradient={impactsGradients.deepBlueCharcoal}>
         <ReadingLayout>
           <Eyebrow>Continuing Research</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl leading-[1.05] text-[var(--color-ink)]">
-            Now under review <span className="italic" style={{ color: accent }}>for AIES 2026.</span>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-3xl leading-[1.05] text-[var(--color-ink)]">
+            Now under review <span style={{ color: accent }}>for AIES 2026.</span>
           </h2>
           <p className="mt-5 text-[var(--color-ink-muted)] leading-relaxed">
             Further work on this project has been developed into a research paper,
@@ -398,31 +395,15 @@ export default function InvisibleImpactsPage() {
               Interactive Art as a Public-Facing AI Ethics Interface.&rdquo;{" "}
               <em>AAAI/ACM Conference on AI, Ethics, and Society (AIES 2026)</em>.
             </p>
-            <p className="mt-3 text-xs font-semibold tracking-[0.1em] uppercase" style={{ color: accent }}>
+            <p className="mt-3 text-xs font-medium tracking-[0.1em] uppercase" style={{ color: accent }}>
               Paper #343 · Under Review
             </p>
           </div>
         </ReadingLayout>
       </GradientField>
 
-      {/* 15 — End of the project sequence: the last case study hands off to About, not another project */}
-      <FullBleedLayout
-        image="/img/about/IMG_8578.jpeg"
-        imageAlt="Portrait of Ramya Yerramilli"
-        imageOpacity={0.3}
-        minHeight="60dvh"
-        overlayClassName="items-center justify-items-center text-center"
-      >
-        <Link href="/about" className="group">
-          <span className="inline-flex rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.22em] uppercase mb-6" style={tintedGlass(accent)}>
-            <span style={{ color: silver }}>That&rsquo;s the work</span>
-          </span>
-          <h2 className="font-[family-name:var(--font-display)] font-semibold leading-[0.95] text-[clamp(2.5rem,7vw,5.5rem)] text-[var(--color-ink)]">
-            About Me
-            <span className="block h-[2px] w-0 group-hover:w-full mx-auto mt-4 transition-[width] duration-500 ease-out" style={{ backgroundColor: accent }} />
-          </h2>
-        </Link>
-      </FullBleedLayout>
+      {/* Closing — deep band pointing to the next piece in the portfolio order */}
+      <NextProjectBand {...getNextProject("invisible-impacts")} />
     </div>
   );
 }

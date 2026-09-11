@@ -39,7 +39,7 @@ export default function Transition({
         className="h-px mb-6"
         style={{ backgroundColor: accent }}
       />
-      <p className="text-[0.62rem] font-semibold tracking-[0.28em] uppercase text-[var(--color-ink-faint)]">
+      <p className="text-[12px] font-medium tracking-[0.28em] uppercase text-[var(--color-ink-faint)]">
         {label}
       </p>
     </section>

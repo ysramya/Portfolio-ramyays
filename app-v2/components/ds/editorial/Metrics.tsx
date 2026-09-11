@@ -43,12 +43,12 @@ export default function Metrics({
         className="md:col-span-3"
       >
         <p
-          className="font-[family-name:var(--font-display)] font-semibold leading-[0.9] text-[clamp(4rem,10vw,8rem)]"
+          className="font-[family-name:var(--font-display)] leading-[0.9] text-[clamp(4rem,10vw,8rem)]"
           style={{ color: accent }}
         >
           {hero.value}
         </p>
-        <p className="mt-2 text-[0.7rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-muted)]">
+        <p className="mt-2 text-[12px] font-medium tracking-[0.2em] uppercase text-[var(--color-ink-muted)]">
           {hero.label}
         </p>
       </motion.div>
@@ -62,10 +62,10 @@ export default function Metrics({
             viewport={{ once: true, margin: "-10% 0px" }}
             transition={{ duration: motionTokens.duration.base, ease: motionTokens.ease, delay: 0.15 + i * 0.1 }}
           >
-            <p className="font-[family-name:var(--font-display)] font-semibold text-3xl">
+            <p className="font-[family-name:var(--font-display)] text-3xl">
               {m.value}
             </p>
-            <p className="mt-1 text-[0.62rem] font-semibold tracking-[0.18em] uppercase text-[var(--color-ink-faint)]">
+            <p className="mt-1 text-[12px] font-medium tracking-[0.18em] uppercase text-[var(--color-ink-faint)]">
               {m.label}
             </p>
           </motion.div>

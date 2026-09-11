@@ -18,18 +18,18 @@ export default function EditorialStatement({
   accent?: string;
 }) {
   return (
-    <div className="wrap py-16 md:py-24 text-center border-y border-white/10">
+    <div className="wrap py-16 md:py-24 text-center border-y border-[var(--rule)]">
       <Reveal>
         {eyebrow && (
           <p
-            className="text-[0.62rem] font-semibold tracking-[0.24em] uppercase mb-4"
+            className="text-[12px] font-medium tracking-[0.24em] uppercase mb-4"
             style={{ color: accent }}
           >
             {eyebrow}
           </p>
         )}
         <p
-          className="max-w-[42ch] mx-auto italic leading-snug font-[family-name:var(--font-display)]"
+          className="max-w-[42ch] mx-auto leading-snug font-[family-name:var(--font-display)]"
           style={{ fontSize: type.statement }}
         >
           {statement}

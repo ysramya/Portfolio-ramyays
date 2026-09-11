@@ -44,12 +44,12 @@ export default function FeatureReveal({
     <section className="wrap py-20 md:py-28">
       <div className="max-w-[36ch]">
         <p
-          className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase"
+          className="text-[12px] font-medium tracking-[0.22em] uppercase"
           style={{ color: accent }}
         >
           {eyebrow}
         </p>
-        <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-[clamp(2rem,4vw,3.2rem)] leading-[1.02]">
+        <h3 className="mt-3 font-[family-name:var(--font-display)] text-[clamp(2rem,4vw,3.2rem)] leading-[1.02]">
           {title}
         </h3>
         <p className="mt-4 text-[var(--color-ink-muted)] text-lg leading-relaxed">{body}</p>

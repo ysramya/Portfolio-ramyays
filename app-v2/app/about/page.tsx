@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import AboutPortrait from "./AboutPortrait";
-import Reveal from "@/components/ds/Reveal";
-import GlassCard from "@/components/ds/GlassCard";
-import FullBleedLayout from "@/components/ds/layouts/FullBleedLayout";
+import DeepBand from "@/components/ds/DeepBand";
+import SectionHead, { Section } from "@/components/ds/SectionHead";
 
 export const metadata: Metadata = {
   title: "About — Ramya Yerramilli",
@@ -29,18 +28,12 @@ const research = [
     title: "Making AI Infrastructure Visible: Interactive Art as a Public-Facing AI Ethics Interface",
     venue: "AIES 2026 · Under Review",
   },
-  {
-    title: "Consciously Assigning Personality to AI",
-    venue: "CHI 2027 · In Progress",
-  },
+  { title: "Consciously Assigning Personality to AI", venue: "CHI 2027 · In Progress" },
   {
     title: "Exposing & Mitigating Dark Patterns in Generative AI for Vulnerable Users",
     venue: "RAISE Lab · Ongoing Research",
   },
-  {
-    title: "AI Safety Evaluation Framework for Community Banks",
-    venue: "Research Proposal · 2026",
-  },
+  { title: "AI Safety Evaluation Framework for Community Banks", venue: "Research Proposal · 2026" },
 ];
 
 const interests = [
@@ -60,156 +53,119 @@ const interests = [
 
 export default function AboutPage() {
   return (
-    <main style={{ paddingTop: "var(--nav-h)" }}>
-      {/* 01 — About: editorial split, portrait left, story right */}
-      <div
-        className="mx-auto grid grid-cols-1 md:grid-cols-[45%_55%] gap-12 md:gap-16 lg:gap-20 items-center px-6"
-        style={{ maxWidth: "1400px", padding: "clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem)" }}
-      >
-        <AboutPortrait src="/img/about/IMG_8578.jpeg" alt="Portrait of Ramya Yerramilli" />
+    <>
+      {/* Hero — portrait and story on the deep band */}
+      <DeepBand>
+        <div
+          className="wrap grid items-center gap-12 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16"
+          style={{ paddingTop: "calc(var(--nav-h) + 48px)", paddingBottom: 72 }}
+        >
+          <AboutPortrait src="/img/about/IMG_8578.jpeg" alt="Portrait of Ramya Yerramilli" />
 
-        <div style={{ maxWidth: "700px" }}>
-          <p className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase text-[var(--color-green)]">
-            About
-          </p>
-          <h1 className="mt-4 font-[family-name:var(--font-display)] font-semibold leading-[1.02] tracking-[-0.01em] text-[clamp(2.4rem,5vw,4rem)] text-[var(--color-ink)]">
-            Hi, I&rsquo;m Ramya.
-          </h1>
-
-          <div className="mt-8 flex flex-col gap-6">
-            {paragraphs.map((p, i) => (
-              <p
-                key={i}
-                className="text-lg leading-[1.85] text-[var(--color-ink-muted)]"
-                style={{
-                  animation: `about-rise 0.9s cubic-bezier(0.16,1,0.3,1) ${0.15 + i * 0.15}s both`,
-                }}
-              >
-                {p}
-              </p>
-            ))}
+          <div>
+            <p className="eyebrow eyebrow-rule">About</p>
+            <h1 className="mt-5" style={{ fontSize: "clamp(44px, 5vw, 72px)" }}>
+              Hi, I&rsquo;m Ramya.
+            </h1>
+            <div className="mt-7 flex flex-col gap-5">
+              {paragraphs.map((p, i) => (
+                <p
+                  key={i}
+                  className="text-[16px] leading-[1.8] text-[var(--body)]"
+                  style={{ animation: `about-rise 0.9s cubic-bezier(0.16,1,0.3,1) ${0.15 + i * 0.15}s both` }}
+                >
+                  {p}
+                </p>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </DeepBand>
 
-      {/* 02 — Experience: quiet editorial table, hairline dividers only */}
-      <section
-        className="mx-auto px-6"
-        style={{ maxWidth: "1000px", padding: "clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 2rem)" }}
-      >
-        <Reveal>
-          <h2 className="font-[family-name:var(--font-display)] font-semibold text-center text-[clamp(1.8rem,3.4vw,2.6rem)] text-[var(--color-ink)]">
-            Experience
-          </h2>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <div className="mt-12 flex flex-col" style={{ borderTop: "1px solid var(--color-border)" }}>
+      {/* 01 — Experience */}
+      <Section id="experience" divided={false}>
+        <div className="sec-grid">
+          <SectionHead n="01" eyebrow="Background" title="Experience" />
+          <ul>
             {experience.map((row) => (
-              <div
+              <li
                 key={row.role}
-                className="group grid grid-cols-1 md:grid-cols-[200px_1fr_1fr] gap-1 md:gap-8 py-6 md:items-center transition-colors duration-300 hover:bg-white/[0.03] rounded-lg px-3 -mx-3"
-                style={{ borderBottom: "1px solid var(--color-border)" }}
+                className="grid gap-1 py-5 md:grid-cols-[150px_minmax(0,1fr)] md:gap-6"
+                style={{ borderTop: "1px solid var(--rule)" }}
               >
-                <span className="text-sm tracking-[0.04em] text-[var(--color-ink-faint)]">{row.year}</span>
-                <span className="text-lg text-[var(--color-ink)]">{row.role}</span>
-                <span className="text-base text-[var(--color-ink-muted)]">{row.org}</span>
-              </div>
+                <span className="text-[13px] tracking-[0.02em] text-[var(--muted)] md:pt-0.5">{row.year}</span>
+                <div>
+                  <p className="text-[17px] text-[var(--ink)]">{row.role}</p>
+                  <p className="mt-1 text-[14px] text-[var(--body)]">{row.org}</p>
+                </div>
+              </li>
             ))}
-          </div>
-        </Reveal>
-      </section>
-
-      {/* 03 — Research & Writing: 2x2 glass card grid */}
-      <section
-        className="mx-auto px-6"
-        style={{ maxWidth: "1100px", padding: "clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 2rem)" }}
-      >
-        <Reveal>
-          <h2 className="font-[family-name:var(--font-display)] font-semibold text-center text-[clamp(1.8rem,3.4vw,2.6rem)] text-[var(--color-ink)]">
-            Research &amp; Writing
-          </h2>
-        </Reveal>
-
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-5">
-          {research.map((item, i) => (
-            <Reveal key={item.title} delay={0.06 * i}>
-              <GlassCard
-                as="div"
-                className="p-7 h-full transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.5)] cursor-pointer"
-              >
-                <p className="font-[family-name:var(--font-display)] text-xl leading-snug text-[var(--color-ink)]">
-                  {item.title}
-                </p>
-                <p className="mt-4 text-sm font-semibold tracking-[0.08em] uppercase text-[var(--color-green)]">
-                  {item.venue}
-                </p>
-              </GlassCard>
-            </Reveal>
-          ))}
+          </ul>
         </div>
-      </section>
+      </Section>
 
-      {/* 04 — Areas of Interest: wrapping glass pills */}
-      <section
-        className="mx-auto px-6"
-        style={{ maxWidth: "900px", padding: "clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 2rem)" }}
-      >
-        <Reveal>
-          <h2 className="font-[family-name:var(--font-display)] font-semibold text-center text-[clamp(1.8rem,3.4vw,2.6rem)] text-[var(--color-ink)]">
-            Areas of Interest
-          </h2>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
-            {interests.map((tag) => (
-              <span
-                key={tag}
-                className="glass rounded-full px-5 py-2.5 text-sm text-[var(--color-ink-muted)]"
-              >
-                {tag}
-              </span>
+      {/* 02 — Research & Writing */}
+      <Section id="research">
+        <div className="sec-grid">
+          <SectionHead n="02" eyebrow="Research" title="Research & writing" />
+          <ul className="grid gap-4 sm:grid-cols-2">
+            {research.map((item) => (
+              <li key={item.title} className="panel flex flex-col p-6">
+                <h3 className="text-[19px] leading-snug">{item.title}</h3>
+                <p className="meta mt-auto pt-5">{item.venue}</p>
+              </li>
             ))}
+          </ul>
+        </div>
+      </Section>
+
+      {/* 03 — Areas of Interest */}
+      <Section id="interests">
+        <div className="sec-grid">
+          <SectionHead n="03" eyebrow="Focus" title="Areas of interest" />
+          <ul className="flex flex-wrap gap-2.5 md:pt-2">
+            {interests.map((tag) => (
+              <li key={tag} className="pill">
+                {tag}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
+      {/* Closing — Beyond the Screen */}
+      <DeepBand>
+        <div className="wrap grid gap-10 py-[clamp(64px,8vw,112px)] md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:items-end md:gap-16">
+          <div>
+            <p className="eyebrow eyebrow-rule">Beyond the screen</p>
+            <h2 className="mt-5" style={{ fontSize: "clamp(34px, 4vw, 54px)", lineHeight: 1.08 }}>
+              Different mediums, same curiosity.
+            </h2>
           </div>
-        </Reveal>
-      </section>
+          <div>
+            <p className="lead">
+              Beyond research and design, I spend my time photographing cities and nature,
+              creating digital paintings, and experimenting in the kitchen.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href="/beyond-the-screen" className="btn">
+                Explore <span aria-hidden>&#8594;</span>
+              </Link>
+              <a href="mailto:ys.ramya@gmail.com" className="btn btn-outline">
+                Get in touch
+              </a>
+            </div>
+          </div>
+        </div>
+      </DeepBand>
 
-      {/* 05 — Beyond the Screen: full-bleed editorial CTA */}
-      <FullBleedLayout
-        image="/img/beyond-the-screen/Cityscape/IMG_0341.JPG"
-        imageAlt="A photograph from Beyond the Screen"
-        minHeight="60dvh"
-        imageOpacity={0.55}
-      >
-        <Reveal className="max-w-[560px] text-center">
-          <p className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase text-[var(--color-green)]">
-            Beyond the Screen
-          </p>
-          <h2 className="mt-4 font-[family-name:var(--font-display)] font-semibold text-[clamp(2rem,4vw,3rem)] leading-[1.1] text-[var(--color-ink)]">
-            Beyond the Screen
-          </h2>
-          <p className="mt-5 text-lg leading-relaxed text-[var(--color-ink-muted)]">
-            Beyond research and design, I spend my time photographing cities and nature, creating
-            digital paintings, and experimenting in the kitchen. Different mediums, same curiosity.
-          </p>
-          <Link
-            href="/beyond-the-screen"
-            className="glass mt-8 inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold tracking-[0.04em] text-[var(--color-ink)] transition-transform duration-300 hover:scale-[1.03]"
-          >
-            Explore <span aria-hidden>→</span>
-          </Link>
-        </Reveal>
-      </FullBleedLayout>
-
-      {/* transform-only — never opacity, so text can never get stuck invisible
-          if an animation somehow fails to complete */}
+      {/* transform-only — never opacity, so text can't get stuck invisible */}
       <style>{`
         @keyframes about-rise {
           from { transform: translateY(16px); }
           to { transform: translateY(0); }
         }
       `}</style>
-    </main>
+    </>
   );
 }

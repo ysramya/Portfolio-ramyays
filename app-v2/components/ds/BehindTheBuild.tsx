@@ -26,7 +26,7 @@ export default function BehindTheBuild({
   return (
     <div className="wrap py-14 md:py-20">
       <Reveal>
-        <h3 className="font-[family-name:var(--font-display)] font-semibold text-[clamp(1.6rem,3vw,2.2rem)]">
+        <h3 className="font-[family-name:var(--font-display)] text-[clamp(1.6rem,3vw,2.2rem)]">
           {title}
         </h3>
       </Reveal>
@@ -41,7 +41,7 @@ export default function BehindTheBuild({
               <div className="w-6 h-6" style={{ color: accent }}>
                 {step.icon}
               </div>
-              <h4 className="mt-4 font-[family-name:var(--font-display)] font-semibold">
+              <h4 className="mt-4 font-[family-name:var(--font-display)]">
                 {step.label}
               </h4>
               <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">

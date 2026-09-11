@@ -22,7 +22,7 @@ export default function MetricStat({
   return (
     <div style={style}>
       <p
-        className={`font-[family-name:var(--font-display)] font-semibold leading-[0.9] ${
+        className={`font-[family-name:var(--font-display)] leading-[0.9] ${
           size === "hero" ? "text-[clamp(3.5rem,8vw,6.5rem)]" : "text-3xl"
         }`}
         style={{ color: size === "hero" ? accent : "var(--color-ink)" }}
@@ -30,7 +30,7 @@ export default function MetricStat({
         {value}
       </p>
       <p
-        className={`mt-2 font-semibold uppercase tracking-[0.18em] text-[var(--color-ink-faint)] ${
+        className={`mt-2 font-medium uppercase tracking-[0.18em] text-[var(--color-ink-faint)] ${
           size === "hero" ? "text-[0.7rem]" : "text-[0.62rem]"
         }`}
       >

@@ -60,7 +60,7 @@ export default function Quote({
           transition={{ duration: motionTokens.duration.slow, ease: motionTokens.ease }}
           className={image ? "" : "max-w-[46ch]"}
         >
-          <p className="font-[family-name:var(--font-display)] italic font-medium leading-[1.05] text-[clamp(2rem,5.5vw,4rem)]">
+          <p className="font-[family-name:var(--font-display)] leading-[1.05] text-[clamp(2rem,5.5vw,4rem)]">
             {text}
           </p>
           <div className="mt-8 inline-flex items-center gap-3 rounded-full px-4 py-2" style={tintedGlass(accent)}>

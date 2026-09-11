@@ -3,74 +3,72 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
-import { motion as motionTokens, tintedGlass } from "../tokens";
+import { motion as motionTokens } from "../tokens";
 
 /**
  * SPOTLIGHT — the case-study opener.
  *
  * Purpose: the first thing a reader sees. Not a title-and-meta header
- * (that's ds/Hero) — a full-bleed brand moment where the project's own
- * imagery IS the composition. Asymmetric on purpose: the title overlaps
- * the image edge instead of sitting in a tidy column beside it, because a
- * clean 50/50 split reads as a template, not an opening page.
+ * (that's ds/Hero) — the opening statement of the page, with the project's
+ * own imagery carrying the mood directly beneath it.
+ *
+ * This was a full-bleed image with the title overlaid on a black gradient
+ * scrim. Gradients are out of the system (§6), and the scrim existed only to
+ * make light type survive over an unpredictable photo — which the ivory
+ * ground makes unnecessary. Text sits on ivory and the image runs full-bleed
+ * below, uncovered.
  *
  * Ideal imagery: the project's brand mark, splash screen, or hero shot —
- * something with its own color and mood, not a UI screenshot.
- * Ideal typography: the largest type on the page. Deliberately allowed to
- * clip against the image edge on desktop.
- * Spacing: near-fullscreen (min-h-[92dvh]), minimal padding — the image
- * and title fight for the same space instead of being separated.
- * Animation: image scales in from 1.08→1 (a held breath, not a zoom),
- * title reveals via Reveal's translateY after a short stagger.
- * Responsive: desktop overlaps title over the image's left edge; mobile
- * stacks — image full-bleed on top, title below it, no overlap (overlap
- * needs room a phone doesn't have).
+ * something with its own colour and mood, not a UI screenshot.
+ * Ideal typography: the largest type on the page (Prata, one weight).
+ * Animation: title reveals via translateY; the image settles in beneath it.
  */
 export default function Spotlight({
   eyebrow,
   title,
   image,
   imageAlt,
-  accent,
 }: {
   eyebrow: string;
   title: ReactNode;
   image: string;
   imageAlt: string;
-  accent: string;
+  /** Legacy prop, accepted and unused — openers no longer carry a per-project colour. */
+  accent?: string;
 }) {
   return (
-    <section className="relative overflow-hidden" style={{ minHeight: "92dvh" }}>
-      <motion.div
-        initial={{ scale: 1.08 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 1.4, ease: motionTokens.ease }}
-        className="absolute inset-0"
+    <section>
+      <div
+        className="wrap"
+        style={{ paddingTop: "calc(var(--nav-h) + 48px)", paddingBottom: 48 }}
       >
-        <Image src={image} alt={imageAlt} fill priority className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/40" />
-      </motion.div>
-
-      <div className="relative z-10 h-full flex flex-col justify-end wrap pb-16 pt-[calc(var(--nav-h)+2rem)]" style={{ minHeight: "92dvh" }}>
-        <motion.span
-          initial={{ y: 12 }}
-          animate={{ y: 0 }}
-          transition={{ duration: motionTokens.duration.base, ease: motionTokens.ease }}
-          className="inline-flex w-fit items-center gap-2 rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.22em] uppercase mb-6"
-          style={tintedGlass(accent)}
-        >
-          <span style={{ color: accent }}>{eyebrow}</span>
-        </motion.span>
+        <p className="eyebrow eyebrow-rule">{eyebrow}</p>
 
         <motion.h1
           initial={{ y: 28 }}
           animate={{ y: 0 }}
           transition={{ duration: motionTokens.duration.slow, ease: motionTokens.ease, delay: 0.1 }}
-          className="font-[family-name:var(--font-display)] font-semibold leading-[0.92] tracking-[-0.02em] text-[clamp(3rem,9vw,7.5rem)] max-w-[16ch] md:-ml-1"
+          className="mt-4 max-w-[16ch]"
         >
           {title}
         </motion.h1>
+
       </div>
+
+      <motion.div
+        initial={{ y: 24 }}
+        whileInView={{ y: 0 }}
+        viewport={{ once: true, margin: "-10% 0px" }}
+        transition={{ duration: motionTokens.duration.slow, ease: motionTokens.ease }}
+        className="relative w-full"
+        style={{
+          aspectRatio: "16 / 7",
+          maxHeight: "62dvh",
+          borderBlock: "1px solid var(--rule)",
+        }}
+      >
+        <Image src={image} alt={imageAlt} fill priority className="object-cover" />
+      </motion.div>
     </section>
   );
 }

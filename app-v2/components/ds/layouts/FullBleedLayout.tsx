@@ -29,7 +29,6 @@ export default function FullBleedLayout({
     <section className="relative overflow-hidden" style={{ minHeight }}>
       <div className="absolute inset-0" style={{ opacity: imageOpacity }}>
         <Image src={image} alt={imageAlt} fill sizes="100vw" className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-[var(--color-bg)]/50 to-[var(--color-bg)]/10" />
       </div>
       <div
         className={`relative z-10 grid px-6 md:px-10 py-20 ${overlayClassName}`}

@@ -17,11 +17,11 @@ export default function NextProject({
   teaser: string;
 }) {
   return (
-    <Reveal className="wrap py-14 flex flex-wrap items-center justify-between gap-6 border-t border-white/10">
-      <p className="italic text-[var(--color-ink-muted)] max-w-[52ch]">{teaser}</p>
+    <Reveal className="wrap py-14 flex flex-wrap items-center justify-between gap-6 border-t border-[var(--rule)]">
+      <p className="text-[var(--color-ink-muted)] max-w-[52ch]">{teaser}</p>
       <Link
         href={href}
-        className="inline-flex items-center gap-2 rounded-full bg-[var(--color-green)] text-black px-6 py-3 text-[0.7rem] font-semibold tracking-[0.14em] uppercase transition-transform hover:-translate-y-0.5"
+        className="inline-flex items-center gap-2 rounded-full bg-[var(--color-green)] text-[var(--bg)] px-6 py-3 text-[12px] font-medium tracking-[0.14em] uppercase transition-transform"
       >
         {label} →
       </Link>

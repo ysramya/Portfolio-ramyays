@@ -1,39 +1,28 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Bodoni_Moda, Manrope, Caveat } from "next/font/google";
-import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { Prata, DM_Sans } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import Analytics from "@/components/Analytics";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+/* Two families, no third — see design-system.md §2.
+   Prata carries every piece of display type (logo, H1, H2, card titles) at a
+   single weight; the system explicitly forbids bolding it, so weight comes
+   from size alone. DM Sans covers body, nav, labels, buttons and meta at
+   300/400/500. */
+const prata = Prata({
+  variable: "--font-prata",
   subsets: ["latin"],
-  axes: ["opsz", "SOFT", "WONK"],
+  weight: "400",
+  display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
-});
-
-/* Collage design system type stack — Bodoni Moda for display, Manrope for
-   body, Caveat for the handwritten field-note marginalia. */
-const bodoni = Bodoni_Moda({
-  variable: "--font-display-collage",
-  subsets: ["latin"],
-});
-
-const manrope = Manrope({
-  variable: "--font-body-collage",
-  subsets: ["latin"],
-});
-
-const caveat = Caveat({
-  variable: "--font-hand",
-  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -47,20 +36,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const hasLogo = existsSync(join(process.cwd(), "public/img/brand/logo.png"));
-
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${inter.variable} ${bodoni.variable} ${manrope.variable} ${caveat.variable}`}
+      className={`${prata.variable} ${dmSans.variable}`}
     >
       {/* suppressHydrationWarning: browser extensions (e.g. Dashlane) inject
           attributes like cz-shortcut-listen onto <body> after the server
           render, which otherwise trips React's hydration mismatch warning. */}
       <body className="min-h-screen flex flex-col" suppressHydrationWarning>
-        <Nav hasLogo={hasLogo} />
+        <Nav />
         <main className="flex-1">{children}</main>
-        <Footer hasLogo={hasLogo} />
+        <Footer />
         <ChatWidget />
         <Analytics />
       </body>

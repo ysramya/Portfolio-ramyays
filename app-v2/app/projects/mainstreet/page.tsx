@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import NextProjectBand from "@/components/ds/NextProjectBand";
+import { getNextProject } from "@/lib/projects";
 import {
   ReadingLayout,
   EditorialLayout,
   GalleryLayout,
   SplitLayout,
-  FullBleedLayout,
 } from "@/components/ds/layouts";
 import { Quote, ImageFrame, MetricStat } from "@/components/ds/atoms";
 import { tintedGlass } from "@/components/ds/tokens";
@@ -22,9 +22,9 @@ const olive = mainstreetPalette.olive;
 const gold = mainstreetPalette.gold;
 const sand = mainstreetPalette.sand;
 
-function Eyebrow({ children, color = accent }: { children: React.ReactNode; color?: string }) {
+function Eyebrow({ children }: { children: React.ReactNode; color?: string }) {
   return (
-    <p className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase" style={{ color }}>
+    <p className="eyebrow">
       {children}
     </p>
   );
@@ -43,7 +43,7 @@ function GlassNote({
 }) {
   return (
     <div className="rounded-2xl p-6" style={{ ...tintedGlass(color, 0.1), ...style }}>
-      <p className="text-[0.62rem] font-semibold tracking-[0.2em] uppercase" style={{ color }}>
+      <p className="text-[12px] font-medium tracking-[0.2em] uppercase" style={{ color }}>
         {label}
       </p>
       <p className="mt-3 text-lg leading-relaxed text-[var(--color-ink)]">{text}</p>
@@ -59,7 +59,7 @@ function GradientField({ gradient, children }: { gradient: string; children: Rea
 function DecisionNote({ label, text, color }: { label: string; text: string; color: string }) {
   return (
     <div className="mt-4 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-      <p className="text-[0.55rem] font-semibold tracking-[0.24em] uppercase" style={{ color }}>{label}</p>
+      <p className="text-[10px] font-medium tracking-[0.24em] uppercase" style={{ color }}>{label}</p>
       <p className="mt-1.5 text-sm leading-relaxed text-[var(--color-ink-muted)]">{text}</p>
     </div>
   );
@@ -67,10 +67,10 @@ function DecisionNote({ label, text, color }: { label: string; text: string; col
 
 function FeatureCard({ icon, label, title, text, color = accent, why, tradeoff }: { icon: string; label: string; title: string; text: string; color?: string; why?: string; tradeoff?: string }) {
   return (
-    <div className="rounded-2xl p-6 transition-colors hover:border-white/20" style={tintedGlass(color, 0.07)}>
+    <div className="rounded-2xl p-6 transition-colors hover:border-[var(--border-strong)]" style={tintedGlass(color, 0.07)}>
       <span className="text-xl">{icon}</span>
-      <p className="mt-3 text-[0.6rem] font-semibold tracking-[0.28em] uppercase" style={{ color }}>{label}</p>
-      <p className="mt-2 font-[family-name:var(--font-display)] font-semibold text-lg text-[var(--color-ink)]">{title}</p>
+      <p className="mt-3 text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color }}>{label}</p>
+      <p className="mt-2 font-[family-name:var(--font-display)] text-lg text-[var(--color-ink)]">{title}</p>
       <p className="mt-2 text-sm leading-relaxed text-[var(--color-ink-muted)]">{text}</p>
       {why && <DecisionNote label="Why this decision?" text={why} color={color} />}
       {tradeoff && <DecisionNote label="Tradeoff" text={tradeoff} color={color} />}
@@ -82,7 +82,7 @@ function FeatureCard({ icon, label, title, text, color = accent, why, tradeoff }
 function ContributionCard({ label, items, color = accent }: { label: string; items: string[]; color?: string }) {
   return (
     <div className="rounded-2xl p-6 h-full" style={tintedGlass(color, 0.08)}>
-      <p className="text-[0.6rem] font-semibold tracking-[0.28em] uppercase" style={{ color }}>{label}</p>
+      <p className="text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color }}>{label}</p>
       <ul className="mt-4 flex flex-col gap-2.5">
         {items.map((item) => (
           <li key={item} className="text-sm leading-relaxed text-[var(--color-ink-muted)] pl-4 relative">
@@ -175,26 +175,20 @@ const kpiCallouts = [
 
 export default function MainstreetPage() {
   return (
-    <div style={{ background: mainstreetGradients.page }}>
+    <div className="auto-number" style={{ background: mainstreetGradients.page }}>
       {/* 1 — Hero: custom, floating laptop dashboard (real asset, teal ambient
           already composited into the image), metadata in glass cards */}
-      <section className="relative overflow-hidden" style={{ paddingTop: "calc(var(--nav-h) + 3rem)", paddingBottom: "6rem" }}>
+      <section data-nav="dark" className="theme-deep relative overflow-hidden" style={{ paddingTop: "calc(var(--nav-h) + 3rem)", paddingBottom: "6rem" }}>
         <div
           className="mx-auto grid gap-12 px-6 md:px-10 md:grid-cols-[1fr_1.1fr] items-center"
-          style={{ maxWidth: "1600px" }}
+          style={{ maxWidth: "var(--wrap-max)" }}
         >
           <div>
-            <span
-              className="inline-flex w-fit items-center gap-2 rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.22em] uppercase mb-6"
-              style={tintedGlass(accent)}
-            >
-              <span style={{ color: gold }}>Internship Project · Mainstreet Advisors</span>
-            </span>
-            <h1 className="font-[family-name:var(--font-display)] font-semibold leading-[0.92] tracking-[-0.02em] text-[clamp(3rem,7.5vw,6rem)] text-[var(--color-ink)]">
-              PM
-              <br />
-              <span className="italic" style={{ color: accent }}>Dashboard</span>
-            </h1>
+            <p className="eyebrow eyebrow-rule">Internship Project · Mainstreet Advisors</p>
+          <h1 className="mt-4">PM</h1>
+          <h2 className="mt-5" style={{ fontSize: "clamp(28px, 3.1vw, 40px)", lineHeight: 1.22 }}>
+            Dashboard
+          </h2>
             <p className="mt-6 text-lg leading-relaxed text-[var(--color-ink-muted)]" style={{ maxWidth: "56ch" }}>
               A Power BI reporting tool that gave six Portfolio Managers at Mainstreet
               Advisors a real-time, single-screen view of their AUA, client health, and
@@ -210,7 +204,7 @@ export default function MainstreetPage() {
                 { label: "Scope", value: "6 Portfolio Managers" },
               ].map((m) => (
                 <div key={m.label} className="rounded-xl px-4 py-3" style={tintedGlass(accent, 0.06)}>
-                  <dt className="text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">
+                  <dt className="text-[10px] font-medium tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">
                     {m.label}
                   </dt>
                   <dd className="mt-1 text-sm text-[var(--color-ink)]">{m.value}</dd>
@@ -221,11 +215,15 @@ export default function MainstreetPage() {
 
           {/* Floating laptop dashboard — real asset, teal glow already baked in */}
           <div className="relative flex items-center justify-center">
+            {/* w-full: inside a centring flex container the figure had no
+                width of its own and collapsed to 2px, so this image never
+                rendered. */}
             <ImageFrame
               src="/img/mainstreet/laptop-mockup.png"
               alt="PM Dashboard Overview, shown on a laptop"
               aspect="1/1"
               objectFit="contain"
+              className="w-full"
             />
           </div>
         </div>
@@ -242,14 +240,14 @@ export default function MainstreetPage() {
         <div style={{ gridColumn: "1 / 7" }}>
           <div style={tintedGlass(accent, 0.08)} className="rounded-2xl p-6 h-full">
             <p className="text-sm text-[var(--color-ink-faint)]">{glance[0].q}</p>
-            <p className="mt-2 font-[family-name:var(--font-display)] font-semibold text-xl text-[var(--color-ink)]">{glance[0].a}</p>
+            <p className="mt-2 font-[family-name:var(--font-display)] text-xl text-[var(--color-ink)]">{glance[0].a}</p>
             <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{glance[0].detail}</p>
           </div>
         </div>
         <div style={{ gridColumn: "7 / 13" }}>
           <div style={tintedGlass(olive, 0.08)} className="rounded-2xl p-6 h-full">
             <p className="text-sm text-[var(--color-ink-faint)]">{glance[1].q}</p>
-            <p className="mt-2 font-[family-name:var(--font-display)] font-semibold text-xl text-[var(--color-ink)]">{glance[1].a}</p>
+            <p className="mt-2 font-[family-name:var(--font-display)] text-xl text-[var(--color-ink)]">{glance[1].a}</p>
             <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{glance[1].detail}</p>
           </div>
         </div>
@@ -257,7 +255,7 @@ export default function MainstreetPage() {
           <div key={g.q} style={{ gridColumn: `${1 + i * 4} / ${5 + i * 4}` }}>
             <div style={tintedGlass(i === 1 ? accent : olive, 0.07)} className="rounded-2xl p-6 h-full">
               <p className="text-sm text-[var(--color-ink-faint)]">{g.q}</p>
-              <p className="mt-2 font-[family-name:var(--font-display)] font-semibold text-lg text-[var(--color-ink)]">{g.a}</p>
+              <p className="mt-2 font-[family-name:var(--font-display)] text-lg text-[var(--color-ink)]">{g.a}</p>
               <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{g.detail}</p>
             </div>
           </div>
@@ -268,8 +266,8 @@ export default function MainstreetPage() {
       <EditorialLayout maxWidth="1500px">
         <div style={{ gridColumn: "1 / 13" }}>
           <Eyebrow>My Contributions</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            What I <span className="italic" style={{ color: accent }}>owned.</span>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            What I <span style={{ color: accent }}>owned.</span>
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ gridColumn: "1 / 13" }}>
@@ -335,13 +333,13 @@ export default function MainstreetPage() {
         <EditorialLayout maxWidth="1500px">
           <div style={{ gridColumn: "1 / 8" }}>
             <Eyebrow>The Problem</Eyebrow>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
               Six managers.
               <br />
-              <span className="italic" style={{ color: accent }}>Zero unified view.</span>
+              <span style={{ color: accent }}>Zero unified view.</span>
             </h2>
             <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
-              Mainstreet Advisors managed over <strong className="text-[var(--color-ink)] font-semibold">$1.2B in assets under advisement</strong> across
+              Mainstreet Advisors managed over <strong className="text-[var(--color-ink)] font-medium">$1.2B in assets under advisement</strong> across
               six Portfolio Managers. Each PM tracked their own book of business through a
               patchwork of Excel files, email threads, and manual lookups into the core
               CRM. There was no shared reporting standard, no live view of account health,
@@ -374,7 +372,7 @@ export default function MainstreetPage() {
             ].map((c) => (
               <div key={c.label} className="rounded-2xl p-6" style={tintedGlass(sand, 0.06)}>
                 <span className="text-2xl">{c.icon}</span>
-                <p className="mt-3 text-[0.6rem] font-semibold tracking-[0.28em] uppercase" style={{ color: accent }}>{c.label}</p>
+                <p className="mt-3 text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color: accent }}>{c.label}</p>
                 <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{c.text}</p>
               </div>
             ))}
@@ -397,8 +395,8 @@ export default function MainstreetPage() {
       <EditorialLayout maxWidth="1500px">
         <div style={{ gridColumn: "1 / 13" }}>
           <Eyebrow>Research · PM Interviews</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            4 of 6 PMs said the <span className="italic" style={{ color: accent }}>same thing.</span>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            4 of 6 PMs said the <span style={{ color: accent }}>same thing.</span>
           </h2>
           <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
             Before building anything, I interviewed all 6 Portfolio Managers to
@@ -425,7 +423,7 @@ export default function MainstreetPage() {
           ].map((c) => (
             <div key={c.label} className="rounded-2xl p-6" style={tintedGlass(accent, 0.06)}>
               <span className="text-2xl">{c.icon}</span>
-              <p className="mt-3 text-[0.6rem] font-semibold tracking-[0.28em] uppercase" style={{ color: accent }}>{c.label}</p>
+              <p className="mt-3 text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color: accent }}>{c.label}</p>
               <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{c.text}</p>
             </div>
           ))}
@@ -452,8 +450,8 @@ export default function MainstreetPage() {
         <EditorialLayout maxWidth="1500px">
           <div style={{ gridColumn: "1 / 8" }}>
             <Eyebrow color={olive}>Designing in a Moving Target</Eyebrow>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-              The requirements <span className="italic" style={{ color: olive }}>kept moving.</span>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              The requirements <span style={{ color: olive }}>kept moving.</span>
             </h2>
             <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
               The dashboard I was briefed on in week one is not the dashboard that was
@@ -516,8 +514,8 @@ export default function MainstreetPage() {
         <EditorialLayout maxWidth="1500px">
           <div style={{ gridColumn: "1 / 13" }}>
             <Eyebrow>Process</Eyebrow>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-              From raw Excel <span className="italic" style={{ color: accent }}>to live Power BI</span>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              From raw Excel <span style={{ color: accent }}>to live Power BI</span>
             </h2>
             <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
               The project ran across four phases — from understanding what PMs actually
@@ -528,19 +526,19 @@ export default function MainstreetPage() {
           <div className="relative" style={{ gridColumn: "1 / 13" }}>
             <div
               className="hidden md:block absolute top-[2.6rem] left-[6%] right-[6%] h-px"
-              style={{ background: `linear-gradient(90deg, transparent, ${accent}55, ${accent}55, transparent)` }}
+              style={{ background: "var(--rule)" }}
               aria-hidden
             />
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {processSteps.map((p) => (
-                <div key={p.n} className="relative rounded-2xl p-6 transition-transform hover:-translate-y-1" style={tintedGlass(accent, 0.07)}>
+                <div key={p.n} className="relative rounded-2xl p-6 transition-transform" style={tintedGlass(accent, 0.07)}>
                   <span
-                    className="flex items-center justify-center w-9 h-9 rounded-full font-[family-name:var(--font-display)] font-semibold text-sm mb-4"
+                    className="flex items-center justify-center w-9 h-9 rounded-full font-[family-name:var(--font-display)] text-sm mb-4"
                     style={{ backgroundColor: accent, color: mainstreetPalette.black }}
                   >
                     {p.n}
                   </span>
-                  <p className="text-[0.68rem] font-semibold tracking-[0.15em] uppercase" style={{ color: accent }}>{p.title}</p>
+                  <p className="text-[12px] font-medium tracking-[0.15em] uppercase" style={{ color: accent }}>{p.title}</p>
                   <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{p.text}</p>
                 </div>
               ))}
@@ -553,8 +551,8 @@ export default function MainstreetPage() {
       <EditorialLayout maxWidth="1500px">
         <div style={{ gridColumn: "1 / 13" }}>
           <Eyebrow>Constraints</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            What I had to <span className="italic" style={{ color: accent }}>design around</span>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            What I had to <span style={{ color: accent }}>design around</span>
           </h2>
           <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
             None of these were negotiable. Every decision documented below had to work
@@ -572,7 +570,7 @@ export default function MainstreetPage() {
             { label: "Executive approval cycles", text: "Nothing shipped without executive sign-off, and each review round introduced new requirements. The schedule had to absorb revision, not assume approval." },
           ].map((c, i) => (
             <div key={c.label} className="rounded-2xl p-6" style={tintedGlass(i % 3 === 0 ? accent : i % 3 === 1 ? olive : sand, 0.07)}>
-              <p className="text-[0.6rem] font-semibold tracking-[0.28em] uppercase" style={{ color: i % 3 === 0 ? accent : i % 3 === 1 ? olive : gold }}>{c.label}</p>
+              <p className="text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color: i % 3 === 0 ? accent : i % 3 === 1 ? olive : gold }}>{c.label}</p>
               <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{c.text}</p>
             </div>
           ))}
@@ -584,8 +582,8 @@ export default function MainstreetPage() {
       <GalleryLayout maxWidth="1700px">
         <div style={{ gridColumn: "1 / 13" }}>
           <Eyebrow>The Solution</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            Every section <span className="italic" style={{ color: accent }}>earns its place</span>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            Every section <span style={{ color: accent }}>earns its place</span>
           </h2>
           <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
             The layout follows a top-to-bottom information hierarchy: headline numbers
@@ -605,9 +603,9 @@ export default function MainstreetPage() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3" style={{ gridColumn: "1 / 13", marginTop: "1rem" }}>
           {kpiCallouts.map((k, i) => (
             <div key={k.label} className="rounded-xl p-4 text-center" style={tintedGlass(i % 2 === 0 ? accent : olive, 0.08)}>
-              <p className="font-[family-name:var(--font-display)] font-semibold text-xl" style={{ color: i % 2 === 0 ? accent : olive }}>{k.value}</p>
-              <p className="mt-1 text-[0.58rem] font-semibold tracking-[0.15em] uppercase text-[var(--color-ink)]">{k.label}</p>
-              <p className="text-[0.65rem] text-[var(--color-ink-faint)]">{k.sub}</p>
+              <p className="font-[family-name:var(--font-display)] text-xl" style={{ color: i % 2 === 0 ? accent : olive }}>{k.value}</p>
+              <p className="mt-1 text-[10px] font-medium tracking-[0.15em] uppercase text-[var(--color-ink)]">{k.label}</p>
+              <p className="text-[12px] text-[var(--color-ink-faint)]">{k.sub}</p>
             </div>
           ))}
         </div>
@@ -640,12 +638,12 @@ export default function MainstreetPage() {
       <EditorialLayout maxWidth="1500px">
         <div style={{ gridColumn: "1 / 13" }}>
           <Eyebrow>Before &amp; After</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            What changed <span className="italic" style={{ color: accent }}>for the PMs</span>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            What changed <span style={{ color: accent }}>for the PMs</span>
           </h2>
         </div>
         <div className="relative rounded-[2rem] p-8" style={{ gridColumn: "1 / 7", ...tintedGlass(mainstreetPalette.slate, 0.08) }}>
-          <p className="text-[0.62rem] font-bold tracking-[0.28em] uppercase text-[var(--color-ink-faint)]">Before — Manual Excel Workflow</p>
+          <p className="text-[12px] font-medium tracking-[0.28em] uppercase text-[var(--color-ink-faint)]">Before — Manual Excel Workflow</p>
           <ul className="mt-5 flex flex-col gap-3">
             {beforeList.map((b) => (
               <li key={b} className="text-sm text-[var(--color-ink-muted)] leading-relaxed pl-6 relative">
@@ -656,7 +654,7 @@ export default function MainstreetPage() {
           </ul>
         </div>
         <div className="relative rounded-[2rem] p-8" style={{ gridColumn: "7 / 13", ...tintedGlass(accent, 0.09) }}>
-          <p className="text-[0.62rem] font-bold tracking-[0.28em] uppercase" style={{ color: accent }}>After — Power BI Dashboard</p>
+          <p className="text-[12px] font-medium tracking-[0.28em] uppercase" style={{ color: accent }}>After — Power BI Dashboard</p>
           <ul className="mt-5 flex flex-col gap-3">
             {afterList.map((a) => (
               <li key={a} className="text-sm text-[var(--color-ink-muted)] leading-relaxed pl-6 relative">
@@ -673,8 +671,8 @@ export default function MainstreetPage() {
         <EditorialLayout maxWidth="1500px">
           <div style={{ gridColumn: "1 / 13" }}>
             <Eyebrow color={olive}>Design Decisions</Eyebrow>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-              Why it looks <span className="italic" style={{ color: olive }}>the way it does</span>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              Why it looks <span style={{ color: olive }}>the way it does</span>
             </h2>
             <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
               Every layout and colour choice was constrained by two things: Mainstreet
@@ -693,8 +691,8 @@ export default function MainstreetPage() {
       <EditorialLayout maxWidth="1500px">
         <div style={{ gridColumn: "1 / 13" }}>
           <Eyebrow>Impact</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            Results that <span className="italic" style={{ color: accent }}>mattered</span>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            Results that <span style={{ color: accent }}>mattered</span>
           </h2>
         </div>
         {[
@@ -703,8 +701,8 @@ export default function MainstreetPage() {
           { n: "1", label: "Screen for the whole picture", desc: "KPIs, trends, wallet share, revenue tiers, and client-level detail — all visible at once", color: gold, col: "9 / 13" },
         ].map((s) => (
           <div key={s.label} className="rounded-2xl p-8 text-center" style={{ gridColumn: s.col, ...tintedGlass(s.color, 0.08) }}>
-            <p className="font-[family-name:var(--font-display)] font-semibold text-6xl" style={{ color: s.color }}>{s.n}</p>
-            <p className="mt-3 text-[0.62rem] font-semibold tracking-[0.24em] uppercase text-[var(--color-ink)]">{s.label}</p>
+            <p className="font-[family-name:var(--font-display)] text-6xl" style={{ color: s.color }}>{s.n}</p>
+            <p className="mt-3 text-[12px] font-medium tracking-[0.24em] uppercase text-[var(--color-ink)]">{s.label}</p>
             <p className="mt-3 text-sm text-[var(--color-ink-muted)] leading-relaxed">{s.desc}</p>
           </div>
         ))}
@@ -715,8 +713,8 @@ export default function MainstreetPage() {
         <EditorialLayout maxWidth="1500px">
           <div style={{ gridColumn: "1 / 8" }}>
             <Eyebrow>Learning Beyond UX</Eyebrow>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-              I had never built a <span className="italic" style={{ color: accent }}>data model before.</span>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              I had never built a <span style={{ color: accent }}>data model before.</span>
             </h2>
             <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
               I started this internship with no prior experience in Power BI data
@@ -753,8 +751,8 @@ export default function MainstreetPage() {
       <EditorialLayout maxWidth="1500px">
         <div style={{ gridColumn: "1 / 13" }}>
           <Eyebrow>If This Dashboard Continued to Evolve</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            Where I&rsquo;d <span className="italic" style={{ color: accent }}>take it next</span>
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+            Where I&rsquo;d <span style={{ color: accent }}>take it next</span>
           </h2>
           <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
             The dashboard shipped at the end of an eight-week internship. These are the
@@ -771,7 +769,7 @@ export default function MainstreetPage() {
             { label: "What I'd measure", text: "Not opens. Whether the Monday reporting ritual actually stopped — and whether PMs bring the dashboard into client and internal conversations rather than rebuilding numbers for them. That was the job it was built to do." },
           ].map((c, i) => (
             <div key={c.label} className="rounded-2xl p-6" style={tintedGlass(i % 2 === 0 ? accent : olive, 0.07)}>
-              <p className="text-[0.6rem] font-semibold tracking-[0.28em] uppercase" style={{ color: i % 2 === 0 ? accent : olive }}>{c.label}</p>
+              <p className="text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color: i % 2 === 0 ? accent : olive }}>{c.label}</p>
               <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{c.text}</p>
             </div>
           ))}
@@ -783,15 +781,15 @@ export default function MainstreetPage() {
         <EditorialLayout maxWidth="1500px">
           <div style={{ gridColumn: "1 / 13" }}>
             <Eyebrow>Reflection</Eyebrow>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-              What I learned <span className="italic" style={{ color: accent }}>building this</span>
+            <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
+              What I learned <span style={{ color: accent }}>building this</span>
             </h2>
           </div>
           <div style={{ gridColumn: "1 / 7" }} className="flex flex-col gap-4">
             {[reflections[0], reflections[1]].map((r, i) => (
               <div key={r.label} className="rounded-2xl p-6" style={{ ...tintedGlass(i === 0 ? accent : olive, 0.07), paddingBottom: r.tall ? "2.5rem" : "1.5rem" }}>
                 <span className="text-xl">{r.icon}</span>
-                <p className="mt-3 text-[0.6rem] font-semibold tracking-[0.24em] uppercase" style={{ color: i === 0 ? accent : olive }}>{r.label}</p>
+                <p className="mt-3 text-[10px] font-medium tracking-[0.24em] uppercase" style={{ color: i === 0 ? accent : olive }}>{r.label}</p>
                 <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{r.text}</p>
               </div>
             ))}
@@ -800,7 +798,7 @@ export default function MainstreetPage() {
             {[reflections[2], reflections[3]].map((r, i) => (
               <div key={r.label} className="rounded-2xl p-6" style={{ ...tintedGlass(i === 0 ? olive : gold, 0.07), paddingBottom: r.tall ? "2.5rem" : "1.5rem" }}>
                 <span className="text-xl">{r.icon}</span>
-                <p className="mt-3 text-[0.6rem] font-semibold tracking-[0.24em] uppercase" style={{ color: i === 0 ? olive : gold }}>{r.label}</p>
+                <p className="mt-3 text-[10px] font-medium tracking-[0.24em] uppercase" style={{ color: i === 0 ? olive : gold }}>{r.label}</p>
                 <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{r.text}</p>
               </div>
             ))}
@@ -811,41 +809,15 @@ export default function MainstreetPage() {
       {/* 14 — CTA: dashboard floating in background, teal lighting, minimal close */}
       <section className="relative overflow-hidden" style={{ minHeight: "60dvh" }}>
         <div className="absolute inset-0" style={{ background: mainstreetGradients.tealCharcoal }} />
-        <div
-          className="absolute w-[500px] h-[500px] rounded-full blur-[120px] opacity-30 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-          style={{ background: `radial-gradient(circle, ${accent} 0%, transparent 70%)` }}
-        />
         <div className="relative z-10 grid px-6 md:px-10 py-24 items-center justify-items-center text-center" style={{ minHeight: "60dvh" }}>
-          <h2 className="font-[family-name:var(--font-display)] font-semibold leading-[0.95] text-[clamp(2rem,5.5vw,4rem)] text-[var(--color-ink)]">
+          <h2 className="font-[family-name:var(--font-display)] leading-[0.95] text-[clamp(2rem,5.5vw,4rem)] text-[var(--color-ink)]">
             One screen. Six managers. Zero spreadsheets.
           </h2>
         </div>
       </section>
 
-      {/* 15 — Next project: FullBleed, centered overlay, follows the homepage order into Raahi */}
-      <FullBleedLayout
-        image="/img/raahi/laptop-mockup.png"
-        imageAlt="Raahi, a browser plugin that catches dark and manipulative patterns on the web"
-        imageOpacity={0.35}
-        minHeight="60dvh"
-        overlayClassName="items-center justify-items-center text-center"
-      >
-        <Link href="/projects/raahi" className="group">
-          <span
-            className="inline-flex rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.22em] uppercase mb-6"
-            style={tintedGlass(accent)}
-          >
-            <span style={{ color: olive }}>Next Project</span>
-          </span>
-          <h2 className="font-[family-name:var(--font-display)] font-semibold leading-[0.95] text-[clamp(2.5rem,7vw,5.5rem)] text-[var(--color-ink)]">
-            Raahi
-            <span
-              className="block h-[2px] w-0 group-hover:w-full mx-auto mt-4 transition-[width] duration-500 ease-out"
-              style={{ backgroundColor: accent }}
-            />
-          </h2>
-        </Link>
-      </FullBleedLayout>
+      {/* Closing — deep band pointing to the next piece in the portfolio order */}
+      <NextProjectBand {...getNextProject("mainstreet")} />
     </div>
   );
 }

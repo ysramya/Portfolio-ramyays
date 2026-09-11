@@ -5,6 +5,10 @@
  * how each component maps to a section of a case study.
  */
 export { default as Reveal } from "./Reveal";
+export { default as DeepBand } from "./DeepBand";
+export { default as SectionHead, Section } from "./SectionHead";
+export { default as NextProjectBand } from "./NextProjectBand";
+export { default as PhoneShot } from "./PhoneShot";
 export { default as GlassCard } from "./GlassCard";
 export { default as Hero } from "./Hero";
 export type { HeroMeta } from "./Hero";

@@ -38,10 +38,10 @@ export function SectionShell({
     <section className={`py-20 md:py-24 ${alt ? "bg-[var(--color-bg-secondary)]" : ""}`}>
       <div className="wrap">
         <Reveal>
-          <p className="text-[0.65rem] font-semibold tracking-[0.24em] uppercase text-[var(--color-green)]">
+          <p className="text-[12px] font-medium tracking-[0.24em] uppercase text-[var(--color-green)]">
             {eyebrow}
           </p>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] text-[clamp(1.6rem,3.4vw,2.6rem)] font-semibold leading-tight max-w-[18ch]">
+          <h2 className="mt-3 font-[family-name:var(--font-display)] text-[clamp(1.6rem,3.4vw,2.6rem)] leading-tight max-w-[18ch]">
             {title}
           </h2>
           {lead && (
@@ -59,7 +59,7 @@ export function SectionShell({
 export function Quote({ text, attribution }: { text: string; attribution: string }) {
   return (
     <Reveal className="mt-8 rounded-r-2xl border-l-2 border-[var(--color-green)] bg-[var(--color-surface)] p-6 md:p-7">
-      <p className="italic text-lg leading-relaxed text-[var(--color-ink)]">
+      <p className="text-lg leading-relaxed text-[var(--color-ink)]">
         &ldquo;{text}&rdquo;
       </p>
       <p className="mt-3 text-xs tracking-wide text-[var(--color-ink-faint)]">
@@ -109,10 +109,10 @@ export function CardGrid({
           className="rounded-2xl border-t-2 bg-[var(--color-surface)] p-6"
           style={{ borderTopColor: accent }}
         >
-          <p className="text-[0.62rem] font-semibold tracking-[0.2em] uppercase" style={{ color: accent }}>
+          <p className="text-[12px] font-medium tracking-[0.2em] uppercase" style={{ color: accent }}>
             {card.label}
           </p>
-          <h3 className="mt-2 font-[family-name:var(--font-display)] font-semibold">
+          <h3 className="mt-2 font-[family-name:var(--font-display)]">
             {card.title}
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-[var(--color-ink-muted)]">
@@ -139,10 +139,10 @@ export function StatRow({
     <Reveal className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--color-border)] border border-[var(--color-border)]">
       {stats.map((stat) => (
         <div key={stat.label} className="bg-[var(--color-surface)] p-7 text-center">
-          <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--color-yellow)]">
+          <p className="font-[family-name:var(--font-display)] text-2xl text-[var(--color-yellow)]">
             {stat.value}
           </p>
-          <p className="mt-2 text-[0.62rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-muted)]">
+          <p className="mt-2 text-[12px] font-medium tracking-[0.2em] uppercase text-[var(--color-ink-muted)]">
             {stat.label}
           </p>
           <p className="mt-2 text-sm text-[var(--color-ink-faint)]">{stat.desc}</p>
@@ -163,10 +163,10 @@ export function Timeline({
         <div key={item.title} className="grid grid-cols-[20px_1fr] gap-4 py-4 border-t border-[var(--color-border)] first:border-t-0">
           <div className="w-3 h-3 mt-1 rounded-full border-2 border-[var(--color-green)]" />
           <div>
-            <p className="text-xs font-semibold tracking-wide uppercase text-[var(--color-green)]">
+            <p className="text-xs font-medium tracking-wide uppercase text-[var(--color-green)]">
               {item.date}
             </p>
-            <p className="mt-1 font-[family-name:var(--font-display)] font-semibold">
+            <p className="mt-1 font-[family-name:var(--font-display)]">
               {item.title}
             </p>
             <p className="mt-1 text-sm text-[var(--color-ink-muted)] leading-relaxed">

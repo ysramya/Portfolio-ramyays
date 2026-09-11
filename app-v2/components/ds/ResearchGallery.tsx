@@ -19,7 +19,7 @@ export default function ResearchGallery({
   return (
     <div className="wrap py-8">
       <Reveal>
-        <p className="text-[0.62rem] font-semibold tracking-[0.22em] uppercase text-[var(--color-ink-faint)] mb-4">
+        <p className="text-[12px] font-medium tracking-[0.22em] uppercase text-[var(--color-ink-faint)] mb-4">
           {method}
         </p>
       </Reveal>

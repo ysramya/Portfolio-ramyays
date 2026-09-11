@@ -41,7 +41,12 @@ export default function ImageFrame({
       viewport={{ once: true, margin: "-10% 0px" }}
       transition={{ duration: motionTokens.duration.slow, ease: motionTokens.ease }}
       className={`relative overflow-hidden ${className}`}
-      style={{ borderRadius: radius.card, alignSelf: "start", ...style }}
+      style={{
+        borderRadius: radius.card,
+        border: "1px solid var(--border)",
+        alignSelf: "start",
+        ...style,
+      }}
     >
       {/* w-full only (no h-full) — a definite height would override
           aspect-ratio per the CSS spec. alignSelf:"start" above stops
@@ -56,8 +61,20 @@ export default function ImageFrame({
           className={objectFit === "contain" ? "object-contain" : "object-cover"}
         />
       </div>
+      {/* The caption used to float over the image on a black gradient scrim.
+          Gradients are out of the system (§6) and light type over an
+          arbitrary photo was never reliably legible, so it sits below the
+          image now on the band tone, separated by a hairline. */}
       {caption && (
-        <figcaption className="absolute bottom-0 inset-x-0 p-3 text-xs text-white/80 bg-gradient-to-t from-black/70 to-transparent">
+        <figcaption
+          className="meta px-3 py-2.5"
+          style={{
+            background: "var(--bg-band)",
+            borderTop: "1px solid var(--border)",
+            letterSpacing: "0.1em",
+            lineHeight: 1.5,
+          }}
+        >
           {caption}
         </figcaption>
       )}

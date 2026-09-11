@@ -31,10 +31,10 @@ export default function Overview({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       >
-        <p className="text-[0.65rem] font-semibold tracking-[0.24em] uppercase text-[var(--color-green)]">
+        <p className="text-[12px] font-medium tracking-[0.24em] uppercase text-[var(--color-green)]">
           {badge}
         </p>
-        <h1 className="mt-3 font-[family-name:var(--font-display)] font-semibold leading-[0.98] tracking-[-0.02em] text-[clamp(2.4rem,6vw,4.6rem)] max-w-[18ch]">
+        <h1 className="mt-3 font-[family-name:var(--font-display)] leading-[0.98] text-[clamp(2.4rem,6vw,4.6rem)] max-w-[18ch]">
           {title}
         </h1>
         <p className="mt-5 text-lg text-[var(--color-ink-muted)] max-w-[64ch] leading-relaxed">
@@ -47,7 +47,7 @@ export default function Overview({
               key={m.label}
               className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3"
             >
-              <dt className="text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">
+              <dt className="text-[10px] font-medium tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">
                 {m.label}
               </dt>
               <dd className="mt-1 text-sm text-[var(--color-ink)]">{m.value}</dd>

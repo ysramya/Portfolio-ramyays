@@ -1,277 +1,597 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════════════════════════════
+   Ramya Yerramilli — Portfolio Design System, v2
+   The style contract lives in design-system.md; this file implements it.
+
+   Warm ivory content sections between deep-green opening and closing
+   bands. Prata for display, DM Sans for everything else. Tan section
+   numerals are the accent. Soft 8px corners on containers, full pills on
+   buttons and tags. No gradients, no glass, no blur, no drop shadows.
+   ═══════════════════════════════════════════════════════════════════ */
+
 :root {
-  --color-green: #4caf50;
-  --color-yellow: #ffdd44;
+  /* ── Grounds ── */
+  --bg: #f7f5f0; /* page ground, warm ivory */
+  --bg-raised: #fcfbf7; /* work cards */
+  --bg-band: #efede6; /* alternate section band */
+  --panel: #eceae3; /* tinted card on ivory — principles, opportunities */
+  --panel-sage: #e5eae3; /* the one emphasised card per section — key insight, what worked */
 
-  --color-bg: #0e0e0e;
-  --color-bg-secondary: #171717;
-  --color-surface: #1f1f1f;
-  --color-border: #2b2b2b;
+  /* ── Ink ── */
+  --ink: #12271f; /* headings, primary buttons, icons */
+  --ink-hover: #1d3a2e;
+  --body: #3d4e45; /* body copy */
+  --muted: #5c6b62; /* eyebrows, labels */
+  --muted-2: #66756c; /* meta, captions */
 
-  --color-ink: #f5f5f5;
-  --color-ink-muted: #b5b5b5;
-  --color-ink-faint: #8a8a8a;
+  /* ── Lines ── */
+  --rule: #e1ded4; /* section dividers */
+  --rule-2: #d9d5c9;
+  --border: #e3e0d6; /* card borders */
+  --border-strong: #c3beaf;
+  --divider: #d3d0c3;
 
-  --font-display: var(--font-fraunces);
-  --font-body: var(--font-inter);
+  /* ── Accent ──
+     Section numerals. Darkened from the reference tan until the 40px
+     numeral clears 3:1 against ivory (large-text AA). */
+  --numeral: #a47e61;
 
+  /* ── Deep green ── the hero and closing ground */
+  --deep: #10231b;
+  --deep-2: #183228;
+  --deep-3: #142b22;
+
+  --radius: 8px;
+
+  /* ── Type ── */
+  --font-display: var(--font-prata); /* Prata 400 — never bolded */
+  --font-body: var(--font-dm-sans); /* DM Sans 300/400/500 */
+
+  /* ── Layout ── */
   --nav-h: 76px;
-  --wrap-max: 1240px;
+  --wrap-max: 1160px;
+  --wrap-pad: 32px;
+}
+
+/* ── Legacy aliases ──
+   Older pages read a `--color-*` vocabulary. These are declared on both the
+   root and the deep scope: a custom property that references another is
+   resolved where it's declared, so without the `.theme-deep` half an alias
+   would keep the ivory value inside a dark band. */
+:root,
+.theme-deep {
+  --color-bg: var(--bg);
+  --color-bg-secondary: var(--bg-band);
+  --color-surface: var(--bg-raised);
+  --color-border: var(--border);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--body);
+  --color-ink-faint: var(--muted);
+  --color-green: var(--ink);
+  --color-yellow: var(--muted);
+}
+
+/* ── Deep scope ──
+   Re-defines the tokens rather than restyling components. Anything placed
+   inside a `.theme-deep` element — headings, body copy, `.btn`, cards,
+   tags, the nav — reads ivory-on-green with no per-component dark variant.
+   `.btn` is the clearest case: its fill is `--ink` and its label `--bg`,
+   so in here it becomes the ivory button with a green label that the
+   reference hero uses. */
+.theme-deep {
+  --bg: #10231b;
+  --bg-raised: #183228;
+  --bg-band: #142b22;
+  --panel: #183228;
+  --panel-sage: #1b372c;
+  --ink: #f2efe7;
+  --ink-hover: #ffffff;
+  --body: #c5cec7;
+  --muted: #98a89e;
+  --muted-2: #98a89e;
+  --rule: #2a4338;
+  --rule-2: #2a4338;
+  --border: #2a4338;
+  --border-strong: #4d6559;
+  --divider: #2a4338;
+  --numeral: #c29a79;
+  background-color: var(--bg);
+  color: var(--body);
 }
 
 @theme inline {
-  --color-green: var(--color-green);
-  --color-yellow: var(--color-yellow);
-  --color-bg: var(--color-bg);
-  --color-bg-secondary: var(--color-bg-secondary);
-  --color-ink: var(--color-ink);
-  --color-ink-muted: var(--color-ink-muted);
-  --color-ink-faint: var(--color-ink-faint);
-  --color-surface: var(--color-surface);
-  --color-border: var(--color-border);
+  --color-bg: var(--bg);
+  --color-bg-raised: var(--bg-raised);
+  --color-bg-band: var(--bg-band);
+  --color-bg-secondary: var(--bg-band);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
+  --color-muted-2: var(--muted-2);
+  --color-rule: var(--rule);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-divider: var(--divider);
+  --color-numeral: var(--numeral);
+  --color-deep: var(--deep);
+  --color-surface: var(--bg-raised);
+  --color-ink-muted: var(--body);
+  --color-ink-faint: var(--muted);
+  --color-green: var(--ink);
+  --color-yellow: var(--muted);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
+
+  /* ── One container radius ──
+     Every step of Tailwind's radius scale resolves to the same soft 8px, so
+     the `rounded-lg`/`rounded-2xl` mix inherited from older pages lands on a
+     single corner. `rounded-full` is a literal value, not a scale lookup, so
+     pills and circular buttons are untouched. */
+  --radius-xs: 8px;
+  --radius-sm: 8px;
+  --radius-md: 8px;
+  --radius-lg: 8px;
+  --radius-xl: 8px;
+  --radius-2xl: 8px;
+  --radius-3xl: 8px;
+  --radius-4xl: 8px;
+
+  /* ── No drop shadows ── */
+  --shadow-2xs: none;
+  --shadow-xs: none;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-xl: none;
+  --shadow-2xl: none;
+  --inset-shadow-2xs: none;
+  --inset-shadow-xs: none;
+  --inset-shadow-sm: none;
 }
 
-* {
-  box-sizing: border-box;
+/* ── Base layer ──
+   Element defaults sit below the component layer. Left unlayered they
+   outrank it — `a { color: inherit }` once beat `.btn`'s label colour and
+   made the nav button unreadable. Order: base < components < utilities. */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--body);
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  /* Arbitrary radii (`rounded-[2rem]`) bypass the scale, so they're brought
+     onto the one container radius here too. */
+  [class*="rounded-["]:not([class*="rounded-full"]) {
+    border-radius: var(--radius) !important;
+  }
+
+  /* Prata ships at one weight; faux-bolding it is out, so headings are
+     pinned to 400 whatever utility class sits on them. */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 400 !important;
+    color: var(--ink);
+    text-wrap: balance;
+    letter-spacing: 0;
+  }
+
+  h1 {
+    font-size: clamp(46px, 5.6vw, 80px);
+    line-height: 1.02;
+  }
+
+  h2 {
+    font-size: clamp(30px, 3vw, 40px);
+    line-height: 1.15;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
-}
+@layer components {
+  /* ── Labels ── */
+  .eyebrow {
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
 
-body {
-  background: var(--color-bg);
-  color: var(--color-ink);
-  font-family: var(--font-body), sans-serif;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
+  /* "CASE STUDY ——" — eyebrow trailed by a short rule. The rule is an
+     inline box rather than a flex item so it follows the last word when a
+     long eyebrow wraps on a phone, instead of floating off to the right. */
+  .eyebrow-rule::after {
+    content: "";
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    margin-left: 14px;
+    vertical-align: middle;
+    background: var(--border-strong);
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+  .meta {
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+  }
 
-img {
-  max-width: 100%;
-  display: block;
-}
+  .lead {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--body);
+    max-width: 34em;
+  }
 
-/* Three container widths — pick per section, don't force everything into one.
-   Reading: pure prose, no companion image. Content (.wrap): the default,
-   most sections. Full: collages/full-bleed moments that should feel like
-   they escape the grid rather than sit inside a column. */
-.wrap-reading {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 0 clamp(1.5rem, 5vw, 4rem);
-}
+  /* ── Layout ── */
+  .wrap,
+  .wrap-reading,
+  .wrap-full {
+    max-width: var(--wrap-max);
+    margin: 0 auto;
+    padding-inline: var(--wrap-pad);
+  }
 
-.wrap {
-  max-width: var(--wrap-max);
-  margin: 0 auto;
-  padding: 0 clamp(1.5rem, 5vw, 4rem);
-}
+  .wrap-reading {
+    max-width: 760px;
+  }
 
-.wrap-full {
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 0 clamp(1rem, 3vw, 2.5rem);
-}
+  .band {
+    background: var(--bg-band);
+  }
 
-h1,
-h2,
-h3 {
-  font-family: var(--font-display), serif;
-  text-wrap: balance;
-}
+  .section {
+    padding-block: clamp(56px, 6vw, 88px);
+  }
 
-p {
-  text-wrap: pretty;
-}
+  .section-divided {
+    border-top: 1px solid var(--rule);
+  }
 
-/* ── Liquid glass ──
-   Translucent, blurred surfaces with a soft top sheen and hairline edge,
-   used purposefully on floating/interactive chrome (nav, buttons, chips,
-   the chat panel) — never on the editorial project rows, which stay flat
-   per their own spec. */
-.glass {
-  background: rgba(20, 20, 20, 0.6);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 8px 32px rgba(0, 0, 0, 0.28);
-}
+  .hairline {
+    height: 1px;
+    background: var(--rule);
+    border: 0;
+  }
 
-.glass-strong {
-  background: rgba(20, 20, 20, 0.72);
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 16px 48px rgba(0, 0, 0, 0.36);
-}
+  /* ── Numbered sections ──
+     The case-study rhythm: a hairline, then a tan numeral beside an
+     eyebrow, a serif title and a short block of copy, with the visual in a
+     wider column to the right. */
+  .sec {
+    padding-block: clamp(48px, 5.5vw, 76px);
+  }
 
-.glass-nav {
-  background: rgba(14, 14, 14, 0.7);
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
-}
+  .sec-divided {
+    border-top: 1px solid var(--rule);
+  }
 
-/* The open mobile menu sits over live page content, so it needs more
-   backing than the slim nav bar — at 60% the text behind it bled through
-   and the links were hard to read. */
-.glass-menu {
-  background: rgba(14, 14, 14, 0.94);
-  backdrop-filter: blur(28px) saturate(140%);
-  -webkit-backdrop-filter: blur(28px) saturate(140%);
-}
+  .sec-grid {
+    display: grid;
+    gap: 40px;
+  }
 
-/* ── Collage design system ──
-   Ramya's "Design System / Version A": Indian ephemera, textiles and field
-   notes. Palette, textures and pattern system live here; typography comes
-   from the Bodoni/Manrope/Caveat stack wired up in layout.tsx. Everything
-   is scoped to .collage so none of it leaks into the dark case-study
-   pages, which still run the original green/yellow system. */
-.collage {
-  /* 01 — Colour palette (exact values from the spec sheet) */
-  --paper: #f5ebdd;
-  --ink: #1d1b18;
-  --deep-green: #24483b;
-  --vermilion: #a93427;
-  --indigo: #394477;
-  --turmeric: #d99a32;
-  --peacock: #3f7770;
-  --rose: #c9827f;
-  --gold: #bb8a3b;
-  --muted-sand: #e6d6bf;
+  @media (min-width: 900px) {
+    .sec-grid {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      column-gap: 64px;
+      align-items: start;
+    }
+  }
 
-  /* derived, for text hierarchy on paper */
-  --ink-soft: rgba(29, 27, 24, 0.72);
-  --ink-faint: rgba(29, 27, 24, 0.48);
-  --hairline: rgba(29, 27, 24, 0.18);
+  .sec-head {
+    display: grid;
+    grid-template-columns: 60px minmax(0, 1fr);
+  }
 
-  background-color: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-body-collage), system-ui, sans-serif;
+  .numeral {
+    font-family: var(--font-display), Georgia, serif;
+    font-size: clamp(32px, 3.2vw, 42px);
+    line-height: 1;
+    color: var(--numeral);
+  }
 
-  /* T1 Paper Grain — the always-on base texture. Kept very low contrast:
-     "use textures sparingly for depth, not distraction". */
-  background-image:
-    radial-gradient(circle at 18% 26%, rgba(169, 52, 39, 0.03) 0 1px, transparent 1px),
-    radial-gradient(circle at 72% 58%, rgba(63, 119, 112, 0.03) 0 1px, transparent 1px),
-    radial-gradient(circle at 44% 84%, rgba(29, 27, 24, 0.025) 0 1px, transparent 1px);
-  background-size: 130px 130px, 180px 180px, 100px 100px;
-}
+  .sec-title {
+    margin-top: 12px;
+    font-size: clamp(27px, 2.7vw, 36px);
+    line-height: 1.18;
+    max-width: 17em;
+  }
 
-/* 02 — Typography. The global `h1,h2,h3 { font-family: var(--font-display) }`
-   rule sets Fraunces on every heading, and an element selector beats the
-   utility class on these headings — so the collage display face has to be
-   asserted here or headings silently fall back to the dark system's serif. */
-.collage h1,
-.collage h2,
-.collage h3 {
-  font-family: var(--font-display-collage), serif;
-}
+  .sec-copy {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
 
-/* 03 — Textures. T1 is on .collage itself; these are the opt-in layers. */
-.tex-handmade {
-  background-color: var(--muted-sand);
-  background-image:
-    repeating-linear-gradient(102deg, rgba(29, 27, 24, 0.022) 0 2px, transparent 2px 5px),
-    repeating-linear-gradient(8deg, rgba(29, 27, 24, 0.018) 0 3px, transparent 3px 7px);
-}
-.tex-vintage-print {
-  background-color: var(--paper);
-  background-image: radial-gradient(circle, rgba(29, 27, 24, 0.07) 0.5px, transparent 0.6px);
-  background-size: 4px 4px;
-}
-.tex-newsprint {
-  background-color: #efe7d7;
-  background-image: repeating-linear-gradient(180deg, rgba(29, 27, 24, 0.05) 0 1px, transparent 1px 6px);
-}
+  .sec-copy p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--body);
+    max-width: 36em;
+  }
 
-/* 04 — Pattern system. C (micro) is the safe default for large areas;
-   A/B/D are accents for borders, blocks and dividers. */
-.pat-micro {
-  background-image: radial-gradient(circle, rgba(169, 52, 39, 0.16) 1px, transparent 1.2px);
-  background-size: 14px 14px;
-}
-.pat-block {
-  background-image:
-    repeating-linear-gradient(45deg, rgba(36, 72, 59, 0.14) 0 6px, transparent 6px 12px),
-    repeating-linear-gradient(-45deg, rgba(169, 52, 39, 0.12) 0 6px, transparent 6px 12px);
-}
+  @media (max-width: 640px) {
+    .sec-head {
+      grid-template-columns: 46px minmax(0, 1fr);
+    }
+  }
 
-/* Aged card surface — the base for project cards and note panels */
-.collage-card {
-  background: var(--muted-sand);
-  border: 1px solid var(--hairline);
-  box-shadow: 2px 3px 0 rgba(29, 27, 24, 0.07);
-}
+  /* ── Automatic numbering for long case studies ──
+     PM Dashboard, Raahi, Wellnut and Invisible Impacts each carry 9–20
+     sections written as an eyebrow followed by a heading. Rather than hand-
+     number ~40 headers, any block whose direct children are `.eyebrow` then
+     an h2/h3 gets the next numeral in the page's sequence. Sub-labels (an
+     eyebrow followed by a paragraph) aren't matched, and nothing inside a
+     deep band is numbered. */
+  .auto-number {
+    counter-reset: sec;
+  }
 
-/* 07 — Stamp system: perforated postage edge */
-.stamp-edge {
-  background: var(--paper);
-  padding: 9px;
-  filter: drop-shadow(2px 3px 0 rgba(29, 27, 24, 0.1));
-  -webkit-mask: radial-gradient(circle at 5px 5px, transparent 4px, #000 4.5px) -5px -5px / 10px 10px round;
-  mask: radial-gradient(circle at 5px 5px, transparent 4px, #000 4.5px) -5px -5px / 10px 10px round;
-}
+  .auto-number :where(div, section):not(.theme-deep, .theme-deep *):has(> .eyebrow + :is(h2, h3)) {
+    counter-increment: sec;
+    position: relative;
+    padding-left: 60px;
+  }
 
-/* 10 — Image treatment: masking tape strip */
-.tape {
-  position: absolute;
-  width: 88px;
-  height: 24px;
-  background: rgba(214, 190, 140, 0.6);
-  border-left: 1px dashed rgba(29, 27, 24, 0.16);
-  border-right: 1px dashed rgba(29, 27, 24, 0.16);
-  box-shadow: 0 1px 2px rgba(29, 27, 24, 0.12);
-}
+  .auto-number :where(div, section):not(.theme-deep, .theme-deep *):has(> .eyebrow + :is(h2, h3))::before {
+    content: counter(sec, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: -3px;
+    font-family: var(--font-display), Georgia, serif;
+    font-size: clamp(30px, 3vw, 40px);
+    line-height: 1;
+    color: var(--numeral);
+  }
 
-/* 08 — Dashed divider rule */
-.rule-ornament {
-  height: 1px;
-  background: repeating-linear-gradient(90deg, var(--hairline) 0 6px, transparent 6px 12px);
-}
+  @media (max-width: 640px) {
+    .auto-number :where(div, section):not(.theme-deep, .theme-deep *):has(> .eyebrow + :is(h2, h3)) {
+      padding-left: 46px;
+    }
+  }
 
-/* Nav over the cream homepage. The global nav is built for dark pages, so
-   its ink colours invert here — overrides need !important because the
-   utility classes set colour directly on each element. */
-.nav-paper a {
-  color: #1d1b18 !important;
-}
-.nav-paper a[href*="linkedin"] {
-  color: #f5ebdd !important;
-}
-.nav-paper button span {
-  background-color: #1d1b18 !important;
-}
-.nav-paper nav[aria-label="Mobile"] {
-  background: rgba(245, 235, 221, 0.97) !important;
-  border-color: rgba(29, 27, 24, 0.18) !important;
+  /* ── Buttons ──
+     Compact pills. `.btn` is filled, `.btn-outline` the secondary. Both read
+     their colours from tokens, so inside `.theme-deep` the filled button
+     turns ivory and the outline turns light without a separate class. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0 22px;
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--bg);
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .btn:hover {
+    background: var(--ink-hover);
+    border-color: var(--ink-hover);
+  }
+
+  .btn.btn-outline {
+    color: var(--ink);
+    background: transparent;
+    border-color: color-mix(in srgb, var(--ink) 38%, transparent);
+  }
+
+  .btn.btn-outline:hover {
+    border-color: var(--ink);
+    background: color-mix(in srgb, var(--ink) 7%, transparent);
+  }
+
+  .btn-sm {
+    min-height: 38px;
+    padding: 0 16px;
+    font-size: 13px;
+  }
+
+  .btn svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+  }
+
+  .arrow-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+    line-height: 1;
+    color: var(--ink);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .group:hover .arrow-btn,
+  .arrow-btn:hover {
+    color: var(--bg);
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+
+  /* ── Surfaces ── */
+  .card {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+
+  .card:hover {
+    border-color: var(--border-strong);
+  }
+
+  .panel {
+    background: var(--panel);
+    border-radius: var(--radius);
+  }
+
+  .panel-sage {
+    background: var(--panel-sage);
+    border-radius: var(--radius);
+  }
+
+  .media {
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--bg-raised);
+  }
+
+  .video-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #0b1712;
+  }
+
+  .video-frame video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #0b1712;
+  }
+
+  .micro-rule {
+    width: 22px;
+    height: 1px;
+    background: var(--border-strong);
+    border: 0;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--body);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+  }
+
+  /* Filled tag — used sparingly, e.g. the three discipline tags in a hero. */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 13px;
+    font-size: 12px;
+    line-height: 1.2;
+    color: var(--body);
+    background: var(--panel);
+    border-radius: 999px;
+  }
+
+  /* ── Glass, retired ──
+     Kept as class names for older markup; they render the flat panel. */
+  .glass,
+  .glass-strong,
+  .glass-menu {
+    background: var(--panel);
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    color: var(--body);
+  }
+
+  .glass-nav {
+    background: var(--bg);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+  }
+
+  /* ── Icons ── line icons, 24×24 viewBox, 1.4 stroke. */
+  .icon-line {
+    width: 22px;
+    height: 22px;
+    stroke: var(--ink);
+    stroke-width: 1.4;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex: none;
+  }
+
+  .icon-solid {
+    width: 21px;
+    height: 21px;
+    fill: var(--ink);
+  }
 }
 
 /* ── Editorial grid: collapse to one column on mobile ──
-   EditorialLayout and GalleryLayout are 12-column canvases, and call
-   sites place children with inline `style={{ gridColumn: "1 / 7" }}`.
-   Inline styles outrank utility classes, so a desktop placement would
-   otherwise survive onto a 375px screen and squeeze a paragraph into a
-   ~165px column. Below md every child spans the full row instead, which
-   fixes all ~184 placements at once rather than per call site. The
-   stagger offsets (negative/positive marginTop) only make sense in a
-   collage, so they're zeroed here too — stacked cards shouldn't overlap. */
+   EditorialLayout and GalleryLayout place children with inline
+   `gridColumn` styles, which outrank utilities; below md every child spans
+   the full row instead, and collage stagger offsets are zeroed. */
 @media (max-width: 767px) {
   .ds-grid > * {
     grid-column: 1 / -1 !important;
     margin-top: 0 !important;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --wrap-pad: 22px;
   }
 }
 

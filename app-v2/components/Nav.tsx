@@ -2,12 +2,16 @@
 
 /**
  * Design-system component: Navigation.
- * Why this exists: global chrome, rendered once in app/layout.tsx — every
- * page shares it, so case studies never redefine navigation. Transparent
- * over a hero, glass-nav once scrolled or the mobile menu is open. Lives
- * outside components/ds/ (rather than duplicated in there) because it's
- * wired to the real site's routes and layout, not a standalone primitive —
- * see components/ds/README.md for how it fits the catalog.
+ * Global chrome, rendered once in app/layout.tsx.
+ *
+ * The nav reads which surface it's floating over. While it overlaps any
+ * element marked `data-nav="dark"` (a DeepBand — page heroes and closings)
+ * it takes the `.theme-deep` scope, which flips its tokens to ivory text on
+ * deep green; over ivory content it's ink on ivory. The hairline appears
+ * once the page has scrolled.
+ *
+ * On case studies the right-hand action is "Back to projects" rather than
+ * "Get in touch", matching the reference.
  */
 
 import { useEffect, useState } from "react";
@@ -17,51 +21,53 @@ import Logo from "./Logo";
 import { trackClick } from "@/lib/analyticsClient";
 
 const links = [
-  { href: "/#work", label: "Projects" },
+  { href: "/#work", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/beyond-the-screen", label: "Beyond the Screen" },
   { href: "/resume.pdf", label: "Resume", external: true },
 ];
 
-export default function Nav({ hasLogo }: { hasLogo: boolean }) {
+export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [onDark, setOnDark] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  const isCaseStudy = pathname?.startsWith("/projects/") ?? false;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    const probe = () => {
+      setScrolled(window.scrollY > 40);
+      // Sample the vertical middle of the nav bar against every dark band.
+      const y = 38;
+      let dark = false;
+      document.querySelectorAll<HTMLElement>('[data-nav="dark"]').forEach((band) => {
+        const r = band.getBoundingClientRect();
+        if (r.top <= y && r.bottom >= y) dark = true;
+      });
+      setOnDark(dark);
+    };
+    probe();
+    window.addEventListener("scroll", probe, { passive: true });
+    window.addEventListener("resize", probe);
+    return () => {
+      window.removeEventListener("scroll", probe);
+      window.removeEventListener("resize", probe);
+    };
+  }, [pathname]);
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${isHome ? "nav-paper " : ""}${
-        // The homepage is the cream collage design, so the nav takes a paper
-        // treatment there instead of the dark glass used on every other route.
-        isHome
-          ? scrolled || open
-            ? "border-b"
-            : "border-b border-transparent"
-          : scrolled || open
-            ? "glass-nav border-b border-white/10"
-            : "bg-transparent border-b border-transparent"
-      }`}
+      className={`fixed top-0 inset-x-0 z-50 ${onDark ? "theme-deep" : ""}`}
       style={{
         height: "var(--nav-h)",
-        ...(isHome && (scrolled || open)
-          ? { backgroundColor: "rgba(244,237,224,0.92)", backdropFilter: "blur(12px)", borderColor: "rgba(36,31,26,0.18)" }
-          : null),
+        backgroundColor: "var(--bg)",
+        borderBottom: `1px solid ${scrolled || open ? "var(--rule)" : "transparent"}`,
+        transition: "background-color 0.3s ease, border-color 0.3s ease",
       }}
     >
       <div className="wrap h-full flex items-center justify-between">
-        {/* The brand mark is a gold wordmark on a black canvas with generous
-            padding, so it renders a touch larger on mobile to stay legible
-            against the dark header — same asset at both breakpoints. */}
         <Link href="/" onClick={() => setOpen(false)} aria-label="Ramya Yerramilli — home">
-          <Logo hasLogo={hasLogo} imageClassName="w-12 h-12 md:w-11 md:h-11 rounded-lg object-cover" />
+          <Logo size={28} />
         </Link>
 
         <nav aria-label="Primary" className="hidden md:block">
@@ -69,38 +75,38 @@ export default function Nav({ hasLogo }: { hasLogo: boolean }) {
             {links.map((l) => {
               const active = !l.external && pathname?.startsWith(l.href);
               return (
-                <li key={l.href} className="flex flex-col items-center gap-1.5">
+                <li key={l.href}>
                   <Link
                     href={l.href}
                     target={l.external ? "_blank" : undefined}
                     rel={l.external ? "noopener" : undefined}
                     onClick={() => l.external && trackClick(l.label)}
-                    className={`text-[0.72rem] font-semibold tracking-[0.14em] uppercase transition-colors hover:text-[var(--color-green)] ${
-                      active ? "text-[var(--color-ink)]" : "text-[var(--color-ink-muted)]"
-                    }`}
+                    className="text-[14px] transition-colors hover:text-[var(--ink)]"
+                    style={{ color: active ? "var(--ink)" : "var(--body)" }}
                   >
                     {l.label}
                   </Link>
-                  <span
-                    className={`w-1 h-1 rounded-full bg-[var(--color-green)] transition-opacity ${
-                      active ? "opacity-100" : "opacity-0"
-                    }`}
-                  />
                 </li>
               );
             })}
           </ul>
         </nav>
 
-        <a
-          href="https://www.linkedin.com/in/ramyays"
-          target="_blank"
-          rel="noopener"
-          onClick={() => trackClick("LinkedIn")}
-          className="hidden md:inline-flex items-center gap-2 rounded-full bg-[var(--color-green)] px-5 py-2 text-[0.7rem] font-semibold tracking-[0.1em] uppercase text-black transition-transform hover:-translate-y-0.5"
-        >
-          Contact ↗
-        </a>
+        {isCaseStudy ? (
+          <Link href="/#work" className="btn btn-outline btn-sm hidden md:inline-flex">
+            <span aria-hidden>&#8592;</span> Back to projects
+          </Link>
+        ) : (
+          <a
+            href="https://www.linkedin.com/in/ramyays"
+            target="_blank"
+            rel="noopener"
+            onClick={() => trackClick("LinkedIn")}
+            className="btn btn-sm hidden md:inline-flex"
+          >
+            Get in touch <span aria-hidden>&#8594;</span>
+          </a>
+        )}
 
         <button
           type="button"
@@ -110,20 +116,35 @@ export default function Nav({ hasLogo }: { hasLogo: boolean }) {
           className="md:hidden flex flex-col gap-[5px] p-2"
         >
           <span
-            className={`block h-[1.5px] w-[22px] bg-[var(--color-ink)] transition-transform ${open ? "translate-y-[6.5px] rotate-45" : ""}`}
+            className={`block h-[1.5px] w-[22px] bg-[var(--ink)] transition-transform ${open ? "translate-y-[6.5px] rotate-45" : ""}`}
           />
           <span
-            className={`block h-[1.5px] w-[22px] bg-[var(--color-ink)] transition-opacity ${open ? "opacity-0" : ""}`}
+            className={`block h-[1.5px] w-[22px] bg-[var(--ink)] transition-opacity ${open ? "opacity-0" : ""}`}
           />
           <span
-            className={`block h-[1.5px] w-[22px] bg-[var(--color-ink)] transition-transform ${open ? "-translate-y-[6.5px] -rotate-45" : ""}`}
+            className={`block h-[1.5px] w-[22px] bg-[var(--ink)] transition-transform ${open ? "-translate-y-[6.5px] -rotate-45" : ""}`}
           />
         </button>
       </div>
 
       {open && (
-        <nav aria-label="Mobile" className="md:hidden glass-menu border-t border-white/10">
-          <ul className="wrap flex flex-col gap-1 py-4">
+        <nav
+          aria-label="Mobile"
+          className="md:hidden"
+          style={{ backgroundColor: "var(--bg)", borderTop: "1px solid var(--rule)" }}
+        >
+          <ul className="wrap flex flex-col py-3">
+            {isCaseStudy && (
+              <li>
+                <Link
+                  href="/#work"
+                  onClick={() => setOpen(false)}
+                  className="block py-3 text-[15px] text-[var(--body)]"
+                >
+                  <span aria-hidden>&#8592;</span> Back to projects
+                </Link>
+              </li>
+            )}
             {links.map((l) => (
               <li key={l.href}>
                 <Link
@@ -134,13 +155,13 @@ export default function Nav({ hasLogo }: { hasLogo: boolean }) {
                     setOpen(false);
                     if (l.external) trackClick(l.label);
                   }}
-                  className="block py-3 text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-ink)]"
+                  className="block py-3 text-[15px] text-[var(--body)]"
                 >
                   {l.label}
                 </Link>
               </li>
             ))}
-            <li>
+            <li className="pt-3 pb-1">
               <a
                 href="https://www.linkedin.com/in/ramyays"
                 target="_blank"
@@ -149,9 +170,9 @@ export default function Nav({ hasLogo }: { hasLogo: boolean }) {
                   setOpen(false);
                   trackClick("LinkedIn");
                 }}
-                className="block py-3 text-sm font-semibold tracking-[0.1em] uppercase text-[var(--color-green)]"
+                className="btn btn-sm"
               >
-                Contact ↗
+                Get in touch <span aria-hidden>&#8594;</span>
               </a>
             </li>
           </ul>

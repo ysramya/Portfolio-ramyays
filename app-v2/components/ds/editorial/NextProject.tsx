@@ -46,9 +46,8 @@ export default function NextProject({
           src={image}
           alt={imageAlt}
           fill
-          className="object-cover opacity-40 md:opacity-25 md:group-hover:opacity-50 transition-opacity duration-700 ease-out scale-105 md:group-hover:scale-100 [transition-property:opacity,transform] [transition-duration:700ms]"
+          className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-[var(--color-bg)]/60 to-[var(--color-bg)]/20" />
       </div>
 
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center py-24">
@@ -57,12 +56,12 @@ export default function NextProject({
           whileInView={{ y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: motionTokens.duration.base }}
-          className="rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.22em] uppercase mb-6"
+          className="rounded-full px-4 py-2 text-[12px] font-medium tracking-[0.22em] uppercase mb-6"
           style={tintedGlass(accent)}
         >
           <span style={{ color: accent }}>{label}</span>
         </motion.span>
-        <h2 className="font-[family-name:var(--font-display)] font-semibold leading-[0.95] text-[clamp(2.5rem,7vw,5.5rem)]">
+        <h2 className="font-[family-name:var(--font-display)] leading-[0.95] text-[clamp(2.5rem,7vw,5.5rem)]">
           {projectName}
           <span
             className="block h-[2px] w-0 group-hover:w-full mx-auto mt-4 transition-[width] duration-500 ease-out"

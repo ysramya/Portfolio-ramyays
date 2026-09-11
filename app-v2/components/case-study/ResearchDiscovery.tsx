@@ -23,13 +23,13 @@ export default function ResearchDiscovery({
     <SectionShell eyebrow="Research & Discovery" title={title} lead={lead}>
       <Timeline items={phases} />
       <div className="mt-14">
-        <h3 className="font-[family-name:var(--font-display)] text-lg font-semibold">
+        <h3 className="font-[family-name:var(--font-display)] text-lg">
           Research method
         </h3>
         <CardGrid cards={methods} />
       </div>
       <div className="mt-14">
-        <h3 className="font-[family-name:var(--font-display)] text-lg font-semibold">
+        <h3 className="font-[family-name:var(--font-display)] text-lg">
           What the research surfaced
         </h3>
         <p className="mt-2 text-sm text-[var(--color-ink-muted)] max-w-[68ch]">

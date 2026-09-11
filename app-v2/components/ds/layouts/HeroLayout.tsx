@@ -1,18 +1,14 @@
-"use client";
-
 import Image from "next/image";
-import { motion } from "framer-motion";
 import type { ReactNode } from "react";
-import { motion as motionTokens } from "../tokens";
+import DeepBand from "../DeepBand";
 
 /**
- * HeroLayout — 100vw, full-bleed image with a grid-positioned text overlay.
+ * HeroLayout — case-study opener on the deep-green band: the title block on
+ * the left, the project's lead image on the right in a soft-cornered frame.
  *
- * No max-width at all: the image owns the entire viewport. Content sits in
- * a 2-row grid (`1fr auto`) so it's pinned to the bottom by default, and
- * the title is allowed to overlap the image edge rather than sitting in a
- * padded box — that overlap is what makes an opener read as a composed
- * page instead of a header bar.
+ * The `children` API is unchanged, so the case studies using it keep passing
+ * the same title block; the band's `.theme-deep` scope turns that content
+ * ivory-on-green without edits.
  */
 export default function HeroLayout({
   image,
@@ -24,29 +20,23 @@ export default function HeroLayout({
   children: ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden" style={{ minHeight: "92dvh" }}>
-      <motion.div
-        initial={{ scale: 1.08 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 1.4, ease: motionTokens.ease }}
-        className="absolute inset-0"
-      >
-        <Image src={image} alt={imageAlt} fill priority className="object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/40" />
-      </motion.div>
-
+    <DeepBand>
       <div
-        className="relative z-10 grid wrap"
-        style={{
-          minHeight: "92dvh",
-          gridTemplateRows: "1fr auto",
-          paddingTop: "calc(var(--nav-h) + 2rem)",
-          paddingBottom: "4rem",
-        }}
+        className="wrap grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14"
+        style={{ paddingTop: "calc(var(--nav-h) + 40px)", paddingBottom: 64 }}
       >
-        <div />
-        {children}
+        <div>{children}</div>
+        <div className="media relative w-full" style={{ aspectRatio: "4 / 3" }}>
+          <Image
+            src={image}
+            alt={imageAlt}
+            fill
+            priority
+            sizes="(max-width: 1024px) 92vw, 560px"
+            className="object-cover"
+          />
+        </div>
       </div>
-    </section>
+    </DeepBand>
   );
 }

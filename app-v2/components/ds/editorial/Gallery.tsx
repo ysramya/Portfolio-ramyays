@@ -64,7 +64,7 @@ export default function Gallery({
               ease: motionTokens.ease,
               delay: 0.15 + i * 0.1,
             }}
-            className={`relative mt-4 md:mt-0 md:absolute aspect-[4/3] w-full md:w-[36%] overflow-hidden rounded-2xl border-4 border-[var(--color-bg)] shadow-2xl ${
+            className={`relative mt-4 md:mt-0 md:absolute aspect-[4/3] w-full md:w-[36%] overflow-hidden rounded-2xl border-4 border-[var(--color-bg)] ${
               i === 0
                 ? "md:-bottom-10 md:left-[6%]"
                 : "md:-top-10 md:right-[4%]"

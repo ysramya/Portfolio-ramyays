@@ -1,70 +1,72 @@
-/**
- * Design-system component: Footer.
- * Why this exists: global chrome, rendered once in app/layout.tsx. Same
- * reasoning as Nav.tsx — wired to real routes/contact links rather than a
- * standalone primitive, documented here rather than duplicated under
- * components/ds/. See components/ds/README.md for the full catalog.
- */
-
 "use client";
 
-import { usePathname } from "next/navigation";
+/**
+ * Design-system component: Footer — design-system.md §4.
+ *
+ * Left cluster: wordmark → 44px vertical divider → name + role stack.
+ * Right cluster: 21px solid social icons at gap 22px → 24px divider →
+ * location. Wraps on narrow viewports; padding 36px 32px 44px.
+ *
+ * It renders on every route now. The homepage used to close with its own
+ * collage footer band and suppressed this one; that band is gone with the
+ * collage system, so there's a single footer again.
+ */
+
 import Logo from "./Logo";
 import { trackClick } from "@/lib/analyticsClient";
 
-export default function Footer({ hasLogo }: { hasLogo: boolean }) {
-  // The collage homepage closes with its own footer band (quote, current
-  // thinking, contact), so the dark global footer would double up and clash.
-  const pathname = usePathname();
-  if (pathname === "/") return null;
+const socials = [
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/ramyays",
+    path: "M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.46-2.2 2.96V21h-4V9Z",
+  },
+  {
+    label: "Email",
+    href: "mailto:ys.ramya@gmail.com",
+    path: "M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v.4l-10 5.9-10-5.9v-.4Zm0 2.7V18.5A1.5 1.5 0 0 0 3.5 20h17a1.5 1.5 0 0 0 1.5-1.5V8.2l-9.49 5.6a1 1 0 0 1-1.02 0L2 8.2Z",
+  },
+];
 
+export default function Footer() {
   return (
-    <footer className="border-t border-[var(--color-border)] py-12">
-      <div className="wrap flex flex-wrap items-center justify-between gap-8">
-        <div>
-          <Logo hasLogo={hasLogo} className="text-xl font-[family-name:var(--font-display)] font-semibold" />
-          <p className="mt-2 text-sm text-[var(--color-ink-muted)] max-w-[340px]">
-            UX Researcher working on Human-AI Interaction and Responsible AI.
-          </p>
-        </div>
-
-        <div className="flex flex-col items-start sm:items-end gap-3">
-          <p className="text-xs text-[var(--color-ink-faint)]">Let&rsquo;s connect</p>
-          <div className="flex items-center gap-3">
-            <a
-              href="https://www.linkedin.com/in/ramyays"
-              target="_blank"
-              rel="noopener"
-              aria-label="LinkedIn"
-              onClick={() => trackClick("LinkedIn")}
-              className="glass w-9 h-9 rounded-full flex items-center justify-center text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-green)]"
-            >
-              in
-            </a>
-            <a
-              href="mailto:ys.ramya@gmail.com"
-              aria-label="Email"
-              onClick={() => trackClick("Email")}
-              className="glass w-9 h-9 rounded-full flex items-center justify-center text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-yellow)]"
-            >
-              ✉
-            </a>
+    <footer style={{ borderTop: "1px solid var(--rule)" }}>
+      <div
+        className="mx-auto flex flex-wrap items-center justify-between gap-x-10 gap-y-8"
+        style={{ maxWidth: "var(--wrap-max)", padding: "36px var(--wrap-pad) 44px" }}
+      >
+        <div className="flex items-center gap-5">
+          <Logo size={28} />
+          <span aria-hidden style={{ width: 1, height: 44, background: "var(--divider)" }} />
+          <div>
+            <p className="text-[15px] text-[var(--ink)]">Ramya Yerramilli</p>
+            <p className="mt-1 text-[13px] text-[var(--muted-2)]">
+              Product designer &amp; UX researcher
+            </p>
           </div>
         </div>
-      </div>
 
-      <div className="wrap mt-8 pt-6 border-t border-[var(--color-border)] flex flex-wrap items-center justify-between gap-4 text-xs text-[var(--color-ink-faint)]">
-        <div className="flex items-center gap-3">
-          <Logo hasLogo={hasLogo} className="text-sm font-[family-name:var(--font-display)] font-semibold" imageClassName="w-7 h-7 rounded-md object-cover" />
-          <span>© {new Date().getFullYear()} Ramya Yerramilli. All rights reserved.</span>
+        <div className="flex items-center gap-6">
+          <div className="flex items-center" style={{ gap: 22 }}>
+            {socials.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target={s.href.startsWith("http") ? "_blank" : undefined}
+                rel={s.href.startsWith("http") ? "noopener" : undefined}
+                aria-label={s.label}
+                onClick={() => trackClick(s.label)}
+                className="transition-opacity hover:opacity-60"
+              >
+                <svg viewBox="0 0 24 24" className="icon-solid" aria-hidden>
+                  <path d={s.path} />
+                </svg>
+              </a>
+            ))}
+          </div>
+          <span aria-hidden style={{ width: 1, height: 24, background: "var(--divider)" }} />
+          <p className="text-[13px] text-[var(--muted-2)]">Chicago, IL</p>
         </div>
-        <a
-          href="#top"
-          className="glass w-8 h-8 rounded-full flex items-center justify-center transition-colors hover:text-[var(--color-green)]"
-          aria-label="Back to top"
-        >
-          ↑
-        </a>
       </div>
     </footer>
   );

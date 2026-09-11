@@ -1,37 +1,48 @@
 import type { ProjectTheme } from "@/components/ds/tokens";
 
 /**
- * ASAP's editorial palette — warm neutrals, not Wellnut's night-sky
- * indigo/purple or Raahi's cool green. This project's own design system
- * (see section 06, "Calm by design") is explicitly a warm, non-stimulating
- * neutral palette with earthy amber accents — this reuses that same
- * register for the case-study page itself, rather than inventing a
- * separate portfolio-side identity.
+ * ASAP — mapped onto the portfolio design system (design-system.md).
+ *
+ * This was a dark, warm-neutral palette (near-black grounds, sand/ivory type,
+ * amber accents) with radial-gradient page washes. The system is a cream
+ * ground with one accent used only as the brush flourish, and no gradients
+ * (§6) — so the palette is *inverted* rather than deleted: keys that were
+ * dark grounds now resolve to the cream grounds, and keys that were light
+ * type now resolve to ink. Because the page inverted as a whole, call sites
+ * that used a key as a background and call sites that used it as text both
+ * stay correct without edits.
+ *
+ * The accent hues collapse to ink: the system forbids accent-coloured fills
+ * and accent text. The case study reads its colours from the page tokens instead.
  */
 export const asapPalette = {
-  black: "#070707",
-  charcoal: "#1C1916",
-  graphite: "#2B2620",
-  slate: "#8C8577",
-  sand: "#C9B79C",
-  beige: "#E4D4B8",
-  ivory: "#F4ECDD",
-  amber: "#D98E3C",
-  gold: "#E8B84B",
-  sage: "#8A9478", // very subtle secondary accent — used sparingly, never a primary highlight
+  // former grounds → cream surfaces
+  black: "var(--bg)",
+  charcoal: "var(--bg-raised)",
+  graphite: "var(--bg-band)",
+  // mid tone stays mid
+  slate: "var(--muted-2)",
+  // former light type → ink hierarchy
+  sand: "var(--body)",
+  beige: "var(--body)",
+  ivory: "var(--ink)",
+  // former accents → ink (no accent fills, no accent text)
+  amber: "var(--ink)",
+  gold: "var(--muted)",
+  sage: "var(--muted-2)",
 } as const;
 
-/** Gradient recipes — warm, dark-dominant, accent bleeding in only at the edges. */
+/** Gradients are out (§6). These resolve to flat system surfaces. */
 export const asapGradients = {
-  amberSand: `linear-gradient(135deg, ${asapPalette.amber}26 0%, ${asapPalette.sand}14 45%, ${asapPalette.black} 100%)`,
-  charcoalGraphite: `linear-gradient(180deg, ${asapPalette.graphite} 0%, ${asapPalette.black} 100%)`,
-  goldCharcoal: `linear-gradient(135deg, ${asapPalette.gold}22 0%, ${asapPalette.charcoal} 55%, ${asapPalette.black} 100%)`,
-  sageAmber: `linear-gradient(135deg, ${asapPalette.sage}14 0%, ${asapPalette.amber}18 60%, ${asapPalette.black} 100%)`,
-  page: `radial-gradient(ellipse 1300px 850px at 12% 0%, ${asapPalette.amber}1c 0%, transparent 60%), radial-gradient(ellipse 1000px 700px at 88% 25%, ${asapPalette.gold}14 0%, transparent 55%), radial-gradient(ellipse 900px 900px at 50% 92%, ${asapPalette.sand}10 0%, transparent 60%), ${asapPalette.black}`,
+  amberSand: "var(--bg-raised)",
+  charcoalGraphite: "var(--bg-band)",
+  goldCharcoal: "var(--bg-raised)",
+  sageAmber: "var(--bg-band)",
+  page: "var(--bg)",
 } as const;
 
 export const asapTheme: ProjectTheme = {
-  primary: asapPalette.sand,
-  secondary: asapPalette.black,
-  accent: asapPalette.amber,
+  primary: "var(--ink)",
+  secondary: "var(--bg-raised)",
+  accent: "var(--ink)",
 };

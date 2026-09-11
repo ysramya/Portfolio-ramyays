@@ -27,13 +27,13 @@ export default function FeatureShowcase({
     <Reveal className="wrap py-14 md:py-20">
       {eyebrow && (
         <p
-          className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase"
+          className="text-[12px] font-medium tracking-[0.22em] uppercase"
           style={{ color: accent }}
         >
           {eyebrow}
         </p>
       )}
-      <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-[clamp(1.8rem,3.4vw,2.6rem)] leading-tight max-w-[24ch]">
+      <h3 className="mt-3 font-[family-name:var(--font-display)] text-[clamp(1.8rem,3.4vw,2.6rem)] leading-tight max-w-[24ch]">
         {title}
       </h3>
       <p className="mt-4 text-[var(--color-ink-muted)] leading-relaxed max-w-[64ch]">

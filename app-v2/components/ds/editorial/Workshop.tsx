@@ -39,7 +39,7 @@ export default function Workshop({
   return (
     <section className="wrap py-20 md:py-28">
       <p
-        className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase mb-10"
+        className="text-[12px] font-medium tracking-[0.22em] uppercase mb-10"
         style={{ color: accent }}
       >
         {label}
@@ -53,7 +53,7 @@ export default function Workshop({
             whileInView={{ x: 0, rotate: img.rotate ?? (i % 2 === 0 ? -2 : 2) }}
             viewport={{ once: true, margin: "-10% 0px" }}
             transition={{ duration: motionTokens.duration.slow, ease: motionTokens.ease, delay: i * 0.08 }}
-            className="relative aspect-[4/3] w-full md:w-[38%] overflow-hidden rounded-xl border border-white/10 shadow-2xl md:-mr-8 md:[&:nth-child(even)]:mt-16"
+            className="relative aspect-[4/3] w-full md:w-[38%] overflow-hidden rounded-xl border border-[var(--rule)] md:-mr-8 md:[&:nth-child(even)]:mt-16"
           >
             <Image src={img.src} alt={img.alt} fill className="object-cover" />
           </motion.div>

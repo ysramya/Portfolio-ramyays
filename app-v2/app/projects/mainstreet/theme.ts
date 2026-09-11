@@ -1,37 +1,43 @@
 import type { ProjectTheme } from "@/components/ds/tokens";
 
 /**
- * PM Dashboard's palette — inherited directly from the dashboard itself
- * (see the real screenshot at public/img/mainstreet/dashboard.jpg), not
- * invented separately like Raahi/Wellnut/ASAP's portfolio-side identities.
- * Teal and olive are the two colors the actual Power BI report uses for
- * its pie chart and bar chart; slate/charcoal/sand echo its header bar and
- * tan client-tier tones. Analytical and executive — no gradients-as-mood.
+ * PM Dashboard — mapped onto the portfolio design system (design-system.md).
+ *
+ * The palette was inherited from the Power BI report itself (teal and olive
+ * are the report's own chart colours; slate/charcoal/sand echo its header and
+ * tier bars). Those colours are still visible where they belong — inside the
+ * dashboard screenshots. The page around them is the system's cream ground:
+ * no accent fills, no accent text (§1), no gradients (§6). Keys are inverted
+ * so existing call sites stay correct as either backgrounds or text.
  */
 export const mainstreetPalette = {
-  black: "#060706",
-  charcoal: "#181A19",
-  graphite: "#242624",
-  slate: "#4A5A61",
-  teal: "#5C93A5", // dashboard's own navy-teal pie slice, lightened for dark-mode legibility
-  emerald: "#5E8A4A", // dashboard's "A" tier bar green
-  olive: "#9DC65A", // dashboard's own pie/bar chart green — exact match
-  sand: "#C4A97A", // dashboard's "C" tier bar tan
-  beige: "#E8E2D3",
-  white: "#F5F3EE",
-  gold: "#C9A227", // very subtle — used sparingly, never a primary highlight
+  // former grounds → cream surfaces
+  black: "var(--bg)",
+  charcoal: "var(--bg-raised)",
+  graphite: "var(--bg-band)",
+  // mid tone stays mid
+  slate: "var(--muted-2)",
+  // former chart accents → ink hierarchy
+  teal: "var(--ink)",
+  emerald: "var(--muted)",
+  olive: "var(--muted)",
+  sand: "var(--muted-2)",
+  gold: "var(--muted)",
+  // former light type → ink
+  beige: "var(--body)",
+  white: "var(--ink)",
 } as const;
 
-/** Gradient recipes — dark-dominant, teal/olive bleeding in at the edges, never a "mood" gradient. */
+/** Gradients are out (§6). These resolve to flat system surfaces. */
 export const mainstreetGradients = {
-  tealCharcoal: `linear-gradient(135deg, ${mainstreetPalette.teal}20 0%, ${mainstreetPalette.graphite} 55%, ${mainstreetPalette.black} 100%)`,
-  oliveCharcoal: `linear-gradient(135deg, ${mainstreetPalette.olive}18 0%, ${mainstreetPalette.graphite} 55%, ${mainstreetPalette.black} 100%)`,
-  slateBlack: `linear-gradient(180deg, ${mainstreetPalette.graphite} 0%, ${mainstreetPalette.black} 100%)`,
-  page: `radial-gradient(ellipse 1300px 800px at 15% 0%, ${mainstreetPalette.teal}16 0%, transparent 60%), radial-gradient(ellipse 1000px 700px at 88% 30%, ${mainstreetPalette.olive}10 0%, transparent 55%), radial-gradient(ellipse 900px 900px at 50% 92%, ${mainstreetPalette.sand}0c 0%, transparent 60%), ${mainstreetPalette.black}`,
+  tealCharcoal: "var(--bg-raised)",
+  oliveCharcoal: "var(--bg-raised)",
+  slateBlack: "var(--bg-band)",
+  page: "var(--bg)",
 } as const;
 
 export const mainstreetTheme: ProjectTheme = {
-  primary: mainstreetPalette.slate,
-  secondary: mainstreetPalette.black,
-  accent: mainstreetPalette.teal,
+  primary: "var(--ink)",
+  secondary: "var(--bg-raised)",
+  accent: "var(--ink)",
 };

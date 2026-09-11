@@ -37,12 +37,12 @@ export default function InsightCards({
             style={{ borderTopColor: accent }}
           >
             <p
-              className="text-[0.62rem] font-semibold tracking-[0.2em] uppercase"
+              className="text-[12px] font-medium tracking-[0.2em] uppercase"
               style={{ color: accent }}
             >
               {card.label}
             </p>
-            <h4 className="mt-2 font-[family-name:var(--font-display)] font-semibold">
+            <h4 className="mt-2 font-[family-name:var(--font-display)]">
               {card.title}
             </h4>
             <p className="mt-2 text-sm leading-relaxed text-[var(--color-ink-muted)]">

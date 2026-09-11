@@ -23,26 +23,17 @@ export default function AboutPortrait({ src, alt }: { src: string; alt: string }
       transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
       className="relative w-full"
     >
+      {/* The portrait used to sit on a blurred green glow inside a
+          gradient-lit bezel with a deep drop shadow. Glow, gradient and
+          shadow are all out of the system (§6); depth comes from the
+          hairline border and the cream ground instead. */}
       <div
-        className="absolute inset-0 -z-10 blur-3xl opacity-60"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 70% at 50% 30%, color-mix(in oklab, var(--color-green) 22%, transparent), transparent 70%)",
-        }}
-        aria-hidden
-      />
-      <div
-        className="relative overflow-hidden rounded-[1.75rem] p-[1px]"
-        style={{
-          background: "linear-gradient(155deg, rgba(255,255,255,0.14), rgba(255,255,255,0.02))",
-          boxShadow: "0 30px 80px -20px rgba(0,0,0,0.55)",
-        }}
+        className="relative overflow-hidden"
+        style={{ aspectRatio: "4/5", borderRadius: "var(--radius)" }}
       >
-        <div className="relative overflow-hidden rounded-[1.7rem]" style={{ aspectRatio: "4/5" }}>
-          <motion.div style={{ y }} className="absolute inset-0 scale-110">
-            <Image src={src} alt={alt} fill sizes="(max-width: 900px) 100vw, 45vw" className="object-cover" priority />
-          </motion.div>
-        </div>
+        <motion.div style={{ y }} className="absolute inset-0 scale-110">
+          <Image src={src} alt={alt} fill sizes="(max-width: 900px) 100vw, 45vw" className="object-cover" priority />
+        </motion.div>
       </div>
     </motion.div>
   );

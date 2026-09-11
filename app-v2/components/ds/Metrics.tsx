@@ -15,10 +15,10 @@ export default function Metrics({
     <Reveal className="wrap py-8 grid grid-cols-1 md:grid-cols-3 gap-px bg-[var(--color-border)] border border-[var(--color-border)] rounded-2xl overflow-hidden">
       {stats.map((stat) => (
         <div key={stat.label} className="bg-[var(--color-surface)] p-7 text-center">
-          <p className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[var(--color-yellow)]">
+          <p className="font-[family-name:var(--font-display)] text-2xl text-[var(--color-yellow)]">
             {stat.value}
           </p>
-          <p className="mt-2 text-[0.62rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-muted)]">
+          <p className="mt-2 text-[12px] font-medium tracking-[0.2em] uppercase text-[var(--color-ink-muted)]">
             {stat.label}
           </p>
           <p className="mt-2 text-sm text-[var(--color-ink-faint)]">{stat.desc}</p>

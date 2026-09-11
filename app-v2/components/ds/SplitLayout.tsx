@@ -46,13 +46,13 @@ export default function SplitLayout({
       <div style={{ order: imageFirst ? 2 : 1 }}>
         {eyebrow && (
           <p
-            className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase"
+            className="text-[12px] font-medium tracking-[0.22em] uppercase"
             style={{ color: accent }}
           >
             {eyebrow}
           </p>
         )}
-        <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-2xl md:text-3xl leading-tight">
+        <h3 className="mt-3 font-[family-name:var(--font-display)] text-2xl md:text-3xl leading-tight">
           {title}
         </h3>
         <p className="mt-4 text-[var(--color-ink-muted)] leading-relaxed max-w-[46ch]">

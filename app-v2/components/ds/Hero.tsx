@@ -43,13 +43,13 @@ export default function Hero({
         transition={{ duration: motionTokens.duration.slow, ease: motionTokens.ease }}
       >
         <p
-          className="text-[0.65rem] font-semibold tracking-[0.24em] uppercase"
+          className="text-[12px] font-medium tracking-[0.24em] uppercase"
           style={{ color: accent }}
         >
           {badge}
         </p>
         <h1
-          className="mt-3 font-[family-name:var(--font-display)] font-semibold leading-[0.98] tracking-[-0.02em] max-w-[18ch]"
+          className="mt-3 font-[family-name:var(--font-display)] leading-[0.98] max-w-[18ch]"
           style={{ fontSize: type.caseTitle }}
         >
           {title}
@@ -64,7 +64,7 @@ export default function Hero({
               key={m.label}
               className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3"
             >
-              <dt className="text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">
+              <dt className="text-[10px] font-medium tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">
                 {m.label}
               </dt>
               <dd className="mt-1 text-sm text-[var(--color-ink)]">{m.value}</dd>

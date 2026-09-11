@@ -1,643 +1,911 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import TrackedLink from "@/components/TrackedLink";
-import { EditorialLayout, GalleryLayout, FullBleedLayout } from "@/components/ds/layouts";
-import { Quote, ImageFrame, MetricStat } from "@/components/ds/atoms";
-import { tintedGlass } from "@/components/ds/tokens";
-import { asapTheme, asapPalette, asapGradients } from "./theme";
+import DeepBand from "@/components/ds/DeepBand";
+import SectionHead, { Section } from "@/components/ds/SectionHead";
+import PhoneShot from "@/components/ds/PhoneShot";
+import { DemoVideo, WatchDemoButton } from "./Demo";
+
+/**
+ * ASAP — written as a product case, per ASAP_Case_Study_Final_Claude_Brief.md.
+ *
+ * Order is the brief's: hero → problem → demo → direction → experience →
+ * AI design → build → validation → impact → role → what's next → close.
+ * The demo sits directly after the problem so a reader sees the product
+ * before any process, and "Try the prototype" appears in the hero, under
+ * the demo and in the close.
+ *
+ * Every claim here traces to the project's own research record. The three
+ * observations in section 01 are findings from the six interviews, shown
+ * as observations — not reconstructed as participant quotes.
+ */
 
 export const metadata: Metadata = {
   title: "ASAP — Ramya Yerramilli",
   description:
-    "An AI-native mobile app for people navigating a major life transition who freeze before they start. It coaches the next step instead of managing the whole list.",
+    "ASAP is an AI-powered planning experience that helps people break down a goal, figure out what matters first, and start taking action.",
 };
 
-const accent = asapTheme.accent;
-const gold = asapPalette.gold;
-const sage = asapPalette.sage;
+const PROTOTYPE_URL = "https://asap-flame.vercel.app/";
 
-function Eyebrow({ children, color = accent }: { children: React.ReactNode; color?: string }) {
+/* ── Icons: 24×24 line set, 1.4 stroke (see .icon-line) ─────────────────── */
+
+function Icon({ children, className = "icon-line" }: { children: ReactNode; className?: string }) {
   return (
-    <p className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase" style={{ color }}>
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" className={className}>
       {children}
-    </p>
+    </svg>
   );
 }
 
-function GradientField({ gradient, children }: { gradient: string; children: React.ReactNode }) {
-  return <div style={{ background: gradient }}>{children}</div>;
-}
+const icons = {
+  person: (
+    <>
+      <circle cx="12" cy="8" r="3.6" />
+      <path d="M4.5 20c.4-3.6 3.5-5.6 7.5-5.6s7.1 2 7.5 5.6" />
+    </>
+  ),
+  team: (
+    <>
+      <circle cx="9" cy="8.5" r="3.2" />
+      <path d="M3 19.5c.3-3 2.8-4.8 6-4.8s5.7 1.8 6 4.8" />
+      <circle cx="17" cy="9.5" r="2.4" />
+      <path d="M16.5 14.8c2.6.2 4.3 1.8 4.5 4.2" />
+    </>
+  ),
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 7.5V12l3 2" />
+    </>
+  ),
+  phone: (
+    <>
+      <rect x="7" y="2.5" width="10" height="19" rx="2.2" />
+      <path d="M10.8 18.3h2.4" />
+    </>
+  ),
+  chip: (
+    <>
+      <rect x="7" y="7" width="10" height="10" rx="1.8" />
+      <path d="M10 3.5V7M14 3.5V7M10 17v3.5M14 17v3.5M3.5 10H7M3.5 14H7M17 10h3.5M17 14h3.5" />
+    </>
+  ),
+  blank: (
+    <>
+      <path d="M6 3.5h8l4 4v13H6z" />
+      <path d="M14 3.5v4h4" />
+    </>
+  ),
+  calendar: (
+    <>
+      <rect x="4" y="5.5" width="16" height="14.5" rx="2" />
+      <path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" />
+    </>
+  ),
+  message: <path d="M4.5 5h15v10.5H10L5.5 19.5v-4h-1z" />,
+  bulb: (
+    <>
+      <path d="M9.5 18h5M10.5 21h3" />
+      <path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.1v.1h5v-.1c0-.8.4-1.6 1.1-2.1A6 6 0 0 0 12 3Z" />
+    </>
+  ),
+  question: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M9.6 9.4a2.5 2.5 0 1 1 3.4 2.4c-.6.3-1 .8-1 1.5v.7M12 16.8h.01" />
+    </>
+  ),
+  steps: <path d="M4 19h4.5v-4.5H13V10h4.5V5.5H20" />,
+  gauge: (
+    <>
+      <path d="M4 16a8 8 0 1 1 16 0" />
+      <path d="M12 16l3.6-4.4" />
+    </>
+  ),
+  code: <path d="M8.5 8 4.5 12l4 4M15.5 8l4 4-4 4M13.5 5l-3 14" />,
+  branch: (
+    <>
+      <circle cx="6.5" cy="5.5" r="2" />
+      <circle cx="6.5" cy="18.5" r="2" />
+      <circle cx="17.5" cy="8" r="2" />
+      <path d="M6.5 7.5v9M17.5 10v.5a4 4 0 0 1-4 4h-7" />
+    </>
+  ),
+  shield: <path d="M12 3.2 19 6v5.2c0 4.6-3 8.2-7 9.6-4-1.4-7-5-7-9.6V6z" />,
+  layers: (
+    <>
+      <path d="M12 3.5 3.5 8 12 12.5 20.5 8z" />
+      <path d="m3.5 12.5 8.5 4.5 8.5-4.5M3.5 16.5 12 21l8.5-4.5" />
+    </>
+  ),
+  history: (
+    <>
+      <path d="M4 12a8 8 0 1 0 2.4-5.7" />
+      <path d="M4 4.5v4h4M12 8v4.2l2.8 1.8" />
+    </>
+  ),
+  link: (
+    <>
+      <path d="M10 14a4 4 0 0 0 5.7 0l3-3A4 4 0 0 0 13 5.3l-1 1" />
+      <path d="M14 10a4 4 0 0 0-5.7 0l-3 3A4 4 0 0 0 11 18.7l1-1" />
+    </>
+  ),
+  chart: <path d="M5 20v-8M12 20V5M19 20v-5M3 20h18" />,
+  check: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="m8.3 12.3 2.5 2.5 5-5.2" />
+    </>
+  ),
+  arrow: <path d="M5 12h14M13.5 6.5 19 12l-5.5 5.5" />,
+};
 
-/**
- * Chapter head. The page is four chapters — Context → Discover → Design →
- * Impact — and each opens with this so a reader always knows which of the
- * four they're in.
- */
-function ChapterHead({
-  n,
-  label,
-  title,
-  lead,
-  color = accent,
-}: {
-  n: string;
-  label: string;
-  title: React.ReactNode;
-  lead?: string;
-  color?: string;
-}) {
+function PrototypeButton({ className = "btn" }: { className?: string }) {
   return (
-    <div style={{ gridColumn: "1 / 13" }}>
-      <div className="flex items-center gap-3">
-        <span
-          className="flex items-center justify-center w-9 h-9 rounded-full font-[family-name:var(--font-display)] font-semibold text-sm"
-          style={{ backgroundColor: color, color: asapPalette.black }}
-        >
-          {n}
-        </span>
-        <Eyebrow color={color}>{label}</Eyebrow>
-      </div>
-      <h2 className="mt-4 font-[family-name:var(--font-display)] font-semibold text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-        {title}
-      </h2>
-      {lead && (
-        <p className="mt-4 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
-          {lead}
-        </p>
-      )}
-    </div>
+    <TrackedLink
+      label="Live Prototype"
+      href={PROTOTYPE_URL}
+      target="_blank"
+      rel="noopener"
+      className={className}
+    >
+      Try the prototype <span aria-hidden>&#8599;</span>
+    </TrackedLink>
   );
 }
 
-/** A compact labelled block — the sub-beats inside each chapter. */
-function Beat({
-  label,
-  children,
-  color = accent,
-}: {
-  label: string;
-  children: React.ReactNode;
-  color?: string;
-}) {
-  return (
-    <div className="rounded-2xl p-6 h-full" style={tintedGlass(color, 0.07)}>
-      <p className="text-[0.58rem] font-semibold tracking-[0.22em] uppercase" style={{ color }}>
-        {label}
-      </p>
-      <div className="mt-3 text-sm leading-relaxed text-[var(--color-ink-muted)]">{children}</div>
-    </div>
-  );
-}
+/* ── Content ─────────────────────────────────────────────────────────────── */
 
-/** A findings/outcome bullet: bolded label, then the detail. */
-function LabelledPoint({ label, text, color }: { label: string; text: string; color: string }) {
-  return (
-    <li className="text-sm leading-relaxed text-[var(--color-ink-muted)] pl-4 relative">
-      <span className="absolute left-0 top-[0.55em] w-1.5 h-1.5 rounded-full" style={{ backgroundColor: color }} />
-      <strong className="text-[var(--color-ink)] font-semibold">{label}</strong> {text}
-    </li>
-  );
-}
+const projectInfo = [
+  { label: "Role", value: "UX Research & Conversation Design", icon: icons.person },
+  { label: "Team", value: "4-person team", icon: icons.team },
+  { label: "Timeline", value: "10 weeks", icon: icons.clock },
+  { label: "Platform", value: "Mobile prototype", icon: icons.phone },
+  { label: "Technology", value: "Claude API", icon: icons.chip },
+];
 
-const aiPrinciples = [
+/** Findings from the six interviews — observations, not verbatim quotes. */
+const observations = [
+  { icon: icons.blank, text: "People froze at the blank page, not at the to-do list." },
   {
-    name: "Coach, not assistant",
-    body: "It asks a question before it plans, and stops once someone has a next step, rather than finishing the work itself. A tool that completes the task builds dependency; this one is built to hand the work back.",
+    icon: icons.calendar,
+    text: "Participants already used Notion and Google Calendar. Storing and tracking tasks was never the gap.",
   },
   {
-    name: "One thing at a time",
-    body: "Only the next step is visible. A full plan revealed at once recreates the same overwhelm the product exists to relieve, just one screen later.",
-  },
-  {
-    name: "Honest about limits",
-    body: "Every breakdown carries a confidence label, and the AI says plainly when a request is outside what it can do, instead of answering everything in the same certain tone.",
+    icon: icons.message,
+    text: "Generic AI suggestions read as advice from something that hadn’t listened.",
   },
 ];
 
-/** Every AI behaviour traced from research finding to what testing validated. */
-const findingToBehavior = [
+const principles = [
   {
-    finding: "People freeze at the blank page",
-    prompt: "Prompt requests context before it plans",
-    validated: "Participants preferred being asked over being told",
+    icon: icons.question,
+    title: "Ask before recommending",
+    body: "The AI gathers context before suggesting next steps.",
   },
   {
-    finding: "Tracking tools lack guidance",
-    prompt: "Prompt is scoped strictly to coaching actions",
-    validated: "Framing the AI as a coach lowered setup hesitation",
+    icon: icons.steps,
+    title: "One step at a time",
+    body: "The experience avoids dropping a long plan on the user all at once.",
   },
   {
-    finding: "Generic advice read as untrustworthy",
-    prompt: "Role-aware prompting, context collected first",
-    validated: "The clarification flow was praised for tailored copy",
-  },
-  {
-    finding: "A full plan felt heavier than the task itself",
-    prompt: "Sequential reveal, one step surfaced at a time",
-    validated: "Lower reported overwhelm in testing",
-  },
-  {
-    finding: "Confident AI read as less honest",
-    prompt: "Every breakdown returns a confidence level",
-    validated: "Participants named the uncertainty signal as a reason to trust it",
+    icon: icons.gauge,
+    title: "Be clear about uncertainty",
+    body: "Confidence cues and limitations help users understand how much to rely on an AI recommendation.",
   },
 ];
 
-const riteRounds = [
+const flow = [
   {
-    n: "01",
-    issue: "Static subtasks; all four personas got near-identical steps.",
-    change: "Tuned prompts to ingest role and task context before generating steps.",
-    result: "Distinct, personalized breakdowns per persona.",
+    label: "Goal",
+    title: "Set the goal",
+    body: "The user describes what they want to accomplish in their own words.",
+    src: "/img/asap/phones/goal.png",
+    alt: "ASAP home screen with a task entered: “I need to prepare for a first client meeting”",
   },
   {
-    n: "02",
-    issue: "Coach responses stalled or failed to return.",
-    change: "Optimized prompt constraints for faster API response cycles.",
-    result: "Retested and confirmed real-time responses.",
+    label: "Clarify",
+    title: "Add context",
+    body: "ASAP asks targeted questions before making recommendations.",
+    src: "/img/asap/phones/clarify.png",
+    alt: "ASAP asking “What best describes you right now?” with options such as early career professional and career changer",
   },
   {
-    n: "03",
-    issue: "Users lost track of progress across steps.",
-    change: "Updated navigation affordances and step counters.",
-    result: "Validated step progression in follow-up testing.",
+    label: "Plan",
+    title: "Get next steps",
+    body: "The system turns that context into practical actions.",
+    src: "/img/asap/phones/plan.png",
+    alt: "A five-step plan tailored for an early-career professional, with the first step highlighted and marked high confidence",
+  },
+  {
+    label: "Focus",
+    title: "Focus",
+    body: "The user works through one step at a time.",
+    src: "/img/asap/phones/focus.png",
+    alt: "Focus mode for “Clarify the goal of the meeting” with a 15-minute timer and the week’s steps above it",
   },
 ];
 
-const surprises = [
-  "Participants already used Notion and Google Calendar; the gap was never tracking or storage.",
-  "The freeze happened at the blank page, not at the to-do list.",
-  "They could feel a plan was needed but had no method for sequencing one.",
-  "Generic AI suggestions read as advice from something that hadn't listened.",
-  "An AI that sounded certain about everything read as less trustworthy, not more.",
-];
-
-const wins = [
-  { label: "Warm, specific tone.", text: "Nobody described the AI as generic or robotic." },
-  { label: "Confidence signal.", text: "Participants spontaneously cited confidence labels as the primary reason they trusted ASAP over competing tools." },
-  { label: "Single-task focus.", text: "Visualizing one step at a time noticeably reduced start anxiety during scenarios." },
-  { label: "Empathetic copy.", text: "Onboarding text addressing life transitions directly resonated strongly with participants." },
-  { label: "Soft refusals.", text: "Transparent refusal messaging read as supportive framing rather than system errors." },
-];
-
-const gaps = [
-  { label: "Surface-level subtasks.", text: "Output lacked depth for multi-day or highly technical projects." },
-  { label: "Fixed step limit.", text: "Cap of five steps proved insufficient for complex workflows." },
-  { label: "Missing time container.", text: "Lack of due dates or calendar links left the planning loop open." },
-  { label: "Hidden clarification feature.", text: "The interactive clarification prompt was valuable, but low visual hierarchy meant most users overlooked it." },
-  { label: "Abrupt onboarding.", text: "Missing a brief guided tour prior to first task creation." },
-];
-
-const nextUp = [
-  { label: "Contextual memory.", text: "Preserve user preferences and past progress across active sessions." },
-  { label: "Adaptive step depth.", text: "Allow dynamic expansion of complex tasks beyond the 5-step cap." },
-  { label: "Calendar sync.", text: "Integrate due dates and calendar exports to close the execution loop." },
-  { label: "Prominent onboarding.", text: "Redesign the first-run experience to showcase the clarification flow." },
-  { label: "Round 2 testing.", text: "Benchmark quantitative completion metrics post-deployment." },
-];
-
-const takeaways = [
+const aiAreas = [
   {
-    label: "Designing behavior, not screens",
-    text: "The decisions that mattered — whether the AI asks before it answers, how it signals uncertainty, what it declines to do — don't live in a Figma frame. All of them determine whether the product works.",
+    icon: icons.code,
+    title: "Prompt structure",
+    body: "Built the prompt logic around the information the AI needed to make useful recommendations.",
   },
   {
-    label: "Trust is designed",
-    text: "Users trusted the AI more when it admitted what it wasn't sure about. Transparency read as competence, the opposite of what a polished demo instinct suggests.",
+    icon: icons.message,
+    title: "Conversation design",
+    body: "Defined how ASAP asks questions, responds to users, and moves the conversation forward.",
   },
   {
-    label: "Scaffolding should fade",
-    text: "The unresolved question, and the most interesting one. Support that never recedes becomes a crutch; a mature version would notice growing capability and step back.",
+    icon: icons.branch,
+    title: "AI behavior",
+    body: "Defined when the system should ask, recommend, clarify, or stop.",
+  },
+  {
+    icon: icons.shield,
+    title: "Confidence and boundaries",
+    body: "Made uncertainty and limitations visible instead of presenting every response with the same level of confidence.",
   },
 ];
+
+/** The behaviour model, simplified from the prompt rules into four moves. */
+const behaviour = [
+  { move: "Take the goal", detail: "In the user’s own words, however broad." },
+  { move: "Ask", detail: "Collect role and context before recommending anything." },
+  { move: "Recommend", detail: "Break the goal into steps. Every step carries a confidence level." },
+  {
+    move: "Clarify or stop",
+    detail: "Coach when someone is stuck. Stop once there’s a clear next step, and say plainly when a request is out of scope.",
+  },
+];
+
+const issues = [
+  {
+    title: "Recommendations were too similar.",
+    saw: "Different scenarios could produce similar recommendations.",
+    changed: "We added more role and context information to the prompt structure.",
+  },
+  {
+    title: "Some responses were unreliable.",
+    saw: "Some interactions stalled or failed to return a useful response.",
+    changed: "We tightened the prompt constraints and response handling.",
+  },
+  {
+    title: "Users lost track of progress.",
+    saw: "It wasn’t always obvious where users were in the planning flow.",
+    changed: "We added clearer navigation and progression cues.",
+  },
+];
+
+const metrics = [
+  { value: "6", label: "User interviews" },
+  { value: "4", label: "Usability scenarios" },
+  { value: "3", label: "Design iterations" },
+  { value: "1", label: "Functional AI prototype" },
+];
+
+const findings = [
+  {
+    title: "The step-by-step model made the product easier to approach.",
+    body: "Users responded well to having a smaller action in front of them instead of a long list.",
+  },
+  {
+    title: "Confidence cues helped set expectations.",
+    body: "Users had a better sense of how much weight to put on an AI recommendation when the system communicated confidence.",
+  },
+  {
+    title: "The experience felt lighter when users could focus.",
+    body: "Showing one action at a time reduced the feeling of having to manage everything at once.",
+  },
+];
+
+const opportunities = [
+  { icon: icons.layers, title: "More flexible planning", body: "Adjust the depth of a plan based on how complex the goal is." },
+  {
+    icon: icons.history,
+    title: "Better context across sessions",
+    body: "Let ASAP retain useful information so users don’t have to start from scratch.",
+  },
+  {
+    icon: icons.link,
+    title: "Connect to existing tools",
+    body: "Bring planning into calendars, notes, and other tools people already use.",
+  },
+  {
+    icon: icons.chart,
+    title: "Measure what actually helps",
+    body: "Test whether the experience improves follow-through, confidence, and completion over time.",
+  },
+];
+
+const owned = [
+  "UX research and usability testing",
+  "Conversation design",
+  "Prompt architecture",
+  "AI behavior and response patterns",
+  "Information architecture",
+  "Confidence and limitation states",
+  "Onboarding and product copy",
+  "Iterative prototyping",
+  "Translating research findings into product decisions",
+];
+
+const nextSteps = [
+  { icon: icons.layers, title: "Handle more complexity", body: "Adapt the planning experience to different types and sizes of goals." },
+  { icon: icons.link, title: "Work with existing tools", body: "Connect planning to calendars, notes, and other everyday workflows." },
+  { icon: icons.chart, title: "Prove the value", body: "Measure whether users actually complete more of what they set out to do." },
+];
+
+/* ── Page ────────────────────────────────────────────────────────────────── */
 
 export default function AsapPage() {
   return (
-    <div style={{ background: asapGradients.page }}>
-      {/* ── Hero ── */}
-      <section className="relative overflow-hidden" style={{ paddingTop: "calc(var(--nav-h) + 2.5rem)", paddingBottom: "3rem" }}>
-        <div className="mx-auto grid gap-10 px-6 md:px-10 md:grid-cols-[1.15fr_0.85fr] items-center" style={{ maxWidth: "1500px" }}>
+    <>
+      {/* HERO — answers the six-second test above the fold: what it is, what
+          it does, what Ramya did, that it was built, and where to see it. */}
+      <DeepBand>
+        <div
+          className="wrap grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10"
+          style={{ paddingTop: "calc(var(--nav-h) + 36px)", paddingBottom: 64 }}
+        >
           <div>
-            <span
-              className="inline-flex w-fit items-center gap-2 rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.22em] uppercase mb-5"
-              style={tintedGlass(accent)}
-            >
-              <span style={{ color: gold }}>HCI Capstone · DePaul University</span>
-            </span>
-            <h1 className="font-[family-name:var(--font-display)] font-semibold leading-[0.92] tracking-[-0.02em] text-[clamp(2.8rem,7vw,5.5rem)] text-[var(--color-ink)]">
+            <p className="eyebrow eyebrow-rule">Case study</p>
+            <h1 className="mt-5" style={{ fontSize: "clamp(60px, 7.4vw, 104px)", lineHeight: 0.95 }}>
               ASAP
-              <br />
-              <span className="italic font-normal text-[0.42em]" style={{ color: accent }}>
-                AI-Scaffolded Action Planner
-              </span>
             </h1>
-            <p className="mt-5 text-lg leading-relaxed text-[var(--color-ink-muted)]" style={{ maxWidth: "54ch" }}>
-              An AI-native mobile app for people navigating a major life transition who
-              freeze before they start. It{" "}
-              <strong className="text-[var(--color-ink)] font-semibold">
-                coaches the next step
-              </strong>{" "}
-              instead of managing the whole list.
+            <h2 className="mt-4" style={{ fontSize: "clamp(30px, 3.2vw, 44px)", lineHeight: 1.12, maxWidth: "12em" }}>
+              Turn big goals into small, doable steps.
+            </h2>
+            <p className="lead mt-5">
+              ASAP is an AI-powered planning experience that helps people break down a
+              goal, figure out what matters first, and start taking action.
             </p>
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <a
-                href="https://asap-flame.vercel.app/"
-                target="_blank"
-                rel="noopener"
-                className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-[0.7rem] font-semibold tracking-[0.15em] uppercase transition-transform hover:-translate-y-0.5"
-                style={{ backgroundColor: accent, color: asapPalette.black }}
-              >
-                Try the prototype ↗
-              </a>
-              <span
-                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.12em] uppercase"
-                style={tintedGlass(accent, 0.08)}
-              >
-                <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: sage, boxShadow: `0 0 8px ${sage}` }} />
-                <span style={{ color: sage }}>Live with real Claude API</span>
-              </span>
+
+            <ul className="mt-6 flex flex-wrap gap-2" aria-label="Disciplines">
+              {["AI Product Design", "UX Research", "Conversation Design"].map((t) => (
+                <li key={t} className="tag">
+                  {t}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-7 flex flex-wrap gap-3">
+              <PrototypeButton />
+              <WatchDemoButton />
             </div>
+
+            <dl
+              className="mt-9 grid grid-cols-2 gap-x-6 gap-y-5 pt-7 sm:grid-cols-3"
+              style={{ borderTop: "1px solid var(--rule)" }}
+            >
+              {projectInfo.map((m) => (
+                <div key={m.label} className="flex items-start gap-3">
+                  <Icon className="icon-line mt-0.5 !h-5 !w-5">{m.icon}</Icon>
+                  <div>
+                    <dt className="meta">{m.label}</dt>
+                    <dd className="mt-1 text-[14px] leading-snug text-[var(--ink)]">{m.value}</dd>
+                  </div>
+                </div>
+              ))}
+            </dl>
           </div>
 
-          <div className="relative flex items-center justify-center py-4">
-            <div
-              className="absolute w-[380px] h-[380px] rounded-full blur-[100px] opacity-50"
-              style={{ background: `radial-gradient(circle, ${accent} 0%, ${gold}66 40%, transparent 70%)` }}
-            />
-            <div className="relative w-[64%] max-w-[280px] rotate-[3deg]">
-              <ImageFrame
-                src="/img/asap/screen-01-home-light.png"
-                alt="ASAP home screen"
-                aspect="9/19.5"
-                objectFit="contain"
-                className="shadow-2xl"
-                style={{ backgroundColor: asapPalette.charcoal, borderRadius: "2rem" }}
+          {/* Real screens: goal entry, the generated plan, focus mode. */}
+          <div className="relative mx-auto w-full max-w-[540px]" style={{ aspectRatio: "540 / 560" }}>
+            <div className="absolute left-0 top-[13%] w-[35%]">
+              <PhoneShot
+                src="/img/asap/phones/goal.png"
+                alt="ASAP home screen with a task entered"
+                sizes="(max-width: 1024px) 32vw, 190px"
+                priority
+              />
+            </div>
+            <div className="absolute right-0 top-[13%] w-[35%]">
+              <PhoneShot
+                src="/img/asap/phones/focus.png"
+                alt="ASAP focus mode with a timer for the current step"
+                sizes="(max-width: 1024px) 32vw, 190px"
+                priority
+              />
+            </div>
+            <div className="absolute left-1/2 top-0 z-10 w-[41%] -translate-x-1/2">
+              <PhoneShot
+                src="/img/asap/phones/plan.png"
+                alt="ASAP’s five-step plan, with the first step marked high confidence"
+                sizes="(max-width: 1024px) 38vw, 222px"
+                priority
               />
             </div>
           </div>
         </div>
-      </section>
+      </DeepBand>
 
-      {/* ── 01 · CONTEXT ── */}
-      <EditorialLayout maxWidth="1500px">
-        <ChapterHead
-          n="01"
-          label="Context"
-          title={<>Starting over is <span className="italic" style={{ color: accent }}>where people get stuck.</span></>}
-          lead="Starting college, switching careers, launching a business: each hands someone a set of tasks they've never had to plan before. The stall isn't motivation. It's not knowing where to begin."
-        />
+      {/* 01 — THE PROBLEM: statement · observations · key insight */}
+      <Section id="problem" divided={false}>
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-10">
+          <SectionHead
+            n="01"
+            eyebrow="The problem"
+            title="People have goals. The hard part is knowing where to start."
+          >
+            <p>
+              Whether it’s changing careers, learning a new skill, or starting a personal
+              project, turning a broad goal into a plan can feel overwhelming.
+            </p>
+            <p>
+              Existing productivity tools assume the plan already exists. Generic AI can
+              generate a lot of advice without helping you figure out what actually matters
+              first.
+            </p>
+            <p>That was the problem we set out to solve.</p>
+          </SectionHead>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ gridColumn: "1 / 8" }}>
-          <Beat label="Role" color={accent}>
-            Lead Research &amp; UX Writer on a four-person capstone team. Led six
-            interviews, four usability scenarios, and designed the prompt architecture, AI
-            behavioral rules, and information architecture.
-          </Beat>
-          <Beat label="Opportunity" color={gold}>
-            A task manager waits for a plan that already exists. An AI assistant writes one
-            and hands it over, finished. Neither teaches the thing actually missing in a
-            transition: how to plan.
-          </Beat>
-          <Beat label="Constraints" color={sage}>
-            Ten weeks, four students, no recruiting budget beyond a university network, and
-            an AI layer running on a live API rather than a scripted demo.
-          </Beat>
-          <Beat label="Where it stands" color={accent}>
-            A working prototype on the real Claude API, tested through four usability
-            scenarios. Round 2 is scheduled post-deployment.
-          </Beat>
+          <div className="lg:pt-1">
+            <p className="meta">What we heard in six interviews</p>
+            <ul className="mt-3">
+              {observations.map((o) => (
+                <li
+                  key={o.text}
+                  className="flex gap-4 py-5"
+                  style={{ borderTop: "1px solid var(--rule)" }}
+                >
+                  <span
+                    className="flex h-10 w-10 flex-none items-center justify-center rounded-full"
+                    style={{ border: "1px solid var(--border-strong)" }}
+                  >
+                    <Icon className="icon-line !h-[18px] !w-[18px]">{o.icon}</Icon>
+                  </span>
+                  <p className="text-[15px] leading-relaxed text-[var(--ink)]">{o.text}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <aside className="panel-sage self-start p-7">
+            <div className="flex items-center gap-3">
+              <Icon>{icons.bulb}</Icon>
+              <p className="eyebrow">Key insight</p>
+            </div>
+            <h3 className="mt-5 text-[23px] leading-[1.28]">
+              People didn’t need another task manager. They needed help getting started.
+            </h3>
+            <p className="mt-4 text-[14px] leading-relaxed text-[var(--body)]">
+              The opportunity was to create a guided planning experience that could take an
+              unclear goal and turn it into a realistic first step.
+            </p>
+          </aside>
+        </div>
+      </Section>
+
+      {/* 02 — PRODUCT DEMO: directly after the problem, one of the largest
+          elements on the page. */}
+      <Section id="demo">
+        <SectionHead
+          n="02"
+          eyebrow="See ASAP in action"
+          title="From “I don’t know where to start” to a clear next step."
+        >
+          <p>
+            ASAP starts with a broad goal, asks a few questions to understand the context,
+            and turns the answers into a practical next step.
+          </p>
+          <p>Watch the full flow below.</p>
+        </SectionHead>
+
+        <div className="mt-10">
+          <DemoVideo poster="/img/asap/demo-poster.jpg" />
         </div>
 
-        <div className="rounded-[2rem] p-8" style={{ gridColumn: "9 / 13", alignSelf: "center", ...tintedGlass(accent, 0.1) }}>
-          <Quote
-            accent={accent}
-            text="People already know they have things to do. What they're missing is how to start, and how to break it down."
-            attribution="Core research insight"
-            style={{ maxWidth: "34ch" }}
-          />
+        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <PrototypeButton />
+          <p className="text-[14px] text-[var(--muted)]">Explore the planning flow yourself.</p>
         </div>
-      </EditorialLayout>
+      </Section>
 
-      {/* ── 02 · DISCOVER — research artefacts sit here: the alignment board and
-             the earliest lo-fi exploration that came straight out of it ── */}
-      <GradientField gradient={asapGradients.charcoalGraphite}>
-        <EditorialLayout maxWidth="1500px">
-          <ChapterHead
-            n="02"
-            label="Discover"
-            color={gold}
-            title={<>The interviews <span className="italic" style={{ color: gold }}>changed the brief.</span></>}
-            lead="Six people, ages 18 to 34, each mid-transition, across four scenarios: College Student, Tech Newbie, Career Swapper, Entrepreneur."
-          />
+      {/* 03 — PRODUCT DIRECTION */}
+      <Section id="direction">
+        <div className="sec-grid">
+          <SectionHead
+            n="03"
+            eyebrow="Product direction"
+            title="We moved from “make me a plan” to “help me figure out the plan.”"
+          >
+            <p>The original concept was closer to a task-management tool.</p>
+            <p>
+              Research showed that users already had places to store tasks and manage their
+              time. What they struggled with was deciding how to break an unfamiliar goal
+              down.
+            </p>
+            <p>So we changed the role of ASAP.</p>
+            <p>
+              Instead of generating a finished plan, the product would help users work
+              through the decisions behind it.
+            </p>
+          </SectionHead>
 
-          <div style={{ gridColumn: "1 / 7" }}>
-            <Beat label="What surprised us" color={gold}>
-              <ul className="flex flex-col gap-2.5">
-                {surprises.map((s) => (
-                  <li key={s} className="pl-4 relative">
-                    <span className="absolute left-0 top-[0.55em] w-1.5 h-1.5 rounded-full" style={{ backgroundColor: gold }} />
-                    {s}
+          <ul className="grid gap-4 sm:grid-cols-3">
+            {principles.map((p) => (
+              <li key={p.title} className="panel flex flex-col p-6">
+                <Icon>{p.icon}</Icon>
+                <h3 className="mt-5 text-[19px] leading-snug">{p.title}</h3>
+                <p className="mt-3 text-[14px] leading-relaxed text-[var(--body)]">{p.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
+      {/* 04 — THE EXPERIENCE: GOAL → CLARIFY → PLAN → FOCUS */}
+      <Section id="experience">
+        <SectionHead n="04" eyebrow="The experience" title="A simple flow from goal to action.">
+          <p>The experience is built around four moments.</p>
+        </SectionHead>
+
+        <ol className="mt-12 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4 lg:gap-x-8">
+          {flow.map((s, i) => (
+            <li key={s.label} className="flex flex-col">
+              <PhoneShot
+                src={s.src}
+                alt={s.alt}
+                sizes="(max-width: 1024px) 42vw, 220px"
+                className="mx-auto max-w-[210px]"
+              />
+              <div className="mt-7 flex items-center gap-3">
+                <span className="numeral !text-[22px]" aria-hidden>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="eyebrow">{s.label}</span>
+                {i < flow.length - 1 && (
+                  <Icon className="icon-line ml-auto hidden !h-[18px] !w-[18px] opacity-60 lg:block">{icons.arrow}</Icon>
+                )}
+              </div>
+              <h3 className="mt-3 text-[19px] leading-snug">{s.title}</h3>
+              <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">{s.body}</p>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      {/* 05 — DESIGNING THE AI: the work behind the interface, as a
+          simplified behaviour model beside the shipped confidence states. */}
+      <Section id="ai">
+        <div className="sec-grid">
+          <div>
+            <SectionHead n="05" eyebrow="Designing the AI" title="The interface was only part of the design.">
+              <p>
+                Because ASAP relies on AI, I also had to design what happens behind the
+                interface — how the system asks questions, uses context, responds to users,
+                and communicates uncertainty.
+              </p>
+            </SectionHead>
+
+            <ul className="mt-10 grid gap-x-8 gap-y-8 sm:grid-cols-2">
+              {aiAreas.map((a) => (
+                <li key={a.title}>
+                  <Icon>{a.icon}</Icon>
+                  <h3 className="mt-4 text-[18px] leading-snug">{a.title}</h3>
+                  <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">{a.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <figure className="panel grid gap-8 p-7 sm:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] sm:items-center">
+            <div>
+              <p className="eyebrow">How ASAP behaves</p>
+              <ol className="mt-6">
+                {behaviour.map((b, i) => (
+                  <li key={b.move} className="relative flex gap-4 pb-6 last:pb-0">
+                    {i < behaviour.length - 1 && (
+                      <span
+                        aria-hidden
+                        className="absolute left-[13px] top-8 bottom-1 w-px"
+                        style={{ background: "var(--border-strong)" }}
+                      />
+                    )}
+                    <span
+                      className="relative flex h-7 w-7 flex-none items-center justify-center rounded-full text-[12px] font-medium"
+                      style={{ background: "var(--ink)", color: "var(--bg)" }}
+                    >
+                      {i + 1}
+                    </span>
+                    <div>
+                      <p className="text-[15px] font-medium text-[var(--ink)]">{b.move}</p>
+                      <p className="mt-1 text-[13.5px] leading-relaxed text-[var(--body)]">{b.detail}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <div>
+              <PhoneShot
+                src="/img/asap/phones/confidence.png"
+                alt="Steps labelled high, medium and low confidence, followed by the note “My time estimates are based on averages and may not match your pace. You know your speed better than I do.”"
+                sizes="(max-width: 640px) 60vw, 200px"
+                className="mx-auto max-w-[200px]"
+              />
+              <figcaption className="mt-4 text-center text-[12.5px] leading-relaxed text-[var(--muted)]">
+                Confidence levels and a plain limitation note, as built.
+              </figcaption>
+            </div>
+          </figure>
+        </div>
+      </Section>
+
+      {/* 06 — BUILDING WITH REAL AI: ISSUE → CHANGE */}
+      <Section id="build">
+        <div className="sec-grid">
+          <SectionHead
+            n="06"
+            eyebrow="Building with real AI"
+            title="Testing the real AI exposed problems we couldn’t see in static screens."
+          >
+            <p>
+              Once the prototype was connected to the Claude API, we could see how the
+              experience behaved with different inputs.
+            </p>
+            <p>That surfaced a few issues we needed to address.</p>
+          </SectionHead>
+
+          <div>
+            <div
+              className="hidden gap-5 pb-3 md:grid md:grid-cols-[40px_minmax(0,1fr)_24px_minmax(0,1fr)]"
+              aria-hidden
+            >
+              <span />
+              <span className="meta">Issue</span>
+              <span />
+              <span className="meta">What changed</span>
+            </div>
+            <ol>
+              {issues.map((it, i) => (
+                <li
+                  key={it.title}
+                  className="grid gap-3 py-6 md:grid-cols-[40px_minmax(0,1fr)_24px_minmax(0,1fr)] md:gap-5"
+                  style={{ borderTop: "1px solid var(--rule)" }}
+                >
+                  <span className="numeral !text-[24px]" aria-hidden>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="text-[18px] leading-snug">{it.title}</h3>
+                    <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">
+                      <span className="sr-only">What we saw: </span>
+                      {it.saw}
+                    </p>
+                  </div>
+                  <Icon className="icon-line mt-1 hidden !h-[18px] !w-[18px] md:block">{icons.arrow}</Icon>
+                  <p className="text-[14px] leading-relaxed text-[var(--ink)]">
+                    <span className="meta mb-1 block md:hidden">What changed</span>
+                    <span className="sr-only md:not-sr-only">
+                      <span className="sr-only">What changed: </span>
+                    </span>
+                    {it.changed}
+                  </p>
+                </li>
+              ))}
+            </ol>
+
+            <figure
+              className="mt-2 flex items-center gap-6 pt-6"
+              style={{ borderTop: "1px solid var(--rule)" }}
+            >
+              {/* Width lives on a wrapper: PhoneShot is `w-full`, which beat a
+                  `w-[96px]` passed to it and pushed the caption off-screen
+                  on phones. */}
+              <div className="w-[96px] flex-none">
+                <PhoneShot
+                  src="/img/asap/phones/steps-locked.png"
+                  alt="The active step with a “1 of 5” counter, and later steps locked with “Unlocks after you finish step 1”"
+                  sizes="110px"
+                />
+              </div>
+              <figcaption className="text-[13.5px] leading-relaxed text-[var(--body)]">
+                <span className="meta mb-1 block">After testing</span>
+                Step counters and locked future steps made position in the plan visible at a
+                glance.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </Section>
+
+      {/* 07 — VALIDATION */}
+      <Section id="validation">
+        <div className="sec-grid">
+          <SectionHead n="07" eyebrow="Validation" title="What we learned from using it with people.">
+            <p>
+              We ran 6 user interviews and 4 usability scenarios across 3 design iterations
+              using a live AI-powered prototype.
+            </p>
+          </SectionHead>
+
+          <div>
+            <dl className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+              {metrics.map((m) => (
+                <div key={m.label} className="flex flex-col-reverse">
+                  <dt className="mt-2 text-[13px] leading-snug text-[var(--muted)]">{m.label}</dt>
+                  <dd
+                    className="font-[family-name:var(--font-display)] leading-none text-[var(--ink)]"
+                    style={{ fontSize: "clamp(40px, 4vw, 52px)" }}
+                  >
+                    {m.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="panel-sage mt-10 p-7">
+              <p className="eyebrow">What we found</p>
+              <ul className="mt-5 flex flex-col gap-6">
+                {findings.map((f) => (
+                  <li key={f.title} className="flex gap-4">
+                    <Icon className="icon-line mt-0.5 !h-5 !w-5">{icons.check}</Icon>
+                    <div>
+                      <h3 className="text-[17px] leading-snug">{f.title}</h3>
+                      <p className="mt-1.5 text-[14px] leading-relaxed text-[var(--body)]">{f.body}</p>
+                    </div>
                   </li>
                 ))}
               </ul>
-            </Beat>
+            </div>
           </div>
+        </div>
 
-          <div style={{ gridColumn: "7 / 13", alignSelf: "start" }}>
-            <ImageFrame
+        <figure className="mt-14">
+          <div className="media relative w-full" style={{ aspectRatio: "1464 / 960", border: "1px solid var(--border)" }}>
+            <Image
               src="/img/asap/figma-overview.png"
-              alt="Team alignment board — collaborative problem framing and feature prioritisation"
-              aspect="1.525/1"
-              objectFit="contain"
-              caption="Alignment board — problem framing and feature prioritisation with the team"
+              alt="The team’s synthesis board: problem framing, interview themes and feature prioritisation"
+              fill
+              sizes="(max-width: 1200px) 94vw, 1096px"
+              className="object-contain"
             />
           </div>
+          <figcaption className="mt-3 text-[13px] text-[var(--muted)]">
+            Synthesis board from the research phase — problem framing and feature
+            prioritisation with the team.
+          </figcaption>
+        </figure>
+      </Section>
 
-          <div className="rounded-2xl p-6" style={{ gridColumn: "1 / 13", ...tintedGlass(accent, 0.08) }}>
-            <p className="text-[0.58rem] font-semibold tracking-[0.22em] uppercase" style={{ color: accent }}>
-              The pivot
+      {/* 08 — IMPACT */}
+      <Section id="impact">
+        <div className="sec-grid">
+          <SectionHead n="08" eyebrow="Impact" title="We ended with a clearer model for AI-guided planning.">
+            <p>
+              The prototype gave us a working interaction model for moving from user intent
+              to context, recommendation, and action.
             </p>
-            <p className="mt-3 text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "80ch" }}>
-              We&rsquo;d scoped a task manager, but the interviews made clear people
-              already owned those and still couldn&rsquo;t start. That shifted the product
-              from something that organizes tasks to something that coaches the thinking
-              behind them, moving our focus from screen design to what the AI says — and
-              doesn&rsquo;t say. Every decision in the next chapter follows from this pivot.
+            <p>It also made the next product questions much clearer.</p>
+          </SectionHead>
+
+          <div>
+            <p className="meta">Future product opportunities — not shipped features</p>
+            <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+              {opportunities.map((o) => (
+                <li key={o.title} className="panel p-6">
+                  <Icon>{o.icon}</Icon>
+                  <h3 className="mt-4 text-[18px] leading-snug">{o.title}</h3>
+                  <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">{o.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Section>
+
+      {/* 09 — MY ROLE */}
+      <Section id="role">
+        <div className="sec-grid">
+          <SectionHead
+            n="09"
+            eyebrow="My role"
+            title="I worked on the experience between the user’s goal and the AI’s response."
+          >
+            <p>
+              On a four-person team, I focused on the parts of the product that shaped how
+              users interacted with the AI.
+            </p>
+          </SectionHead>
+
+          <div>
+            <p className="meta">I owned</p>
+            <ul className="mt-3 grid gap-x-8 sm:grid-cols-2">
+              {owned.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-3 py-3.5 text-[15px] leading-snug text-[var(--ink)]"
+                  style={{ borderTop: "1px solid var(--rule)" }}
+                >
+                  <span
+                    aria-hidden
+                    className="mt-[7px] h-1.5 w-1.5 flex-none rounded-full"
+                    style={{ background: "var(--numeral)" }}
+                  />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 text-[13px] text-[var(--muted)]">
+              HCI capstone, DePaul University.
             </p>
           </div>
-        </EditorialLayout>
-      </GradientField>
-
-      {/* ── 03 · DESIGN — rules, then the finding→behaviour table, then the
-             iteration record, then the shipped experience ── */}
-      <EditorialLayout maxWidth="1500px">
-        <ChapterHead
-          n="03"
-          label="Design"
-          title={<>Three rules for <span className="italic" style={{ color: accent }}>how the AI behaves.</span></>}
-          lead="The interface is downstream of these. All three were fixed before a single hi-fi screen existed."
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ gridColumn: "1 / 13" }}>
-          {aiPrinciples.map((p, i) => (
-            <div
-              key={p.name}
-              className="rounded-2xl p-6 h-full"
-              style={tintedGlass(i === 1 ? gold : i === 2 ? sage : accent, 0.08)}
-            >
-              <p className="font-[family-name:var(--font-display)] font-semibold text-xl text-[var(--color-ink)]">
-                {p.name}
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-[var(--color-ink-muted)]">{p.body}</p>
-            </div>
-          ))}
         </div>
+      </Section>
 
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow>Key decisions — every behavior traces to a finding</Eyebrow>
-        </div>
-        <div style={{ gridColumn: "1 / 13" }}>
-          <div className="hidden md:grid md:grid-cols-[1fr_1fr_1.15fr] gap-x-8">
-            {["Finding", "Prompt strategy", "What we validated"].map((h) => (
-              <p key={h} className="pb-3 text-[0.55rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">
-                {h}
-              </p>
+      {/* 10 — WHAT'S NEXT */}
+      <Section id="next">
+        <div className="sec-grid">
+          <SectionHead
+            n="10"
+            eyebrow="What’s next"
+            title="The next step is making ASAP useful beyond the prototype."
+          >
+            <p>
+              The current experience works as a focused planning tool. The next version would
+              need to handle more complex goals, connect to the tools people already use, and
+              prove that the guidance actually helps people follow through.
+            </p>
+          </SectionHead>
+
+          <ul className="grid gap-4 sm:grid-cols-3">
+            {nextSteps.map((n) => (
+              <li key={n.title} className="panel p-6">
+                <Icon>{n.icon}</Icon>
+                <h3 className="mt-4 text-[18px] leading-snug">{n.title}</h3>
+                <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">{n.body}</p>
+              </li>
             ))}
-          </div>
-          <div className="md:grid md:grid-cols-[1fr_1fr_1.15fr] md:gap-x-8">
-            {findingToBehavior.map((r) => (
-              <div key={r.finding} className="contents">
-                <div className="pt-5 pb-2 md:py-5 border-t border-white/10">
-                  <p className="text-sm leading-relaxed text-[var(--color-ink)] font-medium">{r.finding}</p>
-                </div>
-                <div className="pb-2 md:py-5 md:border-t md:border-white/10">
-                  <p className="text-sm leading-relaxed text-[var(--color-ink-muted)]">
-                    <span className="md:hidden block text-[0.55rem] font-semibold tracking-[0.22em] uppercase mb-1" style={{ color: accent }}>
-                      Prompt strategy
-                    </span>
-                    {r.prompt}
-                  </p>
-                </div>
-                <div className="pb-5 md:py-5 md:border-t md:border-white/10">
-                  <p className="text-sm leading-relaxed text-[var(--color-ink-muted)]">
-                    <span className="md:hidden block text-[0.55rem] font-semibold tracking-[0.22em] uppercase mb-1" style={{ color: sage }}>
-                      What we validated
-                    </span>
-                    {r.validated}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+          </ul>
         </div>
-      </EditorialLayout>
+      </Section>
 
-      {/* Iteration record — the three lo-fi rounds shown as the evidence behind
-          the RITE cards that follow */}
-      <GalleryLayout maxWidth="1600px">
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow color={gold}>Iterations — fixes went in between sessions, not after</Eyebrow>
-          <p className="mt-2 text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
-            Three lo-fi rounds settled where actions live and how the coaching flow
-            triggers, before a single hi-fi pixel.
-          </p>
-        </div>
-        {[
-          { src: "/img/asap/lofi-wireframes-round1.png", alt: "Lo-fi round 1 — first screen explorations", aspect: "2.16/1", cap: "Round 1 — task entry and breakdown explorations", col: "1 / 5" },
-          { src: "/img/asap/lofi-wireframes-round2.png", alt: "Lo-fi round 2 — refined flows", aspect: "2.04/1", cap: "Round 2 — coaching interaction patterns emerging", col: "5 / 9" },
-          { src: "/img/asap/lofi-wireframes-round3.png", alt: "Lo-fi round 3 — happy path mapped end to end", aspect: "1.46/1", cap: "Round 3 — happy path mapped end to end", col: "9 / 13" },
-        ].map((w) => (
-          <div key={w.src} style={{ gridColumn: w.col, marginTop: "1.25rem" }}>
-            <ImageFrame src={w.src} alt={w.alt} aspect={w.aspect} objectFit="contain" caption={w.cap} />
-          </div>
-        ))}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ gridColumn: "1 / 13", marginTop: "1.5rem" }}>
-          {riteRounds.map((r) => (
-            <div key={r.n} className="rounded-2xl p-5" style={tintedGlass(gold, 0.07)}>
-              <span
-                className="flex items-center justify-center w-8 h-8 rounded-full font-[family-name:var(--font-display)] font-semibold text-xs mb-3"
-                style={{ backgroundColor: gold, color: asapPalette.black }}
+      {/* CLOSING — deep green, both CTAs again, then the next case study */}
+      <DeepBand>
+        <div className="wrap py-[clamp(64px,8vw,112px)]">
+          <div className="grid gap-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-end md:gap-16">
+            <div>
+              <p className="eyebrow eyebrow-rule">Final thoughts</p>
+              <h2
+                className="mt-5"
+                style={{ fontSize: "clamp(36px, 4.4vw, 58px)", lineHeight: 1.06, maxWidth: "12em" }}
               >
-                {r.n}
-              </span>
-              {[
-                { k: "Issue", v: r.issue },
-                { k: "Change", v: r.change },
-                { k: "Result", v: r.result },
-              ].map((row, i, arr) => (
-                <div key={row.k}>
-                  <p className="text-[0.55rem] font-semibold tracking-[0.22em] uppercase" style={{ color: row.k === "Result" ? sage : gold }}>
-                    {row.k}
-                  </p>
-                  <p className="mt-1 text-sm leading-relaxed text-[var(--color-ink-muted)]">{row.v}</p>
-                  {i < arr.length - 1 && <p className="my-2 text-sm leading-none text-[var(--color-ink-faint)]" aria-hidden>↓</p>}
-                </div>
-              ))}
+                Good AI design isn’t about doing everything for people.
+              </h2>
             </div>
-          ))}
-        </div>
-      </GalleryLayout>
-
-      {/* The shipped experience — mid-fi bridge, the happy path, then the five
-          hi-fi screens the copy calls out by name */}
-      <GalleryLayout maxWidth="1600px">
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow color={sage}>The final experience</Eyebrow>
-          <p className="mt-2 text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
-            The shipped screens carry the three principles through: one primary action at a
-            time, a confidence label on every breakdown, coaching that appears contextually
-            rather than everywhere.
-          </p>
-        </div>
-        <div style={{ gridColumn: "1 / 6", marginTop: "1.25rem" }}>
-          <ImageFrame
-            src="/img/asap/midfi-wireframes.png"
-            alt="Mid-fi wireframes — structure and visual hierarchy"
-            aspect="0.39/1"
-            objectFit="contain"
-            caption="Mid-fi — structure, hierarchy, and the IA carried into hi-fi"
-          />
-        </div>
-        <div style={{ gridColumn: "6 / 13", marginTop: "1.25rem", alignSelf: "start" }}>
-          <ImageFrame
-            src="/img/asap/happy-path.png"
-            alt="Happy path — first input to AI-generated action plan"
-            aspect="1.31/1"
-            objectFit="contain"
-            caption="Happy path — first input to AI-generated action plan"
-          />
-        </div>
-        {[
-          { src: "/img/asap/screen-02-onboarding-light.png", alt: "Onboarding — copy that names the transition", cap: "Onboarding — copy that names the transition directly", col: "1 / 4" },
-          { src: "/img/asap/screen-03-task-input-light.png", alt: "Task entry — the AI asks before it plans", cap: "Task entry — the AI asks clarifying questions before it plans", col: "4 / 6" },
-          { src: "/img/asap/screen-04-ai-breakdown-dark.png", alt: "Breakdown — every step carries a confidence label", cap: "Breakdown — every step carries a confidence label", col: "6 / 8" },
-          { src: "/img/asap/screen-05-subtask-detail-light.png", alt: "One step at a time", cap: "One step at a time — future steps stay out of view", col: "8 / 10" },
-          { src: "/img/asap/screen-07-deep-focus-dark.png", alt: "Deep Focus — distraction-free single-task view", cap: "Deep Focus — distraction-free single-task view", col: "10 / 13" },
-        ].map((s) => (
-          <div key={s.src} style={{ gridColumn: s.col, marginTop: "1.25rem", maxWidth: "215px", marginInline: "auto" }}>
-            <ImageFrame
-              src={s.src}
-              alt={s.alt}
-              aspect="9/19.5"
-              objectFit="contain"
-              caption={s.cap}
-              style={{ backgroundColor: asapPalette.charcoal }}
-            />
-          </div>
-        ))}
-      </GalleryLayout>
-
-      {/* ── 04 · IMPACT ── */}
-      <GradientField gradient={asapGradients.amberSand}>
-        <EditorialLayout maxWidth="1500px">
-          <ChapterHead
-            n="04"
-            label="Impact"
-            color={sage}
-            title={<>Strong voice, <span className="italic" style={{ color: sage }}>real ceiling.</span></>}
-            lead="Round 1 tested all four transition types. Tone and structure landed; the plans themselves are what set the ceiling on real adoption, and that gap is the honest headline."
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ gridColumn: "1 / 13" }}>
-            <MetricStat accent={sage} value="6" label="Design research interviews" />
-            <MetricStat accent={sage} value="4" label="Usability scenarios tested" />
-            <MetricStat accent={sage} value="Live" label="Running on the real Claude API" />
-          </div>
-
-          <div className="rounded-2xl p-6" style={{ gridColumn: "1 / 7", alignSelf: "start", ...tintedGlass(sage, 0.08) }}>
-            <p className="text-[0.6rem] font-bold tracking-[0.26em] uppercase" style={{ color: sage }}>✓ What worked</p>
-            <ul className="mt-4 flex flex-col gap-3">
-              {wins.map((w) => (
-                <LabelledPoint key={w.label} label={w.label} text={w.text} color={sage} />
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-2xl p-6" style={{ gridColumn: "7 / 13", alignSelf: "start", ...tintedGlass(accent, 0.08) }}>
-            <p className="text-[0.6rem] font-bold tracking-[0.26em] uppercase" style={{ color: accent }}>✗ What didn&rsquo;t</p>
-            <ul className="mt-4 flex flex-col gap-3">
-              {gaps.map((g) => (
-                <LabelledPoint key={g.label} label={g.label} text={g.text} color={accent} />
-              ))}
-            </ul>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ gridColumn: "1 / 13" }}>
-            <Beat label="My direct deliverables" color={gold}>
-              I authored the prompt architecture, defined the system&rsquo;s three
-              behavioral rules, wrote the conversational microcopy — confidence states,
-              soft refusals, and onboarding prompts — and directed the information
-              architecture for both standard and focus modes.
-            </Beat>
-            <Beat label="What I&rsquo;d do next" color={accent}>
-              <ul className="flex flex-col gap-2">
-                {nextUp.map((n) => (
-                  <LabelledPoint key={n.label} label={n.label} text={n.text} color={accent} />
-                ))}
-              </ul>
-            </Beat>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ gridColumn: "1 / 13" }}>
-            {takeaways.map((t, i) => (
-              <div key={t.label} className="rounded-2xl p-6" style={tintedGlass(i === 0 ? accent : i === 1 ? sage : gold, 0.07)}>
-                <p className="text-[0.58rem] font-semibold tracking-[0.22em] uppercase" style={{ color: i === 0 ? accent : i === 1 ? sage : gold }}>
-                  {t.label}
-                </p>
-                <p className="mt-3 text-sm leading-relaxed text-[var(--color-ink-muted)]">{t.text}</p>
+            <div>
+              <p className="lead">
+                For ASAP, the better experience was one that helped people make the next
+                decision themselves.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <PrototypeButton />
+                <WatchDemoButton />
               </div>
-            ))}
+            </div>
           </div>
-        </EditorialLayout>
-      </GradientField>
 
-      {/* CTA */}
-      <section className="relative overflow-hidden" style={{ minHeight: "48dvh" }}>
-        <div className="absolute inset-0" style={{ background: asapGradients.amberSand }} />
-        <div
-          className="absolute w-[420px] h-[420px] rounded-full blur-[120px] opacity-40 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-          style={{ background: `radial-gradient(circle, ${accent} 0%, transparent 70%)` }}
-        />
-        <div className="relative z-10 grid px-6 md:px-10 py-16 items-center justify-items-center text-center gap-6" style={{ minHeight: "48dvh" }}>
-          <h2 className="font-[family-name:var(--font-display)] font-semibold leading-[0.95] text-[clamp(2rem,5vw,3.6rem)] text-[var(--color-ink)]">
-            Try ASAP for yourself.
-          </h2>
-          <TrackedLink
-            label="Live Prototype"
-            href="https://asap-flame.vercel.app/"
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-[0.75rem] font-semibold tracking-[0.15em] uppercase transition-transform hover:-translate-y-0.5"
-            style={{ backgroundColor: accent, color: asapPalette.black }}
+          <div
+            className="mt-16 flex flex-wrap items-center justify-between gap-6 pt-8"
+            style={{ borderTop: "1px solid var(--rule)" }}
           >
-            Live Prototype ↗
-          </TrackedLink>
+            <div>
+              <p className="meta">Next project</p>
+              <p className="mt-2 font-[family-name:var(--font-display)] text-[30px] leading-tight text-[var(--ink)]">
+                PM Dashboard
+              </p>
+            </div>
+            <Link href="/projects/mainstreet" className="btn btn-outline">
+              View case study <span aria-hidden>&#8594;</span>
+            </Link>
+          </div>
         </div>
-      </section>
-
-      {/* Next project — follows the portfolio order into PM Dashboard */}
-      <FullBleedLayout
-        image="/img/mainstreet/laptop-mockup.png"
-        imageAlt="PM Dashboard, a real-time Power BI view for portfolio managers"
-        imageOpacity={0.35}
-        minHeight="55dvh"
-        overlayClassName="items-center justify-items-center text-center"
-      >
-        <Link href="/projects/mainstreet" className="group">
-          <span
-            className="inline-flex rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.22em] uppercase mb-6"
-            style={tintedGlass(accent)}
-          >
-            <span style={{ color: gold }}>Next Project</span>
-          </span>
-          <h2 className="font-[family-name:var(--font-display)] font-semibold leading-[0.95] text-[clamp(2.5rem,7vw,5.5rem)] text-[var(--color-ink)]">
-            PM Dashboard
-            <span
-              className="block h-[2px] w-0 group-hover:w-full mx-auto mt-4 transition-[width] duration-500 ease-out"
-              style={{ backgroundColor: accent }}
-            />
-          </h2>
-        </Link>
-      </FullBleedLayout>
-    </div>
+      </DeepBand>
+    </>
   );
 }

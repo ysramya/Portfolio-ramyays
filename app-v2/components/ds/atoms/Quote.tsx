@@ -56,7 +56,7 @@ export default function Quote({
       {/* whitespace-pre-line lets a caller force a specific 2-line break with
           "\n" (viewport-proof) instead of hoping the measure wraps there. */}
       <p
-        className={`relative whitespace-pre-line font-[family-name:var(--font-display)] italic font-medium leading-[1.1] ${
+        className={`relative whitespace-pre-line font-[family-name:var(--font-display)] leading-[1.1] ${
           size === "large" ? "text-[clamp(2.25rem,5.5vw,4.5rem)]" : "text-[clamp(1.35rem,2.6vw,2.25rem)]"
         }`}
       >

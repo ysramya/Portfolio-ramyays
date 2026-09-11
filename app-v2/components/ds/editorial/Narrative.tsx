@@ -45,7 +45,7 @@ export default function Narrative({
             whileInView={{ y: 0 }}
             viewport={{ once: true, margin: "-15% 0px" }}
             transition={{ duration: motionTokens.duration.fast, ease: motionTokens.ease }}
-            className="text-[0.65rem] font-semibold tracking-[0.24em] uppercase mb-5"
+            className="text-[12px] font-medium tracking-[0.24em] uppercase mb-5"
             style={{ color: accent }}
           >
             {chapter}
@@ -56,7 +56,7 @@ export default function Narrative({
           whileInView={{ y: 0 }}
           viewport={{ once: true, margin: "-15% 0px" }}
           transition={{ duration: motionTokens.duration.base, ease: motionTokens.ease, delay: 0.05 }}
-          className="font-[family-name:var(--font-display)] italic font-medium leading-tight text-[clamp(1.6rem,3.4vw,2.6rem)]"
+          className="font-[family-name:var(--font-display)] leading-tight text-[clamp(1.6rem,3.4vw,2.6rem)]"
         >
           {pullLine}
         </motion.p>

@@ -38,7 +38,7 @@ export default function Evidence({
     <section className="wrap py-20 md:py-28 grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-8">
       <div className="md:col-span-3">
         <Reveal>
-          <h3 className="font-[family-name:var(--font-display)] font-semibold text-[clamp(1.8rem,3.4vw,2.6rem)] max-w-[20ch]">
+          <h3 className="font-[family-name:var(--font-display)] text-[clamp(1.8rem,3.4vw,2.6rem)] max-w-[20ch]">
             {title}
           </h3>
         </Reveal>
@@ -51,16 +51,16 @@ export default function Evidence({
               whileInView={{ y: 0 }}
               viewport={{ once: true, margin: "-10% 0px" }}
               transition={{ duration: motionTokens.duration.base, ease: motionTokens.ease, delay: i * 0.06 }}
-              className="grid grid-cols-[3rem_1fr] gap-4 py-5 border-t border-white/10 first:border-t-0"
+              className="grid grid-cols-[3rem_1fr] gap-4 py-5 border-t border-[var(--rule)] first:border-t-0"
             >
               <span
-                className="font-[family-name:var(--font-display)] text-2xl font-semibold"
+                className="font-[family-name:var(--font-display)] text-2xl"
                 style={{ color: accent }}
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
-                <p className="font-semibold">{item.label}</p>
+                <p className="font-medium">{item.label}</p>
                 <p className="mt-1 text-sm text-[var(--color-ink-muted)] leading-relaxed">
                   {item.detail}
                 </p>
@@ -75,7 +75,7 @@ export default function Evidence({
           <Reveal delay={0.15}>
             <div className="rounded-2xl p-7" style={tintedGlass(accent)}>
               <p
-                className="text-[0.62rem] font-semibold tracking-[0.22em] uppercase"
+                className="text-[12px] font-medium tracking-[0.22em] uppercase"
                 style={{ color: accent }}
               >
                 {aside.label}

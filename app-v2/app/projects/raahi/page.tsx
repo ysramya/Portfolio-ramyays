@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import NextProjectBand from "@/components/ds/NextProjectBand";
+import { getNextProject } from "@/lib/projects";
 import {
   HeroLayout,
   ReadingLayout,
@@ -19,9 +20,9 @@ export const metadata: Metadata = {
 
 const accent = raahiTheme.accent;
 
-function Eyebrow({ children }: { children: React.ReactNode }) {
+function Eyebrow({ children }: { children: React.ReactNode; color?: string }) {
   return (
-    <p className="text-[0.65rem] font-semibold tracking-[0.22em] uppercase" style={{ color: accent }}>
+    <p className="eyebrow">
       {children}
     </p>
   );
@@ -30,7 +31,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 function GlassNote({ label, text, style }: { label: string; text: string; style?: React.CSSProperties }) {
   return (
     <div className="rounded-2xl p-6" style={{ ...tintedGlass(accent, 0.06), ...style }}>
-      <p className="text-[0.62rem] font-semibold tracking-[0.2em] uppercase" style={{ color: accent }}>
+      <p className="text-[12px] font-medium tracking-[0.2em] uppercase" style={{ color: accent }}>
         {label}
       </p>
       <p className="mt-3 text-lg leading-relaxed">{text}</p>
@@ -42,7 +43,7 @@ function GlassNote({ label, text, style }: { label: string; text: string; style?
 function ContributionCard({ title, items }: { title: string; items: string[] }) {
   return (
     <div className="rounded-2xl p-6 h-full" style={tintedGlass(accent, 0.06)}>
-      <p className="text-[0.62rem] font-semibold tracking-[0.2em] uppercase" style={{ color: accent }}>
+      <p className="text-[12px] font-medium tracking-[0.2em] uppercase" style={{ color: accent }}>
         {title}
       </p>
       <ul className="mt-4 flex flex-col gap-3">
@@ -60,7 +61,7 @@ function ContributionCard({ title, items }: { title: string; items: string[] }) 
 function DecisionNote({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="mt-4">
-      <p className="text-[0.58rem] font-semibold tracking-[0.2em] uppercase" style={{ color: accent }}>
+      <p className="text-[10px] font-medium tracking-[0.2em] uppercase" style={{ color: accent }}>
         {label}
       </p>
       <p className="mt-1.5 text-sm text-[var(--color-ink-muted)] leading-relaxed">{children}</p>
@@ -90,7 +91,7 @@ function IterationFlow({
     <div className="rounded-2xl p-6" style={tintedGlass(accent, 0.06)}>
       {steps.map((step, i) => (
         <div key={step.label}>
-          <p className="text-[0.58rem] font-semibold tracking-[0.2em] uppercase" style={{ color: accent }}>
+          <p className="text-[10px] font-medium tracking-[0.2em] uppercase" style={{ color: accent }}>
             {step.label}
           </p>
           <p className="mt-1.5 text-sm leading-relaxed">{step.text}</p>
@@ -107,21 +108,15 @@ function IterationFlow({
 
 export default function RaahiPage() {
   return (
-    <div style={{ backgroundColor: raahiTheme.secondary }}>
+    <div className="auto-number" style={{ backgroundColor: raahiTheme.secondary }}>
       {/* 1 — Hero: full-bleed brand image, title overlaps the edge */}
       <HeroLayout image="/img/raahi/brand-splash.png" imageAlt="Raahi brand identity">
         <div>
-          <span
-            className="inline-flex w-fit items-center gap-2 rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.22em] uppercase mb-6"
-            style={tintedGlass(accent)}
-          >
-            <span style={{ color: accent }}>Product Designer + Co-founder · 16 Weeks</span>
-          </span>
-          <h1 className="font-[family-name:var(--font-display)] font-semibold leading-[0.92] tracking-[-0.02em] text-[clamp(3rem,9vw,7.5rem)] max-w-[16ch] md:-ml-1">
-            Raahi
-            <br />
-            <span className="italic font-normal text-[0.4em] align-middle">Spot it. Fix it.</span>
-          </h1>
+          <p className="eyebrow eyebrow-rule">Product Designer + Co-founder · 16 Weeks</p>
+          <h1 className="mt-4">Raahi</h1>
+          <h2 className="mt-5" style={{ fontSize: "clamp(28px, 3.1vw, 40px)", lineHeight: 1.22 }}>
+            Spot it. Fix it.
+          </h2>
         </div>
       </HeroLayout>
 
@@ -139,7 +134,7 @@ export default function RaahiPage() {
             { label: "Tools", value: "Figma · Miro · Forms · Notion" },
           ].map((m) => (
             <div key={m.label} className="rounded-xl px-4 py-3" style={tintedGlass(accent, 0.06)}>
-              <dt className="text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">
+              <dt className="text-[10px] font-medium tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">
                 {m.label}
               </dt>
               <dd className="mt-1 text-sm">{m.value}</dd>
@@ -152,7 +147,7 @@ export default function RaahiPage() {
       <EditorialLayout>
         <div style={{ gridColumn: "1 / 13" }}>
           <Eyebrow>My Contributions</Eyebrow>
-          <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight max-w-[20ch]">
+          <h3 className="mt-3 font-[family-name:var(--font-display)] text-3xl md:text-4xl leading-tight max-w-[20ch]">
             What I owned.
           </h3>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -222,7 +217,7 @@ export default function RaahiPage() {
         right={
           <div>
             <Eyebrow>The Problem</Eyebrow>
-            <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight">
+            <h3 className="mt-3 font-[family-name:var(--font-display)] text-3xl md:text-4xl leading-tight">
               Dark patterns are everywhere. No one&rsquo;s watching for them.
             </h3>
             <p className="mt-4 text-[var(--color-ink-muted)] text-lg leading-relaxed">
@@ -252,7 +247,7 @@ export default function RaahiPage() {
       {/* 5 — Stakes: EditorialLayout, list col 1-7, glass aside col 8-13 */}
       <EditorialLayout>
         <div style={{ gridColumn: "1 / 8" }}>
-          <h3 className="font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight max-w-[18ch]">
+          <h3 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl leading-tight max-w-[18ch]">
             Three problems. One practitioner. No tool.
           </h3>
           <ol className="mt-8 flex flex-col">
@@ -261,8 +256,8 @@ export default function RaahiPage() {
               { label: "02 · Speed — Invisible", detail: "Manipulation works because it's designed to go unnoticed in the moment it happens." },
               { label: "03 · The Gap — No tool", detail: "Practitioners still rely on manual checklists and gut feel — nothing catches this automatically." },
             ].map((item) => (
-              <li key={item.label} className="py-5 border-t border-white/10 first:border-t-0">
-                <p className="font-semibold">{item.label}</p>
+              <li key={item.label} className="py-5 border-t border-[var(--rule)] first:border-t-0">
+                <p className="font-medium">{item.label}</p>
                 <p className="mt-1 text-sm text-[var(--color-ink-muted)] leading-relaxed">{item.detail}</p>
               </li>
             ))}
@@ -292,7 +287,7 @@ export default function RaahiPage() {
         left={
           <div>
             <Eyebrow>Research</Eyebrow>
-            <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight">
+            <h3 className="mt-3 font-[family-name:var(--font-display)] text-3xl md:text-4xl leading-tight">
               12 interviews. 57+ surveys. One shared vocabulary.
             </h3>
             <p className="mt-4 text-[var(--color-ink-muted)] text-lg leading-relaxed">
@@ -338,7 +333,7 @@ export default function RaahiPage() {
 
       {/* 9 — What we learned: EditorialLayout, 5 items split into two columns */}
       <EditorialLayout>
-        <h3 className="font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight" style={{ gridColumn: "1 / 13" }}>
+        <h3 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl leading-tight" style={{ gridColumn: "1 / 13" }}>
           What the data made undeniable.
         </h3>
         <ol className="flex flex-col" style={{ gridColumn: "1 / 7" }}>
@@ -347,8 +342,8 @@ export default function RaahiPage() {
             { label: "Detection has to live in the browser", detail: "Practitioners review live sites in-browser — a tool has to live there too, or it doesn't get used." },
             { label: "Practitioners already knew — they just couldn't prove it", detail: "Every interview surfaced the same gap: strong instinct, no proof a stakeholder would accept." },
           ].map((item) => (
-            <li key={item.label} className="py-5 border-t border-white/10 first:border-t-0">
-              <p className="font-semibold">{item.label}</p>
+            <li key={item.label} className="py-5 border-t border-[var(--rule)] first:border-t-0">
+              <p className="font-medium">{item.label}</p>
               <p className="mt-1 text-sm text-[var(--color-ink-muted)] leading-relaxed">{item.detail}</p>
             </li>
           ))}
@@ -358,8 +353,8 @@ export default function RaahiPage() {
             { label: "Speed is the attack surface", detail: "Manipulation works because it's invisible in the moment — detection has to be just as fast." },
             { label: "The lever is upstream", detail: "Arm the person reviewing before it ships, not the person encountering it after." },
           ].map((item) => (
-            <li key={item.label} className="py-5 border-t border-white/10 first:border-t-0">
-              <p className="font-semibold">{item.label}</p>
+            <li key={item.label} className="py-5 border-t border-[var(--rule)] first:border-t-0">
+              <p className="font-medium">{item.label}</p>
               <p className="mt-1 text-sm text-[var(--color-ink-muted)] leading-relaxed">{item.detail}</p>
             </li>
           ))}
@@ -388,7 +383,7 @@ export default function RaahiPage() {
       <EditorialLayout>
         <div style={{ gridColumn: "1 / 13" }}>
           <Eyebrow>How the design evolved</Eyebrow>
-          <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight max-w-[22ch]">
+          <h3 className="mt-3 font-[family-name:var(--font-display)] text-3xl md:text-4xl leading-tight max-w-[22ch]">
             Two things research changed my mind about.
           </h3>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -421,7 +416,7 @@ export default function RaahiPage() {
       {/* 11 — Decisions + rejected: EditorialLayout, list col 1-7, callout col 8-13 */}
       <EditorialLayout>
         <div style={{ gridColumn: "1 / 8" }}>
-          <h3 className="font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight max-w-[20ch]">
+          <h3 className="font-[family-name:var(--font-display)] text-3xl md:text-4xl leading-tight max-w-[20ch]">
             Three decisions, made on purpose. One we chose not to make.
           </h3>
           <ol className="mt-8 flex flex-col">
@@ -445,8 +440,8 @@ export default function RaahiPage() {
                 tradeoff: "Gained flags that are comparable and defensible in a stakeholder conversation; gave up the nuance of the individual vocabularies practitioners had built for themselves. Acceptable because those private definitions were exactly what stopped detection from scaling.",
               },
             ].map((item) => (
-              <li key={item.label} className="py-5 border-t border-white/10 first:border-t-0">
-                <p className="font-semibold">{item.label}</p>
+              <li key={item.label} className="py-5 border-t border-[var(--rule)] first:border-t-0">
+                <p className="font-medium">{item.label}</p>
                 <p className="mt-1 text-sm text-[var(--color-ink-muted)] leading-relaxed">{item.detail}</p>
                 <DecisionNote label="Why this decision?">{item.why}</DecisionNote>
                 <DecisionNote label="Tradeoff">{item.tradeoff}</DecisionNote>
@@ -472,7 +467,7 @@ export default function RaahiPage() {
       >
         <div className="max-w-[36ch] rounded-2xl p-6" style={tintedGlass(accent, 0.1)}>
           <Eyebrow>The Solution</Eyebrow>
-          <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-[1.02]">
+          <h3 className="mt-3 font-[family-name:var(--font-display)] text-3xl md:text-4xl leading-[1.02]">
             Raahi, in the browser.
           </h3>
           <p className="mt-4 text-[var(--color-ink-muted)] leading-relaxed">
@@ -488,7 +483,7 @@ export default function RaahiPage() {
       <EditorialLayout>
         <div style={{ gridColumn: "1 / 13" }}>
           <Eyebrow>Watch It Work</Eyebrow>
-          <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight max-w-[20ch]">
+          <h3 className="mt-3 font-[family-name:var(--font-display)] text-3xl md:text-4xl leading-tight max-w-[20ch]">
             Raahi, spotting a dark pattern in real time.
           </h3>
           <video
@@ -506,7 +501,7 @@ export default function RaahiPage() {
       <EditorialLayout>
         <div style={{ gridColumn: "1 / 8" }}>
           <Eyebrow>If This Product Shipped</Eyebrow>
-          <h3 className="mt-3 font-[family-name:var(--font-display)] font-semibold text-3xl md:text-4xl leading-tight max-w-[20ch]">
+          <h3 className="mt-3 font-[family-name:var(--font-display)] text-3xl md:text-4xl leading-tight max-w-[20ch]">
             What I&rsquo;d watch for.
           </h3>
           <p className="mt-4 text-[var(--color-ink-muted)] leading-relaxed">
@@ -537,8 +532,8 @@ export default function RaahiPage() {
                 detail: "Detection accuracy would need ongoing review. A false flag is more expensive than a missed one here — the product's whole value is being credible enough to bring to a stakeholder, and a wrong flag spends that credibility.",
               },
             ].map((item) => (
-              <div key={item.label} className="py-5 border-t border-white/10 first:border-t-0">
-                <p className="font-semibold">{item.label}</p>
+              <div key={item.label} className="py-5 border-t border-[var(--rule)] first:border-t-0">
+                <p className="font-medium">{item.label}</p>
                 <p className="mt-1 text-sm text-[var(--color-ink-muted)] leading-relaxed">{item.detail}</p>
               </div>
             ))}
@@ -555,7 +550,7 @@ export default function RaahiPage() {
       {/* 15 — Now: ReadingLayout, pure text, no image */}
       <ReadingLayout>
         <Eyebrow>Now</Eyebrow>
-        <p className="mt-4 font-[family-name:var(--font-display)] italic font-medium leading-tight text-[clamp(1.6rem,3.4vw,2.6rem)]">
+        <p className="mt-4 font-[family-name:var(--font-display)] leading-tight text-[clamp(1.6rem,3.4vw,2.6rem)]">
           This project is becoming an academic research paper.
         </p>
         <p className="mt-6 text-[var(--color-ink-muted)] text-lg leading-relaxed">
@@ -566,30 +561,8 @@ export default function RaahiPage() {
         </p>
       </ReadingLayout>
 
-      {/* 16 — Next project: FullBleed, centered overlay */}
-      <FullBleedLayout
-        image="/img/wellnut/vr-session.jpg"
-        imageAlt="Wellnut, a VR mental wellness companion"
-        imageOpacity={0.4}
-        minHeight="60dvh"
-        overlayClassName="items-center justify-items-center text-center"
-      >
-        <Link href="/projects/wellnut" className="group">
-          <span
-            className="inline-flex rounded-full px-4 py-2 text-[0.62rem] font-semibold tracking-[0.22em] uppercase mb-6"
-            style={tintedGlass(accent)}
-          >
-            <span style={{ color: accent }}>Next Project</span>
-          </span>
-          <h2 className="font-[family-name:var(--font-display)] font-semibold leading-[0.95] text-[clamp(2.5rem,7vw,5.5rem)]">
-            Wellnut
-            <span
-              className="block h-[2px] w-0 group-hover:w-full mx-auto mt-4 transition-[width] duration-500 ease-out"
-              style={{ backgroundColor: accent }}
-            />
-          </h2>
-        </Link>
-      </FullBleedLayout>
+      {/* Closing — deep band pointing to the next piece in the portfolio order */}
+      <NextProjectBand {...getNextProject("raahi")} />
     </div>
   );
 }

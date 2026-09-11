@@ -1,36 +1,40 @@
 import type { ReactNode } from "react";
 
 /**
- * EditorialLayout — 1280px, a 12-column CSS Grid canvas.
+ * EditorialLayout — a 12-column CSS Grid canvas on the site container.
  *
- * This is the asymmetric workhorse. It has no opinion about what goes
- * where — it's a grid, not a template. Children are placed by the caller
- * via `style={{ gridColumn: "1 / 7" }}` (etc.) on each child, so the same
- * layout can produce a list+aside one time and a 2-column split the next.
- * That's the whole point: composition logic lives at the call site, not
- * baked into a fixed component recipe.
+ * The asymmetric workhorse. It has no opinion about what goes where —
+ * children are placed by the caller via `style={{ gridColumn: "1 / 7" }}`,
+ * so the same layout can produce a list+aside one time and a 2-column split
+ * the next.
+ *
+ * Width and gutters come from the shared `--wrap-max` / `--wrap-pad` tokens,
+ * so every section lines up with the nav, the numbered sections and the
+ * deep bands. It used to take per-section widths up to 1700px, which pushed
+ * content past the grid everything else sits on; `maxWidth` is still
+ * accepted so existing call sites compile, but it no longer widens the
+ * canvas.
  */
 export default function EditorialLayout({
   children,
   className = "",
-  maxWidth = "1280px",
 }: {
   children: ReactNode;
   className?: string;
-  /** Override the default 1280px canvas — pass "1440px" etc. for sections that need more room (statistics, research). */
+  /** Deprecated — accepted for existing call sites; the canvas always uses the site container. */
   maxWidth?: string;
 }) {
   return (
     <section
-      className={`py-20 md:py-28 px-6 md:px-10 ${className}`}
-      style={{ maxWidth, marginInline: "auto" }}
+      className={`py-12 md:py-[72px] ${className}`}
+      style={{ maxWidth: "var(--wrap-max)", marginInline: "auto", paddingInline: "var(--wrap-pad)" }}
     >
       {/* ds-grid: below md, globals.css forces every child to span the full
           row — call sites place children with inline gridColumn, which a
           utility class can't override. */}
       <div
         className="ds-grid grid gap-x-6 gap-y-10"
-        style={{ gridTemplateColumns: "repeat(12, 1fr)" }}
+        style={{ gridTemplateColumns: "repeat(12, minmax(0, 1fr))" }}
       >
         {children}
       </div>

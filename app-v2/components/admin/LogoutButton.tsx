@@ -12,7 +12,7 @@ export default function LogoutButton() {
         router.push("/admin/login");
         router.refresh();
       }}
-      className="glass rounded-full px-4 py-2 text-xs font-semibold tracking-[0.08em] uppercase text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-ink)]"
+      className="glass rounded-full px-4 py-2 text-xs font-medium tracking-[0.08em] uppercase text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-ink)]"
     >
       Log out
     </button>

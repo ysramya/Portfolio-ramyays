@@ -1,454 +1,178 @@
 import Link from "next/link";
 import Image from "next/image";
-import Postmark from "@/components/collage/Postmark";
-import TextileBorder from "@/components/collage/TextileBorder";
-import ArtSlot from "@/components/collage/ArtSlot";
+import DeepBand from "@/components/ds/DeepBand";
+import SectionHead, { Section } from "@/components/ds/SectionHead";
+import LoopVideo from "@/components/LoopVideo";
 import { projects } from "@/lib/projects";
 
 /**
- * Homepage — the scrapbook/collage direction.
- *
- * Surfaces (paper grain, stamp perforations, tape, postmark, textile
- * border) are generated in CSS/SVG. The illustrated collage pieces —
- * portrait, stamps, ornaments, project art — are real artwork and render
- * through <ArtSlot>, which shows the finished image once the file exists
- * and a labelled placeholder until then, so nothing ships as an empty box.
+ * Homepage — deep-green opening, ivory body with numbered sections,
+ * deep-green close: the same shape as every case study.
  */
 
-const intake = [
+const industries = [
   {
-    n: "01",
-    title: "See my work",
-    body: "Projects, case studies and designs that solve real problems.",
-    href: "#work",
-    tint: "color-mix(in oklab, var(--rose) 48%, var(--paper))",
-    art: "/img/collage/intake-work.png",
-    artLabel: "Pomegranate / botanical",
+    title: "Financial services",
+    body: "Dashboards and reporting tools for teams managing $1B+ in assets, where a wrong read has consequences.",
   },
   {
-    n: "02",
-    title: "Learn about me",
-    body: "My background, design journey and what drives me.",
-    href: "/about",
-    tint: "color-mix(in oklab, var(--turmeric) 42%, var(--paper))",
-    art: "/img/collage/intake-about.png",
-    artLabel: "Vintage radio",
+    title: "Research & education",
+    body: "Studies on human-AI interaction at DePaul's RAISE Lab, turning mixed-methods findings into design direction.",
   },
   {
-    n: "03",
-    title: "Research interests",
-    body: "Human-AI interaction, AI safety, vulnerable users and more.",
-    href: "#research",
-    tint: "color-mix(in oklab, var(--peacock) 30%, var(--paper))",
-    art: "/img/collage/intake-research.png",
-    artLabel: "Peacock",
-  },
-  {
-    n: "04",
-    title: "Just curious",
-    body: "Field notes, thoughts, random joys and things I'm into.",
-    href: "/beyond-the-screen",
-    tint: "var(--muted-sand)",
-    art: "/img/collage/intake-curious.png",
-    artLabel: "Chai cup",
+    title: "Architecture & interiors",
+    body: "Six years leading stakeholder-heavy projects before UX — the habit of designing inside real constraints.",
   },
 ];
-
-const investigations = [
-  {
-    n: "01",
-    title: "Cost of a Click",
-    tags: ["AI", "Environment", "Public Awareness"],
-    body: "An interactive installation that makes the invisible infrastructure behind AI visible and tangible.",
-    href: "/projects/invisible-impacts",
-    // the one card that already has real art — a photo from the installation
-    img: "/img/coac/hero-installation.jpg",
-  },
-  {
-    n: "02",
-    title: "Dark Patterns in AI",
-    tags: ["AI", "Ethics", "Behavior"],
-    body: "A mixed-methods study on how generative AI interfaces can manipulate vulnerable users.",
-    href: "/projects/raahi",
-    art: "/img/collage/inv-dark-patterns.png",
-    artLabel: "Puppet strings",
-    note: "People don't always know when they're being influenced.",
-  },
-  {
-    n: "03",
-    title: "Personality in AI",
-    tags: ["AI", "Social Presence", "Trust"],
-    body: "Exploring how assigning personality to AI impacts trust, reliance and manipulation.",
-    href: "#research",
-    art: "/img/collage/inv-personality.png",
-    artLabel: "Two figures in conversation",
-  },
-  {
-    n: "04",
-    title: "AI & Infrastructure",
-    tags: ["AI", "Governance", "Society"],
-    body: "Researching the social and environmental impact of AI infrastructure.",
-    href: "#research",
-    art: "/img/collage/inv-infrastructure.png",
-    artLabel: "Industrial landscape",
-  },
-];
-
-const thinkingAbout = [
-  "Agentic AI & accountability",
-  "Designing for informed consent",
-  "Infrastructure transparency",
-  "Public understanding of AI",
-];
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex items-center gap-4">
-      <span className="rule-ornament flex-1" aria-hidden />
-      <p
-        className="font-[family-name:var(--font-body-collage)] text-[0.7rem] font-bold tracking-[0.28em] uppercase whitespace-nowrap text-center"
-        style={{ color: "var(--vermilion)" }}
-      >
-        {children}
-      </p>
-      <span className="rule-ornament flex-1" aria-hidden />
-    </div>
-  );
-}
 
 export default function Home() {
   return (
-    <div className="collage relative overflow-hidden">
-      <TextileBorder />
-
-      {/* ── Hero ───────────────────────────────────────────────── */}
-      <section className="relative" style={{ paddingTop: "calc(var(--nav-h) + 2rem)", paddingBottom: "3.5rem" }}>
-        <div className="mx-auto grid gap-10 px-6 md:px-12 lg:grid-cols-[1.05fr_1fr] items-center" style={{ maxWidth: "1400px" }}>
-          <div className="lg:pl-10">
-            <p className="font-[family-name:var(--font-body-collage)] text-sm tracking-[0.28em] uppercase" style={{ color: "var(--ink-soft)" }}>
-              Hi, I&rsquo;m
-            </p>
-            <h1
-              className="mt-2 font-[family-name:var(--font-display-collage)] leading-[0.88] text-[clamp(2.6rem,7.5vw,5.4rem)]"
-              style={{ color: "var(--ink)" }}
+    <>
+      {/* ── Hero ─────────────────────────────────────────────────── */}
+      <DeepBand>
+        <div
+          className="wrap grid items-center gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] md:gap-14"
+          style={{ paddingTop: "calc(var(--nav-h) + 48px)", paddingBottom: 72 }}
+        >
+          <div>
+            <p className="eyebrow eyebrow-rule">Product designer &middot; UX researcher</p>
+            <h1 className="mt-5">Ramya Yerramilli</h1>
+            <h2
+              className="mt-5"
+              style={{ fontSize: "clamp(28px, 3.1vw, 40px)", lineHeight: 1.2, maxWidth: "12em" }}
             >
-              Ramya
-              <br />
-              Yerramilli
-            </h1>
-
-            <p
-              className="mt-5 font-[family-name:var(--font-body-collage)] font-bold text-[0.95rem] md:text-base tracking-[0.06em] uppercase leading-relaxed"
-              style={{ color: "var(--vermilion)", maxWidth: "26ch" }}
-            >
-              UX Researcher investigating the human impact of AI
+              Making AI safer for everyday decisions.
+            </h2>
+            <p className="lead mt-5">
+              Designing trustworthy AI experiences informed by mixed-methods research and six
+              years of complex stakeholder-driven design.
             </p>
-
-            <div
-              className="mt-5 flex flex-col gap-4 font-[family-name:var(--font-body-collage)] text-[0.9rem] leading-[1.75]"
-              style={{ color: "var(--ink-soft)", maxWidth: "46ch" }}
-            >
-              <p>
-                I study how people understand, trust and respond to intelligent
-                systems — especially where AI influences behavior, creates risk, or
-                leaves people behind.
-              </p>
-              <p>
-                Through mixed-methods research and human-centered design, I turn
-                complex insights into experiences that are ethical, inclusive and
-                truly human.
-              </p>
-            </div>
-
-            <p className="mt-6 font-[family-name:var(--font-hand)] text-2xl" style={{ color: "var(--ink)" }}>
-              Curious by nature. Researcher by choice.
+            <p className="mt-3 text-[14px] leading-relaxed text-[var(--muted)]">
+              Graduate Research Assistant at DePaul&rsquo;s RAISE Lab, previously at
+              MainStreet Advisors.
             </p>
-
-            <Postmark className="mt-6" />
-          </div>
-
-          {/* Collage composition */}
-          <div className="relative min-h-[420px] md:min-h-[560px]">
-            <div className="relative mx-auto" style={{ maxWidth: "400px" }}>
-              <div
-                className="absolute inset-x-6 top-8 bottom-10 rounded-[14px]"
-                style={{ background: "var(--peacock)", opacity: 0.9 }}
-                aria-hidden
-              />
-              <div
-                className="absolute left-1/2 -translate-x-1/2 top-12 w-[180px] h-[180px] rounded-full"
-                style={{ background: "var(--turmeric)", opacity: 0.85 }}
-                aria-hidden
-              />
-              <ArtSlot
-                src="/img/collage/portrait.png"
-                alt="Illustrated portrait of Ramya Yerramilli"
-                label="Illustrated portrait"
-                aspect="3/4"
-                className="relative"
-              />
-            </div>
-
-            <div className="absolute -top-2 left-0 w-[100px] rotate-[-6deg] hidden sm:block">
-              <div className="stamp-edge">
-                <ArtSlot src="/img/collage/stamp-elephant.png" alt="Vintage India postage stamp" label="Stamp" aspect="1/1.25" />
-              </div>
-            </div>
-
-            <div className="absolute top-[27%] -left-2 md:left-0 w-[148px] md:w-[168px] rotate-[-3deg] hidden sm:block">
-              <span className="tape left-1/2 -translate-x-1/2 -top-3 rotate-[-4deg]" aria-hidden />
-              <div className="collage-card p-4">
-                <p className="font-[family-name:var(--font-hand)] text-[1.05rem] leading-snug" style={{ color: "var(--ink)" }}>
-                  Design is not just how it looks. It&rsquo;s how it makes people
-                  feel, think and decide.
-                </p>
-              </div>
-            </div>
-
-            <div className="absolute top-[24%] right-0 w-[88px] rotate-[4deg] hidden md:block">
-              <div className="collage-card px-2 py-3 text-center" style={{ borderColor: "var(--turmeric)" }}>
-                <p className="font-[family-name:var(--font-body-collage)] text-[0.58rem] tracking-[0.16em]" style={{ color: "var(--vermilion)" }}>
-                  A 13407
-                </p>
-                <div className="my-2">
-                  <ArtSlot src="/img/collage/ticket-motif.png" alt="Floral ticket motif" label="Motif" aspect="1/1" />
-                </div>
-                <p className="font-[family-name:var(--font-body-collage)] text-[0.58rem] leading-tight" style={{ color: "var(--ink-soft)" }}>
-                  खेलेगा
-                  <br />
-                  खिलेगा
-                  <br />
-                  इंडिया
-                </p>
-              </div>
-            </div>
-
-            <p
-              className="absolute top-1 right-0 md:right-[104px] font-[family-name:var(--font-body-collage)] text-[0.6rem] tracking-[0.14em] uppercase text-right leading-relaxed hidden sm:block"
-              style={{ color: "var(--ink-soft)" }}
-            >
-              Chicago, IL
-              <br />
-              Exploring the world
-              <br />
-              one question at a time
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Intake ─────────────────────────────────────────────── */}
-      <section className="px-6 md:px-12 py-10" style={{ borderTop: "1px solid rgba(29,27,24,0.14)" }}>
-        <div className="mx-auto" style={{ maxWidth: "1400px" }}>
-          <SectionLabel>✦ What are you here for today? ✦</SectionLabel>
-
-          <div className="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {intake.map((c, i) => (
-              <Link
-                key={c.n}
-                href={c.href}
-                className="collage-card group relative block p-6 transition-transform duration-300 hover:-translate-y-1"
-                style={{ background: c.tint, transform: `rotate(${i % 2 === 0 ? -0.6 : 0.6}deg)` }}
-              >
-                <p className="font-[family-name:var(--font-display-collage)] text-2xl" style={{ color: "var(--vermilion)" }}>
-                  {c.n}
-                </p>
-                <p
-                  className="mt-3 font-[family-name:var(--font-body-collage)] font-bold text-[0.92rem] tracking-[0.1em] uppercase"
-                  style={{ color: "var(--ink)" }}
-                >
-                  {c.title}
-                </p>
-                <p className="mt-2 font-[family-name:var(--font-body-collage)] text-[0.78rem] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
-                  {c.body}
-                </p>
-                <p
-                  className="mt-5 font-[family-name:var(--font-body-collage)] text-[0.7rem] tracking-[0.2em] uppercase inline-flex items-center gap-2"
-                  style={{ color: "var(--vermilion)" }}
-                >
-                  Explore
-                  <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </p>
-                <div className="mt-4 h-[84px]">
-                  <ArtSlot src={c.art} alt="" label={c.artLabel} aspect="16/9" />
-                </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="#work" className="btn">
+                View my work <span aria-hidden>&#8594;</span>
               </Link>
-            ))}
+              <a href="mailto:ys.ramya@gmail.com" className="btn btn-outline">
+                Get in touch
+              </a>
+            </div>
+          </div>
+
+          {/* The illustration is a finished collage on its own ivory paper
+              ground, so on deep green it's presented as a print: an ivory
+              mat of the same colour, soft corners, the artwork uncropped.
+              The mat uses a literal ivory because `--bg` is green in here. */}
+          <div
+            className="mx-auto w-full max-w-[500px]"
+            style={{ background: "#f7f5ef", padding: "clamp(10px, 1.4vw, 18px)", borderRadius: "var(--radius)" }}
+          >
+            <div className="relative w-full" style={{ aspectRatio: "550 / 560" }}>
+              <Image
+                src="/img/profile/ramya-hero-image.png"
+                alt="Illustrated portrait of Ramya Yerramilli in profile, with pressed flowers, a Chicago skyline photo, and the handwritten line “Curiosity for a kinder, more human future.”"
+                fill
+                priority
+                sizes="(max-width: 768px) 90vw, 500px"
+                className="object-contain"
+              />
+            </div>
           </div>
         </div>
-      </section>
+      </DeepBand>
 
-      {/* ── Featured investigations ────────────────────────────── */}
-      <section id="research" className="px-6 md:px-12 py-10" style={{ scrollMarginTop: "var(--nav-h)" }}>
-        <div className="mx-auto collage-card p-6 md:p-8" style={{ maxWidth: "1400px" }}>
-          <div className="flex flex-wrap items-baseline justify-between gap-4">
-            <p className="font-[family-name:var(--font-body-collage)] text-[0.7rem] font-bold tracking-[0.26em] uppercase" style={{ color: "var(--ink)" }}>
-              Featured investigations ✦
-            </p>
-            <Link
-              href="#work"
-              className="font-[family-name:var(--font-body-collage)] text-[0.7rem] tracking-[0.18em] uppercase hover:underline"
-              style={{ color: "var(--vermilion)" }}
-            >
-              Or explore everything →
-            </Link>
-          </div>
+      {/* ── 01 Selected work ─────────────────────────────────────── */}
+      <Section id="work" divided={false}>
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <SectionHead n="01" eyebrow="Case studies" title="Selected work" />
+          <Link
+            href="/about"
+            className="text-[14px] text-[var(--body)] transition-colors hover:text-[var(--ink)]"
+          >
+            About me <span aria-hidden>&#8594;</span>
+          </Link>
+        </div>
 
-          <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {investigations.map((p) => (
-              <Link key={p.n} href={p.href} className="group block">
-                <div className="stamp-edge">
-                  {p.img ? (
-                    <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
-                      <Image
-                        src={p.img}
-                        alt={p.title}
-                        fill
-                        sizes="(max-width: 640px) 100vw, 25vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                      />
-                    </div>
-                  ) : (
-                    <ArtSlot src={p.art!} alt={p.title} label={p.artLabel!} aspect="4/3" />
-                  )}
-                </div>
-                <p className="mt-3 font-[family-name:var(--font-body-collage)] text-[0.6rem] tracking-[0.18em]" style={{ color: "var(--ink-soft)" }}>
-                  {p.n}
-                </p>
-                <p
-                  className="mt-1 font-[family-name:var(--font-body-collage)] font-bold text-[0.85rem] tracking-[0.08em] uppercase"
-                  style={{ color: "var(--ink)" }}
-                >
-                  {p.title}
-                </p>
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {p.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="font-[family-name:var(--font-body-collage)] text-[0.55rem] tracking-[0.12em] uppercase px-2 py-0.5"
-                      style={{ border: "1px solid rgba(29,27,24,0.25)", color: "var(--ink-soft)" }}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <p className="mt-2 font-[family-name:var(--font-body-collage)] text-[0.76rem] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
-                  {p.body}
-                </p>
-                {p.note && (
-                  <p className="mt-2 font-[family-name:var(--font-hand)] text-[1.05rem] leading-snug" style={{ color: "var(--ink)" }}>
-                    {p.note}
-                  </p>
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          {projects.map((p) => (
+            <Link key={p.slug} href={`/projects/${p.slug}`} className="card group flex flex-col">
+              <div className="relative w-full" style={{ aspectRatio: "9 / 10", background: "#ffffff" }}>
+                {p.video ? (
+                  <LoopVideo
+                    src={p.video}
+                    poster={p.image}
+                    label={`${p.title} preview`}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                ) : (
+                  <Image
+                    src={p.image}
+                    alt={p.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                    className="object-cover"
+                  />
                 )}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── All work — keeps every case study reachable from home ─ */}
-      <section id="work" className="px-6 md:px-12 py-10" style={{ scrollMarginTop: "var(--nav-h)" }}>
-        <div className="mx-auto" style={{ maxWidth: "1400px" }}>
-          <SectionLabel>✦ All work ✦</SectionLabel>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {projects.map((p, i) => (
-              <Link
-                key={p.slug}
-                href={`/projects/${p.slug}`}
-                className="collage-card group block p-4 transition-transform duration-300 hover:-translate-y-1"
-                style={{ transform: `rotate(${i % 2 === 0 ? 0.5 : -0.5}deg)` }}
-              >
-                <div className="stamp-edge">
-                  <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
-                    <Image
-                      src={p.image}
-                      alt={p.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, 20vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    />
-                  </div>
-                </div>
-                <p
-                  className="mt-3 font-[family-name:var(--font-body-collage)] font-bold text-[0.82rem] tracking-[0.08em] uppercase"
-                  style={{ color: "var(--ink)" }}
-                >
-                  {p.title}
-                </p>
-                <p className="mt-1 font-[family-name:var(--font-body-collage)] text-[0.72rem] leading-relaxed" style={{ color: "var(--ink-soft)" }}>
-                  {p.description}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Closing band ───────────────────────────────────────── */}
-      <section className="px-6 md:px-12 py-12">
-        <div className="mx-auto grid gap-10 md:grid-cols-3" style={{ maxWidth: "1400px" }}>
-          <div>
-            <p className="font-[family-name:var(--font-display-collage)] text-4xl leading-none" style={{ color: "var(--vermilion)" }} aria-hidden>
-              &ldquo;
-            </p>
-            <p className="mt-2 font-[family-name:var(--font-body-collage)] text-[0.9rem] leading-[1.8]" style={{ color: "var(--ink)" }}>
-              The goal of my research is simple: make the invisible consequences of
-              technology visible enough to design for them.
-            </p>
-          </div>
-
-          <div>
-            <p className="font-[family-name:var(--font-body-collage)] text-[0.66rem] font-bold tracking-[0.22em] uppercase" style={{ color: "var(--vermilion)" }}>
-              Currently thinking about
-            </p>
-            <ul className="mt-4 flex flex-col gap-2">
-              {thinkingAbout.map((t) => (
-                <li
-                  key={t}
-                  className="font-[family-name:var(--font-body-collage)] text-[0.83rem] pl-5 relative"
-                  style={{ color: "var(--ink-soft)" }}
-                >
-                  <span className="absolute left-0" style={{ color: "var(--vermilion)" }} aria-hidden>
-                    ✦
-                  </span>
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="flex flex-col items-start gap-5">
-            <div className="collage-card px-5 py-4 rotate-[-2deg] text-center" style={{ background: "var(--rose)" }}>
-              <p
-                className="font-[family-name:var(--font-body-collage)] font-bold text-[0.7rem] tracking-[0.12em] uppercase leading-relaxed"
-                style={{ color: "var(--vermilion)" }}
-              >
-                Every question
-                <br />
-                leads to a
-                <br />
-                better design.
-              </p>
-            </div>
-            <div>
-              <p className="font-[family-name:var(--font-body-collage)] text-[0.66rem] font-bold tracking-[0.22em] uppercase" style={{ color: "var(--vermilion)" }}>
-                Find me
-              </p>
-              <div className="mt-3 flex items-center gap-4 font-[family-name:var(--font-body-collage)] text-sm">
-                <a href="https://www.linkedin.com/in/ramyays" target="_blank" rel="noopener" className="hover:underline" style={{ color: "var(--ink)" }}>
-                  LinkedIn
-                </a>
-                <a href="mailto:ys.ramya@gmail.com" className="hover:underline" style={{ color: "var(--ink)" }}>
-                  Email
-                </a>
-                <a href="/resume.pdf" target="_blank" rel="noopener" className="hover:underline" style={{ color: "var(--ink)" }}>
-                  Resume
-                </a>
               </div>
+
+              <div className="flex flex-1 flex-col" style={{ padding: "20px 18px 18px", gap: 14 }}>
+                <h3 style={{ fontSize: 19, lineHeight: 1.25 }}>{p.title}</h3>
+                <p className="flex-1 text-[14px] leading-[1.6] text-[var(--body)]">{p.description}</p>
+                <span aria-hidden className="micro-rule" />
+                <div className="flex items-center justify-between gap-3">
+                  <span className="meta">{p.category}</span>
+                  <span aria-hidden className="arrow-btn">
+                    &#8594;
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── 02 Industries ────────────────────────────────────────── */}
+      <Section id="background">
+        <div className="sec-grid">
+          <SectionHead n="02" eyebrow="Background" title="Designing across industries" />
+          <ul className="grid gap-4 sm:grid-cols-3">
+            {industries.map((c) => (
+              <li key={c.title} className="panel p-6">
+                <h3 style={{ fontSize: 19, lineHeight: 1.3 }}>{c.title}</h3>
+                <p className="mt-3 text-[14px] leading-[1.6] text-[var(--body)]">{c.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
+      {/* ── Closing ──────────────────────────────────────────────── */}
+      <DeepBand>
+        <div className="wrap grid gap-10 py-[clamp(64px,8vw,112px)] md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-end md:gap-16">
+          <div>
+            <p className="eyebrow eyebrow-rule">Currently</p>
+            <h2 className="mt-5" style={{ fontSize: "clamp(34px, 4vw, 54px)", lineHeight: 1.08, maxWidth: "13em" }}>
+              Looking for product design roles where research shapes the decisions.
+            </h2>
+          </div>
+          <div>
+            <p className="lead">
+              I&rsquo;m most useful on problems where the right answer isn&rsquo;t known yet —
+              new surfaces, unclear user models, and systems people have reason not to trust.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a href="mailto:ys.ramya@gmail.com" className="btn">
+                Get in touch <span aria-hidden>&#8594;</span>
+              </a>
+              <a href="/resume.pdf" target="_blank" rel="noopener" className="btn btn-outline">
+                Resume <span aria-hidden>&#8599;</span>
+              </a>
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </DeepBand>
+    </>
   );
 }

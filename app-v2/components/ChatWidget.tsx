@@ -66,8 +66,8 @@ export default function ChatWidget() {
             role="dialog"
             aria-label="Chat with Ramya's assistant"
           >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
-              <p className="text-sm font-semibold">Ramya&rsquo;s Assistant</p>
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--rule)]">
+              <p className="text-sm font-medium">Ramya&rsquo;s Assistant</p>
               <button
                 aria-label="Close chat"
                 onClick={() => setOpen(false)}
@@ -82,7 +82,7 @@ export default function ChatWidget() {
                   key={i}
                   className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed ${
                     m.role === "user"
-                      ? "self-end bg-[var(--color-green)] text-black"
+                      ? "self-end bg-[var(--color-green)] text-[var(--bg)]"
                       : "glass self-start text-[var(--color-ink-muted)]"
                   }`}
                 >
@@ -95,7 +95,7 @@ export default function ChatWidget() {
                 </div>
               )}
             </div>
-            <div className="flex gap-2 p-3 border-t border-white/10">
+            <div className="flex gap-2 p-3 border-t border-[var(--rule)]">
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -106,7 +106,7 @@ export default function ChatWidget() {
               <button
                 onClick={send}
                 aria-label="Send message"
-                className="w-9 h-9 shrink-0 rounded-full bg-[var(--color-green)] text-black flex items-center justify-center"
+                className="w-9 h-9 shrink-0 rounded-full bg-[var(--color-green)] text-[var(--bg)] flex items-center justify-center"
               >
                 ↑
               </button>
@@ -119,7 +119,7 @@ export default function ChatWidget() {
         onClick={() => setOpen((o) => !o)}
         aria-label="Open chat"
         aria-expanded={open}
-        className="w-14 h-14 rounded-full bg-[var(--color-green)] text-black flex items-center justify-center shadow-lg hover:scale-105 transition-transform"
+        className="w-14 h-14 rounded-full bg-[var(--color-green)] text-[var(--bg)] flex items-center justify-center transition-transform"
       >
         <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2}>
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />

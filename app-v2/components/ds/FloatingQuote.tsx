@@ -21,7 +21,7 @@ export default function FloatingQuote({
     <div className="wrap py-8">
       <Reveal>
         <GlassCard strong className="p-7 md:p-9 max-w-[64ch] mx-auto">
-          <p className="text-2xl leading-relaxed italic" style={{ color: accent }}>
+          <p className="text-2xl leading-relaxed" style={{ color: accent }}>
             &ldquo;{text}&rdquo;
           </p>
           <p className="mt-4 text-xs tracking-wide text-[var(--color-ink-faint)]">
