@@ -85,7 +85,7 @@ export default function DesignSystemPage() {
         images={[
           { src: "/img/asap/phone-mockup.png", alt: "ASAP" },
           { src: "/img/wellnut/brand-poster.png", alt: "Wellnut" },
-          { src: "/img/mainstreet/laptop-mockup.png", alt: "PM Dashboard" },
+          { src: "/img/mainstreet/dashboard-mockup.png", alt: "PM Dashboard" },
         ]}
       />
 

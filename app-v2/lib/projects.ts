@@ -28,7 +28,7 @@ export const projects: Project[] = [
     title: "PM Dashboard",
     description: "A single-screen view into $1B+ of managed assets.",
     category: "Data Analytics · Power BI",
-    image: "/img/mainstreet/laptop-mockup.png",
+    image: "/img/mainstreet/dashboard-mockup.png",
     accent: "yellow",
   },
   {

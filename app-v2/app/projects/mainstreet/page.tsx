@@ -1,823 +1,1368 @@
 import type { Metadata } from "next";
-import NextProjectBand from "@/components/ds/NextProjectBand";
-import { getNextProject } from "@/lib/projects";
-import {
-  ReadingLayout,
-  EditorialLayout,
-  GalleryLayout,
-  SplitLayout,
-} from "@/components/ds/layouts";
-import { Quote, ImageFrame, MetricStat } from "@/components/ds/atoms";
-import { tintedGlass } from "@/components/ds/tokens";
-import { mainstreetTheme, mainstreetPalette, mainstreetGradients } from "./theme";
+import type { ReactNode } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import DeepBand from "@/components/ds/DeepBand";
+import SectionHead, { Section } from "@/components/ds/SectionHead";
+
+/**
+ * Mainstreet PM Dashboard — outcome-first enterprise case study, per
+ * Mainstreet_PM_Dashboard_Case_Study_Page.md, with the layout rhythm of the
+ * reference visual (numbered sections, head left / visual right, tinted
+ * cards, dark opening and closing).
+ *
+ * Every screenshot on this page is the real Power BI dashboard or the real
+ * review printout, both with client names and the portfolio manager's name
+ * redacted. Workflows, hierarchy, pipeline and iteration visuals are built
+ * as diagrams — abstract by design, never presented as historical screens.
+ *
+ * Metrics come from the project record: 3–4 hours every Monday per PM
+ * before, under 10 seconds on load after, six PMs, $1.2B+ AUA, ~100
+ * iterations. The reference image's other figures and its PM quote were
+ * generated and are not used.
+ */
 
 export const metadata: Metadata = {
   title: "PM Dashboard — Mainstreet Advisors · Ramya Yerramilli",
   description:
-    "A Power BI reporting tool that gave six Portfolio Managers at Mainstreet Advisors a real-time, single-screen view of their AUA, client health, and revenue.",
+    "I designed and built a Power BI dashboard that gave six Portfolio Managers a single view of AUA, revenue, client health, and portfolio performance — replacing a fragmented, manual reporting process.",
 };
 
-const accent = mainstreetTheme.accent;
-const olive = mainstreetPalette.olive;
-const gold = mainstreetPalette.gold;
-const sand = mainstreetPalette.sand;
+const DASHBOARD_ALT =
+  "The PM Dashboard in Power BI: headline KPIs, share of wallet, relationship trend, revenue by client tier, and the client table. Client names and the portfolio manager's name are redacted.";
 
-function Eyebrow({ children }: { children: React.ReactNode; color?: string }) {
+/** Friction (manual, repeated work) and resolved states in the diagrams. */
+const FRICTION = "#a8452c";
+const POSITIVE = "#3e6b55";
+
+/* ── Icons: 24×24 line set ─────────────────────────────────────────────── */
+
+function Icon({ children, className = "icon-line", style }: { children: ReactNode; className?: string; style?: React.CSSProperties }) {
   return (
-    <p className="eyebrow">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" className={className} style={style}>
       {children}
-    </p>
+    </svg>
   );
 }
 
-function GlassNote({
+const i = {
+  sheet: (
+    <>
+      <rect x="4" y="3.5" width="16" height="17" rx="1.8" />
+      <path d="M4 9h16M4 14.5h16M10 3.5v17" />
+    </>
+  ),
+  crm: (
+    <>
+      <ellipse cx="12" cy="6" rx="7" ry="2.6" />
+      <path d="M5 6v12c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6M5 12c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6" />
+    </>
+  ),
+  calc: (
+    <>
+      <rect x="5" y="3" width="14" height="18" rx="2" />
+      <path d="M8 7.5h8M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01" />
+    </>
+  ),
+  mail: (
+    <>
+      <rect x="3.5" y="5.5" width="17" height="13" rx="1.8" />
+      <path d="m4 7 8 6 8-6" />
+    </>
+  ),
+  person: (
+    <>
+      <circle cx="12" cy="8" r="3.6" />
+      <path d="M4.5 20c.4-3.6 3.5-5.6 7.5-5.6s7.1 2 7.5 5.6" />
+    </>
+  ),
+  pm: (
+    <>
+      <circle cx="12" cy="7.5" r="3.4" />
+      <path d="M5 20.5c.4-3.8 3.3-6 7-6s6.6 2.2 7 6M12 14.5l-1.3 2.5 1.3 3.5 1.3-3.5z" />
+    </>
+  ),
+  team: (
+    <>
+      <circle cx="9" cy="8.5" r="3.2" />
+      <path d="M3 19.5c.3-3 2.8-4.8 6-4.8s5.7 1.8 6 4.8" />
+      <circle cx="17" cy="9.5" r="2.4" />
+      <path d="M16.5 14.8c2.6.2 4.3 1.8 4.5 4.2" />
+    </>
+  ),
+  bolt: <path d="M13 3 5.5 13.5H12L11 21l7.5-10.5H12z" />,
+  model: (
+    <>
+      <rect x="3.5" y="4" width="6" height="5" rx="1" />
+      <rect x="14.5" y="4" width="6" height="5" rx="1" />
+      <rect x="9" y="15" width="6" height="5" rx="1" />
+      <path d="M6.5 9v2.5H12V15M17.5 9v2.5H12" />
+    </>
+  ),
+  dash: (
+    <>
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <path d="M3 9h18M8 13v4M12 12v5M16 14v3" />
+    </>
+  ),
+  decide: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <circle cx="12" cy="12" r="4.5" />
+      <circle cx="12" cy="12" r="1" />
+    </>
+  ),
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 7.5V12l3 2" />
+    </>
+  ),
+  chart: <path d="M5 20v-8M12 20V5M19 20v-5M3 20h18" />,
+  building: (
+    <>
+      <path d="M4 20.5V6l8-2.5V20.5M12 9h8v11.5" />
+      <path d="M7 9h2M7 12.5h2M7 16h2M15 12.5h2M15 16h2M2.5 20.5h19" />
+    </>
+  ),
+  money: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M14.8 9.2c-.5-.9-1.5-1.4-2.8-1.4-1.6 0-2.8.8-2.8 2 0 2.8 5.8 1.4 5.8 4.3 0 1.2-1.2 2.1-3 2.1-1.4 0-2.5-.6-3-1.6M12 6.2v1.6M12 16.2v1.6" />
+    </>
+  ),
+  eye: (
+    <>
+      <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
+      <circle cx="12" cy="12" r="3" />
+    </>
+  ),
+  search: (
+    <>
+      <circle cx="10.5" cy="10.5" r="6" />
+      <path d="m15 15 5.5 5.5" />
+    </>
+  ),
+  pen: <path d="m14.5 5.5 4 4M4 20l1-5L15.5 4.5a2 2 0 0 1 3 0l1 1a2 2 0 0 1 0 3L9 19z" />,
+  list: <path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01" />,
+  check: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="m8.3 12.3 2.5 2.5 5-5.2" />
+    </>
+  ),
+  cross: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="m9 9 6 6M15 9l-6 6" />
+    </>
+  ),
+  send: <path d="M21 3 10 14M21 3l-6.5 18-4-8.5L2 8.5z" />,
+  filter: <path d="M4 5h16l-6.2 7.5v6L10.2 20v-7.5z" />,
+  hash: <path d="M9.5 3.5 7.5 20.5M16.5 3.5l-2 17M4 9h16.5M3.5 15H20" />,
+  user: (
+    <>
+      <circle cx="12" cy="9" r="3.5" />
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M6.5 18.5c1.2-2 3.1-3 5.5-3s4.3 1 5.5 3" />
+    </>
+  ),
+  brief: (
+    <>
+      <rect x="3" y="7.5" width="18" height="12.5" rx="2" />
+      <path d="M8.5 7.5V5.5a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v2M3 13h18" />
+    </>
+  ),
+  gauge: (
+    <>
+      <path d="M4 16a8 8 0 1 1 16 0" />
+      <path d="M12 16l3.6-4.4" />
+    </>
+  ),
+  spark: <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" />,
+  refresh: (
+    <>
+      <path d="M20 12a8 8 0 1 1-2.3-5.7" />
+      <path d="M20 4.5v4h-4" />
+    </>
+  ),
+  trend: <path d="M3.5 17 9.5 11l4 4 7-7.5M15 7.5h5.5V13" />,
+  loop: <path d="M17 3.5 20.5 7 17 10.5M20.5 7H9a5 5 0 0 0 0 10h1" />,
+  arrowR: <path d="M5 12h14M13.5 6.5 19 12l-5.5 5.5" />,
+  arrowD: <path d="M12 5v14M6.5 13.5 12 19l5.5-5.5" />,
+};
+
+/* ── Small diagram primitives ──────────────────────────────────────────── */
+
+function Arrow({ dir = "right", className = "" }: { dir?: "right" | "down"; className?: string }) {
+  return (
+    <Icon className={`icon-line !h-[18px] !w-[18px] flex-none opacity-60 ${className}`}>
+      {dir === "right" ? i.arrowR : i.arrowD}
+    </Icon>
+  );
+}
+
+/** A labelled step in a flow diagram. */
+function Node({
+  icon,
   label,
-  text,
-  color = accent,
-  style,
+  tone = "neutral",
+  className = "",
 }: {
+  icon: ReactNode;
   label: string;
-  text: string;
-  color?: string;
-  style?: React.CSSProperties;
+  tone?: "neutral" | "friction" | "positive" | "strong";
+  className?: string;
 }) {
+  const ring =
+    tone === "friction" ? FRICTION : tone === "positive" ? POSITIVE : tone === "strong" ? "var(--ink)" : "var(--border-strong)";
   return (
-    <div className="rounded-2xl p-6" style={{ ...tintedGlass(color, 0.1), ...style }}>
-      <p className="text-[12px] font-medium tracking-[0.2em] uppercase" style={{ color }}>
-        {label}
-      </p>
-      <p className="mt-3 text-lg leading-relaxed text-[var(--color-ink)]">{text}</p>
+    <div className={`flex flex-col items-center text-center ${className}`}>
+      <span
+        className="flex h-12 w-12 items-center justify-center rounded-full"
+        style={{
+          border: `1px solid ${ring}`,
+          background: tone === "strong" ? "var(--ink)" : "var(--bg-raised)",
+          color: tone === "strong" ? "var(--bg)" : undefined,
+        }}
+      >
+        <Icon
+          className="icon-line !h-5 !w-5"
+          style={tone === "strong" ? { stroke: "var(--bg)" } : tone === "friction" ? { stroke: FRICTION } : tone === "positive" ? { stroke: POSITIVE } : undefined}
+        >
+          {icon}
+        </Icon>
+      </span>
+      <span className="mt-2.5 text-[12.5px] leading-snug text-[var(--ink)] [overflow-wrap:anywhere] sm:[overflow-wrap:normal]">{label}</span>
     </div>
   );
 }
 
-function GradientField({ gradient, children }: { gradient: string; children: React.ReactNode }) {
-  return <div style={{ background: gradient }}>{children}</div>;
-}
-
-/** A labelled rationale block nested inside a FeatureCard ("Why this decision?" / "Tradeoff"). */
-function DecisionNote({ label, text, color }: { label: string; text: string; color: string }) {
+/** A horizontal chain of nodes that wraps to a vertical chain on phones. */
+function Chain({ nodes }: { nodes: { icon: ReactNode; label: string; tone?: "neutral" | "friction" | "positive" | "strong" }[] }) {
   return (
-    <div className="mt-4 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-      <p className="text-[10px] font-medium tracking-[0.24em] uppercase" style={{ color }}>{label}</p>
-      <p className="mt-1.5 text-sm leading-relaxed text-[var(--color-ink-muted)]">{text}</p>
-    </div>
+    <ol className="flex flex-col items-center gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-2">
+      {nodes.map((n, idx) => (
+        <li key={n.label + idx} className="contents">
+          <Node icon={n.icon} label={n.label} tone={n.tone} className="sm:min-w-0 sm:flex-1" />
+          {idx < nodes.length - 1 && (
+            <>
+              <Arrow dir="down" className="sm:hidden" />
+              <Arrow className="mt-[15px] hidden !h-3.5 !w-3.5 sm:block" />
+            </>
+          )}
+        </li>
+      ))}
+    </ol>
   );
 }
 
-function FeatureCard({ icon, label, title, text, color = accent, why, tradeoff }: { icon: string; label: string; title: string; text: string; color?: string; why?: string; tradeoff?: string }) {
+/** Laptop frame around the real dashboard screenshot. */
+function Laptop({ priority = false, sizes }: { priority?: boolean; sizes: string }) {
   return (
-    <div className="rounded-2xl p-6 transition-colors hover:border-[var(--border-strong)]" style={tintedGlass(color, 0.07)}>
-      <span className="text-xl">{icon}</span>
-      <p className="mt-3 text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color }}>{label}</p>
-      <p className="mt-2 font-[family-name:var(--font-display)] text-lg text-[var(--color-ink)]">{title}</p>
-      <p className="mt-2 text-sm leading-relaxed text-[var(--color-ink-muted)]">{text}</p>
-      {why && <DecisionNote label="Why this decision?" text={why} color={color} />}
-      {tradeoff && <DecisionNote label="Tradeoff" text={tradeoff} color={color} />}
-    </div>
+    <figure className="w-full">
+      <div style={{ background: "#0a0f0c", border: "1px solid #2f473c", borderRadius: 14, padding: "clamp(7px, 1vw, 12px)" }}>
+        <div className="relative overflow-hidden" style={{ aspectRatio: "1182 / 665", borderRadius: 3 }}>
+          <Image src="/img/mainstreet/dashboard.jpg" alt={DASHBOARD_ALT} fill priority={priority} sizes={sizes} className="object-cover" />
+        </div>
+      </div>
+      <div aria-hidden style={{ height: 12, margin: "0 -5%", background: "#c5c9c6", borderRadius: "0 0 14px 14px" }}>
+        <div style={{ width: "16%", height: 5, margin: "0 auto", background: "#a9aeab", borderRadius: "0 0 6px 6px" }} />
+      </div>
+    </figure>
   );
 }
 
-/** One of the five "My Contributions" cards — glass surface, list body. */
-function ContributionCard({ label, items, color = accent }: { label: string; items: string[]; color?: string }) {
-  return (
-    <div className="rounded-2xl p-6 h-full" style={tintedGlass(color, 0.08)}>
-      <p className="text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color }}>{label}</p>
-      <ul className="mt-4 flex flex-col gap-2.5">
-        {items.map((item) => (
-          <li key={item} className="text-sm leading-relaxed text-[var(--color-ink-muted)] pl-4 relative">
-            <span className="absolute left-0 top-0" style={{ color }}>·</span>
-            {item}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+/* ── Content ───────────────────────────────────────────────────────────── */
 
-const glance = [
-  { q: "What role are you targeting?", a: "Product Designer with data fluency", detail: "Roles bridging UX and BI in financial or enterprise contexts." },
-  { q: "Is your work relevant to that role?", a: "Stakeholder-driven BI design", detail: "Built from PM interviews to solve a real daily problem for 6 Portfolio Managers overseeing $1B+ AUA." },
-  { q: "Can I quickly understand your contribution?", a: "Sole UX & BI Designer", detail: "I interviewed all 6 PMs, synthesized their mental models, and delivered the live Power BI dashboard." },
-  { q: "Is there evidence of thinking, not just polish?", a: "Research found 3 conflicting mental models", detail: "Dashboard hierarchy resolves all three in a single view — that insight is the design." },
-  { q: "Do outcomes look credible?", a: "Live and used daily", detail: "Dashboard deployed internally at Mainstreet Advisors, in active use by the portfolio management team." },
+const highlights = [
+  { icon: i.building, label: "Internal tool", value: "Enterprise" },
+  { icon: i.chart, label: "Built in", value: "Power BI" },
+  { icon: i.team, label: "Team", value: "1 designer · 2 engineers" },
+  { icon: i.money, label: "Scale", value: "$1.2B+ AUA" },
 ];
 
-const processSteps = [
-  { n: "01", title: "Discovery", text: "I ran six 30-minute interviews with the Portfolio Managers to map their weekly reporting ritual. I identified the 6 core metrics they returned to most: AUA, ARR, # clients, account count, wallet share, and growth since last quarter." },
-  { n: "02", title: "Data Pipeline", text: "I extracted raw data from multiple Excel workbooks and the internal CRM. I cleaned, normalised, and structured it into a relational model in Power BI using DAX calculated columns and measures." },
-  { n: "03", title: "Design Iterations", text: "I started with low-fidelity concepts before exploring mid- and high-fidelity layouts, taking PM and executive feedback after each round. Key tension: information density vs. at-a-glance readability. Early versions were too table-heavy; the final version led with KPI tiles and visuals." },
-  { n: "04", title: "Delivery", text: "I delivered 6 personalised dashboards — one per PM — filtered to their own book. I ran a 30-minute walkthrough with each manager and incorporated final feedback before handoff." },
+const outcomes = [
+  { icon: i.clock, value: "~3 hrs", label: "saved per week per Portfolio Manager" },
+  { icon: i.pm, value: "6", label: "Portfolio Managers" },
+  { icon: i.money, value: "$1.2B+", label: "AUA represented" },
+  { icon: i.bolt, value: "<10 sec", label: "to see the portfolio picture on dashboard load" },
 ];
 
-
-const beforeList = [
-  "3–4 hours every Monday morning gathering and cross-referencing data",
-  "No single view — at least 3 spreadsheets open simultaneously",
-  "Data was days old by the time it was compiled",
+const ritual = [
+  { text: "Pull information from multiple Excel files", manual: true },
+  { text: "Check CRM for missing details", manual: true },
+  { text: "Calculate / reconcile numbers", manual: true },
+  { text: "Assemble reporting", manual: true },
+  { text: "Send information to PMs", manual: true },
+  { text: "PM reviews the report", manual: false },
+  { text: "Follow-up questions return to the analyst", manual: true, repeats: true },
 ];
 
-const afterList = [
-  "Full portfolio picture available in under 10 seconds on load",
-  "One screen: KPIs, trend charts, wallet share, and client table",
-  "Live data connected to source — always reflects current state",
+const liveView = [
+  "Open dashboard",
+  "See headline metrics",
+  "Identify movement / changes",
+  "Drill into portfolio or investor details",
+  "Make decisions",
+];
+
+const hierarchy = [
+  { n: "01", title: "Headline numbers", detail: "AUA · performance · active investors" },
+  { n: "02", title: "Movement", detail: "Trends · changes · comparisons" },
+  { n: "03", title: "Portfolio positioning", detail: "Allocation · wallet share · portfolio performance" },
+  { n: "04", title: "Revenue", detail: "Revenue tier · contribution · client economics" },
+  { n: "05", title: "Client detail", detail: "Investor-level information and drill-downs" },
+];
+
+/**
+ * Annotation boxes in percent of the screenshot (1182×665), measured off the
+ * real image: KPI row, relationship trend, share of wallet + revenue by
+ * tier, and the client table.
+ */
+const anatomy = [
+  { n: "01", title: "KPI layer", text: "The first thing PMs see when the dashboard loads.", boxes: [{ l: 1.6, t: 12.2, w: 96.6, h: 13.2 }] },
+  { n: "02", title: "Trend layer", text: "Shows movement rather than isolated numbers.", boxes: [{ l: 25.7, t: 26.4, w: 45.9, h: 34.2 }] },
+  {
+    n: "03",
+    title: "Portfolio layer",
+    text: "Makes portfolio positioning easier to compare.",
+    boxes: [
+      { l: 1.8, t: 26.4, w: 23.6, h: 34.2 },
+      { l: 72.3, t: 26.4, w: 26.0, h: 34.2 },
+    ],
+  },
+  { n: "04", title: "Client layer", text: "Allows deeper investigation without leaving the dashboard.", boxes: [{ l: 2.2, t: 64.6, w: 94.6, h: 33.2 }] },
+];
+
+const modes = [
+  { icon: i.eye, title: "At a glance", body: "Portfolio health and headline metrics" },
+  { icon: i.filter, title: "Investigate", body: "Drill-downs and filtering" },
+  { icon: i.decide, title: "Act", body: "Information needed for meetings and reporting" },
+];
+
+const roleMap = [
+  { icon: i.search, title: "Research", body: "Understand PM workflows and pain points" },
+  { icon: i.list, title: "Define", body: "Translate needs into metrics and information hierarchy" },
+  { icon: i.crm, title: "Data", body: "Clean and structure source data in Power BI" },
+  { icon: i.pen, title: "Design", body: "Create the dashboard experience and visual hierarchy" },
+  { icon: i.check, title: "Validate", body: "Review with PMs and refine based on feedback" },
+  { icon: i.send, title: "Deliver", body: "Build and personalize dashboards for each PM" },
 ];
 
 const decisions = [
+  { icon: i.gauge, title: "KPI first", body: "Put the information PMs needed immediately at the top of the dashboard." },
+  { icon: i.hash, title: "Consistent number formatting", body: "Standardized financial metrics so numbers could be scanned and compared quickly." },
+  { icon: i.user, title: "Personalized dashboards", body: "Built six dashboard views around each PM's portfolio rather than forcing everyone through a shared generic view." },
   {
-    icon: "🎨",
-    label: "Colour System",
-    title: "Brand greens, not generic blues",
-    text: "Forest green for primary data, olive for secondary, tan for tertiary tiers — Mainstreet's own palette, mapped onto the data hierarchy.",
-    why: "Brand guidelines were fixed, so the question was how to use them. Mapping the palette onto tiers turned a constraint into wayfinding — PMs read tier by colour, no legend needed.",
-    tradeoff: "Gained familiarity; gave up the contrast range a purpose-built data palette offers. Fine, because tier only needed three levels.",
-  },
-  {
-    icon: "📌",
-    label: "Layout Hierarchy",
-    title: "Headline numbers before charts",
-    text: "Four tiles at the very top — Total AUA, ARR, # Clients, Active Accounts — before any visualisation.",
-    why: "Straight from PM feedback on an early build: \"I need to see my total AUA the moment I open this.\" Burying the tiles put a scroll in front of the most-asked question.",
-    tradeoff: "Gained an instant answer; gave up prime space for charts. The trend chart sits directly beneath, still on the same screen.",
-  },
-  {
-    icon: "🔢",
-    label: "Number Format",
-    title: "No decimals, dollar signs everywhere",
-    text: "Whole dollar figures with a $ prefix, growth as clean percentages, no trailing zeros — enforced across all six dashboards.",
-    why: "Executive review flagged inconsistent decimals and dollar signs. Mixed formatting slows scanning, and scanning was the point.",
-    tradeoff: "Gained consistency; gave up decimal precision in the tiles. The client table below carries exact numbers.",
-  },
-  {
-    icon: "🔍",
-    label: "Personalisation",
-    title: "One dashboard per PM, not a shared view",
-    text: "Six report pages, each scoped to a single book, instead of one dashboard with filters.",
-    why: "PMs framed the goal as tracking their own progress — nobody asked for peer comparison. Scoping removed the possibility rather than guarding against it.",
-    tradeoff: "Gained privacy; gave up cross-PM comparison and took on six reports to maintain instead of one. The cost was known upfront.",
+    icon: i.brief,
+    title: "Existing business, not a blank canvas",
+    body: "Worked within Power BI, existing branding, existing workflows, source-data limitations, and executive approval cycles.",
   },
 ];
 
-const reflections = [
-  { icon: "🗣", label: "Stakeholder-first design", text: "The biggest design decisions were driven by PM feedback, not my instincts. What looked clean to me felt unfamiliar to them. Showing iterations early and often — not a polished final — was what made the feedback loop actually work.", tall: true },
-  { icon: "🧹", label: "Data quality is design work", text: "Half the project was cleaning and structuring raw Excel data before a single visual was built. Inconsistent column naming, merged cells, and missing values are design problems — they define what's possible downstream. I learned to treat data modelling as UX work.", tall: false },
-  { icon: "📐", label: "Constraints sharpen decisions", text: "Working within Mainstreet's brand guidelines — rather than against them — produced a more cohesive result than if I'd had total creative freedom. The constraint of \"use these greens\" pushed me to think about hierarchy and typography instead of leaning on colour.", tall: false },
-  { icon: "🤖", label: "AI as a build partner", text: "This was my first time connecting Excel to Power BI, and I leaned on AI tools throughout — to debug Power Query refresh errors, write and explain DAX measures, and walk me through setting up live data connections instead of static imports. It compressed a steep learning curve into something I could troubleshoot in real time, while I stayed responsible for the data modelling and design decisions.", tall: true },
+const capabilities = [
+  { icon: i.team, title: "User understanding", tags: ["PM workflows", "Stakeholder interviews", "Business needs"] },
+  { icon: i.list, title: "Product thinking", tags: ["Requirements", "Prioritization", "Information hierarchy"] },
+  { icon: i.model, title: "Data thinking", tags: ["Data cleaning", "Relational modeling", "DAX", "Metric definitions"] },
+  { icon: i.dash, title: "UX / UI", tags: ["Dashboard architecture", "Visual hierarchy", "Interaction design"] },
+  { icon: i.send, title: "Delivery", tags: ["Iteration", "Stakeholder review", "Implementation", "Personalization"] },
 ];
 
-const kpiCallouts = [
-  { label: "Total AUA", value: "$902,367K", sub: "Total Assets" },
-  { label: "ARR", value: "$622K", sub: "Sum of Run Rate" },
-  { label: "Share of Wallet", value: "58.7%", sub: "MSA assets vs. market value" },
-  { label: "Revenue — Tier B", value: "$209K", sub: "Highest client tier" },
-  { label: "# of Clients", value: "13", sub: "Current Clients" },
+const opportunities = [
+  { icon: i.spark, title: "Predictive insights", body: "Surface portfolio trends and potential risks earlier." },
+  { icon: i.refresh, title: "Automated reporting", body: "Reduce recurring manual reporting even further." },
+  { icon: i.trend, title: "Expanded analytics", body: "Add deeper benchmarking, risk, and portfolio comparisons." },
 ];
+
+/* ── Page ──────────────────────────────────────────────────────────────── */
 
 export default function MainstreetPage() {
   return (
-    <div className="auto-number" style={{ background: mainstreetGradients.page }}>
-      {/* 1 — Hero: custom, floating laptop dashboard (real asset, teal ambient
-          already composited into the image), metadata in glass cards */}
-      <section data-nav="dark" className="theme-deep relative overflow-hidden" style={{ paddingTop: "calc(var(--nav-h) + 3rem)", paddingBottom: "6rem" }}>
-        <div
-          className="mx-auto grid gap-12 px-6 md:px-10 md:grid-cols-[1fr_1.1fr] items-center"
-          style={{ maxWidth: "var(--wrap-max)" }}
-        >
+    <>
+      {/* HERO — the real dashboard in a laptop frame, then the scope strip */}
+      <DeepBand>
+        <div className="wrap" style={{ paddingTop: "calc(var(--nav-h) + 36px)" }}>
+          <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12">
+            <div>
+              <p className="eyebrow eyebrow-rule">Case study · Mainstreet Advisors</p>
+              <h1 className="mt-5">
+                <span className="block" style={{ fontSize: "clamp(54px, 6.6vw, 94px)", lineHeight: 0.98 }}>
+                  Mainstreet
+                </span>
+                <span className="mt-1 block" style={{ fontSize: "clamp(38px, 4.4vw, 62px)", lineHeight: 1.05 }}>
+                  PM Dashboard
+                </span>
+              </h1>
+              <p className="mt-6 text-[clamp(18px,1.6vw,21px)] leading-[1.45] text-[var(--ink)]" style={{ maxWidth: "26em" }}>
+                Turning complex fund data into clear, actionable insights for Portfolio Managers.
+              </p>
+              <p className="mt-4 text-[15px] leading-[1.7] text-[var(--body)]" style={{ maxWidth: "36em" }}>
+                I designed and built a Power BI dashboard that gave six Portfolio Managers a single
+                view of AUA, revenue, client health, and portfolio performance — replacing a
+                fragmented, manual reporting process.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a href="#dashboard" className="btn">
+                  View the dashboard <span aria-hidden>&#8594;</span>
+                </a>
+                <a href="#process" className="btn btn-outline">
+                  See the process <span aria-hidden>&#8594;</span>
+                </a>
+              </div>
+            </div>
+
+            <Laptop priority sizes="(max-width: 1024px) 92vw, 600px" />
+          </div>
+
+          {/* Highlight strip — the project's scope in four facts */}
+          <dl
+            className="mt-14 grid grid-cols-2 gap-x-6 gap-y-6 py-7 md:grid-cols-4"
+            style={{ borderTop: "1px solid var(--rule)" }}
+          >
+            {highlights.map((h) => (
+              <div key={h.label} className="flex items-center gap-3.5">
+                <Icon className="icon-line !h-6 !w-6">{h.icon}</Icon>
+                <div>
+                  <dt className="meta">{h.label}</dt>
+                  <dd className="mt-1 text-[15px] leading-snug text-[var(--ink)]">{h.value}</dd>
+                </div>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </DeepBand>
+
+      {/* 01 — THE OUTCOME */}
+      <Section id="outcome" divided={false}>
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
+          <SectionHead
+            n="01"
+            eyebrow="The outcome"
+            title={
+              <>
+                More time on decisions.
+                <br />
+                Less time on data wrangling.
+              </>
+            }
+          >
+            <p>
+              The dashboard gave Portfolio Managers a single, reliable source of truth for
+              portfolio performance and investor activity. It reduced the manual reporting
+              burden and made key information available without waiting for an analyst to
+              assemble it.
+            </p>
+          </SectionHead>
+
+          <dl className="grid grid-cols-2 gap-4 self-start">
+            {outcomes.map((o) => (
+              <div key={o.value} className="panel flex flex-col p-5">
+                <Icon>{o.icon}</Icon>
+                <dd
+                  className="mt-5 whitespace-nowrap font-[family-name:var(--font-display)] leading-none text-[var(--ink)]"
+                  style={{ fontSize: "clamp(30px, 3vw, 40px)" }}
+                >
+                  {o.value}
+                </dd>
+                <dt className="mt-2 text-[13px] leading-snug text-[var(--body)]">{o.label}</dt>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        {/* Primary infographic: BEFORE → AFTER workflow */}
+        <figure className="mt-12 grid gap-3">
+          <div className="p-7" style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", background: "var(--bg-raised)" }}>
+            <p className="eyebrow" style={{ color: FRICTION }}>Before</p>
+            <div className="mt-6">
+              <Chain
+                nodes={[
+                  { icon: i.sheet, label: "Excel files", tone: "friction" },
+                  { icon: i.calc, label: "Manual calculations", tone: "friction" },
+                  { icon: i.crm, label: "CRM lookups", tone: "friction" },
+                  { icon: i.mail, label: "Email / analyst requests", tone: "friction" },
+                  { icon: i.pm, label: "PM review" },
+                ]}
+              />
+            </div>
+          </div>
+          <div className="flex items-center justify-center">
+            <span className="flex h-11 w-11 items-center justify-center rounded-full" style={{ background: "var(--ink)" }}>
+              <Icon className="icon-line !h-5 !w-5 rotate-90" style={{ stroke: "var(--bg)" }}>
+                {i.arrowR}
+              </Icon>
+            </span>
+          </div>
+          <div className="panel-sage p-7">
+            <p className="eyebrow" style={{ color: POSITIVE }}>After</p>
+            <div className="mt-6">
+              <Chain
+                nodes={[
+                  { icon: i.bolt, label: "Live source data", tone: "positive" },
+                  { icon: i.model, label: "Power BI data model", tone: "positive" },
+                  { icon: i.dash, label: "Dashboard", tone: "positive" },
+                  { icon: i.decide, label: "PM decision", tone: "strong" },
+                ]}
+              />
+            </div>
+          </div>
+          <figcaption className="sr-only">
+            Before: Excel files, manual calculations, CRM lookups and email or analyst requests
+            fed a PM review. After: live source data flows through the Power BI data model into
+            the dashboard and straight to a PM decision.
+          </figcaption>
+        </figure>
+      </Section>
+
+      {/* 02 — WHY IT MATTERED */}
+      <Section id="why">
+        <div className="sec-grid">
+          <SectionHead
+            n="02"
+            eyebrow="Why it mattered"
+            title={
+              <>
+                The business was growing.
+                <br />
+                The reporting process wasn&rsquo;t keeping up.
+              </>
+            }
+          >
+            <p>
+              Mainstreet managed more than $1.2B in AUA across six Portfolio Managers. As
+              portfolios and investor activity grew, reporting became increasingly dependent on
+              spreadsheets, manual updates, and analyst support.
+            </p>
+            <p>
+              The problem wasn&rsquo;t a lack of data. It was that the information PMs needed was
+              scattered across different sources and difficult to access quickly.
+            </p>
+          </SectionHead>
+
           <div>
-            <p className="eyebrow eyebrow-rule">Internship Project · Mainstreet Advisors</p>
-          <h1 className="mt-4">PM</h1>
-          <h2 className="mt-5" style={{ fontSize: "clamp(28px, 3.1vw, 40px)", lineHeight: 1.22 }}>
-            Dashboard
-          </h2>
-            <p className="mt-6 text-lg leading-relaxed text-[var(--color-ink-muted)]" style={{ maxWidth: "56ch" }}>
-              A Power BI reporting tool that gave six Portfolio Managers at Mainstreet
-              Advisors a real-time, single-screen view of their AUA, client health, and
-              revenue — replacing hours of manual Excel work with an instant overview.
-            </p>
-
-            <dl className="grid grid-cols-2 gap-3 mt-10 pt-8" style={{ borderTop: `1px solid ${mainstreetPalette.slate}33` }}>
-              {[
-                { label: "Company", value: "Mainstreet Advisors" },
-                { label: "My Role", value: "Data Analyst Intern" },
-                { label: "Tools", value: "Power BI · Excel · DAX" },
-                { label: "Timeline", value: "8 weeks · Internship" },
-                { label: "Scope", value: "6 Portfolio Managers" },
-              ].map((m) => (
-                <div key={m.label} className="rounded-xl px-4 py-3" style={tintedGlass(accent, 0.06)}>
-                  <dt className="text-[10px] font-medium tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">
-                    {m.label}
-                  </dt>
-                  <dd className="mt-1 text-sm text-[var(--color-ink)]">{m.value}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-
-          {/* Floating laptop dashboard — real asset, teal glow already baked in */}
-          <div className="relative flex items-center justify-center">
-            {/* w-full: inside a centring flex container the figure had no
-                width of its own and collapsed to 2px, so this image never
-                rendered. */}
-            <ImageFrame
-              src="/img/mainstreet/laptop-mockup.png"
-              alt="PM Dashboard Overview, shown on a laptop"
-              aspect="1/1"
-              objectFit="contain"
-              className="w-full"
-            />
-          </div>
-        </div>
-        <p className="text-center text-xs text-[var(--color-ink-faint)] mt-4">
-          Final dashboard delivered in Power BI · client names and identifying details redacted
-        </p>
-      </section>
-
-      {/* 2 — At a Glance: 5 Q&A insight cards */}
-      <EditorialLayout maxWidth="1500px">
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow>At a Glance</Eyebrow>
-        </div>
-        <div style={{ gridColumn: "1 / 7" }}>
-          <div style={tintedGlass(accent, 0.08)} className="rounded-2xl p-6 h-full">
-            <p className="text-sm text-[var(--color-ink-faint)]">{glance[0].q}</p>
-            <p className="mt-2 font-[family-name:var(--font-display)] text-xl text-[var(--color-ink)]">{glance[0].a}</p>
-            <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{glance[0].detail}</p>
-          </div>
-        </div>
-        <div style={{ gridColumn: "7 / 13" }}>
-          <div style={tintedGlass(olive, 0.08)} className="rounded-2xl p-6 h-full">
-            <p className="text-sm text-[var(--color-ink-faint)]">{glance[1].q}</p>
-            <p className="mt-2 font-[family-name:var(--font-display)] text-xl text-[var(--color-ink)]">{glance[1].a}</p>
-            <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{glance[1].detail}</p>
-          </div>
-        </div>
-        {[glance[2], glance[3], glance[4]].map((g, i) => (
-          <div key={g.q} style={{ gridColumn: `${1 + i * 4} / ${5 + i * 4}` }}>
-            <div style={tintedGlass(i === 1 ? accent : olive, 0.07)} className="rounded-2xl p-6 h-full">
-              <p className="text-sm text-[var(--color-ink-faint)]">{g.q}</p>
-              <p className="mt-2 font-[family-name:var(--font-display)] text-lg text-[var(--color-ink)]">{g.a}</p>
-              <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{g.detail}</p>
-            </div>
-          </div>
-        ))}
-      </EditorialLayout>
-
-      {/* 2.5 — My Contributions: five cards, what I personally owned across UX, data, and stakeholders */}
-      <EditorialLayout maxWidth="1500px">
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow>My Contributions</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            What I <span style={{ color: accent }}>owned.</span>
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ gridColumn: "1 / 13" }}>
-          <ContributionCard
-            label="Research"
-            color={accent}
-            items={[
-              "Conducted six 30-minute interviews with Portfolio Managers.",
-              "Identified reporting workflows.",
-              "Synthesized recurring operational pain points.",
-              "Validated dashboard concepts throughout the project.",
-            ]}
-          />
-          <ContributionCard
-            label="Product Strategy"
-            color={olive}
-            items={[
-              "Prioritized dashboard KPIs.",
-              "Defined dashboard information hierarchy.",
-              "Translated research insights into dashboard requirements.",
-              "Balanced executive requests with user workflows throughout multiple approval cycles.",
-            ]}
-          />
-          <ContributionCard
-            label="Design"
-            color={olive}
-            items={[
-              "Designed dashboard architecture.",
-              "Created dashboard layouts.",
-              "Designed interaction hierarchy.",
-              "Created low-fidelity concepts before exploring mid- and high-fidelity designs.",
-              "Used UXPilot only after defining the dashboard structure, to rapidly generate and explore mid- and high-fidelity wireframe variations.",
-              "Evaluated and manually refined every generated concept based on stakeholder feedback.",
-            ]}
-          />
-          <ContributionCard
-            label="Data & Power BI"
-            color={accent}
-            items={[
-              "Cleaned raw Excel datasets.",
-              "Built the Power BI data model from scratch.",
-              "Created relationships between tables.",
-              "Built DAX measures.",
-              "Connected data sources.",
-              "Designed the dashboard visualizations.",
-            ]}
-          />
-          <div className="md:col-span-2">
-            <ContributionCard
-              label="Collaboration"
-              color={gold}
-              items={[
-                "Worked closely with the CEO, Head of Operations, Director, and the Portfolio Managers.",
-                "Feedback was continuous throughout the project rather than a single review at the end — each round of executive input reshaped requirements before the next iteration.",
-              ]}
-            />
-          </div>
-        </div>
-      </EditorialLayout>
-
-      {/* 3 — The Problem: metric-forward, gradient field, stakeholder quote, insight strip */}
-      <GradientField gradient={mainstreetGradients.tealCharcoal}>
-        <EditorialLayout maxWidth="1500px">
-          <div style={{ gridColumn: "1 / 8" }}>
-            <Eyebrow>The Problem</Eyebrow>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-              Six managers.
-              <br />
-              <span style={{ color: accent }}>Zero unified view.</span>
-            </h2>
-            <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
-              Mainstreet Advisors managed over <strong className="text-[var(--color-ink)] font-medium">$1.2B in assets under advisement</strong> across
-              six Portfolio Managers. Each PM tracked their own book of business through a
-              patchwork of Excel files, email threads, and manual lookups into the core
-              CRM. There was no shared reporting standard, no live view of account health,
-              and no way for a PM to know — at a glance — how their portfolio was
-              performing against prior periods.
-            </p>
-          </div>
-          <div style={{ gridColumn: "9 / 13", alignSelf: "start" }}>
-            <MetricStat size="hero" accent={accent} value="$1.2B" label="Assets under advisement" />
-          </div>
-          <div className="rounded-[2rem] p-8" style={{ gridColumn: "9 / 13", ...tintedGlass(olive, 0.08) }}>
-            <div className="flex flex-col gap-6">
-              <MetricStat accent={olive} value="3–4 hrs" label="Lost every week, per PM" />
-              <MetricStat accent={olive} value="6" label="Portfolio Managers, zero shared view" />
-            </div>
-          </div>
-          <div className="rounded-[2rem] p-8" style={{ gridColumn: "1 / 8", ...tintedGlass(accent, 0.1) }}>
-            <Quote
-              accent={accent}
-              text="Every Monday morning I'm pulling three spreadsheets, cross-referencing account lists, and manually calculating growth. By the time I have the numbers, half the day is gone."
-              attribution="Portfolio Manager — Mainstreet Advisors (paraphrased from stakeholder interviews)"
-              style={{ maxWidth: "50ch" }}
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ gridColumn: "1 / 13" }}>
-            {[
-              { icon: "⏱", label: "Time lost weekly", text: "PMs spent 3–4 hours every week stitching together a manual picture of their book from disconnected sources." },
-              { icon: "📊", label: "No standard view", text: "Each PM had a different way of tracking growth, AUA, and run rate — making cross-team reviews inconsistent and slow." },
-              { icon: "🔁", label: "Stale data", text: "Spreadsheets were updated manually, sometimes days late — meaning decisions were made on numbers that didn't reflect current reality." },
-            ].map((c) => (
-              <div key={c.label} className="rounded-2xl p-6" style={tintedGlass(sand, 0.06)}>
-                <span className="text-2xl">{c.icon}</span>
-                <p className="mt-3 text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color: accent }}>{c.label}</p>
-                <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{c.text}</p>
-              </div>
-            ))}
-          </div>
-        </EditorialLayout>
-      </GradientField>
-
-      {/* 4 — Pull quote: standalone editorial quote, compact — a pause, not a full screen */}
-      <ReadingLayout className="text-center py-16 md:py-20">
-        <Quote
-          align="center"
-          accent={accent}
-          text="How might we give each Portfolio Manager a single, live screen that replaces their Monday morning spreadsheet ritual?"
-          attribution=""
-          style={{ maxWidth: "48ch" }}
-        />
-      </ReadingLayout>
-
-      {/* 5 — Research: PM interviews, callout, insight strip */}
-      <EditorialLayout maxWidth="1500px">
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow>Research · PM Interviews</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            4 of 6 PMs said the <span style={{ color: accent }}>same thing.</span>
-          </h2>
-          <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
-            Before building anything, I interviewed all 6 Portfolio Managers to
-            understand their actual workflow. Their existing process: manually pulling
-            daily updates from multiple Excel sheets — described as tedious, with
-            figures easy to miss because everything lived in a single undifferentiated
-            spreadsheet.
-          </p>
-        </div>
-        <div style={{ gridColumn: "2 / 12" }}>
-          <Quote
-            align="center"
-            accent={olive}
-            text="The numbers are all there, but they're jumbled together. I wish I could see my progress in a structured, organized way — not just a wall of cells."
-            attribution="Portfolio Manager — one of 4 who expressed this directly (paraphrased)"
-            style={{ maxWidth: "100%" }}
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ gridColumn: "1 / 13" }}>
-          {[
-            { icon: "🗣", label: "Key finding", text: "4 of 6 PMs independently said they wished they could see their progress in a structured, organized way. This was the finding that justified building the dashboard." },
-            { icon: "📋", label: "Workflow pain", text: "Every PM's daily update ritual started with Excel — pulling data manually, cross-referencing sheets, and doing calculations by hand before they could make a single portfolio decision." },
-            { icon: "🔍", label: "The gap", text: "Numbers weren't missing — they were buried. The problem was structure and visibility, not data availability. That distinction shaped every design decision." },
-          ].map((c) => (
-            <div key={c.label} className="rounded-2xl p-6" style={tintedGlass(accent, 0.06)}>
-              <span className="text-2xl">{c.icon}</span>
-              <p className="mt-3 text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color: accent }}>{c.label}</p>
-              <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{c.text}</p>
-            </div>
-          ))}
-        </div>
-        <div className="rounded-2xl p-8" style={{ gridColumn: "1 / 13", ...tintedGlass(olive, 0.07) }}>
-          <Eyebrow color={olive}>How this changed the product</Eyebrow>
-          <p className="mt-3 text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "80ch" }}>
-            The finding that reframed the project was that the numbers weren&rsquo;t
-            missing — they were buried. That ruled out adding more data and pointed
-            the work at structure instead, which is why the dashboard leads with four
-            headline KPI tiles rather than a fuller table. The six metrics PMs named
-            in interviews became the KPIs I prioritised, and the review sequence they
-            described — headline figure, then movement, then positioning, then detail
-            — became the top-to-bottom order of the dashboard itself. Their stated
-            goal of tracking personal progress, not peer standing, is why I scoped six
-            filtered reports rather than one shared view. Each of those decisions is
-            documented in Design Decisions below.
-          </p>
-        </div>
-      </EditorialLayout>
-
-      {/* 5.5 — Designing in a Moving Target: requirement churn as normal enterprise work */}
-      <GradientField gradient={mainstreetGradients.oliveCharcoal}>
-        <EditorialLayout maxWidth="1500px">
-          <div style={{ gridColumn: "1 / 8" }}>
-            <Eyebrow color={olive}>Designing in a Moving Target</Eyebrow>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-              The requirements <span style={{ color: olive }}>kept moving.</span>
-            </h2>
-            <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
-              The dashboard I was briefed on in week one is not the dashboard that was
-              approved. Requirements evolved throughout the project — every executive
-              review introduced additional reporting needs, workflow considerations, or
-              business requirements, and stakeholders continuously refined what they
-              expected as the dashboard matured and they could react to something real.
-            </p>
-            <p className="mt-4 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
-              Business requirements shifted during the engagement. Data availability
-              shaped several design decisions — some views I wanted to build weren&rsquo;t
-              supportable by the data that existed. Power BI&rsquo;s technical constraints
-              meant redesigning solutions that worked on paper but not in the tool.
-              Close to 100 iterations were explored before the final dashboard was
-              approved.
-            </p>
-            <p className="mt-4 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
-              None of that was rework in the sense of correcting mistakes. It is what
-              designing inside a live business looks like: the brief is a hypothesis,
-              and each review replaces part of it with something better informed.
-            </p>
-          </div>
-          <div className="flex flex-col gap-4" style={{ gridColumn: "9 / 13", alignSelf: "start" }}>
-            <MetricStat size="hero" accent={olive} value="~100" label="Iterations explored before final approval" />
-            <GlassNote
-              color={olive}
-              label="What kept moving"
-              text="Reporting needs, business requirements, data availability, and Power BI's technical limits — each one surfaced through a review cycle, not upfront."
-            />
-          </div>
-
-          <div style={{ gridColumn: "1 / 13", marginTop: "1rem" }}>
-            <ImageFrame
-              src="/img/mainstreet/iterations.png"
-              alt="A printed version of the PM Dashboard marked up by hand during an executive review round"
-              aspect="4/3"
-              objectFit="contain"
-              caption="One review round, marked up on a printed version — a single stage in a process of roughly 100 iterations, not a summary of it. Client names and identifying details are redacted."
-            />
-          </div>
-
-          <div className="rounded-2xl p-8" style={{ gridColumn: "1 / 13", ...tintedGlass(olive, 0.07) }}>
-            <Eyebrow color={olive}>What a review round actually looked like</Eyebrow>
-            <p className="mt-3 text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "80ch" }}>
-              This is one printout from one round. The annotations are the kind of
-              feedback that arrived every cycle: dollar signs marked against columns
-              that were missing them, a question mark over a growth percentage whose
-              definition wasn&rsquo;t obvious, &ldquo;MTD&rdquo; next to a figure that
-              needed a different time frame, and a note to change how account counts
-              were presented. Individually they&rsquo;re small. Collectively they are
-              why the Number Format decision below exists — and why the dashboard went
-              through roughly 100 iterations rather than three.
-            </p>
-          </div>
-        </EditorialLayout>
-      </GradientField>
-
-      {/* 6 — Process: horizontal timeline, four glass cards, on a slate→black field */}
-      <GradientField gradient={mainstreetGradients.slateBlack}>
-        <EditorialLayout maxWidth="1500px">
-          <div style={{ gridColumn: "1 / 13" }}>
-            <Eyebrow>Process</Eyebrow>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-              From raw Excel <span style={{ color: accent }}>to live Power BI</span>
-            </h2>
-            <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
-              The project ran across four phases — from understanding what PMs actually
-              needed to see, through data wrangling, design iteration, and final
-              delivery.
-            </p>
-          </div>
-          <div className="relative" style={{ gridColumn: "1 / 13" }}>
-            <div
-              className="hidden md:block absolute top-[2.6rem] left-[6%] right-[6%] h-px"
-              style={{ background: "var(--rule)" }}
-              aria-hidden
-            />
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              {processSteps.map((p) => (
-                <div key={p.n} className="relative rounded-2xl p-6 transition-transform" style={tintedGlass(accent, 0.07)}>
-                  <span
-                    className="flex items-center justify-center w-9 h-9 rounded-full font-[family-name:var(--font-display)] text-sm mb-4"
-                    style={{ backgroundColor: accent, color: mainstreetPalette.black }}
+            {/* Fragmented-data illustration */}
+            <figure className="panel p-7">
+              <ul className="grid grid-cols-5 gap-2">
+                {[
+                  { icon: i.sheet, label: "Excel workbook" },
+                  { icon: i.sheet, label: "Excel workbook" },
+                  { icon: i.crm, label: "CRM" },
+                  { icon: i.mail, label: "Email" },
+                  { icon: i.calc, label: "Manual calculations" },
+                ].map((s, idx) => (
+                  <li
+                    key={idx}
+                    className="flex flex-col items-center px-1 py-3 text-center"
+                    style={{
+                      background: "var(--bg-raised)",
+                      border: "1px dashed var(--border-strong)",
+                      borderRadius: "var(--radius)",
+                      transform: `translateY(${[0, 10, -4, 8, 2][idx]}px)`,
+                    }}
                   >
-                    {p.n}
+                    <Icon className="icon-line !h-5 !w-5">{s.icon}</Icon>
+                    <span className="mt-2 text-[11px] leading-tight text-[var(--body)]">{s.label}</span>
+                  </li>
+                ))}
+              </ul>
+              <svg viewBox="0 0 500 64" preserveAspectRatio="none" aria-hidden className="mt-4 block h-14 w-full">
+                {[50, 150, 250, 350, 450].map((x) => (
+                  <path key={x} d={`M${x} 0 C ${x} 34, 250 30, 250 64`} fill="none" stroke="var(--border-strong)" strokeWidth="1.4" strokeDasharray="4 4" vectorEffect="non-scaling-stroke" />
+                ))}
+              </svg>
+              <div className="mx-auto flex max-w-[260px] items-center justify-center gap-2.5 px-4 py-3.5" style={{ border: `1px dashed ${FRICTION}`, borderRadius: "var(--radius)", background: "var(--bg-raised)" }}>
+                <Icon className="icon-line !h-5 !w-5" style={{ stroke: FRICTION }}>
+                  {i.cross}
+                </Icon>
+                <span className="text-[15px] text-[var(--ink)]">Fragmented reporting</span>
+              </div>
+              <div className="flex justify-center py-2.5">
+                <Arrow dir="down" />
+              </div>
+              <div className="mx-auto flex max-w-[260px] items-center justify-center gap-2.5 px-4 py-3.5" style={{ background: "var(--ink)", borderRadius: "var(--radius)" }}>
+                <Icon className="icon-line !h-5 !w-5" style={{ stroke: "var(--bg)" }}>
+                  {i.pm}
+                </Icon>
+                <span className="text-[15px]" style={{ color: "var(--bg)" }}>
+                  PM needs one clear answer
+                </span>
+              </div>
+              <figcaption className="sr-only">
+                Two Excel workbooks, CRM, email and manual calculations converge into fragmented
+                reporting, while the PM needs one clear answer.
+              </figcaption>
+            </figure>
+
+            {/* Business importance callout */}
+            <p
+              className="mt-5 pl-5 font-[family-name:var(--font-display)] text-[clamp(19px,1.7vw,22px)] leading-[1.4] text-[var(--ink)]"
+              style={{ borderLeft: "2px solid var(--numeral)" }}
+            >
+              The business needed a faster way for PMs to understand portfolio performance
+              without adding more manual reporting work as the firm grew.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* 03 — THE WORKFLOW */}
+      <Section id="workflow">
+        <SectionHead n="03" eyebrow="The workflow" title="From assembling reports to acting on them." />
+
+        <div className="mt-10 grid gap-5 lg:grid-cols-2">
+          {/* BEFORE — Monday reporting ritual */}
+          <article className="flex flex-col p-7" style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", background: "var(--bg-raised)" }}>
+            <p className="eyebrow" style={{ color: FRICTION }}>Before</p>
+            <h3 className="mt-2 text-[22px] leading-snug">Monday reporting ritual</h3>
+
+            <div className="mt-7">
+              <Chain
+                nodes={[
+                  { icon: i.sheet, label: "Spreadsheet", tone: "friction" },
+                  { icon: i.crm, label: "CRM", tone: "friction" },
+                  { icon: i.calc, label: "Calculator", tone: "friction" },
+                  { icon: i.mail, label: "Email", tone: "friction" },
+                  { icon: i.person, label: "Analyst", tone: "friction" },
+                  { icon: i.pm, label: "PM" },
+                ]}
+              />
+              <p className="mt-5 flex items-center justify-center gap-2 text-[12.5px]" style={{ color: FRICTION }}>
+                <Icon className="icon-line !h-4 !w-4" style={{ stroke: FRICTION }}>
+                  {i.loop}
+                </Icon>
+                Follow-up questions send it back around
+              </p>
+            </div>
+
+            <ol className="mt-7">
+              {ritual.map((r, idx) => (
+                <li key={r.text} className="flex items-start gap-3 py-2.5 text-[14px] leading-snug" style={{ borderTop: "1px solid var(--rule)" }}>
+                  <span className="w-5 flex-none text-[12px] text-[var(--muted)]">{idx + 1}</span>
+                  <span className="flex-1 text-[var(--ink)]">{r.text}</span>
+                  {r.manual && (
+                    <span className="meta flex-none" style={{ color: FRICTION }}>
+                      {r.repeats ? "Repeats" : "Manual"}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </article>
+
+          {/* AFTER — Live portfolio view */}
+          <article className="panel-sage flex flex-col p-7">
+            <p className="eyebrow" style={{ color: POSITIVE }}>After</p>
+            <h3 className="mt-2 text-[22px] leading-snug">Live portfolio view</h3>
+
+            <div className="mt-7">
+              <div className="flex items-center justify-center gap-2 text-[13px] text-[var(--ink)]">
+                <span className="tag !bg-[var(--bg-raised)]">01 Open</span>
+                <Arrow />
+                <span className="tag !bg-[var(--bg-raised)]">02 Understand</span>
+              </div>
+              <div className="my-4">
+                <Laptop sizes="(max-width: 1024px) 86vw, 460px" />
+              </div>
+              <div className="flex items-center justify-center gap-2 text-[13px] text-[var(--ink)]">
+                <span className="tag !bg-[var(--bg-raised)]">03 Investigate</span>
+                <Arrow />
+                <span className="tag !bg-[var(--bg-raised)]">04 Act</span>
+              </div>
+            </div>
+
+            <ol className="mt-7">
+              {liveView.map((s, idx) => (
+                <li key={s} className="flex items-start gap-3 py-2.5 text-[14px] leading-snug" style={{ borderTop: "1px solid var(--rule)" }}>
+                  <span className="w-5 flex-none text-[12px] text-[var(--muted)]">{idx + 1}</span>
+                  <span className="flex-1 text-[var(--ink)]">{s}</span>
+                  <Icon className="icon-line !h-4 !w-4 flex-none" style={{ stroke: POSITIVE }}>
+                    {i.check}
+                  </Icon>
+                </li>
+              ))}
+            </ol>
+          </article>
+        </div>
+
+        <p className="mt-10 max-w-[30em] font-[family-name:var(--font-display)] text-[clamp(22px,2.4vw,30px)] leading-[1.3] text-[var(--ink)]">
+          The dashboard moved reporting from a recurring manual task to an always-available
+          business tool.
+        </p>
+      </Section>
+
+      {/* 04 — THE SOLUTION */}
+      <Section id="solution">
+        <div className="sec-grid">
+          <SectionHead n="04" eyebrow="The solution" title="One screen. The information PMs needed most.">
+            <p>
+              The dashboard brought portfolio performance, investor activity, revenue, and client
+              information into a single Power BI experience.
+            </p>
+            <p>
+              The hierarchy was designed around the questions PMs needed to answer first — then
+              progressively deeper information.
+            </p>
+          </SectionHead>
+
+          {/* Information hierarchy — each layer steps deeper */}
+          <ol aria-label="Dashboard information hierarchy, from first glance to deepest detail">
+            {hierarchy.map((h, idx) => (
+              <li key={h.n} style={{ marginLeft: `${idx * 5}%` }}>
+                <div
+                  className="flex items-center gap-4 px-5 py-4"
+                  style={{
+                    borderRadius: "var(--radius)",
+                    background: idx === 0 ? "var(--ink)" : idx === 1 ? "var(--panel-sage)" : "var(--panel)",
+                    opacity: 1,
+                  }}
+                >
+                  <span className="font-[family-name:var(--font-display)] text-[24px] leading-none" style={{ color: idx === 0 ? "var(--bg)" : "var(--numeral)" }}>
+                    {h.n}
                   </span>
-                  <p className="text-[12px] font-medium tracking-[0.15em] uppercase" style={{ color: accent }}>{p.title}</p>
-                  <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{p.text}</p>
+                  <div>
+                    <p className="eyebrow" style={{ color: idx === 0 ? "var(--bg)" : "var(--ink)" }}>
+                      {h.title}
+                    </p>
+                    <p className="mt-1 text-[13.5px]" style={{ color: idx === 0 ? "#c5cec7" : "var(--body)" }}>
+                      {h.detail}
+                    </p>
+                  </div>
+                </div>
+                {idx < hierarchy.length - 1 && (
+                  <div className="flex py-1.5 pl-6">
+                    <Arrow dir="down" className="!h-4 !w-4" />
+                  </div>
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </Section>
+
+      {/* 05 — THE DASHBOARD: real screenshot, annotated */}
+      <Section id="dashboard">
+        <SectionHead
+          n="05"
+          eyebrow="The dashboard"
+          title={
+            <>
+              Designed for scanning first.
+              <br />
+              Investigation second.
+            </>
+          }
+        />
+
+        <figure className="mt-10">
+          <div
+            className="relative w-full overflow-hidden"
+            style={{ aspectRatio: "1182 / 665", borderRadius: "var(--radius)", border: "1px solid var(--border)", background: "#fff" }}
+          >
+            <Image src="/img/mainstreet/dashboard.jpg" alt={DASHBOARD_ALT} fill sizes="(max-width: 1200px) 94vw, 1096px" className="object-contain" />
+            <div aria-hidden className="absolute inset-0 hidden sm:block">
+              {anatomy.map((a) =>
+                a.boxes.map((b, bi) => (
+                  <div
+                    key={a.n + bi}
+                    className="absolute"
+                    style={{
+                      left: `${b.l}%`,
+                      top: `${b.t}%`,
+                      width: `${b.w}%`,
+                      height: `${b.h}%`,
+                      border: "2px solid #10231b",
+                      borderRadius: 6,
+                    }}
+                  >
+                    <span
+                      className="absolute flex h-7 w-7 items-center justify-center rounded-full text-[12px] font-medium"
+                      style={{ left: -10, top: -12, background: "#10231b", color: "#f2efe7" }}
+                    >
+                      {a.n}
+                    </span>
+                  </div>
+                )),
+              )}
+            </div>
+          </div>
+          <figcaption className="mt-3 text-[13px] text-[var(--muted)]">
+            The delivered Power BI dashboard. Client names and the portfolio manager&rsquo;s name
+            are redacted.
+          </figcaption>
+        </figure>
+
+        <ol className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {anatomy.map((a) => (
+            <li key={a.n} className="flex gap-3.5">
+              <span
+                className="flex h-7 w-7 flex-none items-center justify-center rounded-full text-[12px] font-medium"
+                style={{ background: "var(--ink)", color: "var(--bg)" }}
+              >
+                {a.n}
+              </span>
+              <div>
+                <h3 className="text-[17px] leading-snug">{a.title}</h3>
+                <p className="mt-1 text-[14px] leading-relaxed text-[var(--body)]">{a.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <ul className="mt-10 grid gap-4 sm:grid-cols-3">
+          {modes.map((m, idx) => (
+            <li key={m.title} className="panel flex items-center gap-4 p-5">
+              <Icon>{m.icon}</Icon>
+              <div>
+                <p className="eyebrow !text-[var(--ink)]">{m.title}</p>
+                <p className="mt-1 text-[14px] text-[var(--body)]">{m.body}</p>
+              </div>
+              {idx < modes.length - 1 && <Arrow className="ml-auto hidden sm:block" />}
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* 06 — MY ROLE */}
+      <Section id="role">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end lg:gap-14">
+          <SectionHead n="06" eyebrow="My role" title="I worked across the problem, the data, and the product.">
+            <p>
+              I owned the dashboard experience from understanding PM needs through information
+              architecture, data preparation, dashboard design, iteration, and delivery.
+            </p>
+            <p>
+              I worked closely with Portfolio Managers, operations, analysts, and engineering to
+              turn a fragmented reporting workflow into a usable internal product.
+            </p>
+          </SectionHead>
+          <div className="lg:pb-2">
+            <p className="meta">Tools</p>
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {["Power BI", "Excel", "DAX", "Figma", "CRM data"].map((t) => (
+                <li key={t} className="pill">
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Responsibility map */}
+        <ol className="mt-10 grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {roleMap.map((r, idx) => (
+            <li key={r.title} className="panel relative flex flex-col p-5">
+              <div className="flex items-center justify-between">
+                <Icon>{r.icon}</Icon>
+                <span className="font-[family-name:var(--font-display)] text-[18px] text-[var(--numeral)]" aria-hidden>
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <p className="eyebrow mt-5 !text-[var(--ink)]">{r.title}</p>
+              <p className="mt-2 text-[13.5px] leading-snug text-[var(--body)]">{r.body}</p>
+              {idx < roleMap.length - 1 && (
+                <span
+                  aria-hidden
+                  className="absolute -right-[11px] top-1/2 z-10 hidden h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full lg:flex"
+                  style={{ background: "var(--bg)" }}
+                >
+                  <Icon className="icon-line !h-3.5 !w-3.5">{i.arrowR}</Icon>
+                </span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      {/* 07 — THE PROCESS: the real project progression */}
+      <Section id="process">
+        <SectionHead n="07" eyebrow="The process" title="A collaborative process, shaped by real business constraints." />
+
+        <div className="mt-10 grid gap-4 lg:grid-cols-3">
+          {/* 01 Discover */}
+          <article className="panel flex flex-col p-6">
+            <figure aria-hidden className="flex h-[120px] items-center justify-center" style={{ background: "var(--bg-raised)", borderRadius: "var(--radius)" }}>
+              <svg viewBox="0 0 220 100" className="h-full w-full max-w-[220px]">
+                {[
+                  [40, 30],
+                  [40, 72],
+                  [180, 30],
+                  [180, 72],
+                ].map(([x, y]) => (
+                  <path key={`${x}${y}`} d={`M${x} ${y} L110 50`} stroke="var(--border-strong)" strokeDasharray="3 3" />
+                ))}
+                {[
+                  [40, 30, "PM"],
+                  [40, 72, "PM"],
+                  [180, 30, "Analyst"],
+                  [180, 72, "PM"],
+                ].map(([x, y, l]) => (
+                  <g key={`${x}-${y}`}>
+                    <circle cx={x as number} cy={y as number} r="11" fill="var(--panel)" stroke="var(--ink)" strokeWidth="1.2" />
+                    <text x={x as number} y={(y as number) + 3.5} textAnchor="middle" fontSize="7" fill="var(--ink)" fontFamily="var(--font-body)">
+                      {l}
+                    </text>
+                  </g>
+                ))}
+                <circle cx="110" cy="50" r="17" fill="var(--ink)" />
+                <path d="M103 54c1-3.2 3.7-4.6 7-4.6s6 1.4 7 4.6" stroke="var(--bg)" strokeWidth="1.4" fill="none" />
+                <circle cx="110" cy="44" r="3.6" stroke="var(--bg)" strokeWidth="1.4" fill="none" />
+              </svg>
+            </figure>
+            <p className="mt-5 flex items-baseline gap-3">
+              <span className="numeral !text-[24px]">01</span>
+              <span className="eyebrow !text-[var(--ink)]">Discover</span>
+            </p>
+            <p className="mt-3 text-[14px] leading-relaxed text-[var(--body)]">
+              Spoke with Portfolio Managers and analysts to understand:
+            </p>
+            <ul className="mt-2 flex flex-col gap-1.5 text-[14px] text-[var(--ink)]">
+              {["What they looked at regularly", "Where reporting slowed them down", "Which metrics mattered", "Where they needed more visibility"].map((b) => (
+                <li key={b} className="flex gap-2">
+                  <span aria-hidden className="mt-[8px] h-1 w-1 flex-none rounded-full bg-[var(--numeral)]" />
+                  {b}
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          {/* 02 Structure — data → information architecture */}
+          <article className="panel flex flex-col p-6">
+            <figure aria-hidden className="flex h-[120px] items-center gap-3 px-4" style={{ background: "var(--bg-raised)", borderRadius: "var(--radius)" }}>
+              <div className="flex flex-col gap-2">
+                {["Excel", "Excel", "CRM"].map((s, idx) => (
+                  <span key={idx} className="flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10.5px] text-[var(--ink)]" style={{ border: "1px solid var(--border-strong)" }}>
+                    <Icon className="icon-line !h-3 !w-3">{s === "CRM" ? i.crm : i.sheet}</Icon>
+                    {s}
+                  </span>
+                ))}
+              </div>
+              <Arrow />
+              <div className="flex-1">
+                <span className="block rounded-full px-2.5 py-1 text-center text-[10.5px]" style={{ background: "var(--ink)", color: "var(--bg)" }}>
+                  Dashboard
+                </span>
+                <div className="mx-auto h-2.5 w-px" style={{ background: "var(--border-strong)" }} />
+                <div className="grid grid-cols-2 gap-1">
+                  {["KPIs", "Trends", "Portfolio", "Clients"].map((n) => (
+                    <span key={n} className="rounded-full py-0.5 text-center text-[10px] text-[var(--ink)]" style={{ border: "1px solid var(--border-strong)" }}>
+                      {n}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </figure>
+            <p className="mt-5 flex items-baseline gap-3">
+              <span className="numeral !text-[24px]">02</span>
+              <span className="eyebrow !text-[var(--ink)]">Structure</span>
+            </p>
+            <p className="mt-3 text-[14px] leading-relaxed text-[var(--body)]">Mapped source data and defined:</p>
+            <ul className="mt-2 flex flex-col gap-1.5 text-[14px] text-[var(--ink)]">
+              {["Core metrics", "Relationships between datasets", "Dashboard hierarchy", "Filtering and drill-down needs"].map((b) => (
+                <li key={b} className="flex gap-2">
+                  <span aria-hidden className="mt-[8px] h-1 w-1 flex-none rounded-full bg-[var(--numeral)]" />
+                  {b}
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          {/* 03 Build */}
+          <article className="panel flex flex-col p-6">
+            <figure aria-hidden className="flex h-[120px] flex-col justify-center gap-1.5 px-5" style={{ background: "var(--bg-raised)", borderRadius: "var(--radius)" }}>
+              {["Raw data", "Clean data", "Data model", "DAX", "Dashboard"].map((s, idx, arr) => (
+                <div key={s} className="flex items-center gap-2">
+                  <span
+                    className="h-1.5 flex-none rounded-full"
+                    style={{ width: `${22 + idx * 12}%`, background: idx === arr.length - 1 ? "var(--ink)" : "var(--border-strong)" }}
+                  />
+                  <span className="text-[10.5px] text-[var(--ink)]">{s}</span>
+                </div>
+              ))}
+            </figure>
+            <p className="mt-5 flex items-baseline gap-3">
+              <span className="numeral !text-[24px]">03</span>
+              <span className="eyebrow !text-[var(--ink)]">Build</span>
+            </p>
+            <p className="mt-3 text-[14px] leading-relaxed text-[var(--body)]">
+              Cleaned and normalized data from Excel and internal CRM sources. Built:
+            </p>
+            <ul className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[14px] text-[var(--ink)]">
+              {["Power BI relational model", "DAX measures", "KPI components", "Charts", "Tables", "Filtering", "Personalized dashboard views"].map((b) => (
+                <li key={b} className="flex gap-2">
+                  <span aria-hidden className="mt-[8px] h-1 w-1 flex-none rounded-full bg-[var(--numeral)]" />
+                  {b}
+                </li>
+              ))}
+            </ul>
+          </article>
+        </div>
+
+        {/* 04 Iterate — abstract layouts converging on the approved dashboard */}
+        <article className="panel mt-4 grid gap-8 p-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.6fr)] lg:p-7">
+          <div>
+            <p className="flex items-baseline gap-3">
+              <span className="numeral !text-[24px]">04</span>
+              <span className="eyebrow !text-[var(--ink)]">Iterate</span>
+            </p>
+            <p className="mt-3 text-[14px] leading-relaxed text-[var(--body)]">
+              Requirements evolved throughout the project. Approximately{" "}
+              <strong className="font-medium text-[var(--ink)]">100 dashboard iterations</strong> were
+              explored before approval. Feedback refined:
+            </p>
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {["Information hierarchy", "Metric definitions", "Layout", "Number formatting", "Personalization", "Usability"].map((b) => (
+                <li key={b} className="tag !bg-[var(--bg-raised)]">
+                  {b}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <figure aria-label="Abstract layouts converging from table-heavy early concepts toward the approved KPI-first dashboard">
+              <div className="grid grid-cols-2 items-end gap-3 sm:grid-cols-4">
+                {/* Abstract representations only — not historical screens */}
+                {[0, 1, 2].map((stage) => (
+                  <div key={stage} className="p-2.5" style={{ background: "var(--bg-raised)", border: "1px dashed var(--border-strong)", borderRadius: 6, aspectRatio: "16 / 10" }}>
+                    <div className="flex h-full flex-col gap-1">
+                      {stage > 0 && (
+                        <div className="flex gap-1">
+                          {Array.from({ length: stage + 1 }).map((_, k) => (
+                            <span key={k} className="h-3 flex-1 rounded-sm" style={{ background: "var(--border-strong)" }} />
+                          ))}
+                        </div>
+                      )}
+                      {stage === 2 && (
+                        <div className="flex flex-1 gap-1">
+                          <span className="flex-1 rounded-sm" style={{ background: "var(--panel-sage)" }} />
+                          <span className="flex-[2] rounded-sm" style={{ background: "var(--panel-sage)" }} />
+                        </div>
+                      )}
+                      <div className="flex flex-1 flex-col justify-end gap-[3px]">
+                        {Array.from({ length: stage === 0 ? 7 : stage === 1 ? 4 : 2 }).map((_, k) => (
+                          <span key={k} className="h-[3px] w-full rounded-sm" style={{ background: "var(--rule-2)" }} />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <div className="relative overflow-hidden" style={{ aspectRatio: "16 / 10", borderRadius: 6, border: "2px solid var(--ink)" }}>
+                  <Image src="/img/mainstreet/dashboard.jpg" alt="" fill sizes="200px" className="object-cover object-top" />
+                </div>
+              </div>
+              <div className="mt-3 grid grid-cols-2 text-[11.5px] text-[var(--muted)] sm:grid-cols-4">
+                <span>Early · table-heavy</span>
+                <span className="hidden sm:block" />
+                <span className="hidden sm:block">KPIs and visuals lead</span>
+                <span className="text-right font-medium text-[var(--ink)] sm:text-left">Approved</span>
+              </div>
+              <div className="relative mt-2 h-px" style={{ background: "var(--border-strong)" }}>
+                <span className="absolute -top-[3px] right-0 h-[7px] w-[7px] rounded-full" style={{ background: "var(--ink)" }} />
+              </div>
+            </figure>
+
+            <figure className="mt-6 flex items-center gap-5">
+              <div className="relative w-[150px] flex-none overflow-hidden sm:w-[190px]" style={{ aspectRatio: "4 / 3", borderRadius: 6 }}>
+                <Image
+                  src="/img/mainstreet/iterations.png"
+                  alt="A printed mid-project version of the dashboard marked up with review notes; client details redacted"
+                  fill
+                  sizes="190px"
+                  className="object-cover"
+                />
+              </div>
+              <figcaption className="text-[13px] leading-relaxed text-[var(--body)]">
+                <span className="meta mb-1 block">Real review round</span>
+                A printed version marked up during review — one of the rounds before approval.
+                Client details redacted.
+              </figcaption>
+            </figure>
+          </div>
+        </article>
+      </Section>
+
+      {/* 08 — BEHIND THE DASHBOARD */}
+      <Section id="data">
+        <div className="sec-grid">
+          <SectionHead n="08" eyebrow="Behind the dashboard" title="The interface was only as good as the data underneath it.">
+            <p>
+              The dashboard depended on multiple Excel workbooks and internal CRM data. Before the
+              interface could be trusted, the underlying information had to be cleaned,
+              normalized, and structured into a reliable Power BI model.
+            </p>
+          </SectionHead>
+
+          <figure className="panel p-7" aria-label="Data pipeline">
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { icon: i.sheet, label: "Excel workbooks" },
+                { icon: i.crm, label: "CRM data" },
+              ].map((s) => (
+                <div key={s.label} className="flex items-center gap-3 px-4 py-3.5" style={{ background: "var(--bg-raised)", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
+                  <Icon>{s.icon}</Icon>
+                  <span className="text-[15px] text-[var(--ink)]">{s.label}</span>
                 </div>
               ))}
             </div>
-          </div>
-        </EditorialLayout>
-      </GradientField>
-
-      {/* 6.5 — Constraints: the fixed conditions every decision had to survive */}
-      <EditorialLayout maxWidth="1500px">
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow>Constraints</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            What I had to <span style={{ color: accent }}>design around</span>
-          </h2>
-          <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
-            None of these were negotiable. Every decision documented below had to work
-            inside all seven of them at once.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" style={{ gridColumn: "1 / 13" }}>
-          {[
-            { label: "Microsoft ecosystem", text: "Mainstreet ran on Microsoft. Any tool outside that stack would have added an integration and licensing problem on top of the reporting one." },
-            { label: "Existing business workflows", text: "The dashboard had to fit the review ritual PMs already had. It could replace the manual effort, but not ask them to work in a new sequence." },
-            { label: "Existing branding", text: "Mainstreet's brand colours, typeface, and sizing conventions were fixed. The visual system was inherited, not chosen." },
-            { label: "Raw Excel data quality", text: "Source data arrived with inconsistent column naming, merged cells, and missing values. What could be built downstream was limited by what could be cleaned upstream." },
-            { label: "Power BI technical limits", text: "Some layouts and interactions that worked as concepts weren't supportable in Power BI, and had to be redesigned to fit what the tool could actually render." },
-            { label: "Internship timeline", text: "Eight weeks, covering research, data modelling, design iteration, and delivery — including the executive approval cycles in between." },
-            { label: "Executive approval cycles", text: "Nothing shipped without executive sign-off, and each review round introduced new requirements. The schedule had to absorb revision, not assume approval." },
-          ].map((c, i) => (
-            <div key={c.label} className="rounded-2xl p-6" style={tintedGlass(i % 3 === 0 ? accent : i % 3 === 1 ? olive : sand, 0.07)}>
-              <p className="text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color: i % 3 === 0 ? accent : i % 3 === 1 ? olive : gold }}>{c.label}</p>
-              <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{c.text}</p>
-            </div>
-          ))}
-        </div>
-      </EditorialLayout>
-
-      {/* 8 — Dashboard Showcase: the real screenshot as visual centerpiece, 1700px,
-          floating KPI callouts connected below it */}
-      <GalleryLayout maxWidth="1700px">
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow>The Solution</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            Every section <span style={{ color: accent }}>earns its place</span>
-          </h2>
-          <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
-            The layout follows a top-to-bottom information hierarchy: headline numbers
-            → trend context → wallet positioning → revenue breakdown → client-level
-            detail.
-          </p>
-        </div>
-        <div style={{ gridColumn: "1 / 13", marginTop: "2rem" }}>
-          <ImageFrame
-            src="/img/mainstreet/dashboard.jpg"
-            alt="PM Dashboard Overview — real Power BI screenshot"
-            aspect="1.778/1"
-            objectFit="contain"
-            caption="Client names and identifying details redacted"
-          />
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3" style={{ gridColumn: "1 / 13", marginTop: "1rem" }}>
-          {kpiCallouts.map((k, i) => (
-            <div key={k.label} className="rounded-xl p-4 text-center" style={tintedGlass(i % 2 === 0 ? accent : olive, 0.08)}>
-              <p className="font-[family-name:var(--font-display)] text-xl" style={{ color: i % 2 === 0 ? accent : olive }}>{k.value}</p>
-              <p className="mt-1 text-[10px] font-medium tracking-[0.15em] uppercase text-[var(--color-ink)]">{k.label}</p>
-              <p className="text-[12px] text-[var(--color-ink-faint)]">{k.sub}</p>
-            </div>
-          ))}
-        </div>
-      </GalleryLayout>
-
-      {/* 9 — Feature Breakdown: reads the same screenshot above, top to bottom —
-          no repeated image, just the two callouts that walk through it */}
-      <EditorialLayout maxWidth="1500px">
-        <div className="rounded-2xl p-8" style={{ gridColumn: "1 / 7", ...tintedGlass(accent, 0.07) }}>
-          <Eyebrow>Trend Context — Relationship Trend</Eyebrow>
-          <p className="mt-3 text-[var(--color-ink-muted)] leading-relaxed">
-            Immediately after the headline tiles, the trend chart answers the next
-            question a PM has: is this book growing or shrinking? Wallet share sits
-            beside it — the same visual weight, because both questions get asked in
-            the same breath during a review.
-          </p>
-        </div>
-        <div className="rounded-2xl p-8" style={{ gridColumn: "7 / 13", ...tintedGlass(olive, 0.07) }}>
-          <Eyebrow color={olive}>Client-Level Detail — The Table</Eyebrow>
-          <p className="mt-3 text-[var(--color-ink-muted)] leading-relaxed">
-            The table is deliberately last. It's where a PM goes to investigate a
-            number the tiles and charts surfaced — not where they start. Growth
-            percentages are color-coded green/red so outliers are visible without
-            reading every row.
-          </p>
-        </div>
-      </EditorialLayout>
-
-      {/* 10 — Before vs After: two glass panels, animated-ready divider */}
-      <EditorialLayout maxWidth="1500px">
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow>Before &amp; After</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            What changed <span style={{ color: accent }}>for the PMs</span>
-          </h2>
-        </div>
-        <div className="relative rounded-[2rem] p-8" style={{ gridColumn: "1 / 7", ...tintedGlass(mainstreetPalette.slate, 0.08) }}>
-          <p className="text-[12px] font-medium tracking-[0.28em] uppercase text-[var(--color-ink-faint)]">Before — Manual Excel Workflow</p>
-          <ul className="mt-5 flex flex-col gap-3">
-            {beforeList.map((b) => (
-              <li key={b} className="text-sm text-[var(--color-ink-muted)] leading-relaxed pl-6 relative">
-                <span className="absolute left-0 top-0 text-[var(--color-ink-faint)]">✗</span>
-                {b}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="relative rounded-[2rem] p-8" style={{ gridColumn: "7 / 13", ...tintedGlass(accent, 0.09) }}>
-          <p className="text-[12px] font-medium tracking-[0.28em] uppercase" style={{ color: accent }}>After — Power BI Dashboard</p>
-          <ul className="mt-5 flex flex-col gap-3">
-            {afterList.map((a) => (
-              <li key={a} className="text-sm text-[var(--color-ink-muted)] leading-relaxed pl-6 relative">
-                <span className="absolute left-0 top-0" style={{ color: accent }}>✓</span>
-                {a}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </EditorialLayout>
-
-      {/* 11 — Design Decisions: why it looks the way it does, distinct feature cards */}
-      <GradientField gradient={mainstreetGradients.oliveCharcoal}>
-        <EditorialLayout maxWidth="1500px">
-          <div style={{ gridColumn: "1 / 13" }}>
-            <Eyebrow color={olive}>Design Decisions</Eyebrow>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-              Why it looks <span style={{ color: olive }}>the way it does</span>
-            </h2>
-            <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
-              Every layout and colour choice was constrained by two things: Mainstreet
-              Advisors brand guidelines and what PMs said they needed to trust on sight.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ gridColumn: "1 / 13" }}>
-            {decisions.map((d, i) => (
-              <FeatureCard key={d.label} icon={d.icon} label={d.label} title={d.title} text={d.text} why={d.why} tradeoff={d.tradeoff} color={i % 2 === 0 ? olive : accent} />
-            ))}
-          </div>
-        </EditorialLayout>
-      </GradientField>
-
-      {/* 12 — Impact: floating KPI cards, executive reporting feel */}
-      <EditorialLayout maxWidth="1500px">
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow>Impact</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            Results that <span style={{ color: accent }}>mattered</span>
-          </h2>
-        </div>
-        {[
-          { n: "6", label: "Portfolio Managers", desc: "Each received a personalised dashboard scoped to their own book of business", color: accent, col: "1 / 5" },
-          { n: "~3h", label: "Saved per week, per PM", desc: "Manual Monday reporting ritual replaced with a live, instant-load overview", color: olive, col: "5 / 9" },
-          { n: "1", label: "Screen for the whole picture", desc: "KPIs, trends, wallet share, revenue tiers, and client-level detail — all visible at once", color: gold, col: "9 / 13" },
-        ].map((s) => (
-          <div key={s.label} className="rounded-2xl p-8 text-center" style={{ gridColumn: s.col, ...tintedGlass(s.color, 0.08) }}>
-            <p className="font-[family-name:var(--font-display)] text-6xl" style={{ color: s.color }}>{s.n}</p>
-            <p className="mt-3 text-[12px] font-medium tracking-[0.24em] uppercase text-[var(--color-ink)]">{s.label}</p>
-            <p className="mt-3 text-sm text-[var(--color-ink-muted)] leading-relaxed">{s.desc}</p>
-          </div>
-        ))}
-      </EditorialLayout>
-
-      {/* 12.5 — Learning Beyond UX: the technical half of the project, learned in-flight */}
-      <GradientField gradient={mainstreetGradients.tealCharcoal}>
-        <EditorialLayout maxWidth="1500px">
-          <div style={{ gridColumn: "1 / 8" }}>
-            <Eyebrow>Learning Beyond UX</Eyebrow>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-              I had never built a <span style={{ color: accent }}>data model before.</span>
-            </h2>
-            <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
-              I started this internship with no prior experience in Power BI data
-              modelling. The dashboard couldn&rsquo;t be designed around that gap — there
-              was no separate data engineer, and the design was only as good as the
-              model underneath it. So I learned it as I built it.
-            </p>
-            <p className="mt-4 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "60ch" }}>
-              That turned out to be the most useful thing I took from the project. Once
-              I understood how the data was structured, I could tell which design ideas
-              were actually buildable and which would have collapsed on contact with the
-              source files — and I could design to what the model could support instead
-              of handing off a layout and hoping.
-            </p>
-          </div>
-          <div className="flex flex-col gap-3" style={{ gridColumn: "9 / 13", alignSelf: "start" }}>
+            <svg viewBox="0 0 200 28" preserveAspectRatio="none" aria-hidden className="block h-7 w-full">
+              <path d="M50 0 C 50 16, 100 12, 100 28 M150 0 C 150 16, 100 12, 100 28" fill="none" stroke="var(--border-strong)" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
+            </svg>
             {[
-              "Cleaning raw Excel data into something modellable",
-              "Structuring datasets for a relational model",
-              "Building relationships between tables",
-              "Writing DAX measures",
-              "Connecting live data sources into Power BI",
-              "Translating all of it into a dashboard people could actually use",
-            ].map((s, i) => (
-              <div key={s} className="rounded-xl px-5 py-4" style={tintedGlass(i % 2 === 0 ? accent : olive, 0.07)}>
-                <p className="text-sm leading-relaxed text-[var(--color-ink)]">{s}</p>
+              { icon: i.filter, label: "Data cleaning + normalization" },
+              { icon: i.model, label: "Power BI relational model" },
+              { icon: i.hash, label: "DAX measures" },
+              { icon: i.dash, label: "Dashboard" },
+              { icon: i.pm, label: "Portfolio Manager", strong: true },
+            ].map((s, idx, arr) => (
+              <div key={s.label}>
+                <div
+                  className="flex items-center gap-3 px-4 py-3.5"
+                  style={{
+                    borderRadius: "var(--radius)",
+                    background: s.strong ? "var(--ink)" : "var(--bg-raised)",
+                    border: s.strong ? "1px solid var(--ink)" : "1px solid var(--border)",
+                  }}
+                >
+                  <Icon style={s.strong ? { stroke: "var(--bg)" } : undefined}>{s.icon}</Icon>
+                  <span className="text-[15px]" style={{ color: s.strong ? "var(--bg)" : "var(--ink)" }}>
+                    {s.label}
+                  </span>
+                  <span className="meta ml-auto" style={s.strong ? { color: "#c5cec7" } : undefined}>
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                {idx < arr.length - 1 && (
+                  <div className="flex justify-center py-1">
+                    <Arrow dir="down" className="!h-4 !w-4" />
+                  </div>
+                )}
               </div>
             ))}
-          </div>
-        </EditorialLayout>
-      </GradientField>
+          </figure>
+        </div>
+      </Section>
 
-      {/* 12.75 — If This Dashboard Continued to Evolve: forward-looking, no invented metrics */}
-      <EditorialLayout maxWidth="1500px">
-        <div style={{ gridColumn: "1 / 13" }}>
-          <Eyebrow>If This Dashboard Continued to Evolve</Eyebrow>
-          <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-            Where I&rsquo;d <span style={{ color: accent }}>take it next</span>
-          </h2>
-          <p className="mt-5 text-lg text-[var(--color-ink-muted)] leading-relaxed" style={{ maxWidth: "62ch" }}>
-            The dashboard shipped at the end of an eight-week internship. These are the
-            threads I&rsquo;d pull if the work continued.
+      {/* 09 — KEY DESIGN DECISIONS */}
+      <Section id="decisions">
+        <SectionHead n="09" eyebrow="Key design decisions" title="Small decisions made the dashboard easier to use." />
+        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {decisions.map((d, idx) => (
+            <li key={d.title} className="panel flex flex-col p-6">
+              <div className="flex items-center justify-between">
+                <Icon>{d.icon}</Icon>
+                <span className="font-[family-name:var(--font-display)] text-[20px] text-[var(--numeral)]" aria-hidden>
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <h3 className="mt-5 text-[18px] leading-snug">{d.title}</h3>
+              <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">{d.body}</p>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* 10 — IMPACT */}
+      <Section id="impact">
+        <SectionHead n="10" eyebrow="Impact" title="The Monday reporting ritual became a live business tool." />
+
+        <figure className="mt-10 grid items-stretch gap-4 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+          <div className="flex flex-col p-8" style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", background: "var(--bg-raised)" }}>
+            <p className="eyebrow" style={{ color: FRICTION }}>Before</p>
+            <p className="mt-5 font-[family-name:var(--font-display)] leading-none text-[var(--ink)]" style={{ fontSize: "clamp(52px, 6vw, 80px)" }}>
+              3–4 hrs
+            </p>
+            <p className="mt-2 text-[14px] text-[var(--muted)]">per week, per PM</p>
+            <ul className="mt-7 flex flex-col gap-3">
+              {["Manual reporting", "Multiple sources", "Analyst dependency", "Limited real-time visibility"].map((b) => (
+                <li key={b} className="flex items-center gap-3 text-[15px] text-[var(--ink)]">
+                  <Icon className="icon-line !h-5 !w-5" style={{ stroke: FRICTION }}>
+                    {i.cross}
+                  </Icon>
+                  {b}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex items-center justify-center">
+            <span className="flex h-11 w-11 items-center justify-center rounded-full" style={{ background: "var(--ink)" }}>
+              <Icon className="icon-line !h-5 !w-5 rotate-90 md:rotate-0" style={{ stroke: "var(--bg)" }}>
+                {i.arrowR}
+              </Icon>
+            </span>
+          </div>
+          <div className="panel-sage flex flex-col p-8">
+            <p className="eyebrow" style={{ color: POSITIVE }}>After</p>
+            <p className="mt-5 font-[family-name:var(--font-display)] leading-none text-[var(--ink)]" style={{ fontSize: "clamp(52px, 6vw, 80px)" }}>
+              &lt;10 sec
+            </p>
+            <p className="mt-2 text-[14px] text-[var(--muted)]">to the portfolio picture</p>
+            <ul className="mt-7 flex flex-col gap-3">
+              {["Open dashboard", "See portfolio picture", "Drill into details", "Act on current information"].map((b) => (
+                <li key={b} className="flex items-center gap-3 text-[15px] text-[var(--ink)]">
+                  <Icon className="icon-line !h-5 !w-5" style={{ stroke: POSITIVE }}>
+                    {i.check}
+                  </Icon>
+                  {b}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </figure>
+
+        <div className="mt-10 grid gap-4 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-14">
+          <p className="font-[family-name:var(--font-display)] text-[clamp(22px,2.4vw,30px)] leading-[1.3] text-[var(--ink)]">
+            The result wasn&rsquo;t simply a better-looking report.
+          </p>
+          <p className="text-[16px] leading-[1.7] text-[var(--body)]">
+            It changed <strong className="font-medium text-[var(--ink)]">when and how PMs accessed information</strong> —
+            from requesting and assembling data to accessing it directly when they needed it.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4" style={{ gridColumn: "1 / 13" }}>
-          {[
-            { label: "Validation with Portfolio Managers", text: "The walkthroughs captured reactions at handoff, not habits. I'd want to sit with PMs after a few months of real Mondays to see which sections they actually use, which they skip, and whether anyone has quietly gone back to a spreadsheet for something the dashboard doesn't answer." },
-            { label: "Long-term adoption", text: "Six PMs used it at delivery. The real question is whether it survives contact with edge cases — a client moving tiers, an unusual quarter, a figure that looks wrong. Adoption holds or breaks on what happens the first time someone doubts a number." },
-            { label: "Additional reporting", text: "Requirements kept surfacing through executive reviews right up to approval, which suggests more would surface with use. The structure supports adding views; the discipline would be keeping the top of the screen as sparse as it is now." },
-            { label: "Scalability", text: "Six scoped reports is maintainable by hand. It wouldn't stay that way — a larger team would need those views generated from a single model with row-level security rather than maintained as separate reports." },
-            { label: "Operational improvements", text: "Data quality was the bottleneck throughout. The durable fix is upstream: consistent column naming and fewer merged cells at the source would remove most of the cleaning work before it reaches Power BI." },
-            { label: "What I'd measure", text: "Not opens. Whether the Monday reporting ritual actually stopped — and whether PMs bring the dashboard into client and internal conversations rather than rebuilding numbers for them. That was the job it was built to do." },
-          ].map((c, i) => (
-            <div key={c.label} className="rounded-2xl p-6" style={tintedGlass(i % 2 === 0 ? accent : olive, 0.07)}>
-              <p className="text-[10px] font-medium tracking-[0.28em] uppercase" style={{ color: i % 2 === 0 ? accent : olive }}>{c.label}</p>
-              <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{c.text}</p>
+      </Section>
+
+      {/* 11 — TEAM */}
+      <Section id="team">
+        <div className="sec-grid">
+          <SectionHead n="11" eyebrow="Team" title="1 designer · 2 engineers" />
+
+          <figure aria-label="Team structure">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="panel-sage flex flex-col p-6">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full" style={{ background: "var(--ink)" }}>
+                    <Icon className="icon-line !h-5 !w-5" style={{ stroke: "var(--bg)" }}>
+                      {i.pen}
+                    </Icon>
+                  </span>
+                  <p className="meta">1 designer</p>
+                </div>
+                <h3 className="mt-4 text-[19px] leading-snug">Ramya — Product / UX Design</h3>
+                <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">
+                  Owned the dashboard experience, information architecture, data visualization,
+                  user needs, and iterative design.
+                </p>
+              </div>
+              <div className="panel flex flex-col p-6">
+                <div className="flex items-center gap-3">
+                  <span className="flex -space-x-2">
+                    {[0, 1].map((k) => (
+                      <span key={k} className="flex h-11 w-11 items-center justify-center rounded-full" style={{ background: "var(--bg-raised)", border: "1px solid var(--border-strong)" }}>
+                        <Icon className="icon-line !h-5 !w-5">{i.person}</Icon>
+                      </span>
+                    ))}
+                  </span>
+                  <p className="meta">2 engineers</p>
+                </div>
+                <h3 className="mt-4 text-[19px] leading-snug">Engineering — 2</h3>
+                <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">
+                  Supported technical implementation and data/integration requirements.
+                </p>
+              </div>
             </div>
+
+            <svg viewBox="0 0 200 28" preserveAspectRatio="none" aria-hidden className="block h-7 w-full">
+              <path d="M50 0 V 14 H 150 V 0 M100 14 V 28" fill="none" stroke="var(--border-strong)" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
+            </svg>
+
+            <div className="flex flex-wrap items-center justify-center gap-2 px-5 py-4" style={{ border: "1px dashed var(--border-strong)", borderRadius: "var(--radius)" }}>
+              <span className="meta mr-1">Stakeholders</span>
+              {["Portfolio Managers", "Operations", "Analysts", "Leadership"].map((s) => (
+                <span key={s} className="pill !py-1">
+                  {s}
+                </span>
+              ))}
+            </div>
+          </figure>
+        </div>
+      </Section>
+
+      {/* 12 — WHAT I BROUGHT TO THE PROJECT */}
+      <Section id="capabilities">
+        <SectionHead n="12" eyebrow="What I brought to the project" title="Designing the interface was only part of the job." />
+
+        <ul className="relative mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <span aria-hidden className="absolute left-[10%] right-[10%] top-[22px] hidden h-px lg:block" style={{ background: "var(--border-strong)" }} />
+          {capabilities.map((c, idx) => (
+            <li key={c.title} className="relative flex flex-col">
+              <span
+                className="relative z-10 flex h-11 w-11 items-center justify-center rounded-full"
+                style={{ background: idx === 3 ? "var(--ink)" : "var(--bg)", border: "1px solid var(--ink)" }}
+              >
+                <Icon className="icon-line !h-5 !w-5" style={idx === 3 ? { stroke: "var(--bg)" } : undefined}>
+                  {c.icon}
+                </Icon>
+              </span>
+              <p className="eyebrow mt-5 !text-[var(--ink)]">{c.title}</p>
+              <ul className="mt-3 flex flex-wrap gap-1.5">
+                {c.tags.map((t) => (
+                  <li key={t} className="tag">
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </li>
           ))}
+        </ul>
+      </Section>
+
+      {/* 13 — LOOKING AHEAD */}
+      <Section id="next">
+        <div className="sec-grid">
+          <SectionHead n="13" eyebrow="Looking ahead" title="A strong foundation for the next phase of reporting." />
+          <div>
+            <p className="meta">Future opportunities — not delivered features</p>
+            <ul className="mt-4 grid gap-4 sm:grid-cols-3">
+              {opportunities.map((o) => (
+                <li key={o.title} className="panel p-6">
+                  <Icon>{o.icon}</Icon>
+                  <h3 className="mt-4 text-[18px] leading-snug">{o.title}</h3>
+                  <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">{o.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </EditorialLayout>
+      </Section>
 
-      {/* 13 — Reflection: masonry glass cards, alternating heights */}
-      <GradientField gradient={mainstreetGradients.slateBlack}>
-        <EditorialLayout maxWidth="1500px">
-          <div style={{ gridColumn: "1 / 13" }}>
-            <Eyebrow>Reflection</Eyebrow>
-            <h2 className="mt-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl leading-[1.02] text-[var(--color-ink)]">
-              What I learned <span style={{ color: accent }}>building this</span>
-            </h2>
-          </div>
-          <div style={{ gridColumn: "1 / 7" }} className="flex flex-col gap-4">
-            {[reflections[0], reflections[1]].map((r, i) => (
-              <div key={r.label} className="rounded-2xl p-6" style={{ ...tintedGlass(i === 0 ? accent : olive, 0.07), paddingBottom: r.tall ? "2.5rem" : "1.5rem" }}>
-                <span className="text-xl">{r.icon}</span>
-                <p className="mt-3 text-[10px] font-medium tracking-[0.24em] uppercase" style={{ color: i === 0 ? accent : olive }}>{r.label}</p>
-                <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{r.text}</p>
+      {/* CLOSING */}
+      <DeepBand>
+        <div className="wrap py-[clamp(64px,8vw,112px)]">
+          <div className="grid gap-10 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:items-end md:gap-16">
+            <div>
+              <p className="eyebrow eyebrow-rule">Final thoughts</p>
+              <h2 className="mt-5" style={{ fontSize: "clamp(36px, 4.4vw, 58px)", lineHeight: 1.06, maxWidth: "12em" }}>
+                Better access to data leads to better decisions.
+              </h2>
+            </div>
+            <div>
+              <p className="lead">
+                Mainstreet needed a reporting system that could keep up with the business. The
+                dashboard turned fragmented data into a clear, usable product that Portfolio
+                Managers could access when they needed it.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <a href="#dashboard" className="btn">
+                  View the dashboard <span aria-hidden>&#8594;</span>
+                </a>
+                <Link href="/#work" className="btn btn-outline">
+                  Back to projects <span aria-hidden>&#8594;</span>
+                </Link>
               </div>
-            ))}
+            </div>
           </div>
-          <div style={{ gridColumn: "7 / 13" }} className="flex flex-col gap-4">
-            {[reflections[2], reflections[3]].map((r, i) => (
-              <div key={r.label} className="rounded-2xl p-6" style={{ ...tintedGlass(i === 0 ? olive : gold, 0.07), paddingBottom: r.tall ? "2.5rem" : "1.5rem" }}>
-                <span className="text-xl">{r.icon}</span>
-                <p className="mt-3 text-[10px] font-medium tracking-[0.24em] uppercase" style={{ color: i === 0 ? olive : gold }}>{r.label}</p>
-                <p className="mt-2 text-sm text-[var(--color-ink-muted)] leading-relaxed">{r.text}</p>
-              </div>
-            ))}
-          </div>
-        </EditorialLayout>
-      </GradientField>
 
-      {/* 14 — CTA: dashboard floating in background, teal lighting, minimal close */}
-      <section className="relative overflow-hidden" style={{ minHeight: "60dvh" }}>
-        <div className="absolute inset-0" style={{ background: mainstreetGradients.tealCharcoal }} />
-        <div className="relative z-10 grid px-6 md:px-10 py-24 items-center justify-items-center text-center" style={{ minHeight: "60dvh" }}>
-          <h2 className="font-[family-name:var(--font-display)] leading-[0.95] text-[clamp(2rem,5.5vw,4rem)] text-[var(--color-ink)]">
-            One screen. Six managers. Zero spreadsheets.
-          </h2>
+          <div className="mt-16 flex flex-wrap items-center justify-between gap-6 pt-8" style={{ borderTop: "1px solid var(--rule)" }}>
+            <div>
+              <p className="meta">Next project</p>
+              <p className="mt-2 font-[family-name:var(--font-display)] text-[30px] leading-tight text-[var(--ink)]">Raahi</p>
+            </div>
+            <Link href="/projects/raahi" className="btn btn-outline">
+              View case study <span aria-hidden>&#8594;</span>
+            </Link>
+          </div>
         </div>
-      </section>
-
-      {/* Closing — deep band pointing to the next piece in the portfolio order */}
-      <NextProjectBand {...getNextProject("mainstreet")} />
-    </div>
+      </DeepBand>
+    </>
   );
 }
