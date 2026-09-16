@@ -371,7 +371,8 @@ export default function InvisibleImpactsPage() {
                   src="/img/coac/hero-installation.jpg"
                   alt="The installation at the DePaul Jarvis showcase: a lit water tank on a draped table, a monitor above it running the Cost of a Click visual, and a laptop beside it."
                   fill
-                  priority
+                  loading="eager"
+                  fetchPriority="high"
                   sizes="(max-width: 1024px) 92vw, 440px"
                   className="object-cover"
                 />
@@ -483,6 +484,16 @@ export default function InvisibleImpactsPage() {
           </div>
 
           <figure className="panel p-7 lg:mt-10" aria-label="Invisible infrastructure, abstract information, everyday AI use">
+            <div className="relative mx-auto mb-7 w-full max-w-[300px]" style={{ aspectRatio: "1402 / 1122" }}>
+              <Image
+                src="/img/coac/concept-globe.jpg"
+                alt="Illustration of a lit globe wrapped in orbiting network lines."
+                fill
+                sizes="(max-width: 640px) 70vw, 300px"
+                className="object-contain"
+                style={{ mixBlendMode: "multiply" }}
+              />
+            </div>
             <div className="mx-auto flex max-w-[340px] flex-col items-stretch">
               {problemStages.map((s, idx, arr) => (
                 <div key={s.label}>
@@ -1122,6 +1133,40 @@ export default function InvisibleImpactsPage() {
               Originally posted by @thetshegofatso on TikTok · 6M+ views · 2025
             </figcaption>
           </figure>
+        </div>
+
+        {/* Concept illustrations — deliberately kept out of the Exhibition section
+            and labelled, so they can't be mistaken for documentation of the real
+            showcase, which was a water tank on a draped table. */}
+        <div className="mt-12 pt-8" style={{ borderTop: "1px solid var(--border-strong)" }}>
+          <div className="flex flex-wrap items-baseline justify-between gap-3">
+            <p className="eyebrow">Concept — where this could go next</p>
+            <p className="meta" style={{ color: FRICTION }}>
+              Illustration, not the exhibited installation
+            </p>
+          </div>
+          <p className="mt-3 max-w-[46em] text-[15px] leading-[1.7] text-[var(--body)]">
+            The showcase build was one table, one tank, one pump. These illustrations imagine the
+            same idea at exhibition scale — a room a visitor walks into rather than a station they
+            walk up to.
+          </p>
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            <Photo
+              src="/img/coac/concept-gallery.jpg"
+              alt="Illustration of a gallery-scale version: a suspended cluster of lit screens, with wall text reading “Ask. Explore. See the impact.”"
+              ratio="3 / 2"
+              sizes="(max-width: 640px) 94vw, 460px"
+              caption="Concept illustration — the installation imagined at room scale. Not a photograph of the showcase."
+            />
+            <Photo
+              src="/img/coac/concept-kiosk.jpg"
+              alt="Illustration of a visitor at a lit kiosk reading “Ask. Explore. See the impact.” with a tap-to-begin prompt."
+              ratio="3 / 2"
+              sizes="(max-width: 640px) 94vw, 460px"
+              caption="Concept illustration — a walk-up entry point to the same interaction."
+            />
+          </div>
         </div>
       </Section>
 
