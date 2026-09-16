@@ -366,7 +366,9 @@ const nextSteps = [
 
 export default function WellnutPage() {
   return (
-    <>
+    // The lavender/plum scope, defined in globals.css. Scoped from `body:has()`
+    // so the nav and footer travel with the page.
+    <div className="theme-wellnut">
       {/* HERO */}
       <DeepBand>
         <div className="wrap" style={{ paddingTop: "calc(var(--nav-h) + 36px)", paddingBottom: 56 }}>
@@ -461,10 +463,10 @@ export default function WellnutPage() {
             ].map((s, idx, arr) => (
               <div key={s.label} className="contents">
                 <div className="flex flex-col p-5" style={{ ...s.style, borderRadius: "var(--radius)" }}>
-                  <p className="meta" style={{ color: s.dark ? "#c5cec7" : s.labelColor }}>
+                  <p className="meta" style={{ color: s.dark ? "var(--on-deep-muted, #c5cec7)" : s.labelColor }}>
                     {s.label}
                   </p>
-                  <p className="mt-2 text-[14.5px] leading-snug" style={{ color: s.dark ? "#f2efe7" : "var(--ink)" }}>
+                  <p className="mt-2 text-[14.5px] leading-snug" style={{ color: s.dark ? "var(--on-deep, #f2efe7)" : "var(--ink)" }}>
                     {s.body}
                   </p>
                 </div>
@@ -606,10 +608,10 @@ export default function WellnutPage() {
               <path d="M50 0 C 50 14, 100 12, 100 26 M150 0 C 150 14, 100 12, 100 26" fill="none" stroke="var(--border-strong)" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
             </svg>
             <div className="px-5 py-5" style={{ background: "var(--ink)", borderRadius: "var(--radius)" }}>
-              <p className="eyebrow" style={{ color: "#c5cec7" }}>
+              <p className="eyebrow" style={{ color: "var(--on-deep-muted, #c5cec7)" }}>
                 One focused experience
               </p>
-              <p className="mt-2 text-[14.5px] leading-snug" style={{ color: "#f2efe7" }}>
+              <p className="mt-2 text-[14.5px] leading-snug" style={{ color: "var(--on-deep, #f2efe7)" }}>
                 Private environment → acknowledgement → guided practice.
               </p>
             </div>
@@ -631,10 +633,10 @@ export default function WellnutPage() {
                 ].map((stage, idx, arr) => (
                   <div key={stage.label} className="contents">
                     <div className="flex flex-col p-4" style={{ ...stage.style, borderRadius: "var(--radius)" }}>
-                      <p className="meta" style={{ color: stage.dark ? "#c5cec7" : stage.labelColor }}>
+                      <p className="meta" style={{ color: stage.dark ? "var(--on-deep-muted, #c5cec7)" : stage.labelColor }}>
                         {stage.label}
                       </p>
-                      <p className="mt-2 text-[14.5px] leading-snug" style={{ color: stage.dark ? "#f2efe7" : "var(--ink)" }}>
+                      <p className="mt-2 text-[14.5px] leading-snug" style={{ color: stage.dark ? "var(--on-deep, #f2efe7)" : "var(--ink)" }}>
                         {stage.text}
                       </p>
                     </div>
@@ -688,17 +690,17 @@ export default function WellnutPage() {
                 className="flex items-start gap-4 p-5"
                 style={{ background: emphasis ? "var(--ink)" : "var(--bg-raised)", borderRadius: "var(--radius)", border: emphasis ? "1px solid var(--ink)" : "1px solid var(--border)" }}
               >
-                <span className="font-[family-name:var(--font-display)] text-[30px] leading-none" style={{ color: emphasis ? "#c29a79" : "var(--numeral)" }}>
+                <span className="font-[family-name:var(--font-display)] text-[30px] leading-none" style={{ color: emphasis ? "var(--on-deep-numeral, #c29a79)" : "var(--numeral)" }}>
                   {s.n}
                 </span>
                 <div className="flex-1">
-                  <Icon className="icon-line !h-5 !w-5" style={emphasis ? { stroke: "#f2efe7" } : undefined}>
+                  <Icon className="icon-line !h-5 !w-5" style={emphasis ? { stroke: "var(--on-deep, #f2efe7)" } : undefined}>
                     {s.icon}
                   </Icon>
-                  <p className="mt-2.5 text-[16px] font-medium" style={{ color: emphasis ? "#f2efe7" : "var(--ink)" }}>
+                  <p className="mt-2.5 text-[16px] font-medium" style={{ color: emphasis ? "var(--on-deep, #f2efe7)" : "var(--ink)" }}>
                     {s.title}
                   </p>
-                  <p className="mt-1 text-[13.5px] leading-snug" style={{ color: emphasis ? "#c5cec7" : "var(--body)" }}>
+                  <p className="mt-1 text-[13.5px] leading-snug" style={{ color: emphasis ? "var(--on-deep-muted, #c5cec7)" : "var(--body)" }}>
                     {s.body}
                   </p>
                 </div>
@@ -723,7 +725,7 @@ export default function WellnutPage() {
               <p className="max-w-[80%] px-4 py-3 text-[14.5px] leading-snug text-[var(--ink)]" style={{ background: "var(--bg-raised)", border: "1px solid var(--border)", borderRadius: "var(--radius)" }}>
                 “I&rsquo;m stressed. Everything feels like a lot right now.”
               </p>
-              <p className="ml-auto max-w-[85%] px-4 py-3 text-[14.5px] leading-snug" style={{ background: "var(--ink)", color: "#f2efe7", borderRadius: "var(--radius)" }}>
+              <p className="ml-auto max-w-[85%] px-4 py-3 text-[14.5px] leading-snug" style={{ background: "var(--ink)", color: "var(--on-deep, #f2efe7)", borderRadius: "var(--radius)" }}>
                 “That sounds really tough. You&rsquo;re not alone in feeling this way. Would you like
                 to take a moment to breathe together?”
               </p>
@@ -1124,6 +1126,6 @@ export default function WellnutPage() {
           </div>
         </div>
       </DeepBand>
-    </>
+    </div>
   );
 }

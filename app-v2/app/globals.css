@@ -100,6 +100,65 @@
   color: var(--body);
 }
 
+/* ── Wellnut scope ──
+   The one case study that trades the ivory/green register for the lavender
+   and plum of its own brand illustration. Scoped from `body` so the fixed
+   nav and the footer travel with the page instead of leaving a cream seam;
+   `.theme-wellnut` is set on the page's own wrapper, nothing else.
+
+   Same approach as `.theme-deep`: re-define the tokens, restyle nothing.
+   `--on-deep*` are the three ink-box values (label, muted label, numeral)
+   that sit on an `--ink` fill on the light ground, where inheriting the
+   light tokens wouldn't work. */
+body:has(.theme-wellnut) {
+  --bg: #f5f2fa;
+  --bg-raised: #fbf9fe;
+  --bg-band: #ece5f7;
+  --panel: #ebe4f6;
+  --panel-sage: #e3d9f3;
+
+  --ink: #1f1733;
+  --ink-hover: #2f2450;
+  --body: #4b4363;
+  --muted: #665d84;
+  --muted-2: #6f6690;
+
+  --rule: #e4dcf2;
+  --rule-2: #ddd3ee;
+  --border: #e6dff4;
+  --border-strong: #c4b7dd;
+  --divider: #d5cae9;
+
+  --numeral: #9a6f9b;
+
+  --deep: #241a3d;
+  --deep-2: #2f2350;
+  --deep-3: #2c2050;
+
+  --on-deep: #f3effb;
+  --on-deep-muted: #cac2e2;
+  --on-deep-numeral: #c9a2dc;
+}
+
+body:has(.theme-wellnut) .theme-deep {
+  --bg: #241a3d;
+  --bg-raised: #2f2350;
+  --bg-band: #291e47;
+  --panel: #2f2350;
+  --panel-sage: #372a5c;
+  --ink: #f3effb;
+  --ink-hover: #ffffff;
+  --body: #cac2e2;
+  --muted: #a49ac4;
+  --muted-2: #a49ac4;
+  --rule: #3b2f5e;
+  --rule-2: #3b2f5e;
+  --border: #3b2f5e;
+  --border-strong: #6353918f;
+  --divider: #3b2f5e;
+  --numeral: #c9a2dc;
+}
+
 @theme inline {
   --color-bg: var(--bg);
   --color-bg-raised: var(--bg-raised);

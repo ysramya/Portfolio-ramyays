@@ -48,6 +48,31 @@ So `.btn` (fill `--ink`, label `--bg`) becomes an ivory button with a green
 label on dark, and `.btn-outline` becomes a light outline — exactly the
 reference hero.
 
+### Wellnut scope
+
+The one sanctioned exception to the ivory/green register. Wellnut carries the
+lavender and plum of its own brand illustration, applied the same way — tokens
+re-defined, components untouched:
+
+| Token | Wellnut value | Deep band |
+| --- | --- | --- |
+| `--bg` | `#F5F2FA` | `#241A3D` |
+| `--bg-raised` | `#FBF9FE` | `#2F2350` |
+| `--panel` / `--panel-sage` | `#EBE4F6` / `#E3D9F3` | `#2F2350` / `#372A5C` |
+| `--ink` | `#1F1733` | `#F3EFFB` |
+| `--body` | `#4B4363` | `#CAC2E2` |
+| `--muted` | `#665D84` | `#A49AC4` |
+| `--rule` / `--border-strong` | `#E4DCF2` / `#C4B7DD` | `#3B2F5E` |
+| `--numeral` | `#9A6F9B` | `#C9A2DC` |
+
+Scoped from `body:has(.theme-wellnut)` so the fixed nav and the footer travel
+with the page instead of leaving a cream seam. `--on-deep`, `--on-deep-muted`
+and `--on-deep-numeral` cover text sitting on an `--ink` fill on the light
+ground, where the light tokens don't apply.
+
+Adding a second one of these needs a reason as strong as Wellnut's: a project
+with its own established brand colour. Everything else stays ivory.
+
 Rules
 - Every page opens on a deep band and closes on one. Content sections between
   are ivory, separated by hairlines.
