@@ -70,8 +70,31 @@ with the page instead of leaving a cream seam. `--on-deep`, `--on-deep-muted`
 and `--on-deep-numeral` cover text sitting on an `--ink` fill on the light
 ground, where the light tokens don't apply.
 
-Adding a second one of these needs a reason as strong as Wellnut's: a project
-with its own established brand colour. Everything else stays ivory.
+### Cost of a Click scope
+
+The second project-brand exception: an icy light-blue ground with deep-blue
+type, again by re-defining tokens rather than restyling components.
+
+| Token | Value |
+| --- | --- |
+| `--bg` / `--bg-raised` | `#EEF4FB` / `#FFFFFF` |
+| `--bg-band` | `#E3EDF8` |
+| `--panel` / `--panel-sage` | `#E4EEF8` / `#D6E6F5` |
+| `--ink` | `#0F2A44` |
+| `--body` / `--muted` | `#39546E` / `#536C86` |
+| `--rule` / `--border-strong` | `#D9E5F1` / `#A5C0DB` |
+| `--numeral` | `#3F739E` |
+
+Scoped from `body:has(.theme-coac)`. This page is also **the one exception to
+the deep-band rule below**: its brief calls for the opening and closing to read
+light blue rather than dark navy, so both bands are light and — critically —
+are *not* marked `data-nav="dark"`, since that flag is what flips the nav to
+light type. A light band carrying that flag would render the nav unreadable.
+
+Two exceptions now exist, and that is the ceiling worth holding. A third needs
+the same justification both of these have: a project with its own established
+brand colour that the ivory register actively misrepresents. Everything else
+stays ivory.
 
 Rules
 - Every page opens on a deep band and closes on one. Content sections between

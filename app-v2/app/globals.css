@@ -140,6 +140,42 @@ body:has(.theme-wellnut) {
   --on-deep-numeral: #c9a2dc;
 }
 
+/* ── Cost of a Click scope ──
+   The project's own light-blue identity: an icy ground, white cards, deep
+   blue type. Unlike every other page this one has no deep band — its brief
+   asks for the opening and closing to read light blue rather than dark navy,
+   and the nav only inverts over a band marked `data-nav="dark"`, so the bands
+   here are light and unmarked and the nav keeps its dark type throughout. */
+body:has(.theme-coac) {
+  --bg: #eef4fb;
+  --bg-raised: #ffffff;
+  --bg-band: #e3edf8;
+  --panel: #e4eef8;
+  --panel-sage: #d6e6f5;
+
+  --ink: #0f2a44;
+  --ink-hover: #18405f;
+  --body: #39546e;
+  --muted: #536c86;
+  --muted-2: #5c748d;
+
+  --rule: #d9e5f1;
+  --rule-2: #cfdeee;
+  --border: #dbe7f3;
+  --border-strong: #a5c0db;
+  --divider: #c7d9e9;
+
+  --numeral: #3f739e;
+
+  --deep: #123a5c;
+  --deep-2: #17456b;
+  --deep-3: #1b4d76;
+
+  --on-deep: #f2f7fc;
+  --on-deep-muted: #c3d6e7;
+  --on-deep-numeral: #9cc3e0;
+}
+
 body:has(.theme-wellnut) .theme-deep {
   --bg: #241a3d;
   --bg-raised: #2f2350;
