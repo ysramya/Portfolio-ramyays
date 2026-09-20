@@ -86,7 +86,7 @@ export default function Home() {
       {/* ── 01 Selected work ─────────────────────────────────────── */}
       <Section id="work" divided={false}>
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHead n="01" eyebrow="Case studies" title="Selected work" />
+          <SectionHead n="01" eyebrow="Projects" title="Selected work" />
           <Link
             href="/about"
             className="text-[14px] text-[var(--body)] transition-colors hover:text-[var(--ink)]"
@@ -95,10 +95,26 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        {/* Two big columns rather than a row of equal cards. Every thumbnail
+            is square (1080²), so the stagger comes from offsetting the right
+            column instead of cropping images to different ratios — these are
+            mockups whose subject fills the frame, and a 4:3 crop would cut
+            the laptop in half. */}
+        <div className="mt-10 grid gap-x-5 gap-y-12 sm:grid-cols-2">
           {projects.map((p) => (
-            <Link key={p.slug} href={`/projects/${p.slug}`} className="card group flex flex-col">
-              <div className="relative w-full" style={{ aspectRatio: "9 / 10", background: "#ffffff" }}>
+            <Link
+              key={p.slug}
+              href={`/projects/${p.slug}`}
+              className="group block sm:even:mt-16"
+            >
+              <div
+                className="relative w-full overflow-hidden"
+                style={{
+                  aspectRatio: "1 / 1",
+                  background: "var(--panel)",
+                  borderRadius: "var(--radius)",
+                }}
+              >
                 {p.video ? (
                   <LoopVideo
                     src={p.video}
@@ -111,23 +127,22 @@ export default function Home() {
                     src={p.image}
                     alt={p.title}
                     fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
-                    className="object-cover"
+                    sizes="(max-width: 640px) 100vw, 560px"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                   />
                 )}
               </div>
 
-              <div className="flex flex-1 flex-col" style={{ padding: "20px 18px 18px", gap: 14 }}>
-                <h3 style={{ fontSize: 19, lineHeight: 1.25 }}>{p.title}</h3>
-                <p className="flex-1 text-[14px] leading-[1.6] text-[var(--body)]">{p.description}</p>
-                <span aria-hidden className="micro-rule" />
-                <div className="flex items-center justify-between gap-3">
-                  <span className="meta">{p.category}</span>
-                  <span aria-hidden className="arrow-btn">
-                    &#8594;
-                  </span>
-                </div>
-              </div>
+              <p className="meta mt-5">{p.category}</p>
+              <h3
+                className="mt-2 transition-colors group-hover:text-[var(--numeral)]"
+                style={{ fontSize: "clamp(22px, 2.1vw, 28px)", lineHeight: 1.2 }}
+              >
+                {p.title}
+              </h3>
+              <p className="mt-2 max-w-[42em] text-[15px] leading-[1.6] text-[var(--body)]">
+                {p.description}
+              </p>
             </Link>
           ))}
         </div>
