@@ -29,6 +29,7 @@ export const projects: Project[] = [
     description: "A single-screen view into $1B+ of managed assets.",
     category: "Data Analytics · Power BI",
     image: "/img/mainstreet/dashboard-mockup.png",
+    video: "/img/mainstreet/thumb.mp4",
     accent: "yellow",
   },
   {
@@ -37,6 +38,7 @@ export const projects: Project[] = [
     description: "A browser plugin that catches dark and manipulative patterns on the web.",
     category: "0→1 Product · Browser Tool",
     image: "/img/raahi/laptop-mockup.png",
+    video: "/img/raahi/thumb.mp4",
     accent: "green",
   },
   {
@@ -53,6 +55,7 @@ export const projects: Project[] = [
     description: "Making AI infrastructure visible through interaction.",
     category: "Sustainability · Physical Computing",
     image: "/img/coac/laptop-mockup.png",
+    video: "/img/coac/thumb.mp4",
     accent: "green",
   },
 ];

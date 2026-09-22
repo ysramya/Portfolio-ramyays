@@ -64,8 +64,6 @@ export default function Footer() {
               </a>
             ))}
           </div>
-          <span aria-hidden style={{ width: 1, height: 24, background: "var(--divider)" }} />
-          <p className="text-[13px] text-[var(--muted-2)]">Chicago, IL</p>
         </div>
       </div>
     </footer>

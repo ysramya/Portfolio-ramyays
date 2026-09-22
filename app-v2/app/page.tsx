@@ -25,6 +25,9 @@ const industries = [
   },
 ];
 
+/** Slugs whose card asset is a 16:9 clip rather than a square mockup. */
+const LANDSCAPE_THUMBS = new Set(["mainstreet", "invisible-impacts"]);
+
 export default function Home() {
   return (
     <>
@@ -86,7 +89,7 @@ export default function Home() {
       {/* ── 01 Selected work ─────────────────────────────────────── */}
       <Section id="work" divided={false}>
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHead n="01" eyebrow="Projects" title="Selected work" />
+          <SectionHead n="01" title="Projects" />
           <Link
             href="/about"
             className="text-[14px] text-[var(--body)] transition-colors hover:text-[var(--ink)]"
@@ -100,17 +103,22 @@ export default function Home() {
             column instead of cropping images to different ratios — these are
             mockups whose subject fills the frame, and a 4:3 crop would cut
             the laptop in half. */}
-        <div className="mt-10 grid gap-x-5 gap-y-12 sm:grid-cols-2">
+        <div className="mt-10 grid gap-x-5 gap-y-8 sm:grid-cols-2">
           {projects.map((p) => (
             <Link
               key={p.slug}
               href={`/projects/${p.slug}`}
-              className="group block sm:even:mt-16"
+              className="group block sm:even:mt-10"
             >
               <div
                 className="relative w-full overflow-hidden"
                 style={{
-                  aspectRatio: "1 / 1",
+                  // The two landscape clips (1280x720) keep their own frame —
+                  // squaring them would crop ~44% of their width, cutting the
+                  // dashboard's charts and the browser window in half. The
+                  // square assets stay square. The mix is also what varies the
+                  // card heights.
+                  aspectRatio: LANDSCAPE_THUMBS.has(p.slug) ? "16 / 9" : "1 / 1",
                   background: "var(--panel)",
                   borderRadius: "var(--radius)",
                 }}

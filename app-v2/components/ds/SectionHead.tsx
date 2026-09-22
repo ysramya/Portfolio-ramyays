@@ -16,7 +16,8 @@ export default function SectionHead({
   className = "",
 }: {
   n: string;
-  eyebrow: string;
+  /** Optional: omit where the title alone carries the section's name. */
+  eyebrow?: string;
   title: ReactNode;
   children?: ReactNode;
   as?: "h2" | "h3";
@@ -28,7 +29,7 @@ export default function SectionHead({
         {n}
       </span>
       <div>
-        <p className="eyebrow">{eyebrow}</p>
+        {eyebrow && <p className="eyebrow">{eyebrow}</p>}
         <Tag className="sec-title">{title}</Tag>
         {children && <div className="sec-copy">{children}</div>}
       </div>
