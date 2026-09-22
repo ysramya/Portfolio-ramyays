@@ -34,6 +34,7 @@ export const projects: Project[] = [
     category: "Data Analytics · Power BI",
     image: "/img/mainstreet/dashboard-mockup.png",
     video: "/img/mainstreet/thumb.mp4",
+    duration: "8 weeks",
     accent: "yellow",
   },
   {
