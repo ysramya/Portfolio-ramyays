@@ -103,7 +103,7 @@ export default function Home() {
             itself to its tallest card, leaving a ~270px hole under the short
             one. Multi-column flows each card straight after the last, so the
             stagger falls out of the differing heights and needs no offset. */}
-        <div className="mt-10 [column-gap:20px] sm:columns-2">
+        <div className="mt-10 [column-gap:20px] sm:columns-2 lg:columns-3">
           {projects.map((p) => (
             <Link
               key={p.slug}
