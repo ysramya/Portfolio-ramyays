@@ -856,95 +856,60 @@ export default function AsapPage() {
           </div>
         </div>
 
+        {/* The three boards are the project's own design-system exports, shown
+            as they were drawn rather than rebuilt from the spec — each sits on
+            a white mat because the boards carry their own light ground. */}
         <div className="mt-10 grid gap-4 lg:grid-cols-2">
-          {[
-            {
-              group: "Primary — Slate Teal",
-              swatches: [
-                { t: "900", hex: "#1E3035" },
-                { t: "800", hex: "#2D454C" },
-                { t: "700", hex: "#3A5560" },
-                { t: "600", hex: "#4B5D62" },
-                { t: "400", hex: "#7A9FA8" },
-                { t: "200", hex: "#C8DDE1" },
-                { t: "100", hex: "#E8F0F2" },
-                { t: "50", hex: "#F2F7F8" },
-              ],
-            },
-            {
-              group: "Warm neutrals",
-              swatches: [
-                { t: "Dark BG", hex: "#1A1A17" },
-                { t: "800", hex: "#2A2A27" },
-                { t: "600", hex: "#5C5C57" },
-                { t: "500", hex: "#888882" },
-                { t: "400", hex: "#B0ADA6" },
-                { t: "200", hex: "#DDD9D2" },
-                { t: "100", hex: "#EDE9E2" },
-                { t: "50", hex: "#F5F2EC" },
-              ],
-            },
-            {
-              group: "Accent — Sage & Amber",
-              swatches: [
-                { t: "Sage 400", hex: "#5A7260" },
-                { t: "Sage 100", hex: "#DDE3DC" },
-                { t: "Amber 700", hex: "#5A3E24" },
-                { t: "Amber 400", hex: "#C4A882" },
-                { t: "Amber 300", hex: "#D9C4A4" },
-                { t: "Amber 100", hex: "#F0E8D8" },
-              ],
-            },
-            {
-              group: "Semantic",
-              swatches: [
-                { t: "Success", hex: "#4A7C59" },
-                { t: "Warning", hex: "#B07B30" },
-                { t: "Danger", hex: "#9E4040" },
-                { t: "Info", hex: "#4B5D62" },
-              ],
-            },
-          ].map((g) => (
-            <figure key={g.group} className="panel p-6">
-              <figcaption className="eyebrow !text-[var(--ink)]">{g.group}</figcaption>
-              <ul className="mt-4 flex flex-wrap gap-3">
-                {g.swatches.map((s) => (
-                  <li key={s.hex + s.t} className="w-[76px]">
-                    <span
-                      className="block h-12 w-full"
-                      style={{ background: s.hex, borderRadius: 6, border: "1px solid var(--border-strong)" }}
-                    />
-                    <span className="mt-2 block text-[11.5px] leading-tight text-[var(--ink)]">{s.t}</span>
-                    <span className="block text-[11px] leading-tight text-[var(--muted)]">{s.hex}</span>
-                  </li>
-                ))}
-              </ul>
-            </figure>
-          ))}
+          <figure>
+            <div
+              className="relative w-full overflow-hidden"
+              style={{ aspectRatio: "1390 / 1080", background: "#ffffff", borderRadius: "var(--radius)", border: "1px solid var(--border-strong)" }}
+            >
+              <Image
+                src="/img/asap/design-system/colors.png"
+                alt="ASAP colour board: the Slate Teal ramp from 900 to 50, warm neutrals from dark background to light, sage and amber accents, and the four semantic colours, each labelled with its token and hex."
+                fill
+                sizes="(max-width: 1024px) 94vw, 560px"
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">Colour tokens — slate teal, warm neutrals, sage and amber, semantic.</figcaption>
+          </figure>
+
+          <figure>
+            <div
+              className="relative w-full overflow-hidden"
+              style={{ aspectRatio: "1421 / 884", background: "#ffffff", borderRadius: "var(--radius)", border: "1px solid var(--border-strong)" }}
+            >
+              <Image
+                src="/img/asap/design-system/typography.png"
+                alt="ASAP typography board: Inter from Google Fonts, with weight, size and line height for Heading 1 through Caption, and a note that heading line height and paragraph spacing are 1.1x the font size."
+                fill
+                sizes="(max-width: 1024px) 94vw, 560px"
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">Type scale — Inter, with hierarchy carried by weight.</figcaption>
+          </figure>
         </div>
 
-        <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-          <figure className="panel p-6">
-            <figcaption className="eyebrow !text-[var(--ink)]">Type scale — Inter</figcaption>
-            <dl className="mt-4">
-              {[
-                { s: "Heading 1", w: "700", v: "40 / 48" },
-                { s: "Heading 2", w: "600", v: "28 / 36" },
-                { s: "Heading 3", w: "600", v: "16 / 20" },
-                { s: "Button", w: "400", v: "16 / 20" },
-                { s: "Body", w: "400", v: "16 / 24" },
-                { s: "Small", w: "400", v: "14 / 20" },
-                { s: "Caption", w: "400", v: "12 / 16" },
-              ].map((r) => (
-                <div key={r.s} className="flex items-baseline justify-between gap-4 py-2.5" style={{ borderTop: "1px solid var(--rule)" }}>
-                  <dt className="text-[14.5px] text-[var(--ink)]">{r.s}</dt>
-                  <dd className="meta">
-                    {r.w} · {r.v}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-            <p className="meta mt-4">Specification — the product ships in Inter; this page is set in the portfolio&rsquo;s own faces.</p>
+        <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+          <figure>
+            <div
+              className="relative w-full overflow-hidden"
+              style={{ aspectRatio: "1390 / 1748", background: "#ffffff", borderRadius: "var(--radius)", border: "1px solid var(--border-strong)" }}
+            >
+              <Image
+                src="/img/asap/design-system/components.png"
+                alt="ASAP component board in dark and light mode: primary and disabled CTAs, secondary button, text link, circular icon button, option cards unselected and selected, sidebar nav items, the AI guidance card, dark and light text inputs with focus states, and the selection indicator."
+                fill
+                sizes="(max-width: 1024px) 94vw, 480px"
+                className="object-contain"
+              />
+            </div>
+            <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">
+              Components in both modes — CTAs, option cards, sidebar, the AI guidance card, inputs and selection.
+            </figcaption>
           </figure>
 
           <div className="flex flex-col gap-4">
