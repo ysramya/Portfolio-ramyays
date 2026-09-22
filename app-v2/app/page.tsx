@@ -98,17 +98,17 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Two big columns rather than a row of equal cards. Every thumbnail
-            is square (1080²), so the stagger comes from offsetting the right
-            column instead of cropping images to different ratios — these are
-            mockups whose subject fills the frame, and a 4:3 crop would cut
-            the laptop in half. */}
-        <div className="mt-10 grid gap-x-5 gap-y-8 sm:grid-cols-2">
+        {/* Two columns that pack independently, not a row-aligned grid: the
+            cards mix square and 16:9 thumbnails, and in a grid every row sized
+            itself to its tallest card, leaving a ~270px hole under the short
+            one. Multi-column flows each card straight after the last, so the
+            stagger falls out of the differing heights and needs no offset. */}
+        <div className="mt-10 [column-gap:20px] sm:columns-2">
           {projects.map((p) => (
             <Link
               key={p.slug}
               href={`/projects/${p.slug}`}
-              className="group block sm:even:mt-10"
+              className="group mb-8 block break-inside-avoid"
             >
               <div
                 className="relative w-full overflow-hidden"
