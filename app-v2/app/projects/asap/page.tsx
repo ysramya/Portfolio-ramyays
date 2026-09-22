@@ -838,11 +838,148 @@ export default function AsapPage() {
         </div>
       </Section>
 
-      {/* 10 — WHAT'S NEXT */}
+      {/* 10 — DESIGN SYSTEM */}
+      <Section id="design-system">
+        <div className="sec-grid">
+          <SectionHead n="10" eyebrow="Design system" title="Calm by default, so the task stays dominant.">
+            <p>
+              A slate-teal core with warm neutrals, sage and amber accents, and a restrained
+              semantic set — enough structure to keep AI states legible without letting the
+              interface turn decorative.
+            </p>
+          </SectionHead>
+          <div className="sec-copy lg:pt-10">
+            <p>
+              Weight carries hierarchy rather than colour, and amber is reserved for selection and
+              guidance so a recommendation never competes with the step in front of you.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-10 grid gap-4 lg:grid-cols-2">
+          {[
+            {
+              group: "Primary — Slate Teal",
+              swatches: [
+                { t: "900", hex: "#1E3035" },
+                { t: "800", hex: "#2D454C" },
+                { t: "700", hex: "#3A5560" },
+                { t: "600", hex: "#4B5D62" },
+                { t: "400", hex: "#7A9FA8" },
+                { t: "200", hex: "#C8DDE1" },
+                { t: "100", hex: "#E8F0F2" },
+                { t: "50", hex: "#F2F7F8" },
+              ],
+            },
+            {
+              group: "Warm neutrals",
+              swatches: [
+                { t: "Dark BG", hex: "#1A1A17" },
+                { t: "800", hex: "#2A2A27" },
+                { t: "600", hex: "#5C5C57" },
+                { t: "500", hex: "#888882" },
+                { t: "400", hex: "#B0ADA6" },
+                { t: "200", hex: "#DDD9D2" },
+                { t: "100", hex: "#EDE9E2" },
+                { t: "50", hex: "#F5F2EC" },
+              ],
+            },
+            {
+              group: "Accent — Sage & Amber",
+              swatches: [
+                { t: "Sage 400", hex: "#5A7260" },
+                { t: "Sage 100", hex: "#DDE3DC" },
+                { t: "Amber 700", hex: "#5A3E24" },
+                { t: "Amber 400", hex: "#C4A882" },
+                { t: "Amber 300", hex: "#D9C4A4" },
+                { t: "Amber 100", hex: "#F0E8D8" },
+              ],
+            },
+            {
+              group: "Semantic",
+              swatches: [
+                { t: "Success", hex: "#4A7C59" },
+                { t: "Warning", hex: "#B07B30" },
+                { t: "Danger", hex: "#9E4040" },
+                { t: "Info", hex: "#4B5D62" },
+              ],
+            },
+          ].map((g) => (
+            <figure key={g.group} className="panel p-6">
+              <figcaption className="eyebrow !text-[var(--ink)]">{g.group}</figcaption>
+              <ul className="mt-4 flex flex-wrap gap-3">
+                {g.swatches.map((s) => (
+                  <li key={s.hex + s.t} className="w-[76px]">
+                    <span
+                      className="block h-12 w-full"
+                      style={{ background: s.hex, borderRadius: 6, border: "1px solid var(--border-strong)" }}
+                    />
+                    <span className="mt-2 block text-[11.5px] leading-tight text-[var(--ink)]">{s.t}</span>
+                    <span className="block text-[11px] leading-tight text-[var(--muted)]">{s.hex}</span>
+                  </li>
+                ))}
+              </ul>
+            </figure>
+          ))}
+        </div>
+
+        <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+          <figure className="panel p-6">
+            <figcaption className="eyebrow !text-[var(--ink)]">Type scale — Inter</figcaption>
+            <dl className="mt-4">
+              {[
+                { s: "Heading 1", w: "700", v: "40 / 48" },
+                { s: "Heading 2", w: "600", v: "28 / 36" },
+                { s: "Heading 3", w: "600", v: "16 / 20" },
+                { s: "Button", w: "400", v: "16 / 20" },
+                { s: "Body", w: "400", v: "16 / 24" },
+                { s: "Small", w: "400", v: "14 / 20" },
+                { s: "Caption", w: "400", v: "12 / 16" },
+              ].map((r) => (
+                <div key={r.s} className="flex items-baseline justify-between gap-4 py-2.5" style={{ borderTop: "1px solid var(--rule)" }}>
+                  <dt className="text-[14.5px] text-[var(--ink)]">{r.s}</dt>
+                  <dd className="meta">
+                    {r.w} · {r.v}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <p className="meta mt-4">Specification — the product ships in Inter; this page is set in the portfolio&rsquo;s own faces.</p>
+          </figure>
+
+          <div className="flex flex-col gap-4">
+            <div className="panel-sage p-6">
+              <p className="eyebrow">Interaction principles</p>
+              <ul className="mt-4 flex flex-col gap-3">
+                {[
+                  { t: "Ask before recommending", b: "Gather context before the system proposes anything." },
+                  { t: "One step at a time", b: "Keep the current action visually dominant." },
+                  { t: "Make uncertainty visible", b: "Confidence and limits should be readable from the interface." },
+                  { t: "Preserve progress", b: "Where you are, what's done, what's next, what's unavailable." },
+                ].map((p2) => (
+                  <li key={p2.t}>
+                    <p className="text-[14.5px] font-medium text-[var(--ink)]">{p2.t}</p>
+                    <p className="mt-0.5 text-[13px] leading-snug text-[var(--body)]">{p2.b}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="p-6" style={{ border: "1px dashed var(--border-strong)", borderRadius: "var(--radius)" }}>
+              <p className="eyebrow">Never</p>
+              <p className="mt-3 text-[14px] leading-relaxed text-[var(--body)]">
+                Neon AI gradients, unrelated brand colours, colour as the only indicator of state,
+                or decoration that doesn&rsquo;t support the task.
+              </p>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* 11 — WHAT'S NEXT */}
       <Section id="next">
         <div className="sec-grid">
           <SectionHead
-            n="10"
+            n="11"
             eyebrow="What’s next"
             title="The next step is making ASAP useful beyond the prototype."
           >

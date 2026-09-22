@@ -141,7 +141,15 @@ export default function Home() {
                 )}
               </div>
 
-              <p className="meta mt-5">{p.category}</p>
+              <p className="meta mt-5">
+                {p.category}
+                {p.duration && (
+                  <>
+                    <span aria-hidden> · </span>
+                    {p.duration}
+                  </>
+                )}
+              </p>
               <h3
                 className="mt-2 transition-colors group-hover:text-[var(--numeral)]"
                 style={{ fontSize: "clamp(22px, 2.1vw, 28px)", lineHeight: 1.2 }}

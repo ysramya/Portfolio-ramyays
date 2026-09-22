@@ -1306,10 +1306,163 @@ export default function MainstreetPage() {
         </ul>
       </Section>
 
-      {/* 13 — LOOKING AHEAD */}
+      {/* 13 — DESIGN SYSTEM */}
+      <Section id="design-system">
+        <div className="sec-grid">
+          <SectionHead n="13" eyebrow="Design system" title="Brand clarity and financial clarity in the same system.">
+            <p>
+              The MainStreet palette stays recognisable while adapting to an enterprise analytics
+              environment: green carries the brand signal and positive movement, slate and deep
+              teal carry structure, and the warm tones stay supporting.
+            </p>
+          </SectionHead>
+          <div className="sec-copy lg:pt-10">
+            <p>
+              The constraint that matters most is restraint — the dashboard should read as an
+              established financial tool, not a consumer fintech app, and never trade data
+              readability for brand expression.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-10 grid gap-4 lg:grid-cols-2">
+          <figure className="panel p-6">
+            <figcaption className="eyebrow !text-[var(--ink)]">Brand palette</figcaption>
+            <ul className="mt-4 flex flex-wrap gap-3">
+              {[
+                { t: "MainStreet Green", hex: "#3C8C46" },
+                { t: "Slate Blue", hex: "#364F60" },
+                { t: "Charcoal Gray", hex: "#5A5B5D" },
+                { t: "Dark Brown", hex: "#6F4825" },
+                { t: "Sand", hex: "#D5B07F" },
+                { t: "Warm Brown", hex: "#8E5C2F" },
+                { t: "Deep Teal", hex: "#123A3F" },
+                { t: "Lime", hex: "#C1D365" },
+              ].map((s) => (
+                <li key={s.hex} className="w-[88px]">
+                  <span
+                    className="block h-12 w-full"
+                    style={{ background: s.hex, borderRadius: 4, border: "1px solid var(--border-strong)" }}
+                  />
+                  <span className="mt-2 block text-[11.5px] leading-tight text-[var(--ink)]">{s.t}</span>
+                  <span className="block text-[11px] leading-tight text-[var(--muted)]">{s.hex}</span>
+                </li>
+              ))}
+            </ul>
+          </figure>
+
+          <figure className="panel p-6">
+            <figcaption className="eyebrow !text-[var(--ink)]">Data-visualization roles</figcaption>
+            <dl className="mt-4">
+              {[
+                { r: "Primary series", hex: "#3C8C46" },
+                { r: "Secondary series", hex: "#364F60" },
+                { r: "Dark emphasis", hex: "#123A3F" },
+                { r: "Neutral", hex: "#5A5B5D" },
+                { r: "Warm category", hex: "#8E5C2F" },
+                { r: "Supporting warm", hex: "#D5B07F" },
+                { r: "Highlight", hex: "#C1D365" },
+              ].map((row) => (
+                <div key={row.hex + row.r} className="flex items-center justify-between gap-4 py-2.5" style={{ borderTop: "1px solid var(--rule)" }}>
+                  <dt className="flex items-center gap-2.5 text-[14px] text-[var(--ink)]">
+                    <span aria-hidden className="h-3.5 w-3.5 flex-none" style={{ background: row.hex, borderRadius: 3, border: "1px solid var(--border-strong)" }} />
+                    {row.r}
+                  </dt>
+                  <dd className="meta">{row.hex}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="meta mt-4">One category, one colour — and never colour alone to carry meaning.</p>
+          </figure>
+        </div>
+
+        <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+          <figure className="panel p-6">
+            <figcaption className="eyebrow !text-[var(--ink)]">Type scale — Bliss Light</figcaption>
+            <dl className="mt-4">
+              {[
+                { s: "Heading 1", v: "40 / 48" },
+                { s: "Heading 2", v: "32 / 40" },
+                { s: "Heading 3", v: "24 / 32" },
+                { s: "KPI / Display", v: "28 / 36" },
+                { s: "Button", v: "16 / 20" },
+                { s: "Body", v: "16 / 24" },
+                { s: "Small", v: "14 / 20" },
+                { s: "Caption", v: "12 / 12" },
+              ].map((r) => (
+                <div key={r.s} className="flex items-baseline justify-between gap-4 py-2.5" style={{ borderTop: "1px solid var(--rule)" }}>
+                  <dt className="text-[14.5px] text-[var(--ink)]">{r.s}</dt>
+                  <dd className="meta">{r.v}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="meta mt-4">
+              Specification — the brand face is Bliss Light, set light throughout; this page uses the portfolio&rsquo;s own faces.
+            </p>
+          </figure>
+
+          <div className="flex flex-col gap-4">
+            <div className="panel-sage p-6">
+              <p className="eyebrow">KPI card structure</p>
+              <div className="mt-4 p-5" style={{ background: "var(--bg-raised)", border: "1px solid var(--border-strong)", borderRadius: 8 }}>
+                <p className="meta">Total AUA</p>
+                <p className="mt-1.5 font-[family-name:var(--font-display)] text-[34px] leading-none text-[var(--ink)]">$1.2B</p>
+                <p className="mt-2 text-[14px]" style={{ color: POSITIVE }}>
+                  &#8593; 4.2%
+                </p>
+                <p className="meta mt-1">vs. prior quarter</p>
+              </div>
+              <p className="mt-4 text-[13px] leading-snug text-[var(--body)]">
+                The number is the strongest element; the label stays concise and the card stays undecorated.
+              </p>
+            </div>
+
+            <div className="panel p-6">
+              <p className="eyebrow">Status chips</p>
+              <ul className="mt-4 flex flex-wrap gap-2">
+                {[
+                  { t: "On track", dot: "#3C8C46" },
+                  { t: "Review", dot: "#8E5C2F" },
+                  { t: "At risk", dot: FRICTION },
+                  { t: "Info", dot: "#364F60" },
+                ].map((c) => (
+                  <li
+                    key={c.t}
+                    className="flex items-center gap-2 px-3 py-1.5 text-[12.5px] text-[var(--ink)]"
+                    style={{ border: "1px solid var(--border-strong)", borderRadius: 999, background: "var(--bg-raised)" }}
+                  >
+                    <span aria-hidden className="h-2 w-2 rounded-full" style={{ background: c.dot }} />
+                    {c.t}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 text-[13px] leading-snug text-[var(--body)]">
+                The spec leaves warning and danger as &ldquo;red&rdquo; without a token, so no hex is asserted here.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div className="p-6" style={{ border: "1px solid var(--border-strong)", borderRadius: "var(--radius)", background: "var(--bg-raised)" }}>
+            <p className="eyebrow">Spacing &amp; radius</p>
+            <p className="mt-3 text-[14px] leading-relaxed text-[var(--ink)]">4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 px</p>
+            <p className="mt-1.5 text-[14px] leading-relaxed text-[var(--body)]">Radius 4 · 8 · 12 · 16 px — restrained corporate rounding.</p>
+          </div>
+          <div className="p-6" style={{ border: "1px dashed var(--border-strong)", borderRadius: "var(--radius)" }}>
+            <p className="eyebrow">Never</p>
+            <p className="mt-3 text-[14px] leading-relaxed text-[var(--body)]">
+              Purple, neon or startup-style colours; every brand colour at equal weight; overdecorated
+              KPI cards; or a consumer-fintech reading of an enterprise tool.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* 14 — LOOKING AHEAD */}
       <Section id="next">
         <div className="sec-grid">
-          <SectionHead n="13" eyebrow="Looking ahead" title="A strong foundation for the next phase of reporting." />
+          <SectionHead n="14" eyebrow="Looking ahead" title="A strong foundation for the next phase of reporting." />
           <div>
             <p className="meta">Future opportunities — not delivered features</p>
             <ul className="mt-4 grid gap-4 sm:grid-cols-3">

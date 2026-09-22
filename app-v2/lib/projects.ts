@@ -6,6 +6,9 @@ export type Project = {
   image: string;
   /** Optional silent loop shown in place of `image` on the homepage card. */
   video?: string;
+  /** How long the project ran, shown on the homepage card. Omitted where the
+   *  case study doesn't state one. */
+  duration?: string;
   accent: "green" | "yellow";
 };
 
@@ -21,6 +24,7 @@ export const projects: Project[] = [
     // `image` doubles as the loop's poster and the reduced-motion fallback.
     image: "/img/asap/thumb-poster.jpg",
     video: "/video/asap-thumb.mp4",
+    duration: "10 weeks",
     accent: "green",
   },
   {
@@ -39,6 +43,7 @@ export const projects: Project[] = [
     category: "0→1 Product · Browser Tool",
     image: "/img/raahi/laptop-mockup.png",
     video: "/img/raahi/thumb.mp4",
+    duration: "16 weeks",
     accent: "green",
   },
   {
@@ -47,6 +52,7 @@ export const projects: Project[] = [
     description: "A VR companion for student mental wellness.",
     category: "VR / XR · Mental Health",
     image: "/img/wellnut/vr-session.jpg",
+    duration: "6 months",
     accent: "yellow",
   },
   {
@@ -56,6 +62,7 @@ export const projects: Project[] = [
     category: "Sustainability · Physical Computing",
     image: "/img/coac/laptop-mockup.png",
     video: "/img/coac/thumb.mp4",
+    duration: "10 weeks",
     accent: "green",
   },
 ];
