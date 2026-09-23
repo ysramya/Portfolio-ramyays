@@ -84,6 +84,9 @@ export default function Nav() {
                     href={l.href}
                     target={l.external ? "_blank" : undefined}
                     rel={l.external ? "noopener" : undefined}
+                    /* The resume is a static PDF, so Next's RSC prefetch has
+                       no payload to fetch and 404s on every page load. */
+                    prefetch={l.external ? false : undefined}
                     onClick={() => l.external && trackClick(l.label)}
                     data-active={active ? "true" : undefined}
                     className="nav-link text-[14px] hover:text-[var(--ink)]"
@@ -156,6 +159,7 @@ export default function Nav() {
                   href={l.href}
                   target={l.external ? "_blank" : undefined}
                   rel={l.external ? "noopener" : undefined}
+                  prefetch={l.external ? false : undefined}
                   onClick={() => {
                     setOpen(false);
                     if (l.external) trackClick(l.label);
