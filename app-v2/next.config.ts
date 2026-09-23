@@ -12,6 +12,21 @@ const nextConfig: NextConfig = {
   outputFileTracingExcludes: {
     "/beyond-the-screen": ["./public/img/beyond-the-screen/**"],
   },
+
+  /**
+   * The placeholder shipped briefly under a misspelled slug before the
+   * project's name was confirmed as Med-dementia. Anyone holding the old
+   * URL lands on the page rather than a 404.
+   */
+  async redirects() {
+    return [
+      {
+        source: "/projects/medemtia",
+        destination: "/projects/med-dementia",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -3,7 +3,7 @@ import Link from "next/link";
 import DeepBand from "@/components/ds/DeepBand";
 
 /**
- * Medemtia — placeholder.
+ * Med-dementia — placeholder.
  *
  * Deliberately says nothing about the project beyond its name: there is no
  * brief, no imagery and no figures in the repo for it yet, and inventing a
@@ -17,12 +17,12 @@ import DeepBand from "@/components/ds/DeepBand";
  */
 
 export const metadata: Metadata = {
-  title: "Medemtia — Ramya Yerramilli",
+  title: "Med-dementia — Ramya Yerramilli",
   description: "A case study in progress.",
   robots: { index: false, follow: true },
 };
 
-export default function MedemtiaPage() {
+export default function MedDementiaPage() {
   return (
     <DeepBand>
       <div
@@ -32,7 +32,7 @@ export default function MedemtiaPage() {
         <p className="eyebrow eyebrow-rule">Case study · In progress</p>
 
         <h1 className="mt-5" style={{ fontSize: "clamp(52px, 6.4vw, 92px)", lineHeight: 0.98 }}>
-          Medemtia
+          Med-dementia
         </h1>
 
         <p
