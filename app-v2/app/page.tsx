@@ -37,7 +37,7 @@ export default function Home() {
           className="wrap grid items-center gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] md:gap-14"
           style={{ paddingTop: "calc(var(--nav-h) + 48px)", paddingBottom: 72 }}
         >
-          <div>
+          <div className="hero-seq">
             <p className="eyebrow eyebrow-rule">Product designer &middot; UX researcher</p>
             <h1 className="mt-5">Ramya Yerramilli</h1>
             <h2
@@ -69,7 +69,7 @@ export default function Home() {
               mat of the same colour, soft corners, the artwork uncropped.
               The mat uses a literal ivory because `--bg` is green in here. */}
           <div
-            className="mx-auto w-full max-w-[500px]"
+            className="hero-visual mx-auto w-full max-w-[500px]"
             style={{ background: "#f7f5ef", padding: "clamp(10px, 1.4vw, 18px)", borderRadius: "var(--radius)" }}
           >
             <div className="relative w-full" style={{ aspectRatio: "550 / 560" }}>
@@ -103,7 +103,7 @@ export default function Home() {
             itself to its tallest card, leaving a ~270px hole under the short
             one. Multi-column flows each card straight after the last, so the
             stagger falls out of the differing heights and needs no offset. */}
-        <div className="mt-10 [column-gap:20px] sm:columns-2 lg:columns-3">
+        <div className="mt-10 [column-gap:20px] sm:columns-2 lg:columns-3" data-reveal-group>
           {projects.map((p) => (
             <Link
               key={p.slug}

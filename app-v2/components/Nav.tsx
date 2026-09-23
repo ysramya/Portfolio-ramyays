@@ -59,10 +59,14 @@ export default function Nav() {
     <header
       className={`fixed top-0 inset-x-0 z-50 ${onDark ? "theme-deep" : ""}`}
       style={{
-        height: "var(--nav-h)",
+        /* §05 — the bar compacts and gains a hairline once scrolled, and
+           restores near the top. Height and background are the only things
+           that change; the bar is never hidden. */
+        height: scrolled ? "calc(var(--nav-h) - 10px)" : "var(--nav-h)",
         backgroundColor: "var(--bg)",
         borderBottom: `1px solid ${scrolled || open ? "var(--rule)" : "transparent"}`,
-        transition: "background-color 0.3s ease, border-color 0.3s ease",
+        transition:
+          "background-color 0.3s ease, border-color 0.3s ease, height var(--mo-standard) var(--mo-ease)",
       }}
     >
       <div className="wrap h-full flex items-center justify-between">
@@ -81,7 +85,8 @@ export default function Nav() {
                     target={l.external ? "_blank" : undefined}
                     rel={l.external ? "noopener" : undefined}
                     onClick={() => l.external && trackClick(l.label)}
-                    className="text-[14px] transition-colors hover:text-[var(--ink)]"
+                    data-active={active ? "true" : undefined}
+                    className="nav-link text-[14px] hover:text-[var(--ink)]"
                     style={{ color: active ? "var(--ink)" : "var(--body)" }}
                   >
                     {l.label}

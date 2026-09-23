@@ -690,6 +690,196 @@ body:has(.theme-wellnut) .theme-deep {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   Motion — Portfolio_Motion_Microinteraction_System.md, Tier 1.
+
+   One deliberate deviation from the spec: §03 asks reveals to animate
+   opacity 0 → 1 as well as translateY. They animate transform only here.
+   An earlier version of this site gated content opacity on
+   IntersectionObserver and whole sections rendered blank when the callback
+   fired late (see components/ds/Reveal.tsx). Content that exists must be
+   readable whether or not a scroll callback ever runs, so the entrance is
+   carried by movement alone.
+
+   The hidden state is also scoped to `.motion-ready`, which only JS sets —
+   without JS nothing is ever offset.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --mo-instant: 100ms;
+  --mo-fast: 160ms;
+  --mo-standard: 240ms;
+  --mo-medium: 400ms;
+  --mo-slow: 600ms;
+  --mo-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer components {
+  /* ── Scroll reveal ──
+     Driven by one observer (components/MotionReady.tsx) that tags sections
+     with .reveal and flips .is-in when ~18% enters the viewport. */
+  .motion-ready .reveal {
+    transform: translateY(24px);
+    transition: transform var(--mo-medium) var(--mo-ease);
+  }
+
+  .motion-ready .reveal.is-in {
+    transform: none;
+  }
+
+  /* Stagger — §04. Children of a revealed group follow it in sequence,
+     capped at 5 so a long list never exceeds the 300ms maximum. */
+  .motion-ready .reveal-group > * {
+    transform: translateY(16px);
+    transition: transform var(--mo-standard) var(--mo-ease);
+  }
+
+  .motion-ready .reveal-group.is-in > * {
+    transform: none;
+  }
+
+  .motion-ready .reveal-group.is-in > *:nth-child(2) { transition-delay: 70ms; }
+  .motion-ready .reveal-group.is-in > *:nth-child(3) { transition-delay: 140ms; }
+  .motion-ready .reveal-group.is-in > *:nth-child(4) { transition-delay: 210ms; }
+  .motion-ready .reveal-group.is-in > *:nth-child(n + 5) { transition-delay: 280ms; }
+
+  /* ── Hero entrance — §06.
+     Runs on load rather than scroll, so it uses opacity safely: the
+     keyframe's end state is the resting state, and if the animation never
+     runs the content simply sits visible. */
+  .motion-ready .hero-seq > * {
+    animation: hero-rise var(--mo-slow) var(--mo-ease) both;
+  }
+
+  .motion-ready .hero-seq > *:nth-child(2) { animation-delay: 100ms; }
+  .motion-ready .hero-seq > *:nth-child(3) { animation-delay: 220ms; }
+  .motion-ready .hero-seq > *:nth-child(4) { animation-delay: 360ms; }
+  .motion-ready .hero-seq > *:nth-child(n + 5) { animation-delay: 440ms; }
+
+  @keyframes hero-rise {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* Hero visual — §06, scale only, no opacity gate. */
+  .motion-ready .hero-visual {
+    animation: hero-visual var(--mo-slow) var(--mo-ease) 550ms both;
+  }
+
+  @keyframes hero-visual {
+    from { transform: scale(0.97); }
+    to { transform: none; }
+  }
+
+  /* ── Buttons — §11. Scale on hover, compress on press. */
+  .btn {
+    transition:
+      background-color var(--mo-fast) ease-out,
+      border-color var(--mo-fast) ease-out,
+      color var(--mo-fast) ease-out,
+      transform var(--mo-fast) ease-out;
+  }
+
+  .btn:hover {
+    transform: scale(1.015);
+  }
+
+  .btn:active {
+    transform: scale(0.985);
+  }
+
+  /* Arrows travel on hover — §11/§12. The span carries the glyph. */
+  .btn span[aria-hidden] {
+    display: inline-block;
+    transition: transform var(--mo-fast) ease-out;
+  }
+
+  .btn:hover span[aria-hidden] {
+    transform: translateX(4px);
+  }
+
+  /* ── Cards — §07. Lift, zoom the media, advance the arrow. */
+  .card,
+  .group {
+    transition:
+      border-color var(--mo-standard) ease-out,
+      transform var(--mo-standard) var(--mo-ease);
+  }
+
+  a.group:hover {
+    transform: translateY(-4px);
+  }
+
+  a.group img,
+  a.group video {
+    transition: transform var(--mo-medium) var(--mo-ease);
+  }
+
+  a.group:hover img,
+  a.group:hover video {
+    transform: scale(1.025);
+  }
+
+  .group:hover .arrow-btn {
+    transform: translateX(5px);
+  }
+
+  .arrow-btn {
+    transition:
+      background-color var(--mo-fast) ease-out,
+      border-color var(--mo-fast) ease-out,
+      color var(--mo-fast) ease-out,
+      transform var(--mo-standard) var(--mo-ease);
+  }
+
+  /* ── Large images — §13. */
+  figure .media img,
+  figure > div > img {
+    transition: transform var(--mo-medium) var(--mo-ease);
+  }
+
+  figure:hover .media img {
+    transform: scale(1.015);
+  }
+
+  /* ── Nav links — §05. Underline grows from the left. */
+  .nav-link {
+    position: relative;
+    transition: color var(--mo-fast) ease-out;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--mo-fast) ease-out;
+  }
+
+  .nav-link:hover::after,
+  .nav-link[data-active="true"]::after {
+    transform: scaleX(1);
+  }
+
+  /* ── Page transition — §08, via app/template.tsx. */
+  .page-enter {
+    animation: page-enter var(--mo-standard) var(--mo-ease) both;
+  }
+
+  @keyframes page-enter {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+/* §32 — reduced motion. Transforms and stagger go; colour and state
+   changes stay, and every revealed element is pinned to its resting
+   position so nothing can be left offset. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -697,5 +887,26 @@ body:has(.theme-wellnut) .theme-deep {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .motion-ready .reveal,
+  .motion-ready .reveal-group > *,
+  .motion-ready .hero-seq > *,
+  .motion-ready .hero-visual {
+    transform: none !important;
+    opacity: 1 !important;
+    animation: none !important;
+    transition-delay: 0ms !important;
+  }
+
+  .btn:hover,
+  .btn:active,
+  a.group:hover,
+  a.group:hover img,
+  a.group:hover video,
+  figure:hover .media img,
+  .group:hover .arrow-btn,
+  .btn:hover span[aria-hidden] {
+    transform: none !important;
   }
 }

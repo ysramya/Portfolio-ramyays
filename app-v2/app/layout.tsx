@@ -4,6 +4,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import Analytics from "@/components/Analytics";
+import MotionReady from "@/components/MotionReady";
 import "./globals.css";
 
 /* Two families, no third — see design-system.md §2.
@@ -50,6 +51,7 @@ export default function RootLayout({
         <Footer />
         <ChatWidget />
         <Analytics />
+        <MotionReady />
       </body>
     </html>
   );
