@@ -866,6 +866,110 @@ body:has(.theme-wellnut) .theme-deep {
     transform: scaleX(1);
   }
 
+  /* ═══ Tier 2 — product motion ═══════════════════════════════════════
+     ASAP §15–§18 and MainStreet §21/§24/§25. Same rules as Tier 1: the
+     offset state only exists under `.motion-ready`, entrances are
+     transform-based, and the reduced-motion block pins everything. */
+
+  /* ASAP §15 — Goal → Clarify → Plan → Focus.
+     Each step rises in turn so the four moments read as a sequence rather
+     than four static screenshots. */
+  .motion-ready .flow-step {
+    transform: translateY(20px) scale(0.985);
+    transition:
+      transform var(--mo-medium) var(--mo-ease);
+  }
+
+  .motion-ready .flow-step.is-in {
+    transform: none;
+  }
+
+  .motion-ready .flow-step.is-in:nth-child(2) { transition-delay: 90ms; }
+  .motion-ready .flow-step.is-in:nth-child(3) { transition-delay: 180ms; }
+  .motion-ready .flow-step.is-in:nth-child(4) { transition-delay: 270ms; }
+
+  /* ASAP §18 — the behaviour state machine.
+     Nodes activate in order and the connector between them draws downward,
+     so the Goal → Ask → Recommend → Clarify/Stop relationship is shown
+     rather than described. ~400ms per state, per the spec. */
+  .motion-ready .behaviour-node {
+    transform: scale(0.9);
+    transition: transform var(--mo-medium) var(--mo-ease);
+  }
+
+  .motion-ready .behaviour-step.is-in .behaviour-node {
+    transform: none;
+  }
+
+  .motion-ready .behaviour-connector {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform var(--mo-medium) var(--mo-ease);
+  }
+
+  .motion-ready .behaviour-step.is-in .behaviour-connector {
+    transform: scaleY(1);
+  }
+
+  .motion-ready .behaviour-step.is-in:nth-child(2) .behaviour-node,
+  .motion-ready .behaviour-step.is-in:nth-child(2) .behaviour-connector { transition-delay: 400ms; }
+  .motion-ready .behaviour-step.is-in:nth-child(3) .behaviour-node,
+  .motion-ready .behaviour-step.is-in:nth-child(3) .behaviour-connector { transition-delay: 800ms; }
+  .motion-ready .behaviour-step.is-in:nth-child(4) .behaviour-node,
+  .motion-ready .behaviour-step.is-in:nth-child(4) .behaviour-connector { transition-delay: 1200ms; }
+
+  /* ASAP §16 — confidence states enter at 0.9 → 1, once, never pulsing. */
+  .motion-ready .confidence-shot {
+    transform: scale(0.9);
+    transition: transform var(--mo-slow) var(--mo-ease);
+  }
+
+  .motion-ready .confidence-shot.is-in {
+    transform: none;
+  }
+
+  /* ASAP §17 — a locked step becoming available: functional, not celebratory. */
+  .motion-ready .unlock-shot {
+    transform: scale(0.98);
+    transition: transform 350ms var(--mo-ease);
+  }
+
+  .motion-ready .unlock-shot.is-in {
+    transform: none;
+  }
+
+  /* MainStreet §24 — the "After" workflow rises into view.
+     The spec also asks the old workflow to recede to 25% once the new one
+     arrives. That is not implemented: `workflow-before` is a previous
+     sibling, which CSS cannot select, and the JS route kept losing to the
+     reveal backstop. It is also the one place where the motion would make
+     content harder to read — the Before chain's labels are content, not
+     decoration. The comparison is carried by the layout and colour instead. */
+  .motion-ready .workflow-after {
+    transform: translateY(18px);
+    transition: transform var(--mo-medium) var(--mo-ease);
+  }
+
+  .motion-ready .workflow-after.is-in {
+    transform: none;
+  }
+
+  /* MainStreet §25 — the dashboard's information hierarchy reveals in the
+     same order the product presents it. */
+  .motion-ready .hierarchy-layer {
+    transform: translateX(-10px);
+    transition: transform var(--mo-medium) var(--mo-ease);
+  }
+
+  .motion-ready .hierarchy-layer.is-in {
+    transform: none;
+  }
+
+  .motion-ready .hierarchy-layer.is-in:nth-child(2) { transition-delay: 90ms; }
+  .motion-ready .hierarchy-layer.is-in:nth-child(3) { transition-delay: 180ms; }
+  .motion-ready .hierarchy-layer.is-in:nth-child(4) { transition-delay: 270ms; }
+  .motion-ready .hierarchy-layer.is-in:nth-child(5) { transition-delay: 360ms; }
+
   /* ── Page transition — §08, via app/template.tsx. */
   .page-enter {
     animation: page-enter var(--mo-standard) var(--mo-ease) both;

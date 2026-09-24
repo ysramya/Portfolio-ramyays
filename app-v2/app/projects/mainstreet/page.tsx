@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DeepBand from "@/components/ds/DeepBand";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
+import CountUp from "@/components/CountUp";
 
 /**
  * Mainstreet PM Dashboard — outcome-first enterprise case study, per
@@ -463,7 +464,9 @@ export default function MainstreetPage() {
                   className="mt-5 whitespace-nowrap font-[family-name:var(--font-display)] leading-none text-[var(--ink)]"
                   style={{ fontSize: "clamp(30px, 3vw, 40px)" }}
                 >
-                  {o.value}
+                  {/* §21 — counts only the number; "~", "$", "<", "hrs",
+                      "B+" and "sec" are preserved verbatim. */}
+                  <CountUp value={o.value} />
                 </dd>
                 <dt className="mt-2 text-[13px] leading-snug text-[var(--body)]">{o.label}</dt>
               </div>
@@ -494,7 +497,7 @@ export default function MainstreetPage() {
               </Icon>
             </span>
           </div>
-          <div className="panel-sage p-7">
+          <div className="workflow-after panel-sage p-7">
             <p className="eyebrow" style={{ color: POSITIVE }}>After</p>
             <div className="mt-6">
               <Chain
@@ -708,7 +711,10 @@ export default function MainstreetPage() {
           {/* Information hierarchy — each layer steps deeper */}
           <ol aria-label="Dashboard information hierarchy, from first glance to deepest detail">
             {hierarchy.map((h, idx) => (
-              <li key={h.n} style={{ marginLeft: `${idx * 5}%` }}>
+              /* §25 — the layers reveal in the order the dashboard presents
+                 them. The indent below is layout, not motion; the entrance
+                 composes with it. */
+              <li key={h.n} className="hierarchy-layer" style={{ marginLeft: `${idx * 5}%` }}>
                 <div
                   className="flex items-center gap-4 px-5 py-4"
                   style={{

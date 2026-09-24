@@ -25,6 +25,14 @@ import { usePathname } from "next/navigation";
 const TARGETS = ".sec, footer, [data-reveal]";
 /** Groups whose children stagger: cards, metric rows, step lists. */
 const GROUPS = "[data-reveal-group]";
+/**
+ * Tier 2 product motion — ASAP's flow, behaviour machine, confidence and
+ * unlock states; MainStreet's workflow and hierarchy. Each is observed
+ * individually so it activates when it reaches the viewport, and each is
+ * covered by the same backstop as everything else.
+ */
+const SEQUENCED =
+  ".flow-step, .behaviour-step, .confidence-shot, .unlock-shot, .workflow-after, .hierarchy-layer";
 
 export default function MotionReady() {
   const pathname = usePathname();
@@ -39,12 +47,14 @@ export default function MotionReady() {
       document.querySelectorAll<HTMLElement>(TARGETS),
     );
     const groups = Array.from(document.querySelectorAll<HTMLElement>(GROUPS));
+    const sequenced = Array.from(document.querySelectorAll<HTMLElement>(SEQUENCED));
 
     const revealAll = () => {
       els.forEach((el) => {
         el.classList.add("reveal", "is-in");
       });
       groups.forEach((el) => el.classList.add("reveal-group", "is-in"));
+      sequenced.forEach((el) => el.classList.add("is-in"));
     };
 
     if (reduced || typeof IntersectionObserver === "undefined") {
@@ -54,6 +64,7 @@ export default function MotionReady() {
 
     els.forEach((el) => el.classList.add("reveal"));
     groups.forEach((el) => el.classList.add("reveal-group"));
+    // Sequenced elements carry their own class already; they only need `is-in`.
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -68,7 +79,7 @@ export default function MotionReady() {
       { threshold: 0.18, rootMargin: "0px 0px -5% 0px" },
     );
 
-    [...els, ...groups].forEach((el) => io.observe(el));
+    [...els, ...groups, ...sequenced].forEach((el) => io.observe(el));
 
     // Backstop: anything still offset after 2s is revealed, so a missed
     // callback can never leave content displaced.

@@ -547,7 +547,7 @@ export default function AsapPage() {
 
         <ol className="mt-12 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4 lg:gap-x-8">
           {flow.map((s, i) => (
-            <li key={s.label} className="flex flex-col">
+            <li key={s.label} className="flow-step flex flex-col">
               <PhoneShot
                 src={s.src}
                 alt={s.alt}
@@ -599,16 +599,16 @@ export default function AsapPage() {
               <p className="eyebrow">How ASAP behaves</p>
               <ol className="mt-6">
                 {behaviour.map((b, i) => (
-                  <li key={b.move} className="relative flex gap-4 pb-6 last:pb-0">
+                  <li key={b.move} className="behaviour-step relative flex gap-4 pb-6 last:pb-0">
                     {i < behaviour.length - 1 && (
                       <span
                         aria-hidden
-                        className="absolute left-[13px] top-8 bottom-1 w-px"
+                        className="behaviour-connector absolute left-[13px] top-8 bottom-1 w-px"
                         style={{ background: "var(--border-strong)" }}
                       />
                     )}
                     <span
-                      className="relative flex h-7 w-7 flex-none items-center justify-center rounded-full text-[12px] font-medium"
+                      className="behaviour-node relative flex h-7 w-7 flex-none items-center justify-center rounded-full text-[12px] font-medium"
                       style={{ background: "var(--ink)", color: "var(--bg)" }}
                     >
                       {i + 1}
@@ -626,7 +626,7 @@ export default function AsapPage() {
                 src="/img/asap/phones/confidence.png"
                 alt="Steps labelled high, medium and low confidence, followed by the note “My time estimates are based on averages and may not match your pace. You know your speed better than I do.”"
                 sizes="(max-width: 640px) 60vw, 200px"
-                className="mx-auto max-w-[200px]"
+                className="confidence-shot mx-auto max-w-[200px]"
               />
               <figcaption className="mt-4 text-center text-[12.5px] leading-relaxed text-[var(--muted)]">
                 Confidence levels and a plain limitation note, as built.
@@ -702,6 +702,7 @@ export default function AsapPage() {
                   src="/img/asap/phones/steps-locked.png"
                   alt="The active step with a “1 of 5” counter, and later steps locked with “Unlocks after you finish step 1”"
                   sizes="110px"
+                  className="unlock-shot"
                 />
               </div>
               <figcaption className="text-[13.5px] leading-relaxed text-[var(--body)]">
