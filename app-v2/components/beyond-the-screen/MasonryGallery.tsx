@@ -27,7 +27,14 @@ export default function MasonryGallery({ images, emptyLabel }: { images: Gallery
 
   return (
     <>
-      <div className="columns-1 sm:columns-2 lg:columns-4 gap-8 [column-fill:balance]">
+      {/* A real list of siblings with no inherent order, which is the one
+          case sibling stagger is for — the tiles arrive in sequence rather
+          than all at once. Delays are capped in CSS, so a long category
+          doesn't turn into a slow cascade. */}
+      <div
+        data-reveal-group
+        className="columns-1 sm:columns-2 lg:columns-4 gap-8 [column-fill:balance]"
+      >
         {images.map((img, i) => (
           <button
             key={img.src}

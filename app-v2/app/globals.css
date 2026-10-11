@@ -711,19 +711,48 @@ body:has(.theme-wellnut) .theme-deep {
   --mo-standard: 240ms;
   --mo-medium: 400ms;
   --mo-slow: 600ms;
+  /* Media arrival is the one deliberately unhurried move on the site: the
+     images are the payload of a case study, so they get weight. */
+  --mo-arrive: 560ms;
   --mo-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer components {
   /* ── Scroll reveal ──
-     Driven by one observer (components/MotionReady.tsx) that tags sections
-     with .reveal and flips .is-in when ~18% enters the viewport. */
+     Driven by one observer (components/MotionReady.tsx) that flips .is-in
+     when ~18% of the target enters the viewport.
+
+     This used to tag every `.sec` on the page, which meant one identical
+     24px rise repeated 11–19 times per case study. That reads as a tic
+     rather than choreography, and it animated ~90 blocks of body copy that
+     were perfectly readable sitting still. Reveals are now scoped by what
+     they reveal — media arrives, lists sequence, the footer lands — and
+     running prose simply exists. */
   .motion-ready .reveal {
     transform: translateY(24px);
     transition: transform var(--mo-medium) var(--mo-ease);
   }
 
   .motion-ready .reveal.is-in {
+    transform: none;
+  }
+
+  /* Media arrival. A figure is the thing a case study is showing, so it
+     gets a longer, heavier entrance than anything else: it rises and
+     settles out of a slight undersize, anchored low so it grows up into
+     its frame rather than swelling from the middle.
+
+     Transform-only, like every other scroll reveal here — see the note at
+     the top of this block. The scale is small enough not to soften the
+     image on the way in, and rest is `transform: none`, so nothing stays
+     rasterised once it has landed. */
+  .motion-ready .reveal-media {
+    transform: translateY(20px) scale(0.985);
+    transform-origin: 50% 85%;
+    transition: transform var(--mo-arrive) var(--mo-ease);
+  }
+
+  .motion-ready .reveal-media.is-in {
     transform: none;
   }
 
@@ -970,6 +999,209 @@ body:has(.theme-wellnut) .theme-deep {
   .motion-ready .hierarchy-layer.is-in:nth-child(4) { transition-delay: 270ms; }
   .motion-ready .hierarchy-layer.is-in:nth-child(5) { transition-delay: 360ms; }
 
+  /* ── Case-study hero entrance ──
+     Every case study opened on a static hero; only the homepage had an
+     entrance. The text column reuses the homepage's `.hero-seq` stagger,
+     and each visual gets a finish suited to what it is. All transform-only
+     — the visuals never start hidden, only displaced — so a hero whose
+     animation never runs is simply a hero. */
+
+  /* ASAP — three phones fan out from behind the centre one. The side
+     phones start tucked in toward the middle and slide out to their
+     places, which reads as one flow opening into three screens. The
+     centre phone's own `-translate-x-1/2` is Tailwind v4's standalone
+     `translate` property, so animating `transform` here composes with it
+     rather than overwriting it. */
+  .motion-ready .hero-fan-l,
+  .motion-ready .hero-fan-r {
+    animation: var(--mo-arrive) var(--mo-ease) 520ms both;
+  }
+
+  .motion-ready .hero-fan-l { animation-name: hero-fan-l; }
+  .motion-ready .hero-fan-r { animation-name: hero-fan-r; }
+
+  @keyframes hero-fan-l {
+    from { transform: translateX(42%) scale(0.92); }
+    to { transform: none; }
+  }
+
+  @keyframes hero-fan-r {
+    from { transform: translateX(-42%) scale(0.92); }
+    to { transform: none; }
+  }
+
+  /* Wellnut, Cost of a Click — photographs settle. The frame arrives with
+     `.hero-visual`; the image inside it eases out of a slight zoom over a
+     longer beat, cropped by the frame's own overflow, so it reads as a
+     camera settling rather than a box scaling. */
+  .motion-ready .hero-settle img {
+    animation: hero-settle 1400ms var(--mo-ease) 450ms both;
+  }
+
+  @keyframes hero-settle {
+    from { transform: scale(1.07); }
+    to { transform: none; }
+  }
+
+  /* ── Section heads ──
+     Reinstated at Ramya's request, and deliberately on the head only, not
+     the whole section block: the numeral slides in from the left of its
+     column while the title rises, so each section gets one small beat
+     rather than a block of prose shunting upward. Transform-only. */
+  .motion-ready .sec-head.reveal-head .numeral,
+  .motion-ready .sec-head.reveal-head > div {
+    transition: transform var(--mo-medium) var(--mo-ease);
+  }
+
+  .motion-ready .sec-head.reveal-head .numeral {
+    transform: translateX(-14px);
+  }
+
+  .motion-ready .sec-head.reveal-head > div {
+    transform: translateY(14px);
+    transition-delay: 60ms;
+  }
+
+  .motion-ready .sec-head.reveal-head.is-in .numeral,
+  .motion-ready .sec-head.reveal-head.is-in > div {
+    transform: none;
+  }
+
+  /* ── Reading progress ── Case studies only, rendered by the nav. A
+     scroll-driven animation: its progress is the page's scroll position,
+     so it costs nothing per frame on the main thread. Browsers without
+     scroll timelines simply don't show it — it's orientation, not content. */
+  .read-progress {
+    display: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .read-progress {
+      display: block;
+      position: absolute;
+      inset: auto 0 -1px 0;
+      height: 2px;
+      background: var(--ink);
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      animation: read-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+
+    @keyframes read-progress {
+      to { transform: scaleX(1); }
+    }
+  }
+
+  /* ── Annotation pins ── Raahi's numbered pins pop in, in their reading
+     order, once the screenshot they annotate has arrived. They use the
+     standalone `scale` property because their centring lives in an inline
+     `transform`, which a transform animation would erase. Never below 0.6,
+     so a pin is never invisible, and no overshoot. */
+  .motion-ready .reveal-media .pin {
+    scale: 0.6;
+    transition: scale var(--mo-standard) var(--mo-ease);
+    transition-delay: calc(var(--mo-arrive) - 120ms + var(--i, 0) * 110ms);
+  }
+
+  .motion-ready .reveal-media.is-in .pin {
+    scale: 1;
+  }
+
+  /* ── Press feedback ── Project cards compress slightly under the
+     pointer, the same physical cue the pills give. Written against the
+     hover lift rather than instead of it, so pressing a lifted card keeps
+     it lifted; the transition is the existing `.group` one. */
+  a.group:active {
+    transform: translateY(-4px) scale(0.985);
+  }
+
+  /* ── Lightbox — the gallery viewer.
+     It is an opaque cream surface covering the whole viewport, and it used
+     to appear on a hard cut: the page you were reading simply vanished.
+     The surface now fades up and the photograph settles out of a slight
+     undersize, which reads as the image coming forward rather than the
+     page being replaced.
+
+     Deliberately no `animation-fill-mode`. The hero entrance uses `both`,
+     which is fine for page content, but this viewer covers the viewport
+     and locks body scroll while it is open: if the animation were held at
+     its first frame — a suspended tab, a browser that never runs it — the
+     page would be locked behind something invisible. With no fill mode the
+     element's own style is the resting state, so a viewer whose animation
+     never runs is simply an open viewer. There is no delay either, so
+     there is no gap before the run for the fill mode to cover.
+
+     Entrance only; closing returns you to a page you already have in
+     mind, and delaying that would just be in the way. */
+  .lightbox {
+    animation: lightbox-in var(--mo-standard) var(--mo-ease);
+  }
+
+  @keyframes lightbox-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .lightbox-figure {
+    animation: lightbox-figure-in 320ms var(--mo-ease);
+  }
+
+  @keyframes lightbox-figure-in {
+    from { opacity: 0; transform: scale(0.96) translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* ── Mobile menu ──
+     The panel used to mount and unmount, so the one control that animates
+     on touch (the hamburger crossing into an X) opened a panel that simply
+     appeared. It now expands, using `grid-template-rows: 0fr -> 1fr` so the
+     height is interpolated by the grid rather than animated directly.
+
+     The panel stays mounted, so it is held out of the tab order and the
+     accessibility tree with `inert` + `visibility` — see components/Nav.tsx.
+     Closing runs at ~75% of the opening duration; leaving should be
+     quicker than arriving. */
+  .nav-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition:
+      grid-template-rows 180ms var(--mo-ease),
+      visibility 180ms;
+  }
+
+  .nav-panel > * {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .nav-panel[data-open="true"] {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition:
+      grid-template-rows var(--mo-standard) var(--mo-ease),
+      visibility 0s;
+  }
+
+  /* ── Chat launcher ──
+     The button carried a `transition-transform` class with nothing to
+     transition, so the site's most prominent affordance gave no feedback
+     at all. Press is the same compress the `.btn` pills use. */
+  .chat-fab {
+    transition:
+      transform var(--mo-fast) ease-out,
+      box-shadow var(--mo-fast) ease-out;
+  }
+
+  .chat-fab:hover {
+    transform: scale(1.05);
+  }
+
+  .chat-fab:active {
+    transform: scale(0.95);
+  }
+
   /* ── Page transition — §08, via app/template.tsx. */
   .page-enter {
     animation: page-enter var(--mo-standard) var(--mo-ease) both;
@@ -979,6 +1211,22 @@ body:has(.theme-wellnut) .theme-deep {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: none; }
   }
+}
+
+/* ── Keyboard focus ──
+   There was no focus style anywhere, so keyboard users got the browser
+   default, which on the filled `.btn` pills and the image links is close
+   to invisible. `--ink` is the one token that is always the high-contrast
+   value against `--bg`, in every palette scope, so the ring follows the
+   theme without a per-scope override.
+
+   Unlayered on purpose: a focus ring that a utility class can outrank is
+   not a focus ring. Deliberately not transitioned either: this is the one
+   piece of feedback that should never arrive late. */
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 /* §32 — reduced motion. Transforms and stagger go; colour and state
@@ -994,9 +1242,27 @@ body:has(.theme-wellnut) .theme-deep {
   }
 
   .motion-ready .reveal,
+  .motion-ready .reveal-media,
   .motion-ready .reveal-group > *,
   .motion-ready .hero-seq > *,
-  .motion-ready .hero-visual {
+  .motion-ready .hero-visual,
+  /* Tier 2 previously relied on MotionReady revealing everything up front
+     under reduced motion. That is still what happens, but the resting
+     state belongs in CSS too — the guarantee shouldn't depend on JS. */
+  .motion-ready .flow-step,
+  .motion-ready .behaviour-node,
+  .motion-ready .behaviour-connector,
+  .motion-ready .confidence-shot,
+  .motion-ready .unlock-shot,
+  .motion-ready .workflow-after,
+  .motion-ready .hierarchy-layer,
+  .motion-ready .hero-fan-l,
+  .motion-ready .hero-fan-r,
+  .motion-ready .hero-settle img,
+  .motion-ready .sec-head.reveal-head .numeral,
+  .motion-ready .sec-head.reveal-head > div,
+  .lightbox,
+  .lightbox-figure {
     transform: none !important;
     opacity: 1 !important;
     animation: none !important;
@@ -1010,7 +1276,20 @@ body:has(.theme-wellnut) .theme-deep {
   a.group:hover video,
   figure:hover .media img,
   .group:hover .arrow-btn,
-  .btn:hover span[aria-hidden] {
+  .btn:hover span[aria-hidden],
+  .chat-fab:hover,
+  .chat-fab:active,
+  a.group:active {
     transform: none !important;
+  }
+
+  .motion-ready .reveal-media .pin {
+    scale: 1 !important;
+  }
+
+  /* A progress bar is state, not decoration, but it moves continuously
+     with scroll; under reduced motion it goes. */
+  .read-progress {
+    display: none !important;
   }
 }

@@ -253,8 +253,19 @@ function BrowserFrame({ src, alt, ratio, sizes, priority = false, children }: { 
 function Pin({ n, x, y }: { n: string; x: number; y: number }) {
   return (
     <span
-      className="absolute flex h-8 w-8 items-center justify-center rounded-full text-[12px] font-medium"
-      style={{ left: `${x}%`, top: `${y}%`, transform: "translate(-50%, -50%)", background: "#10231b", color: "#f2efe7", border: "2px solid #f2efe7" }}
+      className="pin absolute flex h-8 w-8 items-center justify-center rounded-full text-[12px] font-medium"
+      style={
+        {
+          left: `${x}%`,
+          top: `${y}%`,
+          transform: "translate(-50%, -50%)",
+          background: "#10231b",
+          color: "#f2efe7",
+          border: "2px solid #f2efe7",
+          // Pins pop in in their reading order ("01" first) — see `.pin`.
+          "--i": Math.max(0, parseInt(n, 10) - 1),
+        } as React.CSSProperties
+      }
     >
       {n}
     </span>
@@ -402,7 +413,7 @@ export default function RaahiPage() {
       <DeepBand>
         <div className="wrap" style={{ paddingTop: "calc(var(--nav-h) + 36px)", paddingBottom: 56 }}>
           <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12">
-            <div>
+            <div className="hero-seq">
               <p className="eyebrow eyebrow-rule">Case study · Raahi</p>
               <h1 className="mt-5" style={{ fontSize: "clamp(60px, 7.4vw, 104px)", lineHeight: 0.95 }}>
                 Raahi
@@ -428,13 +439,17 @@ export default function RaahiPage() {
               </div>
             </div>
 
-            <BrowserFrame
-              src="/img/raahi/product/detection-in-context.jpg"
-              alt="Raahi's Dark Pattern Detected card open over a live subscription page, next to the region it scanned."
-              ratio={AR.full}
-              sizes="(max-width: 1024px) 92vw, 600px"
-              priority
-            />
+            {/* No `hero-settle` here: the frame's chrome bar sits above the
+                image outside its clipping box, so a zoom would paint over it. */}
+            <div className="hero-visual">
+              <BrowserFrame
+                src="/img/raahi/product/detection-in-context.jpg"
+                alt="Raahi's Dark Pattern Detected card open over a live subscription page, next to the region it scanned."
+                ratio={AR.full}
+                sizes="(max-width: 1024px) 92vw, 600px"
+                priority
+              />
+            </div>
           </div>
 
           <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 pt-7 md:grid-cols-4" style={{ borderTop: "1px solid var(--rule)" }}>

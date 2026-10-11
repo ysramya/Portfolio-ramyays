@@ -86,7 +86,9 @@ export default function AboutPage() {
       <Section id="experience" divided={false}>
         <div className="sec-grid">
           <SectionHead n="01" eyebrow="Background" title="Experience" />
-          <ul>
+          {/* Reverse-chronological, so the stagger carries the order rather
+              than decorating it — the rows arrive the way you read them. */}
+          <ul data-reveal-group>
             {experience.map((row) => (
               <li
                 key={row.role}
@@ -108,7 +110,7 @@ export default function AboutPage() {
       <Section id="research">
         <div className="sec-grid">
           <SectionHead n="02" eyebrow="Research" title="Research & writing" />
-          <ul className="grid gap-4 sm:grid-cols-2">
+          <ul data-reveal-group className="grid gap-4 sm:grid-cols-2">
             {research.map((item) => (
               <li key={item.title} className="panel flex flex-col p-6">
                 <h3 className="text-[19px] leading-snug">{item.title}</h3>
@@ -123,7 +125,9 @@ export default function AboutPage() {
       <Section id="interests">
         <div className="sec-grid">
           <SectionHead n="03" eyebrow="Focus" title="Areas of interest" />
-          <ul className="flex flex-wrap gap-2.5 md:pt-2">
+          {/* Twelve tags; the CSS caps the delay from the fifth on, so this
+              lands as one group settling rather than a slow cascade. */}
+          <ul data-reveal-group className="flex flex-wrap gap-2.5 md:pt-2">
             {interests.map((tag) => (
               <li key={tag} className="pill">
                 {tag}

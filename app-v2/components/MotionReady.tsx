@@ -15,16 +15,47 @@
  *    and rendered whole sections blank; the reveal here is transform-only for
  *    the same reason.
  *
- * Targets are picked up from existing structure — `.sec`, footer, and any
- * `[data-reveal]` — so case studies get reveals without touching their markup.
+ * Targets are picked up from existing structure, so case studies get their
+ * motion without per-section markup. What changed: this used to sweep every
+ * `.sec`, which gave a 19-section case study nineteen identical entrances.
+ * Reveals are now chosen by role — a figure arrives because it is the thing
+ * being shown; a list sequences because it has an order; prose does neither,
+ * because prose is already readable sitting still.
  */
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-const TARGETS = ".sec, footer, [data-reveal]";
+/** Generic reveal: the footer landing, plus anything that opts in. */
+const TARGETS = "footer, [data-reveal]";
+/**
+ * Media — the payload of a case study. Gets the longer `reveal-media`
+ * arrival rather than the generic rise.
+ */
+const MEDIA = "figure, [data-reveal-media]";
 /** Groups whose children stagger: cards, metric rows, step lists. */
 const GROUPS = "[data-reveal-group]";
+/**
+ * Section heads — numeral and title, not the section body. Reinstated at
+ * Ramya's request after the blanket `.sec` reveal was removed; scoped to
+ * the head so each section gets one beat rather than a block shunting up.
+ */
+const HEADS = ".sec-head";
+/** Hero visuals run their own on-load entrance; keep scroll reveals off them. */
+const HERO = ".hero-visual";
+/**
+ * Everything that plays an on-load hero animation. These use keyframes with
+ * `fill-mode: both`, and the text ones fade up from opacity 0 — so a paused
+ * animation (a page opened in a background tab, a headless renderer) would
+ * hold a headline invisible. The backstop below finishes them outright.
+ */
+const HERO_ANIMATED =
+  ".hero-seq > *, .hero-visual, .hero-fan-l, .hero-fan-r, .hero-settle img";
+/**
+ * The longest hero sequence (the photo settle: 450ms delay + 1400ms) ends
+ * at 1.85s, so in a visible tab this never cuts anything short.
+ */
+const HERO_BACKSTOP_MS = 2500;
 /**
  * Tier 2 product motion — ASAP's flow, behaviour machine, confidence and
  * unlock states; MainStreet's workflow and hierarchy. Each is observed
@@ -49,20 +80,49 @@ export default function MotionReady() {
     const groups = Array.from(document.querySelectorAll<HTMLElement>(GROUPS));
     const sequenced = Array.from(document.querySelectorAll<HTMLElement>(SEQUENCED));
 
+    // A figure inside a staggered group or a Tier 2 sequence is already
+    // being animated by its parent; animating it twice fights itself.
+    const media = Array.from(
+      document.querySelectorAll<HTMLElement>(MEDIA),
+    ).filter((el) => !el.closest(`${GROUPS}, ${SEQUENCED}, ${HERO}`));
+    const heads = Array.from(document.querySelectorAll<HTMLElement>(HEADS));
+
     const revealAll = () => {
       els.forEach((el) => {
         el.classList.add("reveal", "is-in");
       });
+      media.forEach((el) => el.classList.add("reveal-media", "is-in"));
+      heads.forEach((el) => el.classList.add("reveal-head", "is-in"));
       groups.forEach((el) => el.classList.add("reveal-group", "is-in"));
       sequenced.forEach((el) => el.classList.add("is-in"));
     };
 
+    // Hero backstop — runs whatever else happens below, reduced motion
+    // included (where the animations are already off, and this is a no-op).
+    const finishHeroes = () => {
+      document.querySelectorAll<HTMLElement>(HERO_ANIMATED).forEach((el) => {
+        el.getAnimations().forEach((a) => {
+          try {
+            a.finish();
+          } catch {
+            // An animation that can't finish (none today) is left alone.
+          }
+        });
+      });
+    };
+    const heroBackstop = window.setTimeout(finishHeroes, HERO_BACKSTOP_MS);
+
     if (reduced || typeof IntersectionObserver === "undefined") {
       revealAll();
-      return () => root.classList.remove("motion-ready");
+      return () => {
+        window.clearTimeout(heroBackstop);
+        root.classList.remove("motion-ready");
+      };
     }
 
     els.forEach((el) => el.classList.add("reveal"));
+    media.forEach((el) => el.classList.add("reveal-media"));
+    heads.forEach((el) => el.classList.add("reveal-head"));
     groups.forEach((el) => el.classList.add("reveal-group"));
     // Sequenced elements carry their own class already; they only need `is-in`.
 
@@ -79,7 +139,7 @@ export default function MotionReady() {
       { threshold: 0.18, rootMargin: "0px 0px -5% 0px" },
     );
 
-    [...els, ...groups, ...sequenced].forEach((el) => io.observe(el));
+    [...els, ...media, ...heads, ...groups, ...sequenced].forEach((el) => io.observe(el));
 
     // Backstop: anything still offset after 2s is revealed, so a missed
     // callback can never leave content displaced.
@@ -88,7 +148,7 @@ export default function MotionReady() {
     return () => {
       io.disconnect();
       window.clearTimeout(backstop);
-      window.clearTimeout(backstop);
+      window.clearTimeout(heroBackstop);
       root.classList.remove("motion-ready");
     };
   }, [pathname]);

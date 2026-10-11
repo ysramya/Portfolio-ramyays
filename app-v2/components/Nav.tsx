@@ -135,10 +135,13 @@ export default function Nav() {
         </button>
       </div>
 
-      {open && (
+      {/* Always mounted so it can expand rather than appear; `.nav-panel`
+          animates `grid-template-rows` and hides it when closed. `inert`
+          takes the closed panel out of the tab order and the accessibility
+          tree, which a purely visual collapse would not. */}
+      <div className="nav-panel md:hidden" data-open={open} inert={!open}>
         <nav
           aria-label="Mobile"
-          className="md:hidden"
           style={{ backgroundColor: "var(--bg)", borderTop: "1px solid var(--rule)" }}
         >
           <ul className="wrap flex flex-col py-3">
@@ -186,7 +189,10 @@ export default function Nav() {
             </li>
           </ul>
         </nav>
-      )}
+      </div>
+
+      {/* Reading progress on case studies — scroll-driven, CSS only. */}
+      {isCaseStudy && <div className="read-progress" aria-hidden="true" />}
     </header>
   );
 }

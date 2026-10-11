@@ -373,7 +373,7 @@ export default function WellnutPage() {
       <DeepBand>
         <div className="wrap" style={{ paddingTop: "calc(var(--nav-h) + 36px)", paddingBottom: 56 }}>
           <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12">
-            <div>
+            <div className="hero-seq">
               <p className="eyebrow eyebrow-rule">Case study · Wellnut</p>
               <h1 className="mt-5" style={{ fontSize: "clamp(60px, 7.4vw, 104px)", lineHeight: 0.95 }}>
                 Wellnut
@@ -398,7 +398,7 @@ export default function WellnutPage() {
               </div>
             </div>
 
-            <figure className="w-full">
+            <figure className="hero-visual hero-settle w-full">
               <div className="relative overflow-hidden" style={{ aspectRatio: "1672 / 940", borderRadius: 10, border: "1px solid var(--rule)" }}>
                 <Image
                   src="/img/wellnut/hero-forest.jpg"

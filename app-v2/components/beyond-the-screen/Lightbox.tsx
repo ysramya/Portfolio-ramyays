@@ -41,7 +41,7 @@ export default function Lightbox({
       role="dialog"
       aria-modal="true"
       aria-label={image.alt}
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-10"
+      className="lightbox fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-10"
       /* Was a near-black translucent scrim with a 20px blur. Blur and
          translucency are out of the system (§6), and ink controls need the
          cream ground to be legible — so the viewer is an opaque cream
@@ -76,7 +76,7 @@ export default function Lightbox({
       </button>
 
       <div
-        className="relative w-full h-full max-w-[1200px] max-h-[85vh] rounded-2xl overflow-hidden"
+        className="lightbox-figure relative w-full h-full max-w-[1200px] max-h-[85vh] rounded-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         <Image src={image.src} alt={image.alt} fill sizes="90vw" className="object-contain" priority />

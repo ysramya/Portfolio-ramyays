@@ -385,7 +385,7 @@ export default function MainstreetPage() {
       <DeepBand>
         <div className="wrap" style={{ paddingTop: "calc(var(--nav-h) + 36px)" }}>
           <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12">
-            <div>
+            <div className="hero-seq">
               <p className="eyebrow eyebrow-rule">Case study · Mainstreet Advisors</p>
               <h1 className="mt-5">
                 <span className="block" style={{ fontSize: "clamp(54px, 6.6vw, 94px)", lineHeight: 0.98 }}>
@@ -413,7 +413,10 @@ export default function MainstreetPage() {
               </div>
             </div>
 
-            <Laptop priority sizes="(max-width: 1024px) 92vw, 600px" />
+            {/* The screen image settles inside the bezel, which clips it. */}
+            <div className="hero-visual hero-settle">
+              <Laptop priority sizes="(max-width: 1024px) 92vw, 600px" />
+            </div>
           </div>
 
           {/* Highlight strip — the project's scope in four facts */}

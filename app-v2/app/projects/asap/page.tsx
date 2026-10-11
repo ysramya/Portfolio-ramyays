@@ -6,6 +6,7 @@ import TrackedLink from "@/components/TrackedLink";
 import DeepBand from "@/components/ds/DeepBand";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
 import PhoneShot from "@/components/ds/PhoneShot";
+import CountUp from "@/components/CountUp";
 import { DemoVideo, WatchDemoButton } from "./Demo";
 
 /**
@@ -25,7 +26,7 @@ import { DemoVideo, WatchDemoButton } from "./Demo";
 export const metadata: Metadata = {
   title: "ASAP — Ramya Yerramilli",
   description:
-    "ASAP is an AI-powered planning experience that helps people break down a goal, figure out what matters first, and start taking action.",
+    "ASAP (AI Scaffolding Action Planner) is an AI-powered planning experience that helps people break down a goal, figure out what matters first, and start taking action.",
 };
 
 const PROTOTYPE_URL = "https://asap-flame.vercel.app/";
@@ -263,21 +264,100 @@ const behaviour = [
   },
 ];
 
-const issues = [
+/**
+ * Each issue carries the screen that shows the change. The evidence images
+ * are crops of the real prototype screens in /img/asap/phones (and 2.png),
+ * cut to the part that matters and shown near their native size so the UI
+ * text can actually be read — a whole phone at thumbnail size could not.
+ */
+type Evidence = { src: string; alt: string; w: number; h: number };
+
+const issues: {
+  title: string;
+  saw: string;
+  changed: string;
+  how: string;
+  evidenceLabel: string;
+  evidence: Evidence[];
+  caption: string;
+}[] = [
   {
     title: "Recommendations were too similar.",
     saw: "Different scenarios could produce similar recommendations.",
-    changed: "We added more role and context information to the prompt structure.",
+    changed:
+      "Added role- and context-specific inputs to the prompt structure so recommendations could better reflect different scenarios.",
+    how: "We expanded the prompt inputs to include the user’s role, goal, and relevant task context, helping the AI distinguish between scenarios instead of relying on generic task steps.",
+    evidenceLabel: "In the prototype",
+    evidence: [
+      {
+        src: "/img/asap/evidence/01-role-input.png",
+        alt: "Onboarding screen asking “What best describes you right now?” with options including College student and Early career professional, and the note “This helps me tailor the language to your situation.”",
+        w: 435,
+        h: 380,
+      },
+      {
+        src: "/img/asap/evidence/01-plan-tailored.png",
+        alt: "The plan for “I need to prepare for a first client meeting”: 5 steps, about 95 minutes, tagged “Tailored for early-career pro.”",
+        w: 435,
+        h: 248,
+      },
+    ],
+    caption: "The role chosen on the first screen, and the plan it shapes — tagged “Tailored for early-career pro.”",
   },
   {
     title: "Some responses were unreliable.",
     saw: "Some interactions stalled or failed to return a useful response.",
-    changed: "We tightened the prompt constraints and response handling.",
+    changed:
+      "Refined prompt constraints and response handling to make outputs more predictable when responses were delayed or incomplete.",
+    how: "We refined the instructions that bounded the AI’s response and clarified how the prototype handled incomplete, delayed, or unhelpful outputs. This made the interaction more predictable and helped surface failures during testing.",
+    evidenceLabel: "In the prototype",
+    evidence: [
+      {
+        src: "/img/asap/evidence/02-analyzing.png",
+        alt: "While the plan is generated, the screen reads “Breaking this down for you…” with an “Analyzing your task…” card and a typing indicator.",
+        w: 440,
+        h: 285,
+      },
+    ],
+    caption: "While the AI is working, the screen says so — “Analyzing your task…” — instead of sitting empty.",
   },
   {
     title: "Users lost track of progress.",
     saw: "It wasn’t always obvious where users were in the planning flow.",
-    changed: "We added clearer navigation and progression cues.",
+    changed: "Added clearer step and next-action cues so users could see where they were in the plan at a glance.",
+    how: "We made the plan’s current step and upcoming actions easier to identify, using clearer progression cues and presenting next steps in a more structured sequence.",
+    evidenceLabel: "After testing",
+    evidence: [
+      {
+        src: "/img/asap/evidence/03-steps-locked.png",
+        alt: "The active step marked “Start Here, 1 of 5, Next up”, followed by step 2 of 5 and step 3 of 5, each locked with “Unlocks after you finish step 1” and “step 2.”",
+        w: 435,
+        h: 635,
+      },
+    ],
+    caption: "Each step shows its place — “1 of 5” — and later steps stay locked until the one before is finished.",
+  },
+];
+
+/** Section 08 — what the testing changed, one card per issue in §06. */
+const improvements = [
+  {
+    icon: icons.person,
+    issue: "01",
+    title: "Personalization",
+    body: "Role and task context feed the prompt, so a plan can reflect who it’s for and what they’re facing.",
+  },
+  {
+    icon: icons.gauge,
+    issue: "02",
+    title: "Response behavior",
+    body: "Tighter prompt constraints and clearer handling of slow or incomplete responses made the interaction more predictable.",
+  },
+  {
+    icon: icons.layers,
+    issue: "03",
+    title: "Task progression",
+    body: "Step counters, a highlighted next step, and locked future steps show where you are in the plan.",
   },
 ];
 
@@ -300,25 +380,6 @@ const findings = [
   {
     title: "The experience felt lighter when users could focus.",
     body: "Showing one action at a time reduced the feeling of having to manage everything at once.",
-  },
-];
-
-const opportunities = [
-  { icon: icons.layers, title: "More flexible planning", body: "Adjust the depth of a plan based on how complex the goal is." },
-  {
-    icon: icons.history,
-    title: "Better context across sessions",
-    body: "Let ASAP retain useful information so users don’t have to start from scratch.",
-  },
-  {
-    icon: icons.link,
-    title: "Connect to existing tools",
-    body: "Bring planning into calendars, notes, and other tools people already use.",
-  },
-  {
-    icon: icons.chart,
-    title: "Measure what actually helps",
-    body: "Test whether the experience improves follow-through, confidence, and completion over time.",
   },
 ];
 
@@ -352,11 +413,17 @@ export default function AsapPage() {
           className="wrap grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10"
           style={{ paddingTop: "calc(var(--nav-h) + 36px)", paddingBottom: 64 }}
         >
-          <div>
+          <div className="hero-seq">
             <p className="eyebrow eyebrow-rule">Case study</p>
             <h1 className="mt-5" style={{ fontSize: "clamp(60px, 7.4vw, 104px)", lineHeight: 0.95 }}>
               ASAP
             </h1>
+            <p
+              className="mt-3 text-[var(--muted)]"
+              style={{ fontSize: "clamp(17px, 1.5vw, 21px)", letterSpacing: "0.01em" }}
+            >
+              (AI Scaffolding Action Planner)
+            </p>
             <h2 className="mt-4" style={{ fontSize: "clamp(30px, 3.2vw, 44px)", lineHeight: 1.12, maxWidth: "12em" }}>
               Turn big goals into small, doable steps.
             </h2>
@@ -395,8 +462,8 @@ export default function AsapPage() {
           </div>
 
           {/* Real screens: goal entry, the generated plan, focus mode. */}
-          <div className="relative mx-auto w-full max-w-[540px]" style={{ aspectRatio: "540 / 560" }}>
-            <div className="absolute left-0 top-[13%] w-[35%]">
+          <div className="hero-visual relative mx-auto w-full max-w-[540px]" style={{ aspectRatio: "540 / 560" }}>
+            <div className="hero-fan-l absolute left-0 top-[13%] w-[35%]">
               <PhoneShot
                 src="/img/asap/phones/goal.png"
                 alt="ASAP home screen with a task entered"
@@ -404,7 +471,7 @@ export default function AsapPage() {
                 priority
               />
             </div>
-            <div className="absolute right-0 top-[13%] w-[35%]">
+            <div className="hero-fan-r absolute right-0 top-[13%] w-[35%]">
               <PhoneShot
                 src="/img/asap/phones/focus.png"
                 alt="ASAP focus mode with a timer for the current step"
@@ -636,83 +703,74 @@ export default function AsapPage() {
         </div>
       </Section>
 
-      {/* 06 — BUILDING WITH REAL AI: ISSUE → CHANGE */}
+      {/* 06 — BUILDING WITH REAL AI: ISSUE → CHANGE → EVIDENCE
+          Each row reads left to right: what testing showed, what we changed
+          and how, then the screen that shows it. The rows run the full width
+          of the page so the evidence can be shown large enough to read. */}
       <Section id="build">
-        <div className="sec-grid">
-          <SectionHead
-            n="06"
-            eyebrow="Building with real AI"
-            title="Testing the real AI exposed problems we couldn’t see in static screens."
-          >
-            <p>
-              Once the prototype was connected to the Claude API, we could see how the
-              experience behaved with different inputs.
-            </p>
-            <p>That surfaced a few issues we needed to address.</p>
-          </SectionHead>
+        <SectionHead
+          n="06"
+          eyebrow="Building with real AI"
+          title="Testing the real AI exposed problems we couldn’t see in static screens."
+        >
+          <p>
+            Once the prototype was connected to the Claude API, we could see how the
+            experience behaved with different inputs.
+          </p>
+          <p>That surfaced a few issues we needed to address.</p>
+        </SectionHead>
 
-          <div>
-            <div
-              className="hidden gap-5 pb-3 md:grid md:grid-cols-[40px_minmax(0,1fr)_24px_minmax(0,1fr)]"
-              aria-hidden
-            >
-              <span />
-              <span className="meta">Issue</span>
-              <span />
-              <span className="meta">What changed</span>
-            </div>
-            <ol>
-              {issues.map((it, i) => (
-                <li
-                  key={it.title}
-                  className="grid gap-3 py-6 md:grid-cols-[40px_minmax(0,1fr)_24px_minmax(0,1fr)] md:gap-5"
-                  style={{ borderTop: "1px solid var(--rule)" }}
-                >
-                  <span className="numeral !text-[24px]" aria-hidden>
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="text-[18px] leading-snug">{it.title}</h3>
-                    <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">
-                      <span className="sr-only">What we saw: </span>
-                      {it.saw}
-                    </p>
-                  </div>
-                  <Icon className="icon-line mt-1 hidden !h-[18px] !w-[18px] md:block">{icons.arrow}</Icon>
-                  <p className="text-[14px] leading-relaxed text-[var(--ink)]">
-                    <span className="meta mb-1 block md:hidden">What changed</span>
-                    <span className="sr-only md:not-sr-only">
-                      <span className="sr-only">What changed: </span>
-                    </span>
-                    {it.changed}
-                  </p>
-                </li>
-              ))}
-            </ol>
-
-            <figure
-              className="mt-2 flex items-center gap-6 pt-6"
+        <ol className="mt-12">
+          {issues.map((it, i) => (
+            <li
+              key={it.title}
+              className="grid gap-6 py-9 md:grid-cols-[48px_minmax(0,1fr)] lg:grid-cols-[48px_minmax(0,0.8fr)_minmax(0,1fr)_minmax(0,420px)] lg:gap-10"
               style={{ borderTop: "1px solid var(--rule)" }}
             >
-              {/* Width lives on a wrapper: PhoneShot is `w-full`, which beat a
-                  `w-[96px]` passed to it and pushed the caption off-screen
-                  on phones. */}
-              <div className="w-[96px] flex-none">
-                <PhoneShot
-                  src="/img/asap/phones/steps-locked.png"
-                  alt="The active step with a “1 of 5” counter, and later steps locked with “Unlocks after you finish step 1”"
-                  sizes="110px"
-                  className="unlock-shot"
-                />
+              <span className="numeral !text-[28px]" aria-hidden>
+                {String(i + 1).padStart(2, "0")}
+              </span>
+
+              <div>
+                <p className="meta">Issue</p>
+                <h3 className="mt-2 text-[20px] leading-snug">{it.title}</h3>
+                <p className="mt-2 text-[14.5px] leading-relaxed text-[var(--body)]">{it.saw}</p>
               </div>
-              <figcaption className="text-[13.5px] leading-relaxed text-[var(--body)]">
-                <span className="meta mb-1 block">After testing</span>
-                Step counters and locked future steps made position in the plan visible at a
-                glance.
-              </figcaption>
-            </figure>
-          </div>
-        </div>
+
+              <div className="md:col-start-2 lg:col-start-auto">
+                <p className="meta">What changed</p>
+                <p className="mt-2 text-[15px] leading-relaxed text-[var(--ink)]">{it.changed}</p>
+                <p className="meta mt-5">How we did it</p>
+                <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">{it.how}</p>
+              </div>
+
+              <figure className="md:col-start-2 lg:col-start-auto">
+                <p className="meta mb-3">{it.evidenceLabel}</p>
+                <div className="flex max-w-[435px] flex-col gap-3">
+                  {it.evidence.map((e) => (
+                    <div
+                      key={e.src}
+                      className={`overflow-hidden${i === 2 ? " unlock-shot" : ""}`}
+                      style={{ borderRadius: 12, border: "1px solid var(--border-strong)" }}
+                    >
+                      <Image
+                        src={e.src}
+                        alt={e.alt}
+                        width={e.w}
+                        height={e.h}
+                        sizes="(max-width: 480px) 92vw, 435px"
+                        className="h-auto w-full"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <figcaption className="mt-3 max-w-[435px] text-[13px] leading-relaxed text-[var(--muted)]">
+                  {it.caption}
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ol>
       </Section>
 
       {/* 07 — VALIDATION */}
@@ -726,7 +784,7 @@ export default function AsapPage() {
           </SectionHead>
 
           <div>
-            <dl className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+            <dl data-reveal-group className="grid grid-cols-2 gap-6 sm:grid-cols-4">
               {metrics.map((m) => (
                 <div key={m.label} className="flex flex-col-reverse">
                   <dt className="mt-2 text-[13px] leading-snug text-[var(--muted)]">{m.label}</dt>
@@ -734,7 +792,7 @@ export default function AsapPage() {
                     className="font-[family-name:var(--font-display)] leading-none text-[var(--ink)]"
                     style={{ fontSize: "clamp(40px, 4vw, 52px)" }}
                   >
-                    {m.value}
+                    <CountUp value={m.value} />
                   </dd>
                 </div>
               ))}
@@ -774,30 +832,76 @@ export default function AsapPage() {
         </figure>
       </Section>
 
-      {/* 08 — IMPACT */}
+      {/* 08 — IMPACT
+          Text left, the real goal → plan screens right, then one card per
+          improvement, each tied back to the issue in §06 it came from. */}
       <Section id="impact">
-        <div className="sec-grid">
-          <SectionHead n="08" eyebrow="Impact" title="We ended with a clearer model for AI-guided planning.">
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
+          <SectionHead
+            n="08"
+            eyebrow="Impact"
+            title={
+              <>
+                We ended with a clearer model for{" "}
+                <span className="whitespace-nowrap">AI-guided</span> planning.
+              </>
+            }
+          >
             <p>
-              The prototype gave us a working interaction model for moving from user intent
-              to context, recommendation, and action.
+              ASAP addresses the gap between having a goal and knowing how to achieve it. By
+              clarifying goals and guiding tasks with AI, the app makes complex work easier to
+              navigate.
             </p>
-            <p>It also made the next product questions much clearer.</p>
+            <p>
+              User testing surfaced challenges with generic recommendations, unclear response
+              timing, and limited visibility into task progress. Those findings informed
+              improvements in personalization, response behavior, and task progression.
+            </p>
           </SectionHead>
 
-          <div>
-            <p className="meta">Future product opportunities — not shipped features</p>
-            <ul className="mt-4 grid gap-4 sm:grid-cols-2">
-              {opportunities.map((o) => (
-                <li key={o.title} className="panel p-6">
-                  <Icon>{o.icon}</Icon>
-                  <h3 className="mt-4 text-[18px] leading-snug">{o.title}</h3>
-                  <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">{o.body}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <figure className="mx-auto w-full max-w-[520px]">
+            <div className="flex items-end justify-center">
+              <div className="w-[44%]">
+                <div className="-rotate-3">
+                  <PhoneShot
+                    src="/img/asap/phones/goal.png"
+                    alt="ASAP’s task screen with the goal “I need to prepare for a first client meeting” entered."
+                    sizes="(max-width: 1024px) 40vw, 230px"
+                  />
+                </div>
+                <p className="meta mt-5 text-center">The goal, as typed</p>
+              </div>
+              <div className="relative z-10 -ml-[6%] mb-8 w-[50%]">
+                <div className="rotate-2">
+                  <PhoneShot
+                    src="/img/asap/phones/plan.png"
+                    alt="The five-step plan ASAP builds from that goal, with the first step highlighted and marked high confidence."
+                    sizes="(max-width: 1024px) 46vw, 260px"
+                  />
+                </div>
+                <p className="meta mt-5 text-center">The plan ASAP builds</p>
+              </div>
+            </div>
+          </figure>
         </div>
+
+        <ul data-reveal-group className="mt-14 grid gap-4 md:grid-cols-3">
+          {improvements.map((c) => (
+            <li key={c.title} className="panel flex gap-4 p-6">
+              <span
+                className="flex h-11 w-11 flex-none items-center justify-center rounded-full"
+                style={{ background: "var(--panel-sage)" }}
+              >
+                <Icon className="icon-line !h-5 !w-5">{c.icon}</Icon>
+              </span>
+              <div>
+                <h3 className="text-[18px] leading-snug">{c.title}</h3>
+                <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">{c.body}</p>
+                <p className="meta mt-4">From issue {c.issue}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </Section>
 
       {/* 09 — MY ROLE */}
@@ -914,22 +1018,6 @@ export default function AsapPage() {
           </figure>
 
           <div className="flex flex-col gap-4">
-            <div className="panel-sage p-6">
-              <p className="eyebrow">Interaction principles</p>
-              <ul className="mt-4 flex flex-col gap-3">
-                {[
-                  { t: "Ask before recommending", b: "Gather context before the system proposes anything." },
-                  { t: "One step at a time", b: "Keep the current action visually dominant." },
-                  { t: "Make uncertainty visible", b: "Confidence and limits should be readable from the interface." },
-                  { t: "Preserve progress", b: "Where you are, what's done, what's next, what's unavailable." },
-                ].map((p2) => (
-                  <li key={p2.t}>
-                    <p className="text-[14.5px] font-medium text-[var(--ink)]">{p2.t}</p>
-                    <p className="mt-0.5 text-[13px] leading-snug text-[var(--body)]">{p2.b}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
             <div className="p-6" style={{ border: "1px dashed var(--border-strong)", borderRadius: "var(--radius)" }}>
               <p className="eyebrow">Never</p>
               <p className="mt-3 text-[14px] leading-relaxed text-[var(--body)]">

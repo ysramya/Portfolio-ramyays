@@ -1,11 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 type Message = { role: "user" | "assistant"; content: string };
 
 export default function ChatWidget() {
+  /**
+   * Framer Motion animates via inline styles, so the global
+   * `prefers-reduced-motion` override in globals.css — which works by
+   * flattening CSS transition and animation durations — never reaches this
+   * panel. It has to be asked for explicitly.
+   */
+  const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [input, setInput] = useState("");
@@ -58,10 +65,14 @@ export default function ChatWidget() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.94, y: 12 }}
+            initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.94, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.94, y: 12 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.94, y: 12 }}
+            transition={
+              reduce
+                ? { duration: 0.01 }
+                : { duration: 0.2, ease: [0.16, 1, 0.3, 1] }
+            }
             className="glass-strong w-[320px] rounded-2xl flex flex-col overflow-hidden"
             role="dialog"
             aria-label="Chat with Ramya's assistant"
@@ -117,9 +128,9 @@ export default function ChatWidget() {
 
       <button
         onClick={() => setOpen((o) => !o)}
-        aria-label="Open chat"
+        aria-label={open ? "Close chat" : "Open chat"}
         aria-expanded={open}
-        className="w-14 h-14 rounded-full bg-[var(--color-green)] text-[var(--bg)] flex items-center justify-center transition-transform"
+        className="chat-fab w-14 h-14 rounded-full bg-[var(--color-green)] text-[var(--bg)] flex items-center justify-center"
       >
         <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2}>
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />

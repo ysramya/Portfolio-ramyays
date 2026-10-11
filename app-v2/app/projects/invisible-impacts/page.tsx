@@ -334,7 +334,7 @@ export default function InvisibleImpactsPage() {
       <LightBand>
         <div className="wrap" style={{ paddingTop: "calc(var(--nav-h) + 36px)", paddingBottom: 56 }}>
           <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.82fr)] lg:gap-14">
-            <div>
+            <div className="hero-seq">
               <p className="eyebrow eyebrow-rule">Case study · Cost of a Click</p>
               <h1 className="mt-5" style={{ fontSize: "clamp(52px, 6.4vw, 92px)", lineHeight: 0.98 }}>
                 Cost of a Click
@@ -365,7 +365,7 @@ export default function InvisibleImpactsPage() {
               </div>
             </div>
 
-            <figure className="w-full">
+            <figure className="hero-visual hero-settle w-full">
               <div className="relative overflow-hidden" style={{ aspectRatio: "2268 / 2962", borderRadius: 10, border: "1px solid var(--border-strong)" }}>
                 <Image
                   src="/img/coac/hero-installation.jpg"
