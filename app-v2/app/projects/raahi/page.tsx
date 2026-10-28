@@ -386,8 +386,6 @@ const signals = [
   { icon: i.repeat, title: "Sustained use", body: "Do practitioners keep Raahi active after the initial novelty?" },
   { icon: i.browser, title: "In-workflow detection", body: "Are flags created during real website reviews rather than demonstrations?" },
   { icon: i.doc, title: "Evidence creation", body: "Do flagged patterns make it into stakeholder conversations?" },
-  { icon: i.shield, title: "Detection credibility", body: "Are detections accurate enough that practitioners trust them?" },
-  { icon: i.layers, title: "Taxonomy coverage", body: "Can the taxonomy evolve as new patterns emerge without losing consistency?" },
 ];
 
 const risks = [
@@ -999,7 +997,7 @@ export default function RaahiPage() {
           </div>
         </div>
 
-        <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {signals.map((s) => (
             <li key={s.title} className="panel flex flex-col p-5">
               <Icon>{s.icon}</Icon>

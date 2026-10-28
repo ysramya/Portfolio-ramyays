@@ -309,15 +309,6 @@ const buildLayers = [
   { icon: i.brain, title: "Experience", body: "User action · immediate consequence · reflection" },
 ];
 
-const capabilities = [
-  { icon: i.search, title: "UX research", body: "Interviews · survey · synthesis · testing" },
-  { icon: i.target, title: "Experience design", body: "Interaction model · information hierarchy · physical-digital journey" },
-  { icon: i.layers, title: "Systems thinking", body: "AI interaction → sensor → physical response → digital feedback" },
-  { icon: i.pen, title: "Prototyping", body: "Figma · Framer · Arduino · VS Code" },
-  { icon: i.chip, title: "Physical computing", body: "Pump · relay · sensor interaction" },
-  { icon: i.users, title: "Public-facing design", body: "Exhibition · audience testing · impact measurement" },
-];
-
 const takeaways = [
   { n: "01", icon: i.drop, title: "Felt information is different", body: "Physical feedback created a different kind of environmental awareness than a static number." },
   { n: "02", icon: i.wrench, title: "Research can shape hardware", body: "Research influenced the physical interaction, not just the screen design." },
@@ -1170,24 +1161,9 @@ export default function InvisibleImpactsPage() {
         </div>
       </Section>
 
-      {/* 17 — CAPABILITIES */}
-      <Section id="capabilities">
-        <SectionHead n="17" eyebrow="Capabilities" title="This wasn’t just a sustainability installation." />
-
-        <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {capabilities.map((c) => (
-            <li key={c.title} className="panel flex flex-col p-6">
-              <Icon style={{ stroke: WATER }}>{c.icon}</Icon>
-              <h3 className="mt-4 text-[18px] leading-snug">{c.title}</h3>
-              <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">{c.body}</p>
-            </li>
-          ))}
-        </ul>
-      </Section>
-
-      {/* 18 — KEY TAKEAWAYS */}
+      {/* 17 — KEY TAKEAWAYS */}
       <Section id="takeaways">
-        <SectionHead n="18" eyebrow="Key takeaways" title="Design the experience, not just the information." />
+        <SectionHead n="17" eyebrow="Key takeaways" title="Design the experience, not just the information." />
 
         <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {takeaways.map((t) => (
@@ -1205,10 +1181,10 @@ export default function InvisibleImpactsPage() {
         </ul>
       </Section>
 
-      {/* 19 — CONTINUING RESEARCH */}
+      {/* 18 — CONTINUING RESEARCH */}
       <Section id="next">
         <div className="sec-grid">
-          <SectionHead n="19" eyebrow="Continuing research" title="The installation became a research platform.">
+          <SectionHead n="18" eyebrow="Continuing research" title="The installation became a research platform.">
             <p>
               Further work on the project developed into a paper on interactive art as a
               public-facing AI ethics interface.

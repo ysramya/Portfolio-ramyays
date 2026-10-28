@@ -343,9 +343,7 @@ const impact = [
 const successCriteria = [
   { icon: i.repeat, title: "Return use", body: "Do students voluntarily come back after the first session?" },
   { icon: i.check, title: "Completion", body: "Do they finish the journey from emotion selection through guided practice?" },
-  { icon: i.shield, title: "Perceived safety", body: "Does it feel private, non-judgmental, and appropriately bounded?" },
   { icon: i.arrowR, title: "Help-seeking", body: "Does Wellnut make professional support easier to approach, rather than replacing it?" },
-  { icon: i.scale, title: "Trust", body: "Do users understand what the avatar can and cannot do?" },
 ];
 
 const risks = [
@@ -1019,7 +1017,7 @@ export default function WellnutPage() {
           </div>
         </div>
 
-        <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {successCriteria.map((s) => (
             <li key={s.title} className="panel flex flex-col p-5">
               <Icon>{s.icon}</Icon>

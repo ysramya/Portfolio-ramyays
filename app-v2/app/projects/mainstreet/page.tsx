@@ -362,14 +362,6 @@ const decisions = [
   },
 ];
 
-const capabilities = [
-  { icon: i.team, title: "User understanding", tags: ["PM workflows", "Stakeholder interviews", "Business needs"] },
-  { icon: i.list, title: "Product thinking", tags: ["Requirements", "Prioritization", "Information hierarchy"] },
-  { icon: i.model, title: "Data thinking", tags: ["Data cleaning", "Relational modeling", "DAX", "Metric definitions"] },
-  { icon: i.dash, title: "UX / UI", tags: ["Dashboard architecture", "Visual hierarchy", "Interaction design"] },
-  { icon: i.send, title: "Delivery", tags: ["Iteration", "Stakeholder review", "Implementation", "Personalization"] },
-];
-
 const opportunities = [
   { icon: i.spark, title: "Predictive insights", body: "Surface portfolio trends and potential risks earlier." },
   { icon: i.refresh, title: "Automated reporting", body: "Reduce recurring manual reporting even further." },
@@ -476,49 +468,6 @@ export default function MainstreetPage() {
             ))}
           </dl>
         </div>
-
-        {/* Primary infographic: BEFORE → AFTER workflow */}
-        <figure className="mt-12 grid gap-3">
-          <div className="p-7" style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", background: "var(--bg-raised)" }}>
-            <p className="eyebrow" style={{ color: FRICTION }}>Before</p>
-            <div className="mt-6">
-              <Chain
-                nodes={[
-                  { icon: i.sheet, label: "Excel files", tone: "friction" },
-                  { icon: i.calc, label: "Manual calculations", tone: "friction" },
-                  { icon: i.crm, label: "CRM lookups", tone: "friction" },
-                  { icon: i.mail, label: "Email / analyst requests", tone: "friction" },
-                  { icon: i.pm, label: "PM review" },
-                ]}
-              />
-            </div>
-          </div>
-          <div className="flex items-center justify-center">
-            <span className="flex h-11 w-11 items-center justify-center rounded-full" style={{ background: "var(--ink)" }}>
-              <Icon className="icon-line !h-5 !w-5 rotate-90" style={{ stroke: "var(--bg)" }}>
-                {i.arrowR}
-              </Icon>
-            </span>
-          </div>
-          <div className="workflow-after panel-sage p-7">
-            <p className="eyebrow" style={{ color: POSITIVE }}>After</p>
-            <div className="mt-6">
-              <Chain
-                nodes={[
-                  { icon: i.bolt, label: "Live source data", tone: "positive" },
-                  { icon: i.model, label: "Power BI data model", tone: "positive" },
-                  { icon: i.dash, label: "Dashboard", tone: "positive" },
-                  { icon: i.decide, label: "PM decision", tone: "strong" },
-                ]}
-              />
-            </div>
-          </div>
-          <figcaption className="sr-only">
-            Before: Excel files, manual calculations, CRM lookups and email or analyst requests
-            fed a PM review. After: live source data flows through the Power BI data model into
-            the dashboard and straight to a PM decision.
-          </figcaption>
-        </figure>
       </Section>
 
       {/* 02 — WHY IT MATTERED */}
@@ -1286,39 +1235,10 @@ export default function MainstreetPage() {
         </div>
       </Section>
 
-      {/* 12 — WHAT I BROUGHT TO THE PROJECT */}
-      <Section id="capabilities">
-        <SectionHead n="12" eyebrow="What I brought to the project" title="Designing the interface was only part of the job." />
-
-        <ul className="relative mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          <span aria-hidden className="absolute left-[10%] right-[10%] top-[22px] hidden h-px lg:block" style={{ background: "var(--border-strong)" }} />
-          {capabilities.map((c, idx) => (
-            <li key={c.title} className="relative flex flex-col">
-              <span
-                className="relative z-10 flex h-11 w-11 items-center justify-center rounded-full"
-                style={{ background: idx === 3 ? "var(--ink)" : "var(--bg)", border: "1px solid var(--ink)" }}
-              >
-                <Icon className="icon-line !h-5 !w-5" style={idx === 3 ? { stroke: "var(--bg)" } : undefined}>
-                  {c.icon}
-                </Icon>
-              </span>
-              <p className="eyebrow mt-5 !text-[var(--ink)]">{c.title}</p>
-              <ul className="mt-3 flex flex-wrap gap-1.5">
-                {c.tags.map((t) => (
-                  <li key={t} className="tag">
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </Section>
-
-      {/* 13 — DESIGN SYSTEM */}
+      {/* 12 — DESIGN SYSTEM */}
       <Section id="design-system">
         <div className="sec-grid">
-          <SectionHead n="13" eyebrow="Design system" title="Brand clarity and financial clarity in the same system.">
+          <SectionHead n="12" eyebrow="Design system" title="Brand clarity and financial clarity in the same system.">
             <p>
               The MainStreet palette stays recognisable while adapting to an enterprise analytics
               environment: green carries the brand signal and positive movement, slate and deep
@@ -1468,10 +1388,10 @@ export default function MainstreetPage() {
         </div>
       </Section>
 
-      {/* 14 — LOOKING AHEAD */}
+      {/* 13 — LOOKING AHEAD */}
       <Section id="next">
         <div className="sec-grid">
-          <SectionHead n="14" eyebrow="Looking ahead" title="A strong foundation for the next phase of reporting." />
+          <SectionHead n="13" eyebrow="Looking ahead" title="A strong foundation for the next phase of reporting." />
           <div>
             <p className="meta">Future opportunities — not delivered features</p>
             <ul className="mt-4 grid gap-4 sm:grid-cols-3">
