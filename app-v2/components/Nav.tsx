@@ -71,7 +71,7 @@ export default function Nav() {
     >
       <div className="wrap h-full flex items-center justify-between">
         <Link href="/" onClick={() => setOpen(false)} aria-label="Ramya Yerramilli, home">
-          <Logo size={28} />
+          <Logo size={44} />
         </Link>
 
         <nav aria-label="Primary" className="hidden md:block">

@@ -1,29 +1,34 @@
+import Image from "next/image";
+
 /**
- * Wordmark — design-system.md §2.
+ * The RY monogram: cream letters and gold leaf-and-ring line art.
  *
- * Prata at 28–30px, `letter-spacing: .06em`, ink on cream.
- *
- * This replaced the previous `/img/brand/logo.png` mark, which is a gold
- * wordmark on a solid black square. On the cream ground that block reads as a
- * third background tone in every header and footer, which the two-tone rule
- * (§1) rules out — and the system names a typographic wordmark instead. The
- * image asset is still in `public/img/brand/` if it's wanted back.
+ * Two renderings of one artwork, because cream letters vanish on ivory: the
+ * cream version for deep-green grounds and a dark-letter version for ivory.
+ * Which one shows follows the surrounding theme in CSS (`.logo-on-dark` /
+ * `.logo-on-light`, globals.css), so the nav switches with the band it floats
+ * over and the footer takes the light one. The favicon and touch icon use the
+ * cream version on a deep-green tile (app/icon.png, app/apple-icon.png).
  */
 
 export default function Logo({
-  size = 30,
+  size = 44,
   className = "",
 }: {
-  /** Rendered wordmark size in px. The system's range is 28–30. */
+  /** Rendered width and height in px. */
   size?: number;
   className?: string;
 }) {
+  const common = {
+    width: size,
+    height: size,
+    sizes: `${size}px`,
+    draggable: false,
+  } as const;
   return (
-    <span
-      className={`font-[family-name:var(--font-display)] leading-none text-[var(--ink)] ${className}`}
-      style={{ fontSize: `${size}px`, letterSpacing: "0.06em" }}
-    >
-      RY
+    <span className={`inline-flex select-none ${className}`} style={{ width: size, height: size }}>
+      <Image src="/img/brand/logo-mark-light.png" alt="RY" priority className="logo-on-light" {...common} />
+      <Image src="/img/brand/logo-mark.png" alt="" aria-hidden priority className="logo-on-dark" {...common} />
     </span>
   );
 }

@@ -29,9 +29,9 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Ramya Yerramilli | UX Researcher, Human-AI Interaction",
+  title: "Ramya Yerramilli | Product & Experience Strategist",
   description:
-    "UX Researcher specializing in Human-AI Interaction and Responsible AI. Graduate Research Assistant at DePaul's RAISE Lab, with six years leading architecture and interior design projects before UX.",
+    "Product & Experience Strategist turning complex user and business problems into actionable product decisions: product discovery, research-led decision-making, and AI and complex workflows. Graduate Research Assistant at DePaul's RAISE Lab, with six years leading architecture and interior design projects before UX.",
 };
 
 export default function RootLayout({

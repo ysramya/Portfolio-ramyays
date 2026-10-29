@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import type { GalleryImage } from "@/lib/gallery";
 
@@ -36,7 +37,11 @@ export default function Lightbox({
 
   if (!image) return null;
 
-  return (
+  /* Portalled to <body>: the page content sits inside `.page-enter`, whose
+     entrance animation leaves it a containing block for `position: fixed`
+     descendants even after it ends, which sized this viewer to the whole
+     page and pushed the photo off-screen. */
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
@@ -85,6 +90,7 @@ export default function Lightbox({
       <p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-xs text-[var(--color-ink-faint)] tracking-wide">
         {image.alt} · {index + 1} / {images.length}
       </p>
-    </div>
+    </div>,
+    document.body,
   );
 }

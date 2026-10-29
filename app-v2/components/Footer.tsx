@@ -36,12 +36,12 @@ export default function Footer() {
         style={{ maxWidth: "var(--wrap-max)", padding: "36px var(--wrap-pad) 44px" }}
       >
         <div className="flex items-center gap-5">
-          <Logo size={28} />
+          <Logo size={48} />
           <span aria-hidden style={{ width: 1, height: 44, background: "var(--divider)" }} />
           <div>
             <p className="text-[15px] text-[var(--ink)]">Ramya Yerramilli</p>
             <p className="mt-1 text-[13px] text-[var(--muted-2)]">
-              Product designer &amp; UX researcher
+              Product &amp; Experience Strategist
             </p>
           </div>
         </div>

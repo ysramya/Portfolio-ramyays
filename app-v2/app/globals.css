@@ -1404,3 +1404,16 @@ body:has(.theme-wellnut) .theme-deep {
       transform var(--mo-standard) var(--mo-ease);
   }
 }
+
+/* ── Logo variants ──
+   Dark-letter mark on the ivory grounds, cream-letter mark inside any
+   `.theme-deep` scope (the deep bands, and the nav while it floats over one). */
+.logo-on-dark {
+  display: none;
+}
+.theme-deep .logo-on-dark {
+  display: block;
+}
+.theme-deep .logo-on-light {
+  display: none;
+}
