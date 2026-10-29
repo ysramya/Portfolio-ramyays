@@ -17,7 +17,7 @@ import DeepBand from "@/components/ds/DeepBand";
  */
 
 export const metadata: Metadata = {
-  title: "Med-dementia — Ramya Yerramilli",
+  title: "Med-dementia | Ramya Yerramilli",
   description: "A case study in progress.",
   robots: { index: false, follow: true },
 };

@@ -16,7 +16,7 @@ import {
 } from "@/components/ds";
 
 export const metadata: Metadata = {
-  title: "Design System — internal reference",
+  title: "Design System | internal reference",
   robots: { index: false, follow: false },
 };
 
@@ -32,7 +32,7 @@ export default function DesignSystemPage() {
       <Hero
         badge="iD Lab Shark Tank · Competitively Funded · 2025"
         title="Design system reference: Hero"
-        intro="Every field below is real Raahi content, reused to verify the component renders correctly — not fabricated copy."
+        intro="Every field below is real Raahi content, reused to verify the component renders correctly, not fabricated copy."
         meta={[
           { label: "Role", value: "Product Designer + Co-founder" },
           { label: "Duration", value: "16 weeks" },
@@ -49,7 +49,7 @@ export default function DesignSystemPage() {
       <SplitLayout
         eyebrow="The Format"
         title="Browser toolbar, not a standalone app"
-        body="Practitioners review live products inside the browser — a toolbar embeds directly into the workflow with zero context-switching."
+        body="Practitioners review live products inside the browser: a toolbar embeds directly into the workflow with zero context-switching."
         image="/img/raahi/design-workflow.png"
         imageAlt="Raahi design workflow"
         imageSide="left"
@@ -57,7 +57,7 @@ export default function DesignSystemPage() {
       <SplitLayout
         eyebrow="The Audience"
         title="Practitioner-first, not end-user"
-        body="Arming practitioners to catch dark patterns upstream scales the impact — one practitioner protects thousands of users."
+        body="Arming practitioners to catch dark patterns upstream scales the impact: one practitioner protects thousands of users."
         image="/img/raahi/product-specs.png"
         imageAlt="Raahi product specs"
         imageSide="right"
@@ -126,8 +126,8 @@ export default function DesignSystemPage() {
       />
 
       <FloatingQuote
-        text="I know dark patterns when I see them — but I have no systematic way to document or prove it to a stakeholder."
-        attribution="The insight that started it — senior UX practitioner, March 2025"
+        text="I know dark patterns when I see them, but I have no systematic way to document or prove it to a stakeholder."
+        attribution="The insight that started it: senior UX practitioner, March 2025"
       />
 
       <BehindTheBuild
@@ -176,7 +176,7 @@ export default function DesignSystemPage() {
       <div className="wrap py-8">
         <GlassCard className="p-6 max-w-md">
           <p className="text-sm text-[var(--color-ink-muted)]">
-            Raw GlassCard — for one-off content that doesn&rsquo;t warrant a
+            Raw GlassCard: for one-off content that doesn&rsquo;t warrant a
             bespoke component.
           </p>
         </GlassCard>

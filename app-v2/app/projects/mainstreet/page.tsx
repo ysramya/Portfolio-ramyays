@@ -24,9 +24,9 @@ import CountUp from "@/components/CountUp";
  */
 
 export const metadata: Metadata = {
-  title: "PM Dashboard — Mainstreet Advisors · Ramya Yerramilli",
+  title: "PM Dashboard | Mainstreet Advisors · Ramya Yerramilli",
   description:
-    "I designed and built a Power BI dashboard that gave six Portfolio Managers a single view of AUA, revenue, client health, and portfolio performance — replacing a fragmented, manual reporting process.",
+    "I designed and built a Power BI dashboard that gave six Portfolio Managers a single view of AUA, revenue, client health, and portfolio performance, replacing a fragmented, manual reporting process.",
 };
 
 const DASHBOARD_ALT =
@@ -392,7 +392,7 @@ export default function MainstreetPage() {
               </p>
               <p className="mt-4 text-[15px] leading-[1.7] text-[var(--body)]" style={{ maxWidth: "36em" }}>
                 I designed and built a Power BI dashboard that gave six Portfolio Managers a single
-                view of AUA, revenue, client health, and portfolio performance — replacing a
+                view of AUA, revenue, client health, and portfolio performance, replacing a
                 fragmented, manual reporting process.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
@@ -655,7 +655,7 @@ export default function MainstreetPage() {
               information into a single Power BI experience.
             </p>
             <p>
-              The hierarchy was designed around the questions PMs needed to answer first — then
+              The hierarchy was designed around the questions PMs needed to answer first, then
               progressively deeper information.
             </p>
           </SectionHead>
@@ -1032,7 +1032,7 @@ export default function MainstreetPage() {
               </div>
               <figcaption className="text-[13px] leading-relaxed text-[var(--body)]">
                 <span className="meta mb-1 block">Real review round</span>
-                A printed version marked up during review — one of the rounds before approval.
+                A printed version marked up during review, one of the rounds before approval.
                 Client details redacted.
               </figcaption>
             </figure>
@@ -1173,7 +1173,7 @@ export default function MainstreetPage() {
             The result wasn&rsquo;t simply a better-looking report.
           </p>
           <p className="text-[16px] leading-[1.7] text-[var(--body)]">
-            It changed <strong className="font-medium text-[var(--ink)]">when and how PMs accessed information</strong> —
+            It changed <strong className="font-medium text-[var(--ink)]">when and how PMs accessed information</strong>:
             from requesting and assembling data to accessing it directly when they needed it.
           </p>
         </div>
@@ -1195,7 +1195,7 @@ export default function MainstreetPage() {
                   </span>
                   <p className="meta">1 designer</p>
                 </div>
-                <h3 className="mt-4 text-[19px] leading-snug">Ramya — Product / UX Design</h3>
+                <h3 className="mt-4 text-[19px] leading-snug">Ramya, Product / UX Design</h3>
                 <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">
                   Owned the dashboard experience, information architecture, data visualization,
                   user needs, and iterative design.
@@ -1212,7 +1212,7 @@ export default function MainstreetPage() {
                   </span>
                   <p className="meta">2 engineers</p>
                 </div>
-                <h3 className="mt-4 text-[19px] leading-snug">Engineering — 2</h3>
+                <h3 className="mt-4 text-[19px] leading-snug">Engineering (2)</h3>
                 <p className="mt-2 text-[14px] leading-relaxed text-[var(--body)]">
                   Supported technical implementation and data/integration requirements.
                 </p>
@@ -1247,7 +1247,7 @@ export default function MainstreetPage() {
           </SectionHead>
           <div className="sec-copy lg:pt-10">
             <p>
-              The constraint that matters most is restraint — the dashboard should read as an
+              The constraint that matters most is restraint: the dashboard should read as an
               established financial tool, not a consumer fintech app, and never trade data
               readability for brand expression.
             </p>
@@ -1301,13 +1301,13 @@ export default function MainstreetPage() {
                 </div>
               ))}
             </dl>
-            <p className="meta mt-4">One category, one colour — and never colour alone to carry meaning.</p>
+            <p className="meta mt-4">One category, one colour, and never colour alone to carry meaning.</p>
           </figure>
         </div>
 
         <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           <figure className="panel p-6">
-            <figcaption className="eyebrow !text-[var(--ink)]">Type scale — Bliss Light</figcaption>
+            <figcaption className="eyebrow !text-[var(--ink)]">Type scale: Bliss Light</figcaption>
             <dl className="mt-4">
               {[
                 { s: "Heading 1", v: "40 / 48" },
@@ -1326,7 +1326,7 @@ export default function MainstreetPage() {
               ))}
             </dl>
             <p className="meta mt-4">
-              Specification — the brand face is Bliss Light, set light throughout; this page uses the portfolio&rsquo;s own faces.
+              Specification: the brand face is Bliss Light, set light throughout; this page uses the portfolio&rsquo;s own faces.
             </p>
           </figure>
 
@@ -1376,7 +1376,7 @@ export default function MainstreetPage() {
           <div className="p-6" style={{ border: "1px solid var(--border-strong)", borderRadius: "var(--radius)", background: "var(--bg-raised)" }}>
             <p className="eyebrow">Spacing &amp; radius</p>
             <p className="mt-3 text-[14px] leading-relaxed text-[var(--ink)]">4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 px</p>
-            <p className="mt-1.5 text-[14px] leading-relaxed text-[var(--body)]">Radius 4 · 8 · 12 · 16 px — restrained corporate rounding.</p>
+            <p className="mt-1.5 text-[14px] leading-relaxed text-[var(--body)]">Radius 4 · 8 · 12 · 16 px. Restrained corporate rounding.</p>
           </div>
           <div className="p-6" style={{ border: "1px dashed var(--border-strong)", borderRadius: "var(--radius)" }}>
             <p className="eyebrow">Never</p>
@@ -1393,7 +1393,7 @@ export default function MainstreetPage() {
         <div className="sec-grid">
           <SectionHead n="13" eyebrow="Looking ahead" title="A strong foundation for the next phase of reporting." />
           <div>
-            <p className="meta">Future opportunities — not delivered features</p>
+            <p className="meta">Future opportunities, not delivered features</p>
             <ul className="mt-4 grid gap-4 sm:grid-cols-3">
               {opportunities.map((o) => (
                 <li key={o.title} className="panel p-6">

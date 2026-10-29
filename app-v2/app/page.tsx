@@ -21,7 +21,7 @@ const industries = [
   },
   {
     title: "Architecture & interiors",
-    body: "Six years leading stakeholder-heavy projects before UX — the habit of designing inside real constraints.",
+    body: "Six years leading stakeholder-heavy projects before UX: the habit of designing inside real constraints.",
   },
 ];
 
@@ -36,19 +36,22 @@ export default function Home() {
           style={{ paddingTop: "calc(var(--nav-h) + 48px)", paddingBottom: 72 }}
         >
           <div className="hero-seq">
-            <p className="eyebrow eyebrow-rule">Product designer &middot; UX researcher</p>
+            <p className="eyebrow eyebrow-rule">Product &amp; Experience Strategist</p>
             <h1 className="mt-5">Ramya Yerramilli</h1>
             <h2
               className="mt-5"
-              style={{ fontSize: "clamp(28px, 3.1vw, 40px)", lineHeight: 1.2, maxWidth: "12em" }}
+              style={{ fontSize: "clamp(26px, 2.9vw, 38px)", lineHeight: 1.2, maxWidth: "16em" }}
             >
-              Making AI safer for everyday decisions.
+              Turning complex user and business problems into actionable product decisions.
             </h2>
-            <p className="lead mt-5">
-              Designing trustworthy AI experiences informed by mixed-methods research and six
-              years of complex stakeholder-driven design.
-            </p>
-            <p className="mt-3 text-[14px] leading-relaxed text-[var(--muted)]">
+            <ul className="mt-6 flex flex-wrap gap-2" aria-label="Areas of credibility">
+              {["Product discovery", "Research-led decision-making", "AI & complex workflows"].map((a) => (
+                <li key={a} className="pill">
+                  {a}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 text-[14px] leading-relaxed text-[var(--muted)]">
               Graduate Research Assistant at DePaul&rsquo;s RAISE Lab, previously at
               MainStreet Advisors.
             </p>
@@ -123,7 +126,7 @@ export default function Home() {
           </div>
           <div>
             <p className="lead">
-              I&rsquo;m most useful on problems where the right answer isn&rsquo;t known yet —
+              I&rsquo;m most useful on problems where the right answer isn&rsquo;t known yet:
               new surfaces, unclear user models, and systems people have reason not to trust.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">

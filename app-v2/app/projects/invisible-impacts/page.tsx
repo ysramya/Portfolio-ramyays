@@ -31,7 +31,7 @@ import SectionHead, { Section } from "@/components/ds/SectionHead";
  */
 
 export const metadata: Metadata = {
-  title: "Cost of a Click — Ramya Yerramilli",
+  title: "Cost of a Click | Ramya Yerramilli",
   description:
     "An interactive installation that translates the environmental cost of AI into a physical and digital experience.",
 };
@@ -344,7 +344,7 @@ export default function InvisibleImpactsPage() {
               </h2>
               <p className="mt-5 text-[clamp(17px,1.5vw,20px)] leading-[1.5] text-[var(--ink)]" style={{ maxWidth: "30em" }}>
                 An interactive installation that translates the environmental cost of AI into a
-                physical and digital experience — connecting everyday AI interactions to real-time
+                physical and digital experience, connecting everyday AI interactions to real-time
                 water and energy feedback.
               </p>
               <p className="mt-3 text-[15px] leading-[1.7] text-[var(--body)]" style={{ maxWidth: "38em" }}>
@@ -443,7 +443,7 @@ export default function InvisibleImpactsPage() {
         </dl>
 
         <div className="mt-6 flex flex-wrap gap-3">
-          {["DePaul Summer Impact Grant — Winner", "DePaul Summer Showcase — Featured installation"].map((p) => (
+          {["DePaul Summer Impact Grant: Winner", "DePaul Summer Showcase: Featured installation"].map((p) => (
             <p key={p} className="flex items-center gap-2 px-4 py-2.5 text-[13.5px] text-[var(--ink)]" style={{ border: "1px solid var(--border-strong)", borderRadius: "var(--radius)", background: "var(--bg-raised)" }}>
               <Icon className="icon-line !h-4 !w-4 flex-none">{i.award}</Icon>
               {p}
@@ -453,7 +453,7 @@ export default function InvisibleImpactsPage() {
 
         <p className="mt-5 max-w-[56em] text-[12.5px] leading-relaxed text-[var(--muted)]">
           <strong className="font-medium text-[var(--ink)]">How to read these:</strong> the 85%, 73% and 30% measures are
-          self-reported participant responses. The 6M+ figure represents social reach — not product adoption or verified
+          self-reported participant responses. The 6M+ figure represents social reach, not product adoption or verified
           behaviour change.
         </p>
       </Section>
@@ -465,8 +465,8 @@ export default function InvisibleImpactsPage() {
             <SectionHead n="02" eyebrow="The problem" title="AI feels invisible. So do its environmental costs." />
             <div className="sec-copy mt-6">
               <p>
-                AI depends on physical infrastructure — data centers, energy systems, and water used
-                for cooling — but none of that is visible during a typical AI interaction.
+                AI depends on physical infrastructure (data centers, energy systems, and water used
+                for cooling), but none of that is visible during a typical AI interaction.
               </p>
               <p>
                 The problem was not a lack of information. It was the distance between{" "}
@@ -477,9 +477,9 @@ export default function InvisibleImpactsPage() {
             <blockquote className="mt-8 max-w-[34em] pl-5" style={{ borderLeft: `2px solid ${WATER}` }}>
               <p className="font-[family-name:var(--font-display)] text-[clamp(20px,2vw,26px)] leading-[1.35] text-[var(--ink)]">
                 &ldquo;Abstract environmental data doesn&rsquo;t change behaviour. But when you watch
-                the water pour — you feel it.&rdquo;
+                the water pour, you feel it.&rdquo;
               </p>
-              <footer className="meta mt-3">Research finding — exit interviews after installation interaction, Summer 2025</footer>
+              <footer className="meta mt-3">Research finding: exit interviews after installation interaction, Summer 2025</footer>
             </blockquote>
           </div>
 
@@ -677,7 +677,7 @@ export default function InvisibleImpactsPage() {
           <div className="sec-copy lg:pt-10">
             <p>
               The physical and digital layers were deliberately coupled, so the environmental cost
-              never arrived as a separate educational message alongside the interaction — it{" "}
+              never arrived as a separate educational message alongside the interaction. It{" "}
               <strong className="font-medium text-[var(--ink)]">was</strong> the interaction.
             </p>
           </div>
@@ -717,21 +717,21 @@ export default function InvisibleImpactsPage() {
             alt="The installation running: the lit tank, the monitor above it, and the laptop visitors typed on."
             ratio="4 / 5"
             sizes="(max-width: 640px) 94vw, 360px"
-            caption="Ask — the laptop and tank as a visitor meets them."
+            caption="Ask: the laptop and tank as a visitor meets them."
           />
           <Photo
             src="/img/coac/pump-bucket.jpg"
             alt="The submersible pump sitting in a bucket of water, tubing and power cable running out of frame."
             ratio="4 / 5"
             sizes="(max-width: 640px) 94vw, 360px"
-            caption="Physical response — the pump that moves the water."
+            caption="Physical response: the pump that moves the water."
           />
           <Photo
             src="/img/coac/video-wall.jpg"
             alt="The four-panel video wall showing the Cost of a Click title card and a QR code reading “Scan for more information”."
             ratio="4 / 5"
             sizes="(max-width: 640px) 94vw, 360px"
-            caption="Environmental data — the wall that carried the context."
+            caption="Environmental data: the wall that carried the context."
             position="50% 35%"
           />
         </div>
@@ -798,7 +798,7 @@ export default function InvisibleImpactsPage() {
             alt="The pump seated in its reservoir of water."
             ratio="3 / 4"
             sizes="(max-width: 640px) 94vw, 420px"
-            caption="The pump in its reservoir — the other end of the same circuit."
+            caption="The pump in its reservoir, the other end of the same circuit."
           />
         </div>
       </Section>
@@ -994,7 +994,7 @@ export default function InvisibleImpactsPage() {
           />
           <Photo
             src="/img/coac/team-testing.jpg"
-            alt="Four team members standing beside the finished installation — the tank, the monitor and the Cost of a Click poster."
+            alt="Four team members standing beside the finished installation: the tank, the monitor and the Cost of a Click poster."
             ratio="3 / 4"
             sizes="(max-width: 640px) 94vw, 420px"
             caption="The installation assembled and running, before doors opened."
@@ -1040,7 +1040,7 @@ export default function InvisibleImpactsPage() {
             alt="The exhibition room: the lit tank on the DePaul-draped table on the left, the four-panel video wall on the right."
             ratio="4 / 3"
             sizes="(max-width: 1024px) 94vw, 640px"
-            caption="The room as visitors found it — installation on one side, video wall on the other."
+            caption="The room as visitors found it: installation on one side, video wall on the other."
           />
           <Photo
             src="/img/coac/video-wall.jpg"
@@ -1072,7 +1072,7 @@ export default function InvisibleImpactsPage() {
       {/* 15 — IMPACT */}
       <Section id="impact">
         <div className="sec-grid">
-          <SectionHead n="15" eyebrow="Impact" title="The installation made the invisible visible — and the response was measurable." />
+          <SectionHead n="15" eyebrow="Impact" title="The installation made the invisible visible, and the response was measurable." />
           <div className="sec-copy lg:pt-10">
             <p>
               The result wasn&rsquo;t simply that visitors saw a new data visualization. The
@@ -1085,7 +1085,7 @@ export default function InvisibleImpactsPage() {
         <dl className="mt-10 grid gap-4 sm:grid-cols-3">
           {[
             { value: "85%", label: "reported changed awareness of AI's environmental footprint" },
-            { value: "73%", label: "reported intent to use AI more mindfully — specifically reducing unnecessary or casual queries" },
+            { value: "73%", label: "reported intent to use AI more mindfully, specifically reducing unnecessary or casual queries" },
             { value: "30%", label: "increase in self-reported informed decision-making about when to use AI tools" },
           ].map((m) => (
             <div key={m.value} className="panel flex flex-col-reverse p-6">
@@ -1113,7 +1113,7 @@ export default function InvisibleImpactsPage() {
               public conversation around AI&rsquo;s hidden environmental cost.
             </p>
             <p className="text-[12.5px] leading-relaxed text-[var(--muted)]">
-              6M+ views measure reach — not adoption, and not behaviour change.
+              6M+ views measure reach, not adoption, and not behaviour change.
             </p>
           </SectionHead>
 
@@ -1140,14 +1140,14 @@ export default function InvisibleImpactsPage() {
             showcase, which was a water tank on a draped table. */}
         <div className="mt-12 pt-8" style={{ borderTop: "1px solid var(--border-strong)" }}>
           <div className="flex flex-wrap items-baseline justify-between gap-3">
-            <p className="eyebrow">Concept — where this could go next</p>
+            <p className="eyebrow">Concept: where this could go next</p>
             <p className="meta" style={{ color: FRICTION }}>
               Illustration, not the exhibited installation
             </p>
           </div>
           <p className="mt-3 max-w-[46em] text-[15px] leading-[1.7] text-[var(--body)]">
             The showcase build was one table, one tank, one pump. These illustrations imagine the
-            same idea at exhibition scale — a room a visitor walks into rather than a station they
+            same idea at exhibition scale: a room a visitor walks into rather than a station they
             walk up to.
           </p>
 
@@ -1157,14 +1157,14 @@ export default function InvisibleImpactsPage() {
               alt="Illustration of a gallery-scale version: a suspended cluster of lit screens, with wall text reading “Ask. Explore. See the impact.”"
               ratio="3 / 2"
               sizes="(max-width: 640px) 94vw, 460px"
-              caption="Concept illustration — the installation imagined at room scale. Not a photograph of the showcase."
+              caption="Concept illustration: the installation imagined at room scale. Not a photograph of the showcase."
             />
             <Photo
               src="/img/coac/concept-kiosk.jpg"
               alt="Illustration of a visitor at a lit kiosk reading “Ask. Explore. See the impact.” with a tap-to-begin prompt."
               ratio="3 / 2"
               sizes="(max-width: 640px) 94vw, 460px"
-              caption="Concept illustration — a walk-up entry point to the same interaction."
+              caption="Concept illustration: a walk-up entry point to the same interaction."
             />
           </div>
         </div>
@@ -1219,7 +1219,7 @@ export default function InvisibleImpactsPage() {
                 Public-Facing AI Ethics Interface.&rdquo;{" "}
                 <em>AAAI/ACM Conference on AI, Ethics, and Society (AIES 2026)</em>.
               </p>
-              <p className="meta mt-3">Paper #343 · Under review — not accepted</p>
+              <p className="meta mt-3">Paper #343 · Under review, not accepted</p>
             </div>
           </div>
         </div>
@@ -1241,7 +1241,7 @@ export default function InvisibleImpactsPage() {
                 AI&rsquo;s environmental impact without ever feeling connected to it.
               </p>
               <p className="lead mt-3">
-                The project turned that abstract cost into an experience —{" "}
+                The project turned that abstract cost into an experience:{" "}
                 <strong className="font-medium text-[var(--ink)]">something people could see, touch, question, and remember.</strong>
               </p>
               <div className="mt-6 flex flex-wrap gap-3">

@@ -5,7 +5,7 @@ import DeepBand from "@/components/ds/DeepBand";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
 
 export const metadata: Metadata = {
-  title: "Beyond the Screen — Ramya Yerramilli",
+  title: "Beyond the Screen | Ramya Yerramilli",
   description:
     "Outside of research and design, I explore creativity through digital painting, cityscapes, nature, interiors, and cooking.",
 };
@@ -26,7 +26,7 @@ export default function BeyondTheScreenPage() {
       eyebrow: "Photography",
       title: "Cityscapes",
       description:
-        "I enjoy documenting quiet moments in the city — streets, skylines, architecture, and changing light. Photography has taught me to slow down, notice patterns, and appreciate the details that often go unseen.",
+        "I enjoy documenting quiet moments in the city: streets, skylines, architecture, and changing light. Photography has taught me to slow down, notice patterns, and appreciate the details that often go unseen.",
       images: getGalleryImages("Cityscape"),
       empty: "Cityscapes coming soon.",
     },
@@ -35,7 +35,7 @@ export default function BeyondTheScreenPage() {
       eyebrow: "Photography",
       title: "Nature",
       description:
-        "Landscapes, light, and the outdoors — a different pace from the city, but the same instinct to notice and observe before reaching for a camera.",
+        "Landscapes, light, and the outdoors: a different pace from the city, but the same instinct to notice and observe before reaching for a camera.",
       images: getGalleryImages("Nature"),
       empty: "Nature photos coming soon.",
     },
@@ -44,7 +44,7 @@ export default function BeyondTheScreenPage() {
       eyebrow: "Photography",
       title: "Interiors",
       description:
-        "Rooms hold the same questions I ask in research — how does a space guide attention, invite pause, or shape a mood before anyone notices why. Interior photography is where that instinct started.",
+        "Rooms hold the same questions I ask in research: how does a space guide attention, invite pause, or shape a mood before anyone notices why. Interior photography is where that instinct started.",
       images: getGalleryImages("interiors"),
       empty: "Interiors coming soon.",
     },
@@ -69,8 +69,8 @@ export default function BeyondTheScreenPage() {
           <h1 className="mt-5">Beyond the Screen</h1>
           <p className="lead mt-5" style={{ maxWidth: "46em" }}>
             Outside of research and design, I explore creativity through digital painting,
-            photography — cityscapes, nature, and interiors — and cooking. These practices keep
-            me curious, observant, and grounded — qualities that continue to shape how I
+            photography (cityscapes, nature, and interiors), and cooking. These practices keep
+            me curious, observant, and grounded, qualities that continue to shape how I
             approach every project.
           </p>
         </div>

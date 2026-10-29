@@ -23,7 +23,7 @@ import SectionHead, { Section } from "@/components/ds/SectionHead";
  */
 
 export const metadata: Metadata = {
-  title: "Raahi — Ramya Yerramilli",
+  title: "Raahi | Ramya Yerramilli",
   description:
     "An AI browser plugin that helps UX practitioners detect, document, and explain dark patterns while reviewing live websites.",
 };
@@ -292,7 +292,7 @@ const transformation = [
 const findings = [
   { title: "Language was missing", body: "“Dark pattern” meant something different to every practitioner." },
   { title: "Review happens in the browser", body: "A tool that lives anywhere else doesn't get used." },
-  { title: "Instinct without proof", body: "Practitioners knew — they couldn't prove it to a stakeholder." },
+  { title: "Instinct without proof", body: "Practitioners knew, but they couldn't prove it to a stakeholder." },
   { title: "Speed is the problem", body: "Manipulation works because it's invisible in the moment." },
   { title: "The lever is upstream", body: "Reach the reviewer before the pattern ships." },
 ];
@@ -424,8 +424,8 @@ export default function RaahiPage() {
                 patterns while reviewing live websites.
               </p>
               <p className="mt-3 text-[15px] leading-[1.7] text-[var(--body)]" style={{ maxWidth: "36em" }}>
-                Raahi turns a practitioner&rsquo;s instinct — &ldquo;something about this experience
-                feels manipulative&rdquo; — into documented, defensible evidence.
+                Raahi turns a practitioner&rsquo;s instinct (&ldquo;something about this experience
+                feels manipulative&rdquo;) into documented, defensible evidence.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <a href="#product" className="btn">
@@ -562,7 +562,7 @@ export default function RaahiPage() {
 
             <blockquote className="mt-5 pl-5" style={{ borderLeft: "2px solid var(--numeral)" }}>
               <p className="font-[family-name:var(--font-display)] text-[clamp(19px,1.7vw,22px)] leading-[1.4] text-[var(--ink)]">
-                &ldquo;I know dark patterns when I see them — but I have no systematic way to document or prove it to a stakeholder.&rdquo;
+                &ldquo;I know dark patterns when I see them, but I have no systematic way to document or prove it to a stakeholder.&rdquo;
               </p>
               <footer className="meta mt-3">Senior UX practitioner, interview · March 2025</footer>
             </blockquote>
@@ -778,7 +778,7 @@ export default function RaahiPage() {
             <div className="relative overflow-hidden" style={{ aspectRatio: "2400 / 1286", borderRadius: "var(--radius)", border: "1px solid var(--border)", background: "#fff" }}>
               <Image src="/img/raahi/research/synthesis-board.jpg" alt="The research synthesis board: user pain points, use-case scenarios, guiding questions, and a catalogue of deceptive pattern types." fill sizes="(max-width: 640px) 94vw, 700px" className="object-contain" />
             </div>
-            <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">Synthesis board — pain points, use cases, and the pattern types practitioners named.</figcaption>
+            <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">Synthesis board: pain points, use cases, and the pattern types practitioners named.</figcaption>
           </figure>
           <figure>
             <div className="relative overflow-hidden" style={{ aspectRatio: "1200 / 1286", borderRadius: "var(--radius)" }}>
@@ -1077,7 +1077,7 @@ export default function RaahiPage() {
                 Raahi started with a simple gap: practitioners could recognize dark patterns, but they lacked a consistent way to document and prove them.
               </p>
               <p className="lead mt-3">
-                The product turns that gap into a workflow — <strong className="font-medium text-[var(--ink)]">detect, classify, document, and act.</strong>
+                The product turns that gap into a workflow: <strong className="font-medium text-[var(--ink)]">detect, classify, document, and act.</strong>
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <a href="#prototype" className="btn">

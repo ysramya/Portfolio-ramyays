@@ -1360,8 +1360,14 @@ body:has(.theme-wellnut) .theme-deep {
    same back-in-out ease as the squishy hero (a little overshoot, then settle).
    It uses the independent `scale` property, so it composes with the reveal
    transforms instead of fighting them, and it's gated to real hover devices
-   with motion allowed. Elements that already declare a `transition` for
-   their reveal need `scale` added to that list, hence the mirrored rules. */
+   with motion allowed.
+
+   Only the innermost card pops (a card inside an `article` panel pops with it). A container that holds other cards (a figure
+   wrapping three panels, a chain of nodes) stays still, so hovering one card
+   moves that card and not its neighbours. "Card" covers the system classes and
+   the inline-styled boxes the case studies build with `var(--radius)`.
+   Elements that already declare a `transition` for their reveal need `scale`
+   added to that list, hence the mirrored rules. */
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   :root {
     --pop-ease: cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -1369,26 +1375,30 @@ body:has(.theme-wellnut) .theme-deep {
     --pop-time: 0.7s;
   }
 
-  main :is(.panel, .panel-sage, .card, figure, .video-frame, .pop) {
+  main :is(.panel, .panel-sage, .card, .media, .video-frame, .pop, figure, article, [style*="border-radius:var(--radius)"], [style*="border-radius: var(--radius)"]):not(:has(:is(.panel, .panel-sage, .card, .media, .video-frame, .pop, figure, article, [style*="border-radius:var(--radius)"], [style*="border-radius: var(--radius)"]))),
+  main article {
     transition:
       scale var(--pop-time) var(--pop-ease),
       border-color 0.2s ease;
   }
-  main :is(.panel, .panel-sage, .card, figure, .video-frame, .pop):hover {
+  main :is(.panel, .panel-sage, .card, .media, .video-frame, .pop, figure, article, [style*="border-radius:var(--radius)"], [style*="border-radius: var(--radius)"]):not(:has(:is(.panel, .panel-sage, .card, .media, .video-frame, .pop, figure, article, [style*="border-radius:var(--radius)"], [style*="border-radius: var(--radius)"]))):hover,
+  main article:hover {
     scale: var(--pop-scale);
   }
 
-  .motion-ready main :is(.panel, .panel-sage, .card, figure, .video-frame, .pop).reveal {
+  .motion-ready main :is(.panel, .panel-sage, .card, .media, .video-frame, .pop, figure, article, [style*="border-radius:var(--radius)"], [style*="border-radius: var(--radius)"]):not(:has(:is(.panel, .panel-sage, .card, .media, .video-frame, .pop, figure, article, [style*="border-radius:var(--radius)"], [style*="border-radius: var(--radius)"]))).reveal,
+  .motion-ready main article.reveal {
     transition:
       scale var(--pop-time) var(--pop-ease),
       transform var(--mo-medium) var(--mo-ease);
   }
-  .motion-ready main :is(.panel, .panel-sage, .card, figure, .video-frame, .pop).reveal-media {
+  .motion-ready main :is(.panel, .panel-sage, .card, .media, .video-frame, .pop, figure, article, [style*="border-radius:var(--radius)"], [style*="border-radius: var(--radius)"]):not(:has(:is(.panel, .panel-sage, .card, .media, .video-frame, .pop, figure, article, [style*="border-radius:var(--radius)"], [style*="border-radius: var(--radius)"]))).reveal-media,
+  .motion-ready main article.reveal-media {
     transition:
       scale var(--pop-time) var(--pop-ease),
       transform var(--mo-arrive) var(--mo-ease);
   }
-  .motion-ready main .reveal-group > :is(.panel, .panel-sage, .card, figure, .video-frame, .pop) {
+  .motion-ready main .reveal-group > :is(.panel, .panel-sage, .card, .media, .video-frame, .pop, figure, article, [style*="border-radius:var(--radius)"], [style*="border-radius: var(--radius)"]):not(:has(:is(.panel, .panel-sage, .card, .media, .video-frame, .pop, figure, article, [style*="border-radius:var(--radius)"], [style*="border-radius: var(--radius)"]))) {
     transition:
       scale var(--pop-time) var(--pop-ease),
       transform var(--mo-standard) var(--mo-ease);

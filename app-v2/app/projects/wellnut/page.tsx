@@ -23,7 +23,7 @@ import SectionHead, { Section } from "@/components/ds/SectionHead";
  */
 
 export const metadata: Metadata = {
-  title: "Wellnut — Ramya Yerramilli",
+  title: "Wellnut | Ramya Yerramilli",
   description:
     "A VR companion designed to give students a low-friction, judgment-free way to pause, reflect, and take the first step toward support.",
 };
@@ -292,11 +292,11 @@ const researchChanges = [
 
 const experience = [
   { n: "01", title: "Arrive", body: "Enter the private forest environment.", icon: i.tree },
-  { n: "02", title: "Express", body: "Choose an emotion — Lonely or Stressed.", icon: i.heart },
+  { n: "02", title: "Express", body: "Choose an emotion: Lonely or Stressed.", icon: i.heart },
   { n: "03", title: "Be heard", body: "The avatar acknowledges what was expressed.", icon: i.ear },
   { n: "04", title: "Reflect", body: "The conversation adapts to that emotional state.", icon: i.chat },
   { n: "05", title: "Practice", body: "Move into guided meditation and breathing.", icon: i.breathe },
-  { n: "06", title: "Continue", body: "End with an appropriate next step — including encouragement toward human support.", icon: i.arrowR },
+  { n: "06", title: "Continue", body: "End with an appropriate next step, including encouragement toward human support.", icon: i.arrowR },
 ];
 
 const guardrails = [
@@ -316,7 +316,7 @@ const roleMap = [
 
 const phases = [
   { icon: i.doc, title: "Understand", weeks: "Weeks 1–4", body: "Literature and secondary research into support barriers, existing interventions, and the VR / meditation evidence base." },
-  { icon: i.flask, title: "Validate", weeks: "Weeks 5–10", body: "33 students surveyed across six disciplines — support-seeking barriers, independence, VR receptiveness." },
+  { icon: i.flask, title: "Validate", weeks: "Weeks 5–10", body: "33 students surveyed across six disciplines: support-seeking barriers, independence, VR receptiveness." },
   { icon: i.shield, title: "De-risk", weeks: "Weeks 11–14", body: "Licensed therapist consultation produced the empathy-language framework and the validate-before-guidance principle." },
   { icon: i.code, title: "Build", weeks: "Weeks 15–26", body: "Scoped the MVP, then built the environment, avatar, emotion branches, meditation, and the showcase build." },
 ];
@@ -382,7 +382,7 @@ export default function WellnutPage() {
               </h2>
               <p className="mt-5 text-[clamp(17px,1.5vw,20px)] leading-[1.5] text-[var(--ink)]" style={{ maxWidth: "29em" }}>
                 A VR companion that gives students a low-friction, judgment-free way to pause,
-                reflect, and reach guided support — before they hit a crisis point.
+                reflect, and reach guided support, before they hit a crisis point.
               </p>
               <p className="mt-3 text-[15px] leading-[1.7] text-[var(--body)]" style={{ maxWidth: "36em" }}>
                 No appointment, no stigma, no waiting list.
@@ -408,7 +408,7 @@ export default function WellnutPage() {
                   className="object-cover"
                 />
               </div>
-              <figcaption className="meta mt-3">Concept illustration — the real build appears from section 05 onward.</figcaption>
+              <figcaption className="meta mt-3">Concept illustration. The real build appears from section 05 onward.</figcaption>
             </figure>
           </div>
 
@@ -506,7 +506,7 @@ export default function WellnutPage() {
                 58%
               </p>
               <p className="text-[14px] leading-snug text-[var(--body)]">
-                of students with chronic stress had never accessed an on-campus mental health service — despite it being free.
+                of students with chronic stress had never accessed an on-campus mental health service, despite it being free.
               </p>
             </div>
 
@@ -570,7 +570,7 @@ export default function WellnutPage() {
         </div>
 
         <p className="mt-10 max-w-[32em] font-[family-name:var(--font-display)] text-[clamp(22px,2.4vw,30px)] leading-[1.3] text-[var(--ink)]">
-          Reduce the friction of starting — without pretending the product replaces human care.
+          Reduce the friction of starting, without pretending the product replaces human care.
         </p>
       </Section>
 
@@ -670,13 +670,13 @@ export default function WellnutPage() {
             <div className="relative overflow-hidden" style={{ aspectRatio: "652 / 362", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
               <Image src="/img/wellnut/pov-forest.jpg" alt="In-headset view of the Wellnut forest, with the avatar waiting in the clearing." fill sizes="(max-width: 1024px) 94vw, 560px" className="object-cover" />
             </div>
-            <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">From the build — the forest as the student sees it.</figcaption>
+            <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">From the build: the forest as the student sees it.</figcaption>
           </figure>
           <figure>
             <div className="relative overflow-hidden" style={{ aspectRatio: "652 / 362", borderRadius: "var(--radius)", border: "1px solid var(--border)", background: "#111" }}>
               <Image src="/img/wellnut/emotion-bubbles.jpg" alt="The Lonely and Stressed emotion bubbles floating above the avatar in the forest." fill sizes="(max-width: 1024px) 94vw, 560px" className="object-cover object-[50%_35%]" />
             </div>
-            <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">From the build — emotion selection: Lonely or Stressed.</figcaption>
+            <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">From the build: emotion selection, Lonely or Stressed.</figcaption>
           </figure>
         </div>
 
@@ -739,7 +739,7 @@ export default function WellnutPage() {
                 ]}
               />
             </div>
-            <figcaption className="meta mt-5">The interaction model — written for the build, not a screenshot.</figcaption>
+            <figcaption className="meta mt-5">The interaction model, written for the build, not a screenshot.</figcaption>
           </figure>
         </div>
 
@@ -755,8 +755,8 @@ export default function WellnutPage() {
 
         <blockquote className="mt-8 max-w-[46em] pl-5" style={{ borderLeft: `2px solid ${CALM}` }}>
           <p className="font-[family-name:var(--font-display)] text-[clamp(19px,1.8vw,24px)] leading-[1.4] text-[var(--ink)]">
-            &ldquo;The avatar should model a healthy relationship — providing space, listening, and
-            validation — while maintaining appropriate boundaries. It should feel like someone who
+            &ldquo;The avatar should model a healthy relationship, providing space, listening, and
+            validation, while maintaining appropriate boundaries. It should feel like someone who
             cares, without replacing human connection.&rdquo;
           </p>
           <footer className="meta mt-3">Licensed therapist consultation · Dec 2024</footer>
@@ -849,7 +849,7 @@ export default function WellnutPage() {
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           <div className="panel-sage p-7">
             <p className="eyebrow" style={{ color: CALM }}>
-              Build now — v1
+              Build now: v1
             </p>
             <ul className="mt-5 flex flex-col">
               {buildNow.map((f) => (
@@ -933,7 +933,7 @@ export default function WellnutPage() {
           </div>
         </div>
 
-        <div className="mt-10 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,0.8fr)]">
+        <div className="mt-10 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.25fr)] lg:items-start">
           <figure>
             <div className="relative overflow-hidden" style={{ aspectRatio: "4 / 3", borderRadius: "var(--radius)" }}>
               <Image src="/img/wellnut/vr-session.jpg" alt="An attendee trying Wellnut in the headset at the showcase, with the run mirrored on a screen." fill sizes="(max-width: 1024px) 94vw, 380px" className="object-cover" />
@@ -947,7 +947,7 @@ export default function WellnutPage() {
             <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">Presenting at the showcase.</figcaption>
           </figure>
           <figure>
-            <div className="video-frame" style={{ aspectRatio: "9 / 16" }}>
+            <div className="video-frame" style={{ aspectRatio: "848 / 480" }}>
               <video controls playsInline preload="metadata" muted loop aria-label="Guiding a first-time user into the Wellnut experience at the showcase">
                 <source src="/img/wellnut/vr-guided-session.mp4" type="video/mp4" />
               </video>
@@ -969,7 +969,7 @@ export default function WellnutPage() {
               <p className="font-[family-name:var(--font-display)] text-[clamp(22px,2.4vw,30px)] leading-[1.3] text-[var(--ink)]">
                 &ldquo;This feels like talking to someone who actually cares.&rdquo;
               </p>
-              <footer className="meta mt-3">Attendee feedback — Jarvis Innovation Showcase, May 2025</footer>
+              <footer className="meta mt-3">Attendee feedback, Jarvis Innovation Showcase, May 2025</footer>
             </blockquote>
             <p className="text-[15px] leading-[1.7] text-[var(--body)]">
               The notes also asked for things the MVP didn&rsquo;t have: meditative background audio,
@@ -987,7 +987,7 @@ export default function WellnutPage() {
           <div className="sec-copy lg:pt-10">
             <p>
               The strongest result wasn&rsquo;t a scale metric. It was moving from an abstract problem
-              — students aren&rsquo;t using the support that exists — to a tangible experience built
+              (students aren&rsquo;t using the support that exists) to a tangible experience built
               around the actual barriers.
             </p>
           </div>
@@ -1101,7 +1101,7 @@ export default function WellnutPage() {
               </p>
               <p className="lead mt-3">
                 Research shaped the platform, the interaction model, the ethical boundaries, and the
-                scope — <strong className="font-medium text-[var(--ink)]">turning that insight into a prototype students could actually experience.</strong>
+                scope: <strong className="font-medium text-[var(--ink)]">turning that insight into a prototype students could actually experience.</strong>
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <a href="#experience" className="btn">

@@ -5,7 +5,7 @@ import DeepBand from "@/components/ds/DeepBand";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
 
 export const metadata: Metadata = {
-  title: "About — Ramya Yerramilli",
+  title: "About | Ramya Yerramilli",
   description: "How I think, and what shaped my journey as a designer.",
 };
 

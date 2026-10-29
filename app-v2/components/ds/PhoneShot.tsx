@@ -33,7 +33,7 @@ export default function PhoneShot({
       sizes={sizes}
       priority={priority}
       draggable={false}
-      className={`h-auto w-full select-none ${className}`}
+      className={`h-auto w-full select-none ${priority ? "" : "pop"} ${className}`}
       style={style}
     />
   );

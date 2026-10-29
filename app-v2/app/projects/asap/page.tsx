@@ -25,7 +25,7 @@ import { DemoVideo, WatchDemoButton } from "./Demo";
  */
 
 export const metadata: Metadata = {
-  title: "ASAP — Ramya Yerramilli",
+  title: "ASAP | Ramya Yerramilli",
   description:
     "ASAP (AI Scaffolding Action Planner) is an AI-powered planning experience that helps people break down a goal, figure out what matters first, and start taking action.",
 };
@@ -303,7 +303,7 @@ const issues: {
         h: 248,
       },
     ],
-    caption: "The role chosen on the first screen, and the plan it shapes — tagged “Tailored for early-career pro.”",
+    caption: "The role chosen on the first screen, and the plan it shapes, tagged “Tailored for early-career pro.”",
   },
   {
     title: "Some responses were unreliable.",
@@ -320,7 +320,7 @@ const issues: {
         h: 285,
       },
     ],
-    caption: "While the AI is working, the screen says so — “Analyzing your task…” — instead of sitting empty.",
+    caption: "While the AI is working, the screen says so (“Analyzing your task…”) instead of sitting empty.",
   },
   {
     title: "Users lost track of progress.",
@@ -336,7 +336,7 @@ const issues: {
         h: 635,
       },
     ],
-    caption: "Each step shows its place — “1 of 5” — and later steps stay locked until the one before is finished.",
+    caption: "Each step shows its place (“1 of 5”) and later steps stay locked until the one before is finished.",
   },
 ];
 
@@ -648,7 +648,7 @@ export default function AsapPage() {
             <SectionHead n="05" eyebrow="Designing the AI" title="The interface was only part of the design.">
               <p>
                 Because ASAP relies on AI, I also had to design what happens behind the
-                interface — how the system asks questions, uses context, responds to users,
+                interface: how the system asks questions, uses context, responds to users,
                 and communicates uncertainty.
               </p>
             </SectionHead>
@@ -829,7 +829,7 @@ export default function AsapPage() {
             />
           </div>
           <figcaption className="mt-3 text-[13px] text-[var(--muted)]">
-            Synthesis board from the research phase — problem framing and feature
+            Synthesis board from the research phase: problem framing and feature
             prioritisation with the team.
           </figcaption>
         </figure>
@@ -952,7 +952,7 @@ export default function AsapPage() {
           <SectionHead n="10" eyebrow="Design system" title="Calm by default, so the task stays dominant.">
             <p>
               A slate-teal core with warm neutrals, sage and amber accents, and a restrained
-              semantic set — enough structure to keep AI states legible without letting the
+              semantic set: enough structure to keep AI states legible without letting the
               interface turn decorative.
             </p>
           </SectionHead>
@@ -981,7 +981,7 @@ export default function AsapPage() {
                 className="object-contain"
               />
             </div>
-            <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">Colour tokens — slate teal, warm neutrals, sage and amber, semantic.</figcaption>
+            <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">Colour tokens: slate teal, warm neutrals, sage and amber, semantic.</figcaption>
           </figure>
 
           <figure>
@@ -997,7 +997,7 @@ export default function AsapPage() {
                 className="object-contain"
               />
             </div>
-            <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">Type scale — Inter, with hierarchy carried by weight.</figcaption>
+            <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">Type scale: Inter, with hierarchy carried by weight.</figcaption>
           </figure>
         </div>
 
@@ -1016,7 +1016,7 @@ export default function AsapPage() {
               />
             </div>
             <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">
-              Components in both modes — CTAs, option cards, sidebar, the AI guidance card, inputs and selection.
+              Components in both modes: CTAs, option cards, sidebar, the AI guidance card, inputs and selection.
             </figcaption>
           </figure>
 

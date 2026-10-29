@@ -19,7 +19,7 @@ function ProjectPanel({ p, index, total }: { p: Project; index: number; total: n
     <div className="grid items-center gap-6 md:min-h-[400px] md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:gap-10">
       <Link
         href={`/projects/${p.slug}`}
-        aria-label={`${p.title} — read the case study`}
+        aria-label={`${p.title}: read the case study`}
         className="pop group relative block w-full overflow-hidden"
         style={{ aspectRatio: LANDSCAPE_THUMBS.has(p.slug) ? "16 / 9" : "1 / 1", background: "var(--panel)", borderRadius: "var(--radius)" }}
       >

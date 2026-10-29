@@ -29,7 +29,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Ramya Yerramilli — UX Researcher, Human-AI Interaction",
+  title: "Ramya Yerramilli | UX Researcher, Human-AI Interaction",
   description:
     "UX Researcher specializing in Human-AI Interaction and Responsible AI. Graduate Research Assistant at DePaul's RAISE Lab, with six years leading architecture and interior design projects before UX.",
 };

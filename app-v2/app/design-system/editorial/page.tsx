@@ -14,7 +14,7 @@ import {
 import { raahiTheme } from "@/app/projects/raahi/theme";
 
 export const metadata: Metadata = {
-  title: "Editorial Blocks — internal reference",
+  title: "Editorial Blocks | internal reference",
   robots: { index: false, follow: false },
 };
 
@@ -81,7 +81,7 @@ export default function EditorialCheckpointPage() {
 
       <Quote
         text="A pull-quote at magazine scale, escaping the grid on purpose."
-        attribution="Attribution line — internal reference only"
+        attribution="Attribution line, internal reference only"
         accent={accent}
       />
 

@@ -4,7 +4,7 @@ import TrafficPie from "@/components/admin/TrafficPie";
 import LogoutButton from "@/components/admin/LogoutButton";
 import GlassCard from "@/components/ds/GlassCard";
 
-export const metadata: Metadata = { title: "Analytics — Admin", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "Analytics | Admin", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
 
 const PROJECT_NAMES: Record<string, string> = {

@@ -43,7 +43,7 @@ export default function ChatWidget() {
       // shouldn't imply it might.
       const fallback =
         res.status === 503
-          ? "The chat assistant is offline right now, but Ramya reads every email — ys.ramya@gmail.com."
+          ? "The chat assistant is offline right now, but Ramya reads every email: ys.ramya@gmail.com."
           : "Something went wrong on my end. You can reach Ramya at ys.ramya@gmail.com!";
       const reply: string = data.reply ?? fallback;
       setMessages((m) => [...m, { role: "assistant", content: reply }]);

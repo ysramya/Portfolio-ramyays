@@ -70,7 +70,7 @@ export default function Nav() {
       }}
     >
       <div className="wrap h-full flex items-center justify-between">
-        <Link href="/" onClick={() => setOpen(false)} aria-label="Ramya Yerramilli — home">
+        <Link href="/" onClick={() => setOpen(false)} aria-label="Ramya Yerramilli, home">
           <Logo size={28} />
         </Link>
 
