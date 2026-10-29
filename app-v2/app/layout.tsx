@@ -6,6 +6,7 @@ import ChatWidget from "@/components/ChatWidget";
 import Analytics from "@/components/Analytics";
 import MotionReady from "@/components/MotionReady";
 import PageRibbon from "@/components/PageRibbon";
+import DataRainBackground from "@/components/DataRainBackground";
 import "./globals.css";
 
 /* Two families, no third — see design-system.md §2.
@@ -48,6 +49,7 @@ export default function RootLayout({
           render, which otherwise trips React's hydration mismatch warning. */}
       <body className="min-h-screen flex flex-col" suppressHydrationWarning>
         <PageRibbon />
+        <DataRainBackground />
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />

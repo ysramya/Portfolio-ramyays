@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 };
 
 const paragraphs = [
-  "I started my career designing spaces, but somewhere along the way I became more interested in the people moving through them than the spaces themselves. During my first master's in Design Management & Entrepreneurship, I discovered design thinking, service design, and the idea that great design isn't just about aesthetics—it's about understanding people, systems, and the experiences they create. That realization completely changed the direction of my career.",
+  "I started my career designing spaces, but somewhere along the way I became more interested in the people moving through them than the spaces themselves. During my first master's in Design Management & Entrepreneurship, I discovered design thinking, service design, and the idea that great design isn't just about aesthetics. It's about understanding people, systems, and the experiences they create. That realization completely changed the direction of my career.",
   "Over the next six years, I led residential and commercial design projects, collaborating with clients, contractors, and cross-functional teams to bring complex ideas to life. In 2024, I moved to Chicago to pursue a second master's in Human–Computer Interaction at DePaul University. Today, I work at the intersection of research, design, and AI, exploring how emerging technologies can be more intuitive, trustworthy, and human-centered. My work spans healthcare, finance, and responsible AI, where I'm equally excited by asking the right questions as I am by designing the solutions.",
-  "Outside of work, you'll usually find me behind a camera, creating digital paintings, or experimenting in the kitchen. Different mediums, same curiosity—observing, exploring, and making. That's probably the thread connecting everything I do.",
+  "Outside of work, you'll usually find me behind a camera, creating digital paintings, or experimenting in the kitchen. Different mediums, same curiosity: observing, exploring, and making. That's probably the thread connecting everything I do.",
 ];
 
 const experience = [
