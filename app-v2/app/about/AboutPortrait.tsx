@@ -21,7 +21,7 @@ export default function AboutPortrait({ src, alt }: { src: string; alt: string }
       whileInView={{ y: 0 }}
       viewport={{ once: true, margin: "-10% 0px" }}
       transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-      className="relative w-full"
+      className="pop relative w-full"
     >
       {/* The portrait used to sit on a blurred green glow inside a
           gradient-lit bezel with a deep drop shadow. Glow, gradient and

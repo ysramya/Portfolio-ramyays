@@ -55,12 +55,12 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero — portrait and story on the deep band */}
-      <DeepBand>
+      <DeepBand rain ribbon>
         <div
           className="wrap grid items-center gap-12 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16"
           style={{ paddingTop: "calc(var(--nav-h) + 48px)", paddingBottom: 72 }}
         >
-          <AboutPortrait src="/img/about/IMG_8578.jpeg" alt="Portrait of Ramya Yerramilli" />
+          <AboutPortrait src="/img/profile/ramya-portrait.webp" alt="Portrait of Ramya Yerramilli looking up and to the side, lit warmly against a deep green background" />
 
           <div>
             <p className="eyebrow eyebrow-rule">About</p>

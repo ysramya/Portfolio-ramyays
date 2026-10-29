@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import DeepBand from "@/components/ds/DeepBand";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
-import LoopVideo from "@/components/LoopVideo";
+import ProjectTabs from "@/components/ProjectTabs";
 import { projects } from "@/lib/projects";
 
 /**
@@ -25,14 +25,12 @@ const industries = [
   },
 ];
 
-/** Slugs whose card asset is a 16:9 clip rather than a square mockup. */
-const LANDSCAPE_THUMBS = new Set(["mainstreet", "invisible-impacts"]);
 
 export default function Home() {
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────────── */}
-      <DeepBand>
+      <DeepBand rain ribbon>
         <div
           className="wrap grid items-center gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] md:gap-14"
           style={{ paddingTop: "calc(var(--nav-h) + 48px)", paddingBottom: 72 }}
@@ -64,22 +62,18 @@ export default function Home() {
             </div>
           </div>
 
-          {/* The illustration is a finished collage on its own ivory paper
-              ground, so on deep green it's presented as a print: an ivory
-              mat of the same colour, soft corners, the artwork uncropped.
-              The mat uses a literal ivory because `--bg` is green in here. */}
-          <div
-            className="hero-visual mx-auto w-full max-w-[500px]"
-            style={{ background: "#f7f5ef", padding: "clamp(10px, 1.4vw, 18px)", borderRadius: "var(--radius)" }}
-          >
-            <div className="relative w-full" style={{ aspectRatio: "550 / 560" }}>
+          {/* The portrait is shot against the same deep green as the band, so
+              it sits directly on the ground — no mat, just the system's
+              rounded corner. */}
+          <div className="pop hero-visual hero-portrait mx-auto w-full max-w-[440px]">
+            <div className="relative w-full overflow-hidden" style={{ aspectRatio: "3 / 4", borderRadius: "var(--radius)" }}>
               <Image
-                src="/img/profile/ramya-hero-image.png"
-                alt="Illustrated portrait of Ramya Yerramilli in profile, with pressed flowers, a Chicago skyline photo, and the handwritten line “Curiosity for a kinder, more human future.”"
+                src="/img/profile/ramya-portrait.webp"
+                alt="Portrait of Ramya Yerramilli looking up and to the side, lit warmly against a deep green background."
                 fill
                 priority
-                sizes="(max-width: 768px) 90vw, 500px"
-                className="object-contain"
+                sizes="(max-width: 768px) 90vw, 440px"
+                className="object-cover"
               />
             </div>
           </div>
@@ -98,69 +92,8 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Two columns that pack independently, not a row-aligned grid: the
-            cards mix square and 16:9 thumbnails, and in a grid every row sized
-            itself to its tallest card, leaving a ~270px hole under the short
-            one. Multi-column flows each card straight after the last, so the
-            stagger falls out of the differing heights and needs no offset. */}
-        <div className="mt-10 [column-gap:20px] sm:columns-2 lg:columns-3" data-reveal-group>
-          {projects.map((p) => (
-            <Link
-              key={p.slug}
-              href={`/projects/${p.slug}`}
-              className="group mb-8 block break-inside-avoid"
-            >
-              <div
-                className="relative w-full overflow-hidden"
-                style={{
-                  // The two landscape clips (1280x720) keep their own frame —
-                  // squaring them would crop ~44% of their width, cutting the
-                  // dashboard's charts and the browser window in half. The
-                  // square assets stay square. The mix is also what varies the
-                  // card heights.
-                  aspectRatio: LANDSCAPE_THUMBS.has(p.slug) ? "16 / 9" : "1 / 1",
-                  background: "var(--panel)",
-                  borderRadius: "var(--radius)",
-                }}
-              >
-                {p.video ? (
-                  <LoopVideo
-                    src={p.video}
-                    poster={p.image}
-                    label={`${p.title} preview`}
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                ) : (
-                  <Image
-                    src={p.image}
-                    alt={p.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, 560px"
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                  />
-                )}
-              </div>
-
-              <p className="meta mt-5">
-                {p.category}
-                {p.duration && (
-                  <>
-                    <span aria-hidden> · </span>
-                    {p.duration}
-                  </>
-                )}
-              </p>
-              <h3
-                className="mt-2 transition-colors group-hover:text-[var(--numeral)]"
-                style={{ fontSize: "clamp(22px, 2.1vw, 28px)", lineHeight: 1.2 }}
-              >
-                {p.title}
-              </h3>
-              <p className="mt-2 max-w-[42em] text-[15px] leading-[1.6] text-[var(--body)]">
-                {p.description}
-              </p>
-            </Link>
-          ))}
+        <div className="mt-10">
+          <ProjectTabs projects={projects} />
         </div>
       </Section>
 

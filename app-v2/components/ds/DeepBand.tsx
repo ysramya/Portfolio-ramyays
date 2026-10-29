@@ -1,4 +1,8 @@
 import type { ReactNode } from "react";
+import HeroRain from "@/components/HeroRain";
+import RibbonField from "@/components/ui/ribbon-field";
+import { DEEP_GREEN } from "@/components/ribbonPalettes";
+
 
 /**
  * DeepBand — the deep-green ground used for page openings and closings.
@@ -16,12 +20,18 @@ export default function DeepBand({
   id,
   className = "",
   shapes = true,
+  rain = false,
+  ribbon = false,
   as: Tag = "section",
 }: {
   children: ReactNode;
   id?: string;
   className?: string;
   shapes?: boolean;
+  /** Data-rain behind the content — for page openings, not closings. */
+  rain?: boolean;
+  /** Animated ribbon-field gradient as the band ground (replaces the leaf shapes). Pass a palette to match a themed page; `true` uses deep green. */
+  ribbon?: boolean | string[];
   as?: "section" | "div" | "header";
 }) {
   return (
@@ -30,7 +40,13 @@ export default function DeepBand({
       data-nav="dark"
       className={`theme-deep relative overflow-hidden ${className}`}
     >
-      {shapes && (
+      {ribbon && (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <RibbonField colors={Array.isArray(ribbon) ? ribbon : DEEP_GREEN} />
+          <div className="ribbon-grain absolute inset-0" />
+        </div>
+      )}
+      {shapes && !ribbon && (
         <svg
           aria-hidden="true"
           focusable="false"
@@ -48,6 +64,7 @@ export default function DeepBand({
           />
         </svg>
       )}
+      {rain && <HeroRain />}
       <div className="relative">{children}</div>
     </Tag>
   );

@@ -7,6 +7,7 @@ import DeepBand from "@/components/ds/DeepBand";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
 import PhoneShot from "@/components/ds/PhoneShot";
 import CountUp from "@/components/CountUp";
+import SquishyHero from "@/components/ui/squishy-hero";
 import { DemoVideo, WatchDemoButton } from "./Demo";
 
 /**
@@ -408,7 +409,7 @@ export default function AsapPage() {
     <>
       {/* HERO — answers the six-second test above the fold: what it is, what
           it does, what Ramya did, that it was built, and where to see it. */}
-      <DeepBand>
+      <DeepBand rain ribbon>
         <div
           className="wrap grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10"
           style={{ paddingTop: "calc(var(--nav-h) + 36px)", paddingBottom: 64 }}
@@ -463,30 +464,32 @@ export default function AsapPage() {
 
           {/* Real screens: goal entry, the generated plan, focus mode. */}
           <div className="hero-visual relative mx-auto w-full max-w-[540px]" style={{ aspectRatio: "540 / 560" }}>
-            <div className="hero-fan-l absolute left-0 top-[13%] w-[35%]">
-              <PhoneShot
-                src="/img/asap/phones/goal.png"
-                alt="ASAP home screen with a task entered"
-                sizes="(max-width: 1024px) 32vw, 190px"
-                priority
-              />
-            </div>
-            <div className="hero-fan-r absolute right-0 top-[13%] w-[35%]">
-              <PhoneShot
-                src="/img/asap/phones/focus.png"
-                alt="ASAP focus mode with a timer for the current step"
-                sizes="(max-width: 1024px) 32vw, 190px"
-                priority
-              />
-            </div>
-            <div className="absolute left-1/2 top-0 z-10 w-[41%] -translate-x-1/2">
-              <PhoneShot
-                src="/img/asap/phones/plan.png"
-                alt="ASAP’s five-step plan, with the first step marked high confidence"
-                sizes="(max-width: 1024px) 38vw, 222px"
-                priority
-              />
-            </div>
+            <SquishyHero className="h-full w-full">
+              <div className="hero-fan-l absolute left-0 top-[13%] w-[35%]">
+                <PhoneShot
+                  src="/img/asap/phones/goal.png"
+                  alt="ASAP home screen with a task entered"
+                  sizes="(max-width: 1024px) 32vw, 190px"
+                  priority
+                />
+              </div>
+              <div className="hero-fan-r absolute right-0 top-[13%] w-[35%]">
+                <PhoneShot
+                  src="/img/asap/phones/focus.png"
+                  alt="ASAP focus mode with a timer for the current step"
+                  sizes="(max-width: 1024px) 32vw, 190px"
+                  priority
+                />
+              </div>
+              <div className="absolute left-1/2 top-0 z-10 w-[41%] -translate-x-1/2">
+                <PhoneShot
+                  src="/img/asap/phones/plan.png"
+                  alt="ASAP’s five-step plan, with the first step marked high confidence"
+                  sizes="(max-width: 1024px) 38vw, 222px"
+                  priority
+                />
+              </div>
+            </SquishyHero>
           </div>
         </div>
       </DeepBand>

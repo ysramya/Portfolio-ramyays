@@ -20,7 +20,7 @@ export default function HeroLayout({
   children: ReactNode;
 }) {
   return (
-    <DeepBand>
+    <DeepBand rain ribbon>
       <div
         className="wrap grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14"
         style={{ paddingTop: "calc(var(--nav-h) + 40px)", paddingBottom: 64 }}

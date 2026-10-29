@@ -63,7 +63,7 @@ export default function BeyondTheScreenPage() {
     <>
       {/* Kept compact on purpose: the first gallery has to break the fold so
           visitors see there's work below, not just a title card. */}
-      <DeepBand>
+      <DeepBand rain ribbon>
         <div className="wrap" style={{ paddingTop: "calc(var(--nav-h) + 40px)", paddingBottom: 56 }}>
           <p className="eyebrow eyebrow-rule">Outside the work</p>
           <h1 className="mt-5">Beyond the Screen</h1>

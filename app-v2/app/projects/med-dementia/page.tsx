@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function MedDementiaPage() {
   return (
-    <DeepBand>
+    <DeepBand rain ribbon>
       <div
         className="wrap flex flex-col justify-center"
         style={{ minHeight: "100svh", paddingTop: "calc(var(--nav-h) + 48px)", paddingBottom: 72 }}

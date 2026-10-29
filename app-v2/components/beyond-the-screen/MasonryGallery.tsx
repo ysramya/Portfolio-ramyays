@@ -40,7 +40,7 @@ export default function MasonryGallery({ images, emptyLabel }: { images: Gallery
             key={img.src}
             type="button"
             onClick={() => setOpenIndex(i)}
-            className="group relative block w-full mb-8 rounded-2xl overflow-hidden cursor-zoom-in break-inside-avoid"
+            className="pop group relative block w-full mb-8 rounded-2xl overflow-hidden cursor-zoom-in break-inside-avoid"
             style={img.wide ? { columnSpan: "all" } : undefined}
             aria-label={`Open ${img.alt} in lightbox`}
           >

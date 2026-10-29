@@ -1293,3 +1293,104 @@ body:has(.theme-wellnut) .theme-deep {
     display: none !important;
   }
 }
+
+/* ── Data rain backdrop ──
+   Fixed behind the page (z-index -1), so only the bare ivory ground shows it.
+   The design system forbids blur, gradients and grain, so the component's
+   bloom, vignette and grain layers are hidden — the lines alone remain. */
+:root {
+  --dr-core: #12271f;
+}
+.dr-root {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.42;
+}
+.dr-root--contained {
+  position: absolute;
+  z-index: 0;
+}
+.dr-main {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.dr-bloom,
+.dr-vignette,
+.dr-grain {
+  display: none;
+}
+.theme-deep .dr-root,
+.dr-root--deep {
+  --dr-core: #f2efe7;
+  opacity: 0.6;
+}
+
+/* ── Ribbon-field grain ──
+   Fractal-noise tile laid over the canvas, as in the source gradient. */
+.ribbon-grain {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>");
+  background-size: 120px 120px;
+  mix-blend-mode: overlay;
+  opacity: 0.35;
+}
+/* The portrait is shot on the same flat green as the old band; feather its
+   top and sides so it melts into the ribbons instead of showing a box. */
+.hero-portrait > div {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent),
+    linear-gradient(to bottom, transparent, #000 12%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent),
+    linear-gradient(to bottom, transparent, #000 12%);
+  mask-composite: intersect;
+}
+.page-ribbon {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ── Slight pop on hover ──
+   Cards, figures and clickable images swell a touch under the pointer on the
+   same back-in-out ease as the squishy hero (a little overshoot, then settle).
+   It uses the independent `scale` property, so it composes with the reveal
+   transforms instead of fighting them, and it's gated to real hover devices
+   with motion allowed. Elements that already declare a `transition` for
+   their reveal need `scale` added to that list, hence the mirrored rules. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :root {
+    --pop-ease: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --pop-scale: 1.02;
+    --pop-time: 0.7s;
+  }
+
+  main :is(.panel, .panel-sage, .card, figure, .video-frame, .pop) {
+    transition:
+      scale var(--pop-time) var(--pop-ease),
+      border-color 0.2s ease;
+  }
+  main :is(.panel, .panel-sage, .card, figure, .video-frame, .pop):hover {
+    scale: var(--pop-scale);
+  }
+
+  .motion-ready main :is(.panel, .panel-sage, .card, figure, .video-frame, .pop).reveal {
+    transition:
+      scale var(--pop-time) var(--pop-ease),
+      transform var(--mo-medium) var(--mo-ease);
+  }
+  .motion-ready main :is(.panel, .panel-sage, .card, figure, .video-frame, .pop).reveal-media {
+    transition:
+      scale var(--pop-time) var(--pop-ease),
+      transform var(--mo-arrive) var(--mo-ease);
+  }
+  .motion-ready main .reveal-group > :is(.panel, .panel-sage, .card, figure, .video-frame, .pop) {
+    transition:
+      scale var(--pop-time) var(--pop-ease),
+      transform var(--mo-standard) var(--mo-ease);
+  }
+}
