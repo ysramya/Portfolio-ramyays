@@ -58,6 +58,59 @@ function RankedList({
   );
 }
 
+const PAGE_NAMES: Record<string, string> = {
+  "/": "Home",
+  "/about": "About",
+  "/beyond-the-screen": "Beyond the Screen",
+  "/resume": "Resume",
+  "/projects": "Work",
+};
+
+function pageName(path: string): string {
+  const clean = path.split("?")[0].replace(/\/+$/, "") || "/";
+  if (PAGE_NAMES[clean]) return PAGE_NAMES[clean];
+  if (clean.startsWith("/projects/")) {
+    const slug = clean.split("/")[2] ?? clean;
+    return `Project: ${PROJECT_NAMES[slug] ?? slug}`;
+  }
+  return clean;
+}
+
+function PageBars({ rows, total }: { rows: { label: string; path: string; count: number }[]; total: number }) {
+  const max = rows[0]?.count ?? 1;
+  return (
+    <GlassCard className="p-6">
+      <p className="text-sm font-medium tracking-[0.04em] text-[var(--color-ink)]">Most Visited Pages</p>
+      {rows.length === 0 ? (
+        <p className="mt-4 text-sm text-[var(--color-ink-faint)]">No page views yet.</p>
+      ) : (
+        <div className="mt-4 flex flex-col gap-4">
+          {rows.map((r) => (
+            <div key={r.path}>
+              <div className="flex items-baseline justify-between gap-4">
+                <span className="text-sm text-[var(--color-ink)] truncate">
+                  {r.label} <span className="text-xs text-[var(--color-ink-faint)]">{r.path}</span>
+                </span>
+                <span className="text-sm font-medium text-[var(--color-ink)] shrink-0">
+                  {r.count} <span className="text-xs font-normal text-[var(--color-ink-faint)]">
+                    ({Math.round((r.count / total) * 100)}%)
+                  </span>
+                </span>
+              </div>
+              <div className="mt-1.5 h-1.5 rounded-full" style={{ background: "var(--color-border)" }}>
+                <div
+                  className="h-full rounded-full"
+                  style={{ width: `${(r.count / max) * 100}%`, background: "var(--color-green)" }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </GlassCard>
+  );
+}
+
 function rank(items: string[], limit = 6): { label: string; count: number }[] {
   const counts = new Map<string, number>();
   for (const item of items) counts.set(item, (counts.get(item) ?? 0) + 1);
@@ -87,10 +140,6 @@ export default async function AdminAnalyticsPage() {
             settings), then run <code className="text-[var(--color-green)]">supabase/schema.sql</code> in your
             Supabase project&rsquo;s SQL editor.
           </p>
-          <p className="mt-4 text-xs text-[var(--color-ink-muted)]">
-            Supabase variables this deployment can see:{" "}
-            {Object.keys(process.env).filter((k) => k.toUpperCase().includes("SUPABASE")).join(", ") || "none"}
-          </p>
         </GlassCard>
       </main>
     );
@@ -103,10 +152,20 @@ export default async function AdminAnalyticsPage() {
     supabase.from("click_events").select("label").limit(10000),
   ]);
 
-  const paths = (pageViews ?? []).map((r) => r.path as string);
+  const paths = (pageViews ?? [])
+    .map((r) => r.path as string)
+    .filter((p) => !p.startsWith("/admin") && !p.startsWith("/__"));
   const totalVisits = paths.length;
 
-  const topPages = rank(paths);
+  const pageCounts = new Map<string, number>();
+  for (const p of paths) {
+    const clean = p.split("?")[0].replace(/\/+$/, "") || "/";
+    pageCounts.set(clean, (pageCounts.get(clean) ?? 0) + 1);
+  }
+  const topPages = [...pageCounts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10)
+    .map(([path, count]) => ({ path, label: pageName(path), count }));
   const topProjects = rank(
     paths
       .filter((p) => p.startsWith("/projects/"))
@@ -144,9 +203,9 @@ export default async function AdminAnalyticsPage() {
         <StatTile label="Total Page Views" value={totalVisits} />
       </div>
 
-      {/* Top Pages / Top Projects */}
-      <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
-        <RankedList title="Top Pages" rows={topPages} emptyLabel="No page views yet." />
+      {/* Most visited pages / Top Projects */}
+      <div className="mt-5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-5">
+        <PageBars rows={topPages} total={totalVisits || 1} />
         <RankedList title="Top Projects" rows={topProjects} emptyLabel="No project views yet." />
       </div>
 
