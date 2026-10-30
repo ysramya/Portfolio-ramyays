@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Prata, DM_Sans } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import ChatWidget from "@/components/ChatWidget";
+import VoiceflowChat from "@/components/VoiceflowChat";
 import Analytics from "@/components/Analytics";
 import MotionReady from "@/components/MotionReady";
 import PageRibbon from "@/components/PageRibbon";
@@ -53,7 +53,7 @@ export default function RootLayout({
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
-        <ChatWidget />
+        <VoiceflowChat />
         <Analytics />
         <MotionReady />
       </body>
