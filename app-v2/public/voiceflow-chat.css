@@ -1,0 +1,120 @@
+/*
+ * Theme for the Voiceflow assistant (components/VoiceflowChat.tsx loads this
+ * into the widget). Colours and type follow the site's tokens in
+ * app/globals.css: ink #12271f, ivory #f7f5f0, panel #eceae3, sage #e5eae3.
+ * The widget lives in a shadow root, so the page's CSS variables inherit in
+ * (the font stacks below) but the page's rules do not.
+ */
+
+.vfrc-widget,
+.vfrc-chat,
+.vfrc-chat * {
+  font-family: var(--font-dm-sans), "DM Sans", system-ui, sans-serif !important;
+}
+
+/* Launcher */
+.vfrc-launcher {
+  background: #12271f !important;
+  color: #f7f5f0 !important;
+  border: 1px solid rgba(247, 245, 240, 0.18) !important;
+  box-shadow: 0 6px 20px rgba(16, 35, 27, 0.28) !important;
+}
+
+/* Chat window */
+.vfrc-chat {
+  background: #f7f5f0 !important;
+  border: 1px solid #e3e0d6 !important;
+}
+
+/* Header: deep green with the cream monogram, so the logo reads */
+.vfrc-header {
+  background: #12271f !important;
+}
+.vfrc-header--title {
+  color: #f7f5f0 !important;
+  font-family: var(--font-prata), Georgia, serif !important;
+  font-size: 15px !important;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+.vfrc-header .vfrc-avatar {
+  background: transparent !important;
+  border-radius: 0 !important;
+  object-fit: contain;
+}
+.vfrc-header--button,
+.vfrc-header--icon {
+  color: #f7f5f0 !important;
+}
+
+/* Welcome banner */
+.vfrc-assistant-info--avatar {
+  background: #f7f5f0 !important;
+  border-radius: 50% !important;
+  object-fit: contain;
+  padding: 10px;
+  border: 1px solid #e3e0d6;
+}
+.vfrc-assistant-info--title {
+  font-family: var(--font-prata), Georgia, serif !important;
+  color: #12271f !important;
+}
+.vfrc-assistant-info--description {
+  color: #3d4e45 !important;
+}
+
+/* Messages */
+.vfrc-system-response .vfrc-message {
+  background: #eceae3 !important;
+  color: #12271f !important;
+}
+.vfrc-user-response .vfrc-message {
+  background: #12271f !important;
+  color: #f7f5f0 !important;
+}
+
+/* Input */
+.vfrc-chat-input {
+  color: #12271f !important;
+}
+.vfrc-chat-input__send {
+  background: #12271f !important;
+  color: #f7f5f0 !important;
+}
+
+/* The "talk" control: a labelled pill so voice is an obvious choice next to typing */
+.vfrc-chat-input__voice-mode {
+  background: #12271f !important;
+  color: #f7f5f0 !important;
+  width: auto !important;
+  min-width: 0 !important;
+  padding: 0 14px 0 10px !important;
+  gap: 6px;
+  display: inline-flex !important;
+  align-items: center;
+}
+.vfrc-chat-input__voice-mode::after {
+  content: "Talk";
+  font-size: 13px;
+  font-weight: 500;
+  color: #f7f5f0;
+}
+.vfrc-chat-input__voice-mode svg,
+.vfrc-chat-input__voice-mode-icon {
+  color: #f7f5f0 !important;
+  fill: currentColor;
+}
+
+/* Quick-reply buttons: outlined pills like the site's secondary buttons */
+.vfrc-system-response--action .vfrc-button {
+  background: #fcfbf7 !important;
+  color: #12271f !important;
+  border: 1px solid #c3beaf !important;
+  border-radius: 999px !important;
+  padding: 8px 16px !important;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.vfrc-system-response--action .vfrc-button:hover {
+  background: #e5eae3 !important;
+  border-color: #12271f !important;
+}
