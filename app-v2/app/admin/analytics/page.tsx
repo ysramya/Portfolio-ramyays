@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import TrafficPie from "@/components/admin/TrafficPie";
+import VisitsChart, { type DayPoint } from "@/components/admin/VisitsChart";
 import LogoutButton from "@/components/admin/LogoutButton";
 import GlassCard from "@/components/ds/GlassCard";
 
@@ -120,7 +122,68 @@ function rank(items: string[], limit = 6): { label: string; count: number }[] {
     .map(([label, count]) => ({ label, count }));
 }
 
-export default async function AdminAnalyticsPage() {
+const TZ = "America/Chicago";
+const RANGES = [
+  { key: "7d", label: "7 days", days: 7 },
+  { key: "30d", label: "30 days", days: 30 },
+  { key: "90d", label: "90 days", days: 90 },
+  { key: "all", label: "All time", days: 0 },
+] as const;
+const SOURCES = ["All", "Direct", "LinkedIn", "Google", "Other"] as const;
+
+const dayFormat = new Intl.DateTimeFormat("en-CA", { timeZone: TZ });
+const dayKey = (d: Date | string) => dayFormat.format(new Date(d));
+
+function shiftDay(key: string, delta: number): string {
+  const [y, m, d] = key.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d + delta, 12)).toISOString().slice(0, 10);
+}
+
+function dayLabel(key: string): string {
+  const [y, m, d] = key.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d, 12)).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+// Supabase caps a single response at 1,000 rows, so page through the table.
+async function fetchAll<T>(
+  build: (from: number, to: number) => PromiseLike<{ data: T[] | null }>
+): Promise<T[]> {
+  const rows: T[] = [];
+  for (let page = 0; page < 100; page++) {
+    const { data } = await build(page * 1000, page * 1000 + 999);
+    if (!data?.length) break;
+    rows.push(...data);
+    if (data.length < 1000) break;
+  }
+  return rows;
+}
+
+function FilterLink({ href, active, children }: { href: string; active: boolean; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      scroll={false}
+      className={`rounded-full px-4 py-1.5 text-xs font-medium tracking-[0.06em] transition-colors ${
+        active
+          ? "bg-[var(--color-ink)] text-[var(--color-bg)]"
+          : "border border-[var(--color-border)] text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]"
+      }`}
+    >
+      {children}
+    </Link>
+  );
+}
+
+export default async function AdminAnalyticsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ range?: string; source?: string }>;
+}) {
+  const sp = await searchParams;
   const supabase = getSupabaseAdmin();
 
   if (!supabase) {
@@ -145,42 +208,87 @@ export default async function AdminAnalyticsPage() {
     );
   }
 
-  const [{ data: pageViews }, { count: uniqueVisitors }, { data: visitors }, { data: clicks }] = await Promise.all([
-    supabase.from("page_views").select("path").limit(10000),
-    supabase.from("visitors").select("*", { count: "exact", head: true }),
-    supabase.from("visitors").select("traffic_source").limit(10000),
-    supabase.from("click_events").select("label").limit(10000),
+  const range = RANGES.find((r) => r.key === sp.range) ?? RANGES[1];
+  const source = SOURCES.find((s) => s === sp.source) ?? "All";
+  const href = (r: string, s: string) => `/admin/analytics?range=${r}&source=${s}`;
+
+  const today = dayKey(new Date());
+  const sinceKey = range.days ? shiftDay(today, -(range.days - 1)) : null;
+  // One day of slack either side of the Chicago-day boundary, then trimmed by key below.
+  const sinceIso = sinceKey ? new Date(`${shiftDay(sinceKey, -1)}T00:00:00Z`).toISOString() : null;
+
+  const [rawViews, rawClicks, visitorRows] = await Promise.all([
+    fetchAll<{ path: string; visitor_id: string; created_at: string }>((from, to) => {
+      let q = supabase.from("page_views").select("path, visitor_id, created_at").order("id");
+      if (sinceIso) q = q.gte("created_at", sinceIso);
+      return q.range(from, to);
+    }),
+    fetchAll<{ label: string; visitor_id: string; created_at: string }>((from, to) => {
+      let q = supabase.from("click_events").select("label, visitor_id, created_at").order("id");
+      if (sinceIso) q = q.gte("created_at", sinceIso);
+      return q.range(from, to);
+    }),
+    fetchAll<{ visitor_id: string; traffic_source: string }>((from, to) =>
+      supabase.from("visitors").select("visitor_id, traffic_source").order("visitor_id").range(from, to)
+    ),
   ]);
 
-  const paths = (pageViews ?? [])
-    .map((r) => r.path as string)
-    .filter((p) => !p.startsWith("/admin") && !p.startsWith("/__"));
-  const totalVisits = paths.length;
+  const sourceOf = new Map(visitorRows.map((v) => [v.visitor_id, v.traffic_source || "Direct"]));
+  const keep = (visitorId: string, created: string) =>
+    (!sinceKey || dayKey(created) >= sinceKey) && (source === "All" || sourceOf.get(visitorId) === source);
+
+  const views = rawViews.filter(
+    (r) => keep(r.visitor_id, r.created_at) && !r.path.startsWith("/admin") && !r.path.startsWith("/__")
+  );
+  const clicks = rawClicks.filter((r) => keep(r.visitor_id, r.created_at));
+
+  const totalViews = views.length;
+  const visitorIds = new Set(views.map((r) => r.visitor_id));
+  const uniqueVisitors = visitorIds.size;
+  const viewsPerVisitor = uniqueVisitors ? totalViews / uniqueVisitors : 0;
+
+  // Time series: one point per Chicago-local day.
+  const firstDay = views.length ? views.map((r) => dayKey(r.created_at)).sort()[0] : today;
+  const startDay = sinceKey ?? firstDay;
+  const perDay = new Map<string, { views: number; visitors: Set<string> }>();
+  for (const r of views) {
+    const k = dayKey(r.created_at);
+    const e = perDay.get(k) ?? { views: 0, visitors: new Set<string>() };
+    e.views++;
+    e.visitors.add(r.visitor_id);
+    perDay.set(k, e);
+  }
+  const series: DayPoint[] = [];
+  for (let k = startDay, n = 0; k <= today && n < 800; k = shiftDay(k, 1), n++) {
+    const e = perDay.get(k);
+    series.push({ day: k, label: dayLabel(k), views: e?.views ?? 0, visitors: e?.visitors.size ?? 0 });
+  }
 
   const pageCounts = new Map<string, number>();
-  for (const p of paths) {
-    const clean = p.split("?")[0].replace(/\/+$/, "") || "/";
+  for (const r of views) {
+    const clean = r.path.split("?")[0].replace(/\/+$/, "") || "/";
     pageCounts.set(clean, (pageCounts.get(clean) ?? 0) + 1);
   }
   const topPages = [...pageCounts.entries()]
     .sort((a, b) => b[1] - a[1])
     .slice(0, 10)
     .map(([path, count]) => ({ path, label: pageName(path), count }));
+
   const topProjects = rank(
-    paths
+    views
+      .map((r) => r.path)
       .filter((p) => p.startsWith("/projects/"))
       .map((p) => {
         const slug = p.split("/")[2] ?? p;
         return PROJECT_NAMES[slug] ?? slug;
       })
   );
-
-  const buttonClicks = rank((clicks ?? []).map((r) => r.label as string));
+  const buttonClicks = rank(clicks.map((r) => r.label));
 
   const trafficCounts = new Map<string, number>();
-  for (const v of visitors ?? []) {
-    const source = (v.traffic_source as string) || "Direct";
-    trafficCounts.set(source, (trafficCounts.get(source) ?? 0) + 1);
+  for (const id of visitorIds) {
+    const src = sourceOf.get(id) ?? "Direct";
+    trafficCounts.set(src, (trafficCounts.get(src) ?? 0) + 1);
   }
   const trafficSources = [...trafficCounts.entries()].map(([name, value]) => ({ name, value }));
 
@@ -196,16 +304,59 @@ export default async function AdminAnalyticsPage() {
         <LogoutButton />
       </div>
 
-      {/* Overview */}
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-5">
-        <StatTile label="Total Visits" value={totalVisits} />
-        <StatTile label="Unique Visitors" value={uniqueVisitors ?? 0} />
-        <StatTile label="Total Page Views" value={totalVisits} />
+      {/* Filters */}
+      <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="mr-1 text-[12px] font-medium tracking-[0.16em] uppercase text-[var(--color-ink-faint)]">
+            Period
+          </span>
+          {RANGES.map((r) => (
+            <FilterLink key={r.key} href={href(r.key, source)} active={r.key === range.key}>
+              {r.label}
+            </FilterLink>
+          ))}
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="mr-1 text-[12px] font-medium tracking-[0.16em] uppercase text-[var(--color-ink-faint)]">
+            Source
+          </span>
+          {SOURCES.map((s) => (
+            <FilterLink key={s} href={href(range.key, s)} active={s === source}>
+              {s}
+            </FilterLink>
+          ))}
+        </div>
       </div>
+
+      {/* Overview */}
+      <div className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <StatTile label="Page Views" value={totalViews} />
+        <StatTile label="Unique Visitors" value={uniqueVisitors} />
+        <StatTile label="Views per Visitor" value={Math.round(viewsPerVisitor * 10) / 10} />
+        <StatTile label="Button Clicks" value={clicks.length} />
+      </div>
+
+      {/* Visits over time */}
+      <GlassCard className="mt-5 p-6">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm font-medium tracking-[0.04em] text-[var(--color-ink)]">Visits over time</p>
+          <div className="flex items-center gap-4 text-xs text-[var(--color-ink-muted)]">
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block h-2 w-2 rounded-full" style={{ background: "#12271f" }} /> Page views
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block h-2 w-2 rounded-full" style={{ background: "#a47e61" }} /> Unique visitors
+            </span>
+          </div>
+        </div>
+        <div className="mt-4">
+          <VisitsChart data={series} />
+        </div>
+      </GlassCard>
 
       {/* Most visited pages / Top Projects */}
       <div className="mt-5 grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-5">
-        <PageBars rows={topPages} total={totalVisits || 1} />
+        <PageBars rows={topPages} total={totalViews || 1} />
         <RankedList title="Top Projects" rows={topProjects} emptyLabel="No project views yet." />
       </div>
 
