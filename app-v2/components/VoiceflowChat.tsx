@@ -50,7 +50,7 @@ function load() {
     assistant: {
       color: "#12271f",
       palette: PALETTE,
-      header: { title: "Ask Ramya" },
+      header: { title: "Raya" },
       stylesheet: `${window.location.origin}/voiceflow-chat.css`,
     },
   });
