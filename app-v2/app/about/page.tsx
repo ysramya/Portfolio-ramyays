@@ -17,12 +17,12 @@ const paragraphs = [
 ];
 
 const experience = [
-  { year: "2026 – Present", role: "Research Assistant", org: "RAISE Lab · DePaul University" },
-  { year: "2025 – 2026", role: "International Admissions Operations", org: "DePaul University" },
-  { year: "2025", role: "UX Designer, Data Visualization (Internship)", org: "MainStreet Advisors, a Fifth Third Bank subsidiary" },
-  { year: "2024 – 2026", role: "M.S. Human–Computer Interaction", org: "DePaul University" },
-  { year: "2018 – 2024", role: "Interior Designer", org: "Residential & Commercial Projects" },
-  { year: "2017 – 2018", role: "M.A. Design Management & Entrepreneurship", org: "Anant National University" },
+  { year: "2026 – Present", role: "Research Assistant", org: "RAISE Lab · DePaul University · Chicago, IL" },
+  { year: "2025 – 2026", role: "International Admissions Operations", org: "DePaul University · Chicago, IL" },
+  { year: "2025", role: "UX Designer, Data Visualization (Internship)", org: "MainStreet Advisors, a Fifth Third Bank subsidiary · Chicago, IL" },
+  { year: "2024 – 2026", role: "M.S. Human–Computer Interaction", org: "DePaul University · Chicago, IL" },
+  { year: "2018 – 2024", role: "Interior Designer", org: "Residential & Commercial Projects · Hyderabad, India" },
+  { year: "2017 – 2018", role: "M.A. Design Management & Entrepreneurship", org: "De Montfort University · Leicester, United Kingdom" },
 ];
 
 const research = [
@@ -87,7 +87,7 @@ export default function AboutPage() {
       {/* 01 — Experience */}
       <Section id="experience" divided={false}>
         <div className="sec-grid">
-          <SectionHead n="01" eyebrow="Background" title="Experience" />
+          <SectionHead n="01" eyebrow="Background" title="Experience & Education" />
           {/* Reverse-chronological, so the stagger carries the order rather
               than decorating it — the rows arrive the way you read them. */}
           <ul data-reveal-group>
