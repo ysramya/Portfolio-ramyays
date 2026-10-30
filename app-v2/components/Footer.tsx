@@ -41,7 +41,7 @@ export default function Footer() {
           <div>
             <p className="text-[15px] text-[var(--ink)]">Ramya Yerramilli</p>
             <p className="mt-1 text-[13px] text-[var(--muted-2)]">
-              Product &amp; Experience Strategist
+              Product Strategy &amp; Operations
             </p>
           </div>
         </div>

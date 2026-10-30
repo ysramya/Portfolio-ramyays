@@ -6,6 +6,7 @@ import type { ReactNode, CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
+import CaseSummary from "@/components/ds/CaseSummary";
 
 /**
  * Cost of a Click — outcome-first experience-design case study, per
@@ -395,7 +396,18 @@ export default function InvisibleImpactsPage() {
       </LightBand>
 
       {/* 01 — THE OUTCOME */}
-      <Section id="outcome" divided={false}>
+      <CaseSummary
+        rows={[
+          { label: "Business problem", body: "AI's water and energy costs are invisible to the people using it, and statistics had not changed how people think about it." },
+          { label: "My contribution", body: "As lead UX researcher alongside a UI designer, developer and PM, ran 15 interviews and a 42-response survey, explored 3 concept directions, and ran 2 rounds of usability testing before the exhibition." },
+          { label: "Insight", body: "Abstract environmental data was too easy to ignore. A felt, immediate consequence made the cost concrete." },
+          { label: "Decisions I influenced", body: "Reframed the brief from information delivery to experience design, tied physical feedback (a water pump) and on-screen feedback to each AI prompt, and fixed water spillage, prompt timing and screen readability after testing." },
+          { label: "Solution", body: "An interactive installation: each AI prompt triggers a pump and a real-time on-screen counter of the environmental cost." },
+          { label: "Impact", body: "Won the DePaul Summer Impact Grant 2025 and was featured at the Summer Showcase. In exit surveys (self-reported), 85% reported changed awareness and 73% intended to use AI more mindfully. Footage reached 6M+ TikTok views, which measures reach, not behavior change." },
+        ]}
+      />
+
+      <Section id="outcome">
         <div className="sec-grid">
           <SectionHead n="01" eyebrow="The outcome" title="We turned an invisible environmental cost into something people could see and feel." />
           <div className="sec-copy lg:pt-10">

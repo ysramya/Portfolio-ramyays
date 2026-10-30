@@ -10,18 +10,22 @@ import { projects } from "@/lib/projects";
  * deep-green close: the same shape as every case study.
  */
 
-const industries = [
+const outcomes = [
   {
     title: "Financial services",
-    body: "Dashboards and reporting tools for teams managing $1B+ in assets, where a wrong read has consequences.",
+    body: "Replaced a manual weekly reporting process with a live Power BI view for portfolio managers: about 3 hours saved per manager per week, and 5+ recommendations adopted across Product, Engineering and Design.",
   },
   {
-    title: "Research & education",
-    body: "Studies on human-AI interaction at DePaul's RAISE Lab, turning mixed-methods findings into design direction.",
+    title: "Higher-education operations",
+    body: "Redesigned how admissions requests were categorized, prioritized and assigned: 20% fewer counselor follow-ups and 30%+ more throughput, from analysis of 1,000+ application records across 50+ markets.",
   },
   {
-    title: "Architecture & interiors",
-    body: "Six years leading stakeholder-heavy projects before UX: the habit of designing inside real constraints.",
+    title: "AI & responsible technology",
+    body: "Research on dark patterns in generative AI, a 16-category framework for evaluating manipulative AI behavior, and an AI planning product tested with real users.",
+  },
+  {
+    title: "Client delivery",
+    body: "Six years leading residential and commercial projects before product work: 9/10 client NPS at Aedium Design, and 15% lower design-to-build latency across 10+ concurrent projects at HomeLane.",
   },
 ];
 
@@ -36,24 +40,24 @@ export default function Home() {
           style={{ paddingTop: "calc(var(--nav-h) + 48px)", paddingBottom: 72 }}
         >
           <div className="hero-seq">
-            <p className="eyebrow eyebrow-rule">Product &amp; Experience Strategist</p>
+            <p className="eyebrow eyebrow-rule">Product Strategy &amp; Operations</p>
             <h1 className="mt-5">Ramya Yerramilli</h1>
             <h2
               className="mt-5"
               style={{ fontSize: "clamp(26px, 2.9vw, 38px)", lineHeight: 1.2, maxWidth: "16em" }}
             >
-              Turning complex user and business problems into actionable product decisions.
+              I turn complex user and operational problems into clear product decisions.
             </h2>
             <ul className="mt-6 flex flex-wrap gap-2" aria-label="Areas of credibility">
-              {["Product discovery", "Research-led decision-making", "AI & complex workflows"].map((a) => (
+              {["Product discovery & planning", "Product operations & workflows", "Research-led decisions", "AI & emerging technology"].map((a) => (
                 <li key={a} className="pill">
                   {a}
                 </li>
               ))}
             </ul>
             <p className="mt-5 text-[14px] leading-relaxed text-[var(--muted)]">
-              Graduate Research Assistant at DePaul&rsquo;s RAISE Lab, previously at
-              MainStreet Advisors.
+              MS in Human-Computer Interaction, DePaul University. B2B and B2C
+              experience across financial services, education and AI research.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="#work" className="btn">
@@ -103,9 +107,9 @@ export default function Home() {
       {/* ── 02 Industries ────────────────────────────────────────── */}
       <Section id="background">
         <div className="sec-grid">
-          <SectionHead n="02" eyebrow="Background" title="Designing across industries" />
-          <ul className="grid gap-4 sm:grid-cols-3">
-            {industries.map((c) => (
+          <SectionHead n="02" eyebrow="Impact" title="Where I&rsquo;ve created value" />
+          <ul className="grid gap-4 sm:grid-cols-2">
+            {outcomes.map((c) => (
               <li key={c.title} className="panel p-6">
                 <h3 style={{ fontSize: 19, lineHeight: 1.3 }}>{c.title}</h3>
                 <p className="mt-3 text-[14px] leading-[1.6] text-[var(--body)]">{c.body}</p>
@@ -121,13 +125,15 @@ export default function Home() {
           <div>
             <p className="eyebrow eyebrow-rule">Currently</p>
             <h2 className="mt-5" style={{ fontSize: "clamp(34px, 4vw, 54px)", lineHeight: 1.08, maxWidth: "13em" }}>
-              Looking for product design roles where research shapes the decisions.
+              Looking for product strategy and operations roles where research and data shape the decisions.
             </h2>
           </div>
           <div>
             <p className="lead">
-              I&rsquo;m most useful on problems where the right answer isn&rsquo;t known yet:
-              new surfaces, unclear user models, and systems people have reason not to trust.
+              I&rsquo;m most useful where the problem is unclear and several teams are involved:
+              working out what to build and why, and getting it moving. Open to Product
+              Strategy, Product Operations, Product Planning and Product Program roles,
+              including AI-focused teams.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href="mailto:ys.ramya@gmail.com" className="btn">

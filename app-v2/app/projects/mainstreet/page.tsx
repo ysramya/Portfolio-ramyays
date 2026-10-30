@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DeepBand from "@/components/ds/DeepBand";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
+import CaseSummary from "@/components/ds/CaseSummary";
 import CountUp from "@/components/CountUp";
 
 /**
@@ -430,7 +431,18 @@ export default function MainstreetPage() {
       </DeepBand>
 
       {/* 01 — THE OUTCOME */}
-      <Section id="outcome" divided={false}>
+      <CaseSummary
+        rows={[
+          { label: "Business problem", body: "Mainstreet's weekly reporting ran on spreadsheets, CRM exports, email and manual calculations. Portfolio Managers waited on analysts to see where $1.2B+ in assets stood, and the process would not scale as the firm grew." },
+          { label: "My contribution", body: "Owned the dashboard from Portfolio Manager interviews through metric definitions, data cleaning and the Power BI model to design and delivery, working with analysts, operations and two engineers. About 100 iterations before approval." },
+          { label: "Insight", body: "The data existed but was scattered. Portfolio Managers needed the answer to their first questions on one screen, then the ability to go deeper." },
+          { label: "Decisions I influenced", body: "A KPI-first hierarchy, standardized metric and number formatting, and a personalized view for each Portfolio Manager instead of one generic view, all built inside existing Power BI, branding and approval cycles. 5+ recommendations were adopted by Product, Engineering and Design, and bringing interaction design into planning early shortened the release timeline by 2 sprints." },
+          { label: "Solution", body: "One Power BI dashboard that moves from headline numbers to trends, portfolio positioning, revenue and client-level drill-downs." },
+          { label: "Impact", body: "About 3 hours saved per week for each Portfolio Manager, down from 3 to 4 hours of manual reporting, with the portfolio picture visible in under 10 seconds. Reporting moved from a recurring manual task to an always-available tool." },
+        ]}
+      />
+
+      <Section id="outcome">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
           <SectionHead
             n="01"

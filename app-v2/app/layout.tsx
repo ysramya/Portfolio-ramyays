@@ -29,9 +29,9 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Ramya Yerramilli | Product & Experience Strategist",
+  title: "Ramya Yerramilli | Product Strategy & Operations",
   description:
-    "Product & Experience Strategist turning complex user and business problems into actionable product decisions: product discovery, research-led decision-making, and AI and complex workflows. Graduate Research Assistant at DePaul's RAISE Lab, with six years leading architecture and interior design projects before UX.",
+    "Product strategy and operations professional with an MS in Human-Computer Interaction. I turn complex user and operational problems into product decisions: product discovery, workflow improvement, research-led planning, and AI and emerging technology.",
 };
 
 export default function RootLayout({

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DeepBand from "@/components/ds/DeepBand";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
+import CaseSummary from "@/components/ds/CaseSummary";
 
 /**
  * Raahi — outcome-first AI product case study, per Raahi_Case_Study_Page.md,
@@ -465,7 +466,18 @@ export default function RaahiPage() {
       </DeepBand>
 
       {/* 01 — THE OUTCOME */}
-      <Section id="outcome" divided={false}>
+      <CaseSummary
+        rows={[
+          { label: "Business problem", body: "UX practitioners could recognize manipulative design but had no shared vocabulary and no consistent way to document it, so they struggled to prove it to stakeholders." },
+          { label: "My contribution", body: "As co-founder and product designer, ran 12 practitioner interviews and a 57+ response survey, set the product's scope (who it serves, where it lives, what it detects), designed the flag-to-evidence flow, and worked with design, engineering, legal and data science." },
+          { label: "Insight", body: "Practitioners review live sites inside the browser, use “dark pattern” to mean different things, and lack evidence rather than awareness." },
+          { label: "Decisions I influenced", body: "Moved from a standalone app to a browser plugin, aimed at practitioners rather than end users so the intervention happens before patterns ship, introduced a three-tier shared taxonomy, and made every flag produce evidence." },
+          { label: "Solution", body: "A working browser prototype: detect a potential pattern in context, classify it as coercive, deceptive or addictive, and record it as evidence." },
+          { label: "Impact", body: "A research-backed product direction and a working prototype. Of 57+ practitioners surveyed, 78.9% regularly encounter dark patterns (a directional, self-selected sample). It has not shipped, so there are no adoption figures. Follow-on research is now studying dark patterns in generative AI." },
+        ]}
+      />
+
+      <Section id="outcome">
         <div className="sec-grid">
           <SectionHead n="01" eyebrow="The outcome" title="From “I know a dark pattern when I see one” to evidence a team can act on." />
           <div className="sec-copy lg:pt-10">

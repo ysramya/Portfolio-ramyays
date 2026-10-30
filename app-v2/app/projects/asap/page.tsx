@@ -5,6 +5,7 @@ import Link from "next/link";
 import TrackedLink from "@/components/TrackedLink";
 import DeepBand from "@/components/ds/DeepBand";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
+import CaseSummary from "@/components/ds/CaseSummary";
 import PhoneShot from "@/components/ds/PhoneShot";
 import CountUp from "@/components/CountUp";
 import SquishyHero from "@/components/ui/squishy-hero";
@@ -495,7 +496,18 @@ export default function AsapPage() {
       </DeepBand>
 
       {/* 01 — THE PROBLEM: statement · observations · key insight */}
-      <Section id="problem" divided={false}>
+      <CaseSummary
+        rows={[
+          { label: "Business problem", body: "People with a big goal freeze at the blank page. Planning tools assume a plan already exists, and generic AI hands over advice without helping people decide what matters first." },
+          { label: "My contribution", body: "On a four-person team, owned user research and usability testing, conversation and prompt design, AI behavior, confidence and limitation states, and turning findings into product requirements." },
+          { label: "Insight", body: "Six interviews showed people did not need another task manager. They needed help getting started." },
+          { label: "Decisions I influenced", body: "Reframed the product from “make me a plan” to “help me figure out the plan”: ask before recommending, show one step at a time, and make AI uncertainty visible." },
+          { label: "Solution", body: "A working mobile prototype on the Claude API: set a goal, answer a few clarifying questions, get a stepwise plan with confidence levels, then focus on one step." },
+          { label: "Impact", body: "Tested across 4 usability scenarios and 3 iterations. Testing exposed generic recommendations, unreliable responses and lost progress, which led to role-aware prompts, clearer response handling and step cues. It is a prototype, so there are no adoption numbers. The next test is whether people complete more of what they set out to do." },
+        ]}
+      />
+
+      <Section id="problem">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-10">
           <SectionHead
             n="01"

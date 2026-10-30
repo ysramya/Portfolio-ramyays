@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DeepBand from "@/components/ds/DeepBand";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
+import CaseSummary from "@/components/ds/CaseSummary";
 
 /**
  * Wellnut — outcome-first VR product case study, per Wellnut_Case_Study_Page.md,
@@ -427,7 +428,18 @@ export default function WellnutPage() {
       </DeepBand>
 
       {/* 01 — THE OUTCOME */}
-      <Section id="outcome" divided={false}>
+      <CaseSummary
+        rows={[
+          { label: "Business problem", body: "Free campus mental-health services existed, but 58% of students with chronic stress in the survey had never used them: stigma, lack of time, a preference for independence and uncertainty about where to start." },
+          { label: "My contribution", body: "As UX researcher and project coordinator, designed and synthesized a 33-student survey, drew on a licensed-therapist consultation, set the MVP scope, wrote the conversation design and ethical guardrails, and coordinated a team across research, Unreal development, environment art, character art and audio." },
+          { label: "Insight", body: "The barrier comes before the first step. 71% saw value in VR meditation, and students need to feel heard before they can accept guidance." },
+          { label: "Decisions I influenced", body: "A private VR environment, an always-available avatar, and acknowledgement before meditation. Scoped version one to a single focused experience instead of five unfinished features." },
+          { label: "Solution", body: "A working VR prototype: a private forest, emotion selection, an empathetic avatar conversation and guided meditation." },
+          { label: "Impact", body: "Took an idea from research to a built prototype in 6 months and showed it at the Jarvis Innovation Showcase in May 2025, where feedback was positive and produced the next build list. It is a prototype, so there are no clinical or adoption outcomes to claim." },
+        ]}
+      />
+
+      <Section id="outcome">
         <div className="sec-grid">
           <SectionHead n="01" eyebrow="The outcome" title="We turned a support gap into a focused VR experience." />
           <div className="sec-copy lg:pt-10">

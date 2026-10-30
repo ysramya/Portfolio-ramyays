@@ -6,18 +6,20 @@ import SectionHead, { Section } from "@/components/ds/SectionHead";
 
 export const metadata: Metadata = {
   title: "About | Ramya Yerramilli",
-  description: "How I think, and what shaped my journey as a designer.",
+  description: "Product strategy and operations professional with an MS in Human-Computer Interaction. Background, experience, research and what I am looking for next.",
 };
 
 const paragraphs = [
-  "I started my career designing spaces, but somewhere along the way I became more interested in the people moving through them than the spaces themselves. During my first master's in Design Management & Entrepreneurship, I discovered design thinking, service design, and the idea that great design isn't just about aesthetics. It's about understanding people, systems, and the experiences they create. That realization completely changed the direction of my career.",
-  "Over the next six years, I led residential and commercial design projects, collaborating with clients, contractors, and cross-functional teams to bring complex ideas to life. In 2024, I moved to Chicago to pursue a second master's in Human–Computer Interaction at DePaul University. Today, I work at the intersection of research, design, and AI, exploring how emerging technologies can be more intuitive, trustworthy, and human-centered. My work spans healthcare, finance, and responsible AI, where I'm equally excited by asking the right questions as I am by designing the solutions.",
-  "Outside of work, you'll usually find me behind a camera, creating digital paintings, or experimenting in the kitchen. Different mediums, same curiosity: observing, exploring, and making. That's probably the thread connecting everything I do.",
+  "I started my career in design, and became more interested in the people and systems around a project than the project itself. During my first master's in Design Management & Entrepreneurship I discovered design thinking and service design, and with them the idea that good decisions start with understanding people, systems and constraints. That changed the direction of my career.",
+  "Over the next six years I led residential and commercial projects, working with clients, contractors and cross-functional teams to deliver complex work to scope. I then went back to school for a second master's in Human-Computer Interaction at DePaul University. Today I work where product, operations, research and AI meet: finding where a process or product is failing the people and the business, and turning that research into decisions a team can act on.",
+  "My work so far spans financial services, higher-education operations and responsible AI research, in both B2B and B2C settings. I'm most interested in product strategy and operations roles, where I can help a team work out what to build, why, and how to get it done.",
+  "Outside of work, you'll usually find me behind a camera, creating digital paintings, or experimenting in the kitchen. Different mediums, same curiosity: observing, exploring, and making.",
 ];
 
 const experience = [
   { year: "2026 – Present", role: "Research Assistant", org: "RAISE Lab · DePaul University" },
   { year: "2025 – 2026", role: "International Admissions Operations", org: "DePaul University" },
+  { year: "2025", role: "UX Designer, Data Visualization (Internship)", org: "MainStreet Advisors, a Fifth Third Bank subsidiary" },
   { year: "2024 – 2026", role: "M.S. Human–Computer Interaction", org: "DePaul University" },
   { year: "2018 – 2024", role: "Interior Designer", org: "Residential & Commercial Projects" },
   { year: "2017 – 2018", role: "M.A. Design Management & Entrepreneurship", org: "Anant National University" },
@@ -37,18 +39,18 @@ const research = [
 ];
 
 const interests = [
-  "Human-Centered AI",
+  "Product Strategy",
+  "Product Operations",
+  "Product Discovery",
+  "Process Improvement",
+  "Data & Dashboards",
+  "Business Problem-Solving",
+  "Human-AI Interaction",
   "Responsible AI",
   "AI Safety",
-  "AI Ethics",
   "UX Research",
   "Mixed Methods",
-  "Design Strategy",
   "Systems Thinking",
-  "Service Design",
-  "Accessibility",
-  "Design Systems",
-  "Emerging Technologies",
 ];
 
 export default function AboutPage() {

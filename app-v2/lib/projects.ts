@@ -14,13 +14,24 @@ export type Project = {
 
 // Order is deliberate, not chronological — it's the sequence a recruiter
 // should read, and each case study's closing band links to the next one:
-// ASAP → PM Dashboard → Raahi → Wellnut → Invisible Impacts → About.
+// PM Dashboard → ASAP → Raahi → Wellnut → Invisible Impacts → About.
+// It leads with the clearest business outcome, then the AI product work.
 export const projects: Project[] = [
+  {
+    slug: "mainstreet",
+    title: "PM Dashboard",
+    description: "Replaced a manual Monday reporting ritual with a live view of $1.2B+ in assets, saving about 3 hours a week per Portfolio Manager.",
+    category: "Product Operations · Power BI",
+    image: "/img/mainstreet/dashboard-mockup.png",
+    video: "/img/mainstreet/thumb.mp4",
+    duration: "8 weeks",
+    accent: "yellow",
+  },
   {
     slug: "asap",
     title: "ASAP",
-    description: "Turning big goals into small, doable steps.",
-    category: "AI Product Design · Mobile",
+    description: "An AI planning product that turns a vague goal into a clear next step, shaped by user research and tested across three iterations.",
+    category: "AI Product Strategy · Mobile",
     // `image` doubles as the loop's poster and the reduced-motion fallback.
     image: "/img/asap/thumb-poster.jpg",
     video: "/video/asap-thumb.mp4",
@@ -28,19 +39,9 @@ export const projects: Project[] = [
     accent: "green",
   },
   {
-    slug: "mainstreet",
-    title: "PM Dashboard",
-    description: "A single-screen view into $1B+ of managed assets.",
-    category: "Data Analytics · Power BI",
-    image: "/img/mainstreet/dashboard-mockup.png",
-    video: "/img/mainstreet/thumb.mp4",
-    duration: "8 weeks",
-    accent: "yellow",
-  },
-  {
     slug: "raahi",
     title: "Raahi",
-    description: "A browser plugin that catches dark and manipulative patterns on the web.",
+    description: "A browser plugin that turns a practitioner's instinct about dark patterns into documented evidence, built from 12 interviews and a 57+ response survey.",
     category: "0→1 Product · Browser Tool",
     image: "/img/raahi/laptop-mockup.png",
     video: "/img/raahi/thumb.mp4",
@@ -50,8 +51,8 @@ export const projects: Project[] = [
   {
     slug: "wellnut",
     title: "Wellnut",
-    description: "A VR companion for student mental wellness.",
-    category: "VR / XR · Mental Health",
+    description: "A VR companion that lowers the barrier to student mental-health support, taken from research to a working prototype in 6 months.",
+    category: "Product Research · VR",
     image: "/img/wellnut/vr-session.jpg",
     duration: "6 months",
     accent: "yellow",
@@ -59,8 +60,8 @@ export const projects: Project[] = [
   {
     slug: "invisible-impacts",
     title: "Invisible Impacts",
-    description: "Making AI infrastructure visible through interaction.",
-    category: "Sustainability · Physical Computing",
+    description: "An installation that makes AI's hidden environmental cost tangible, with measured visitor response and a grant win.",
+    category: "Research & Delivery · Physical Computing",
     image: "/img/coac/laptop-mockup.png",
     video: "/img/coac/thumb.mp4",
     duration: "10 weeks",
@@ -90,7 +91,7 @@ export function getNextProject(slug: string): {
   return {
     href: "/about",
     title: "About me",
-    description: "How I think, and what shaped my journey as a designer.",
+    description: "Background, experience, and what I am looking for next.",
     eyebrow: "Up next",
     cta: "Read more",
   };
