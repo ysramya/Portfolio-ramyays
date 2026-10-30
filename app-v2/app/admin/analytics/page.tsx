@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import TrafficPie from "@/components/admin/TrafficPie";
 import VisitsChart, { type DayPoint } from "@/components/admin/VisitsChart";
+import AutoRefresh from "@/components/admin/AutoRefresh";
 import LogoutButton from "@/components/admin/LogoutButton";
 import GlassCard from "@/components/ds/GlassCard";
 
@@ -302,6 +303,9 @@ export default async function AdminAnalyticsPage({
           </h1>
         </div>
         <LogoutButton />
+      </div>
+      <div className="mt-3">
+        <AutoRefresh />
       </div>
 
       {/* Filters */}
