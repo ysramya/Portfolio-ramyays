@@ -7,14 +7,22 @@ import { createClient } from "@supabase/supabase-js";
  * (the /api/track route, the admin dashboard) check for null and no-op
  * or show a setup message instead.
  */
+// The Vercel Supabase integration prefixes every variable with the project
+// id (e.g. <id>_SUPABASE_URL), so match on the name's ending as well.
+function findEnv(...names: string[]) {
+  for (const name of names) {
+    const exact = process.env[name];
+    if (exact) return exact;
+  }
+  for (const [name, value] of Object.entries(process.env)) {
+    if (value && names.some((n) => name.endsWith(`_${n}`))) return value;
+  }
+  return undefined;
+}
+
 export function getSupabaseAdmin() {
-  // The Vercel Supabase integration and the newer sb_secret_ keys use
-  // different names, so accept the common ones.
-  const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ??
-    process.env.SUPABASE_SECRET_KEY ??
-    process.env.SUPABASE_SERVICE_KEY;
+  const url = findEnv("SUPABASE_URL");
+  const key = findEnv("SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_SECRET_KEY", "SUPABASE_SERVICE_KEY");
   if (!url || !key) return null;
   return createClient(url, key, { auth: { persistSession: false } });
 }
