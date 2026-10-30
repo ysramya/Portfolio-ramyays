@@ -87,6 +87,10 @@ export default async function AdminAnalyticsPage() {
             settings), then run <code className="text-[var(--color-green)]">supabase/schema.sql</code> in your
             Supabase project&rsquo;s SQL editor.
           </p>
+          <p className="mt-4 text-xs text-[var(--color-ink-muted)]">
+            Supabase variables this deployment can see:{" "}
+            {Object.keys(process.env).filter((k) => k.toUpperCase().includes("SUPABASE")).join(", ") || "none"}
+          </p>
         </GlassCard>
       </main>
     );
