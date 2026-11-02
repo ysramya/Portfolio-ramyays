@@ -14,13 +14,17 @@ const KEY_NAMES = ["SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_SECRET_KEY", "SUPABASE
 // The Vercel Supabase integration prefixes every variable with the project
 // id (e.g. <id>_SUPABASE_URL), so match on the name's ending as well. An
 // exact name always wins, which is how to override an integration value.
+// Names are tried in the order given, so the order of KEY_NAMES is the
+// priority: a rotated or stale copy listed later is never picked over it.
 function findEnv(names: string[]): { name: string; value: string } | undefined {
   for (const name of names) {
     const value = process.env[name];
     if (value) return { name, value };
   }
-  for (const [name, value] of Object.entries(process.env)) {
-    if (value && names.some((n) => name.endsWith(`_${n}`))) return { name, value };
+  for (const name of names) {
+    for (const [envName, value] of Object.entries(process.env)) {
+      if (value && envName.endsWith(`_${name}`)) return { name: envName, value };
+    }
   }
   return undefined;
 }
