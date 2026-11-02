@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getSupabaseAdmin } from "@/lib/supabase";
+import { describeSupabaseEnv, getSupabaseAdmin } from "@/lib/supabase";
 import TrafficPie from "@/components/admin/TrafficPie";
 import VisitsChart, { type DayPoint } from "@/components/admin/VisitsChart";
 import AutoRefresh from "@/components/admin/AutoRefresh";
@@ -254,6 +254,19 @@ export default async function AdminAnalyticsPage({
           </p>
           <pre className="mt-3 overflow-x-auto rounded p-3 text-xs" style={{ background: "var(--panel)" }}>
             {e instanceof Error ? e.message : String(e)}
+          </pre>
+          <p className="mt-5 text-sm text-[var(--color-ink-muted)]">What the server is using (names and types only):</p>
+          <pre className="mt-2 overflow-x-auto rounded p-3 text-xs" style={{ background: "var(--panel)" }}>
+            {(() => {
+              const d = describeSupabaseEnv();
+              return [
+                `URL variable:  ${d.urlVariable}  (${d.projectHost})`,
+                `Key variable:  ${d.keyVariable}  (${d.keyType})`,
+                "",
+                "All key-like Supabase variables:",
+                ...d.candidates.map((c) => `  ${c}`),
+              ].join("\n");
+            })()}
           </pre>
         </GlassCard>
       </main>

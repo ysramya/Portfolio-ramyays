@@ -7,22 +7,63 @@ import { createClient } from "@supabase/supabase-js";
  * (the /api/track route, the admin dashboard) check for null and no-op
  * or show a setup message instead.
  */
+
+const URL_NAMES = ["SUPABASE_URL"];
+const KEY_NAMES = ["SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_SECRET_KEY", "SUPABASE_SERVICE_KEY"];
+
 // The Vercel Supabase integration prefixes every variable with the project
-// id (e.g. <id>_SUPABASE_URL), so match on the name's ending as well.
-function findEnv(...names: string[]) {
+// id (e.g. <id>_SUPABASE_URL), so match on the name's ending as well. An
+// exact name always wins, which is how to override an integration value.
+function findEnv(names: string[]): { name: string; value: string } | undefined {
   for (const name of names) {
-    const exact = process.env[name];
-    if (exact) return exact;
+    const value = process.env[name];
+    if (value) return { name, value };
   }
   for (const [name, value] of Object.entries(process.env)) {
-    if (value && names.some((n) => name.endsWith(`_${n}`))) return value;
+    if (value && names.some((n) => name.endsWith(`_${n}`))) return { name, value };
   }
   return undefined;
 }
 
 export function getSupabaseAdmin() {
-  const url = findEnv("SUPABASE_URL");
-  const key = findEnv("SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_SECRET_KEY", "SUPABASE_SERVICE_KEY");
+  const url = findEnv(URL_NAMES);
+  const key = findEnv(KEY_NAMES);
   if (!url || !key) return null;
-  return createClient(url, key, { auth: { persistSession: false } });
+  return createClient(url.value, key.value, { auth: { persistSession: false } });
+}
+
+const keyKind = (v: string) =>
+  v.startsWith("sb_secret_")
+    ? "secret key (sb_secret_)"
+    : v.startsWith("sb_publishable_")
+      ? "publishable key (cannot write)"
+      : v.startsWith("eyJ")
+        ? "legacy JWT key"
+        : "unrecognized format";
+
+/**
+ * Which Supabase variables the server resolved, for the admin error card.
+ * Names, key types and the project host only: never a secret value.
+ */
+export function describeSupabaseEnv() {
+  const url = findEnv(URL_NAMES);
+  const key = findEnv(KEY_NAMES);
+  let host = "not set";
+  if (url) {
+    try {
+      host = new URL(url.value).host;
+    } catch {
+      host = "not a valid URL";
+    }
+  }
+  const candidates = Object.entries(process.env)
+    .filter(([name, value]) => value && name.toUpperCase().includes("SUPABASE") && /KEY|SECRET/i.test(name))
+    .map(([name, value]) => `${name}: ${keyKind(value as string)}`);
+  return {
+    urlVariable: url?.name ?? "none",
+    projectHost: host,
+    keyVariable: key?.name ?? "none",
+    keyType: key ? keyKind(key.value) : "none",
+    candidates,
+  };
 }
