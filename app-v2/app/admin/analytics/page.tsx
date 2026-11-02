@@ -151,11 +151,13 @@ function dayLabel(key: string): string {
 
 // Supabase caps a single response at 1,000 rows, so page through the table.
 async function fetchAll<T>(
-  build: (from: number, to: number) => PromiseLike<{ data: T[] | null }>
+  build: (from: number, to: number) => PromiseLike<{ data: T[] | null; error: { message: string } | null }>
 ): Promise<T[]> {
   const rows: T[] = [];
   for (let page = 0; page < 100; page++) {
-    const { data } = await build(page * 1000, page * 1000 + 999);
+    const { data, error } = await build(page * 1000, page * 1000 + 999);
+    // A failed read used to look like "no data yet"; surface it instead.
+    if (error) throw new Error(error.message);
     if (!data?.length) break;
     rows.push(...data);
     if (data.length < 1000) break;
@@ -218,21 +220,45 @@ export default async function AdminAnalyticsPage({
   // One day of slack either side of the Chicago-day boundary, then trimmed by key below.
   const sinceIso = sinceKey ? new Date(`${shiftDay(sinceKey, -1)}T00:00:00Z`).toISOString() : null;
 
-  const [rawViews, rawClicks, visitorRows] = await Promise.all([
-    fetchAll<{ path: string; visitor_id: string; created_at: string }>((from, to) => {
+  type ViewRow = { path: string; visitor_id: string; created_at: string };
+  type ClickRow = { label: string; visitor_id: string; created_at: string };
+  type VisitorRow = { visitor_id: string; traffic_source: string };
+  let rawViews: ViewRow[];
+  let rawClicks: ClickRow[];
+  let visitorRows: VisitorRow[];
+  try {
+    [rawViews, rawClicks, visitorRows] = await Promise.all([
+      fetchAll<ViewRow>((from, to) => {
       let q = supabase.from("page_views").select("path, visitor_id, created_at").order("id");
       if (sinceIso) q = q.gte("created_at", sinceIso);
       return q.range(from, to);
     }),
-    fetchAll<{ label: string; visitor_id: string; created_at: string }>((from, to) => {
+      fetchAll<ClickRow>((from, to) => {
       let q = supabase.from("click_events").select("label, visitor_id, created_at").order("id");
       if (sinceIso) q = q.gte("created_at", sinceIso);
       return q.range(from, to);
     }),
-    fetchAll<{ visitor_id: string; traffic_source: string }>((from, to) =>
+      fetchAll<VisitorRow>((from, to) =>
       supabase.from("visitors").select("visitor_id, traffic_source").order("visitor_id").range(from, to)
     ),
-  ]);
+    ]);
+  } catch (e) {
+    return (
+      <main className="mx-auto px-6" style={{ maxWidth: "720px", paddingTop: "calc(var(--nav-h) + 3rem)", paddingBottom: "6rem" }}>
+        <GlassCard className="p-8">
+          <h1 className="font-[family-name:var(--font-display)] text-2xl text-[var(--color-ink)]">
+            Couldn&rsquo;t read the analytics database
+          </h1>
+          <p className="mt-4 text-sm leading-relaxed text-[var(--color-ink-muted)]">
+            The dashboard reached Supabase but a query failed, so no numbers can be shown. The error was:
+          </p>
+          <pre className="mt-3 overflow-x-auto rounded p-3 text-xs" style={{ background: "var(--panel)" }}>
+            {e instanceof Error ? e.message : String(e)}
+          </pre>
+        </GlassCard>
+      </main>
+    );
+  }
 
   const sourceOf = new Map(visitorRows.map((v) => [v.visitor_id, v.traffic_source || "Direct"]));
   const keep = (visitorId: string, created: string) =>
