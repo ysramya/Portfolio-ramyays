@@ -60,12 +60,10 @@ export default function Home() {
               experience across financial services, education and AI research.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
+              {/* One action in the hero: contact lives in the nav, and again once at the page's close. */}
               <Link href="#work" className="btn">
                 View my work <span aria-hidden>&#8594;</span>
               </Link>
-              <a href="mailto:ys.ramya@gmail.com" className="btn btn-outline">
-                Get in touch
-              </a>
             </div>
           </div>
 

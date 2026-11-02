@@ -157,9 +157,6 @@ export default function AboutPage() {
               <Link href="/beyond-the-screen" className="btn">
                 Explore <span aria-hidden>&#8594;</span>
               </Link>
-              <a href="mailto:ys.ramya@gmail.com" className="btn btn-outline">
-                Get in touch
-              </a>
             </div>
           </div>
         </div>
