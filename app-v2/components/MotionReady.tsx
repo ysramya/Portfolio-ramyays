@@ -120,11 +120,20 @@ export default function MotionReady() {
       };
     }
 
-    els.forEach((el) => el.classList.add("reveal"));
-    media.forEach((el) => el.classList.add("reveal-media"));
-    heads.forEach((el) => el.classList.add("reveal-head"));
-    groups.forEach((el) => el.classList.add("reveal-group"));
+    // Anything already on screen when the page opens arrives with the page
+    // (it slides in with the route), so it gets no fade and no delay of its
+    // own. Only content below the fold is held back for its scroll reveal.
+    const fold = window.innerHeight;
+    const below = (el: HTMLElement) => el.getBoundingClientRect().top > fold * 0.95;
+    els.filter(below).forEach((el) => el.classList.add("reveal"));
+    media.filter(below).forEach((el) => el.classList.add("reveal-media"));
+    heads.filter(below).forEach((el) => el.classList.add("reveal-head"));
+    groups.filter(below).forEach((el) => el.classList.add("reveal-group"));
     // Sequenced elements carry their own class already; they only need `is-in`.
+
+    // Sequenced states carry their own hidden class, so those already on
+    // screen are switched on straight away.
+    sequenced.filter((el) => !below(el)).forEach((el) => el.classList.add("is-in"));
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -139,7 +148,7 @@ export default function MotionReady() {
       { threshold: 0.18, rootMargin: "0px 0px -5% 0px" },
     );
 
-    [...els, ...media, ...heads, ...groups, ...sequenced].forEach((el) => io.observe(el));
+    [...els, ...media, ...heads, ...groups, ...sequenced].filter(below).forEach((el) => io.observe(el));
 
     // Backstop: anything still offset after 2s is revealed, so a missed
     // callback can never leave content displaced.

@@ -781,28 +781,9 @@ body:has(.theme-wellnut) .theme-deep {
      Runs on load rather than scroll, so it uses opacity safely: the
      keyframe's end state is the resting state, and if the animation never
      runs the content simply sits visible. */
-  .motion-ready .hero-seq > * {
-    animation: hero-rise 900ms var(--mo-ease-soft) both;
-  }
-
-  .motion-ready .hero-seq > *:nth-child(2) { animation-delay: 100ms; }
-  .motion-ready .hero-seq > *:nth-child(3) { animation-delay: 220ms; }
-  .motion-ready .hero-seq > *:nth-child(4) { animation-delay: 360ms; }
-  .motion-ready .hero-seq > *:nth-child(n + 5) { animation-delay: 440ms; }
-
-  @keyframes hero-rise {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  /* Hero visual — §06, scale only, no opacity gate. */
+  .motion-ready .hero-seq > *,
   .motion-ready .hero-visual {
-    animation: hero-visual var(--mo-slow) var(--mo-ease) 550ms both;
-  }
-
-  @keyframes hero-visual {
-    from { transform: scale(0.97); }
-    to { transform: none; }
+    animation: none;
   }
 
   /* ── Buttons — §11. Scale on hover, compress on press. */
@@ -1021,8 +1002,8 @@ body:has(.theme-wellnut) .theme-deep {
     animation: var(--mo-arrive) var(--mo-ease) 520ms both;
   }
 
-  .motion-ready .hero-fan-l { animation-name: hero-fan-l; }
-  .motion-ready .hero-fan-r { animation-name: hero-fan-r; }
+  .motion-ready .hero-fan-l,
+  .motion-ready .hero-fan-r { animation: none; }
 
   @keyframes hero-fan-l {
     from { transform: translateX(42%) scale(0.92); }
@@ -1039,7 +1020,7 @@ body:has(.theme-wellnut) .theme-deep {
      longer beat, cropped by the frame's own overflow, so it reads as a
      camera settling rather than a box scaling. */
   .motion-ready .hero-settle img {
-    animation: hero-settle 1400ms var(--mo-ease) 450ms both;
+    animation: none;
   }
 
   @keyframes hero-settle {

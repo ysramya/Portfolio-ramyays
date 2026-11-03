@@ -78,7 +78,6 @@ export default function AboutPage() {
                 <p
                   key={i}
                   className="text-[16px] leading-[1.8] text-[var(--body)]"
-                  style={{ animation: `about-rise 1s cubic-bezier(0.33,1,0.68,1) ${0.1 + i * 0.12}s both` }}
                 >
                   <Rich>{p}</Rich>
                 </p>
@@ -180,13 +179,6 @@ export default function AboutPage() {
         </div>
       </DeepBand>
 
-      {/* fade only: starts at 30% so text can never be stuck invisible */}
-      <style>{`
-        @keyframes about-rise {
-          from { opacity: 0.3; }
-          to { opacity: 1; }
-        }
-      `}</style>
     </>
   );
 }
