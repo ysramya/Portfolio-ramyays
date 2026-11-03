@@ -54,6 +54,27 @@ const interests = [
   "Systems Thinking",
 ];
 
+/**
+ * Key facts under a section title. On desktop the title sits beside a long list
+ * and would otherwise leave an empty column; these fill it with the numbers a
+ * skimmer wants (all from the resume) and the whole head sticks while the list
+ * scrolls. Hidden below md, where the title already sits above its content.
+ */
+function SideStats({ stats }: { stats: { value: string; label: string }[] }) {
+  return (
+    <dl className="mt-6 hidden flex-col gap-5 md:flex">
+      {stats.map((s) => (
+        <div key={s.label} style={{ borderTop: "1px solid var(--rule)", paddingTop: 14 }}>
+          <dt className="text-[var(--ink)]" style={{ fontFamily: "var(--font-display)", fontSize: 30, lineHeight: 1.1 }}>
+            {s.value}
+          </dt>
+          <dd className="mt-1 max-w-[18em] text-[14px] leading-[1.55] text-[var(--body)]">{s.label}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
 export default function AboutPage() {
   return (
     <>
@@ -88,7 +109,20 @@ export default function AboutPage() {
       {/* 01 — Experience */}
       <Section id="experience" divided={false}>
         <div className="sec-grid">
-          <SectionHead n="01" eyebrow="Background" title="Experience & Education" />
+          <SectionHead
+            n="01"
+            eyebrow="Background"
+            title="Experience & Education"
+            className="md:sticky md:top-28"
+          >
+            <SideStats
+              stats={[
+                { value: "6+ years", label: "of professional design, project and client-delivery experience" },
+                { value: "2+ years", label: "of mixed-methods research" },
+                { value: "2 master's", label: "in Human-Computer Interaction, and in Design Management & Entrepreneurship" },
+              ]}
+            />
+          </SectionHead>
           {/* Reverse-chronological, so the stagger carries the order rather
               than decorating it — the rows arrive the way you read them. */}
           <ul data-reveal-group>
@@ -112,7 +146,14 @@ export default function AboutPage() {
       {/* 02 — Research & Writing */}
       <Section id="research">
         <div className="sec-grid">
-          <SectionHead n="02" eyebrow="Research" title="Research & writing" />
+          <SectionHead n="02" eyebrow="Research" title="Research & writing" className="md:sticky md:top-28">
+            <SideStats
+              stats={[
+                { value: "4", label: "studies, papers and proposals on human-AI interaction and AI safety" },
+                { value: "AIES 2026", label: "paper under review, with CHI 2027 in progress" },
+              ]}
+            />
+          </SectionHead>
           <ul data-reveal-group className="grid gap-4 sm:grid-cols-2">
             {research.map((item) => (
               <li key={item.title} className="panel flex flex-col p-6">
