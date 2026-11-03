@@ -27,15 +27,6 @@ const experience = [
   { year: "2017 – 2018", role: "M.A. Design Management & Entrepreneurship", org: "De Montfort University · Leicester, United Kingdom" },
 ];
 
-const research = [
-  {
-    title: "Exposing & Mitigating Dark Patterns in Generative AI for Vulnerable Users",
-    venue: "RAISE Lab · Ongoing Research",
-  },
-  { title: "AI Safety Evaluation Framework for Community Banks", venue: "Research Proposal · 2026" },
-];
-
-
 /**
  * Key facts under a section title. On desktop the title sits beside a long list
  * and would otherwise leave an empty column; these fill it with the numbers a
@@ -124,32 +115,10 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      {/* 02 — Research & Writing */}
-      <Section id="research">
-        <div className="sec-grid">
-          <SectionHead n="02" eyebrow="Research" title="Research & writing" className="md:sticky md:top-28">
-            <SideStats
-              stats={[
-                { value: "2", label: "studies and proposals on human-AI interaction and AI safety" },
-                { value: "RAISE Lab", label: "ongoing research on dark patterns in generative AI for vulnerable users" },
-              ]}
-            />
-          </SectionHead>
-          <ul data-reveal-group className="grid gap-4 sm:grid-cols-2">
-            {research.map((item) => (
-              <li key={item.title} className="panel flex flex-col p-6">
-                <h3 className="text-[19px] leading-snug">{item.title}</h3>
-                <p className="meta mt-auto pt-5">{item.venue}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Section>
-
-      {/* 03 — Areas of Interest */}
+      {/* 02 — Areas of Interest */}
       <Section id="interests">
         <div className="sec-grid">
-          <SectionHead n="03" eyebrow="Focus" title="Areas of interest" />
+          <SectionHead n="02" eyebrow="Focus" title="Areas of interest" />
           {/* Twelve tags; the CSS caps the delay from the fifth on, so this
               lands as one group settling rather than a slow cascade. */}
           <InterestTags />
