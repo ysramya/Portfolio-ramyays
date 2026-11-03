@@ -14,10 +14,10 @@ export default function BeyondTheScreenPage() {
   const sections = [
     {
       id: "interiors",
-      eyebrow: "Photography",
+      eyebrow: "Interior design",
       title: "Interiors",
       description:
-        "Rooms hold the same questions I ask in research: how does a space guide attention, invite pause, or shape a mood before anyone notices why. Interior photography is where that instinct started.",
+        "These are my designs. I designed and executed every interior shown here, from the first concept and layout through to the finished space. Rooms hold the same questions I ask in research: how does a space guide attention, invite pause, or shape a mood before anyone notices why.",
       images: getGalleryImages("interiors"),
       empty: "Interiors coming soon.",
     },
@@ -69,7 +69,7 @@ export default function BeyondTheScreenPage() {
           <h1 className="mt-5">Beyond the Screen</h1>
           <p className="lead mt-5" style={{ maxWidth: "46em" }}>
             Outside of research and design, I explore creativity through digital painting,
-            photography (cityscapes, nature, and interiors), and cooking. These practices keep
+            photography (cityscapes and nature), the interiors I have designed, and cooking. These practices keep
             me curious, observant, and grounded, qualities that continue to shape how I
             approach every project.
           </p>
