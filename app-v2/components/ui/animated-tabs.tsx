@@ -9,8 +9,7 @@ import { motion, useReducedMotion } from "framer-motion";
  * eases in on each switch.
  *
  * Adapted to the site's system: tokens instead of translucent black, no blur
- * or shadow, and transform-only motion (the panel content is never faded, so
- * it can't be caught half-visible). Tabs follow the WAI-ARIA pattern —
+ * or shadow, and a soft fade on the panel (never fully transparent). Tabs follow the WAI-ARIA pattern —
  * roving tabindex, arrow/Home/End keys, tabpanel labelled by its tab.
  */
 
@@ -105,10 +104,12 @@ export function AnimatedTabs({ tabs, defaultTab, className = "", label = "Tabs" 
                 borderRadius: "calc(var(--radius) + 4px)",
               }}
             >
+              {/* A soft fade only: the content used to slide in and scale on each
+                  switch, which read as the text moving. Position never changes. */}
               <motion.div
-                initial={reduced ? false : { x: -14, scale: 0.98 }}
-                animate={{ x: 0, scale: 1 }}
-                transition={{ type: "spring", duration: 0.55, bounce: 0.1 }}
+                initial={reduced ? false : { opacity: 0.4 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.45, ease: "easeOut" }}
               >
                 {tab.content}
               </motion.div>

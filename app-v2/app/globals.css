@@ -368,7 +368,7 @@ body:has(.theme-wellnut) .theme-deep {
   }
 
   .section {
-    padding-block: clamp(56px, 6vw, 88px);
+    padding-block: clamp(44px, 4.8vw, 68px);
   }
 
   .section-divided {
@@ -386,7 +386,7 @@ body:has(.theme-wellnut) .theme-deep {
      eyebrow, a serif title and a short block of copy, with the visual in a
      wider column to the right. */
   .sec {
-    padding-block: clamp(48px, 5.5vw, 76px);
+    padding-block: clamp(36px, 4.2vw, 60px);
   }
 
   .sec-divided {
@@ -715,6 +715,12 @@ body:has(.theme-wellnut) .theme-deep {
      images are the payload of a case study, so they get weight. */
   --mo-arrive: 560ms;
   --mo-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Scroll reveals are a gentle fade, with no upward movement: the old rise
+     read as content jumping up from the bottom. They start at 30% opacity,
+     never 0, so nothing is ever blank if a scroll callback fails to fire. */
+  --reveal-from: 0.3;
+  --mo-fade: 1100ms;
+  --mo-ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 @layer components {
@@ -729,12 +735,12 @@ body:has(.theme-wellnut) .theme-deep {
      they reveal — media arrives, lists sequence, the footer lands — and
      running prose simply exists. */
   .motion-ready .reveal {
-    transform: translateY(24px);
-    transition: transform var(--mo-medium) var(--mo-ease);
+    opacity: var(--reveal-from);
+    transition: opacity var(--mo-fade) var(--mo-ease-soft);
   }
 
   .motion-ready .reveal.is-in {
-    transform: none;
+    opacity: 1;
   }
 
   /* Media arrival. A figure is the thing a case study is showing, so it
@@ -747,24 +753,23 @@ body:has(.theme-wellnut) .theme-deep {
      image on the way in, and rest is `transform: none`, so nothing stays
      rasterised once it has landed. */
   .motion-ready .reveal-media {
-    transform: translateY(20px) scale(0.985);
-    transform-origin: 50% 85%;
-    transition: transform var(--mo-arrive) var(--mo-ease);
+    opacity: var(--reveal-from);
+    transition: opacity calc(var(--mo-fade) + 200ms) var(--mo-ease-soft);
   }
 
   .motion-ready .reveal-media.is-in {
-    transform: none;
+    opacity: 1;
   }
 
   /* Stagger — §04. Children of a revealed group follow it in sequence,
      capped at 5 so a long list never exceeds the 300ms maximum. */
   .motion-ready .reveal-group > * {
-    transform: translateY(16px);
-    transition: transform var(--mo-standard) var(--mo-ease);
+    opacity: var(--reveal-from);
+    transition: opacity var(--mo-fade) var(--mo-ease-soft);
   }
 
   .motion-ready .reveal-group.is-in > * {
-    transform: none;
+    opacity: 1;
   }
 
   .motion-ready .reveal-group.is-in > *:nth-child(2) { transition-delay: 70ms; }
@@ -777,7 +782,7 @@ body:has(.theme-wellnut) .theme-deep {
      keyframe's end state is the resting state, and if the animation never
      runs the content simply sits visible. */
   .motion-ready .hero-seq > * {
-    animation: hero-rise var(--mo-slow) var(--mo-ease) both;
+    animation: hero-rise 900ms var(--mo-ease-soft) both;
   }
 
   .motion-ready .hero-seq > *:nth-child(2) { animation-delay: 100ms; }
@@ -786,8 +791,8 @@ body:has(.theme-wellnut) .theme-deep {
   .motion-ready .hero-seq > *:nth-child(n + 5) { animation-delay: 440ms; }
 
   @keyframes hero-rise {
-    from { opacity: 0; transform: translateY(28px); }
-    to { opacity: 1; transform: none; }
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
   /* Hero visual — §06, scale only, no opacity gate. */
@@ -904,13 +909,12 @@ body:has(.theme-wellnut) .theme-deep {
      Each step rises in turn so the four moments read as a sequence rather
      than four static screenshots. */
   .motion-ready .flow-step {
-    transform: translateY(20px) scale(0.985);
-    transition:
-      transform var(--mo-medium) var(--mo-ease);
+    opacity: var(--reveal-from);
+    transition: opacity var(--mo-fade) var(--mo-ease-soft);
   }
 
   .motion-ready .flow-step.is-in {
-    transform: none;
+    opacity: 1;
   }
 
   .motion-ready .flow-step.is-in:nth-child(2) { transition-delay: 90ms; }
@@ -975,12 +979,12 @@ body:has(.theme-wellnut) .theme-deep {
      content harder to read — the Before chain's labels are content, not
      decoration. The comparison is carried by the layout and colour instead. */
   .motion-ready .workflow-after {
-    transform: translateY(18px);
-    transition: transform var(--mo-medium) var(--mo-ease);
+    opacity: var(--reveal-from);
+    transition: opacity var(--mo-fade) var(--mo-ease-soft);
   }
 
   .motion-ready .workflow-after.is-in {
-    transform: none;
+    opacity: 1;
   }
 
   /* MainStreet §25 — the dashboard's information hierarchy reveals in the
@@ -1050,21 +1054,17 @@ body:has(.theme-wellnut) .theme-deep {
      rather than a block of prose shunting upward. Transform-only. */
   .motion-ready .sec-head.reveal-head .numeral,
   .motion-ready .sec-head.reveal-head > div {
-    transition: transform var(--mo-medium) var(--mo-ease);
-  }
-
-  .motion-ready .sec-head.reveal-head .numeral {
-    transform: translateX(-14px);
+    opacity: var(--reveal-from);
+    transition: opacity var(--mo-fade) var(--mo-ease-soft);
   }
 
   .motion-ready .sec-head.reveal-head > div {
-    transform: translateY(14px);
-    transition-delay: 60ms;
+    transition-delay: 80ms;
   }
 
   .motion-ready .sec-head.reveal-head.is-in .numeral,
   .motion-ready .sec-head.reveal-head.is-in > div {
-    transform: none;
+    opacity: 1;
   }
 
   /* ── Reading progress ── Case studies only, rendered by the nav. A
@@ -1204,12 +1204,12 @@ body:has(.theme-wellnut) .theme-deep {
 
   /* ── Page transition — §08, via app/template.tsx. */
   .page-enter {
-    animation: page-enter var(--mo-standard) var(--mo-ease) both;
+    animation: page-enter 500ms var(--mo-ease-soft) both;
   }
 
   @keyframes page-enter {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: none; }
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }
 
@@ -1390,19 +1390,28 @@ body:has(.theme-wellnut) .theme-deep {
   .motion-ready main article.reveal {
     transition:
       scale var(--pop-time) var(--pop-ease),
-      transform var(--mo-medium) var(--mo-ease);
+      opacity var(--mo-fade) var(--mo-ease-soft);
   }
   .motion-ready main :is(.panel, .panel-sage, .card, .media, .video-frame, .pop, figure, article, [style*="border-radius:var(--radius)"], [style*="border-radius: var(--radius)"]):not(:has(:is(.panel, .panel-sage, .card, .media, .video-frame, .pop, figure, article, [style*="border-radius:var(--radius)"], [style*="border-radius: var(--radius)"]))).reveal-media,
   .motion-ready main article.reveal-media {
     transition:
       scale var(--pop-time) var(--pop-ease),
-      transform var(--mo-arrive) var(--mo-ease);
+      opacity calc(var(--mo-fade) + 200ms) var(--mo-ease-soft);
   }
   .motion-ready main .reveal-group > :is(.panel, .panel-sage, .card, .media, .video-frame, .pop, figure, article, [style*="border-radius:var(--radius)"], [style*="border-radius: var(--radius)"]):not(:has(:is(.panel, .panel-sage, .card, .media, .video-frame, .pop, figure, article, [style*="border-radius:var(--radius)"], [style*="border-radius: var(--radius)"]))) {
     transition:
       scale var(--pop-time) var(--pop-ease),
-      transform var(--mo-standard) var(--mo-ease);
+      opacity var(--mo-fade) var(--mo-ease-soft);
   }
+}
+
+/* ── Key points ──
+   Bold carries the eye to the phrases and numbers a skimmer needs. DM Sans
+   600 in the full ink colour, so it reads on ivory and on the deep bands. */
+main strong,
+footer strong {
+  font-weight: 600;
+  color: var(--ink);
 }
 
 /* ── Logo variants ──

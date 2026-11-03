@@ -17,10 +17,10 @@ export default function AboutPortrait({ src, alt }: { src: string; alt: string }
   return (
     <motion.div
       ref={ref}
-      initial={{ y: 24 }}
-      whileInView={{ y: 0 }}
+      initial={{ opacity: 0.3 }}
+      whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "-10% 0px" }}
-      transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 1.1, ease: [0.33, 1, 0.68, 1] }}
       className="pop relative w-full"
     >
       {/* The portrait used to sit on a blurred green glow inside a
