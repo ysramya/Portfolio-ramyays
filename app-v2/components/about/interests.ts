@@ -65,7 +65,7 @@ export const interests: Interest[] = [
   {
     tag: "AI Safety",
     why: "Safety has to be designed in before a product ships, not found afterwards.",
-    how: "Raahi's premise is making manipulation visible before it ships, and my RAISE Lab research studies dark patterns in generative AI, including the effects on vulnerable users.",
+    how: "Raahi's premise is making manipulation visible before it ships, so people can see how a screen is steering them before they commit.",
     links: [{ label: "Raahi", href: "/projects/raahi" }],
   },
   {

@@ -19,7 +19,6 @@ const paragraphs = [
 ];
 
 const experience = [
-  { year: "2026 – Present", role: "Research Assistant", org: "RAISE Lab · DePaul University · Chicago, IL" },
   { year: "2025 – 2026", role: "International Admissions Operations", org: "DePaul University · Chicago, IL" },
   { year: "2025", role: "UX Designer, Data Visualization (Internship)", org: "MainStreet Advisors, a Fifth Third Bank subsidiary · Chicago, IL" },
   { year: "2024 – 2026", role: "M.S. Human–Computer Interaction", org: "DePaul University · Chicago, IL" },
@@ -90,7 +89,6 @@ export default function AboutPage() {
             <SideStats
               stats={[
                 { value: "6+ years", label: "of professional design, project and client-delivery experience" },
-                { value: "2+ years", label: "of mixed-methods research" },
                 { value: "2 master's", label: "in Human-Computer Interaction, and in Design Management & Entrepreneurship" },
               ]}
             />
