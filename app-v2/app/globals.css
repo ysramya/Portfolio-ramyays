@@ -1380,27 +1380,35 @@ body:has(.theme-wellnut) .theme-deep {
 }
 
 /* ── Hero tags ──
-   The credibility line under the headline: bright phrases, each underlined by a
-   slim gold rule that fades out to the right. No outline, no rounded shape and
-   no fill, so it reads as marked-up text and not as buttons. They wrap with the
-   column, so they never run into the portrait. */
+   The four areas under the headline: a small gold line icon beside each phrase,
+   in a two-by-two. No outline, rounded shape or fill, so it reads as part of the
+   page and not as buttons. The columns shrink with the text column, so a long
+   phrase wraps instead of running into the portrait. */
 .hero-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px 30px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, max-content));
+  justify-content: start;
+  gap: 16px 22px;
   max-width: 100%;
 }
 .hero-tag {
-  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
   font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: 0.005em;
+  line-height: 1.35;
   color: var(--ink);
-  padding-bottom: 7px;
-  background-image: linear-gradient(90deg, #d9b48c 0%, #c29a79 45%, rgba(194, 154, 121, 0) 100%);
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  background-size: 100% 2px;
+}
+.hero-tag svg {
+  flex: none;
+  color: var(--numeral);
+}
+@media (max-width: 560px) {
+  .hero-tags {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
 }
 
 /* ── Key points ──

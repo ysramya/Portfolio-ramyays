@@ -12,13 +12,68 @@ import { projects } from "@/lib/projects";
 
 
 
+/** Small line icons for the hero's four areas, in the site's 24x24 line style. */
+function HeroIcon({ children }: { children: React.ReactNode }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="22"
+      height="22"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {children}
+    </svg>
+  );
+}
+
+const heroAreas = [
+  {
+    label: "Product discovery & planning",
+    icon: (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <path d="M15.5 8.5 13.5 13.5 8.5 15.5 10.5 10.5z" />
+      </>
+    ),
+  },
+  {
+    label: "Product operations & workflows",
+    icon: (
+      <>
+        <circle cx="6" cy="18" r="2" />
+        <circle cx="18" cy="6" r="2" />
+        <path d="M8 18h7a3 3 0 0 0 3-3V8" />
+      </>
+    ),
+  },
+  {
+    label: "Research-led decisions",
+    icon: (
+      <>
+        <circle cx="11" cy="11" r="6" />
+        <path d="m20 20-4.2-4.2" />
+      </>
+    ),
+  },
+  {
+    label: "AI & emerging technology",
+    icon: <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16v4M17 18h4" />,
+  },
+];
+
 export default function Home() {
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────────── */}
       <DeepBand ribbon>
         <div
-          className="wrap grid items-center gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] md:gap-14"
+          className="wrap grid items-center gap-12 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:gap-12"
           style={{ paddingTop: "calc(var(--nav-h) + 40px)", paddingBottom: 56 }}
         >
           <div className="hero-seq">
@@ -31,9 +86,10 @@ export default function Home() {
               I turn complex user and operational problems into clear product decisions.
             </h2>
             <ul className="hero-tags mt-6" aria-label="Areas of credibility">
-              {["Product discovery & planning", "Product operations & workflows", "Research-led decisions", "AI & emerging technology"].map((a) => (
-                <li key={a} className="hero-tag">
-                  {a}
+              {heroAreas.map((a) => (
+                <li key={a.label} className="hero-tag">
+                  <HeroIcon>{a.icon}</HeroIcon>
+                  <span>{a.label}</span>
                 </li>
               ))}
             </ul>
