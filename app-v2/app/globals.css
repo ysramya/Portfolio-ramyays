@@ -1302,6 +1302,16 @@ body:has(.theme-wellnut) .theme-deep {
   mix-blend-mode: overlay;
   opacity: 0.35;
 }
+/* About portrait: a bright location photo, so every edge is feathered into
+   the deep green ground instead of sitting in a box. */
+.about-portrait {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 16%, #000 78%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 16%, #000 78%, transparent 100%);
+  mask-composite: intersect;
+}
 /* The portrait is shot on the same flat green as the old band; feather its
    top and sides so it melts into the ribbons instead of showing a box. */
 .hero-portrait > div {

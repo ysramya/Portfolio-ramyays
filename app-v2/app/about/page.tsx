@@ -60,10 +60,10 @@ export default function AboutPage() {
       {/* Hero — portrait and story on the deep band */}
       <DeepBand ribbon>
         <div
-          className="wrap grid items-center gap-12 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:gap-14"
+          className="wrap grid items-start gap-12 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:gap-14"
           style={{ paddingTop: "calc(var(--nav-h) + 40px)", paddingBottom: 56 }}
         >
-          <AboutPortrait src="/img/about/ramya-golden-gate.webp" alt="Ramya Yerramilli smiling and looking out over the water, with the Golden Gate Bridge behind her at sunset" />
+          <AboutPortrait src="/img/about/ramya-golden-gate-level.webp" alt="Ramya Yerramilli smiling and looking out over the water, with the Golden Gate Bridge behind her at sunset" />
 
           <div>
             <p className="eyebrow eyebrow-rule">About</p>

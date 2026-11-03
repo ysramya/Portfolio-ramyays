@@ -27,10 +27,7 @@ export default function AboutPortrait({ src, alt }: { src: string; alt: string }
           gradient-lit bezel with a deep drop shadow. Glow, gradient and
           shadow are all out of the system (§6); depth comes from the
           hairline border and the cream ground instead. */}
-      <div
-        className="relative overflow-hidden"
-        style={{ aspectRatio: "4/5", borderRadius: "var(--radius)" }}
-      >
+      <div className="about-portrait relative overflow-hidden" style={{ aspectRatio: "4/5" }}>
         <motion.div style={{ y }} className="absolute inset-0 scale-110">
           <Image src={src} alt={alt} fill sizes="(max-width: 900px) 100vw, 45vw" className="object-cover" priority />
         </motion.div>
