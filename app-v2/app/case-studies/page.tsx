@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function CaseStudiesPage() {
   return (
     <>
-      <DeepBand rain ribbon>
+      <DeepBand ribbon>
         <div className="wrap" style={{ paddingTop: "calc(var(--nav-h) + 48px)", paddingBottom: 56 }}>
           <div className="hero-seq">
             <p className="eyebrow eyebrow-rule">Case Studies</p>

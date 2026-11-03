@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import HeroRain from "@/components/HeroRain";
 import RibbonField from "@/components/ui/ribbon-field";
 import { DEEP_GREEN } from "@/components/ribbonPalettes";
 
@@ -20,7 +19,6 @@ export default function DeepBand({
   id,
   className = "",
   shapes = true,
-  rain = false,
   ribbon = false,
   as: Tag = "section",
 }: {
@@ -28,8 +26,6 @@ export default function DeepBand({
   id?: string;
   className?: string;
   shapes?: boolean;
-  /** Data-rain behind the content — for page openings, not closings. */
-  rain?: boolean;
   /** Animated ribbon-field gradient as the band ground (replaces the leaf shapes). Pass a palette to match a themed page; `true` uses deep green. */
   ribbon?: boolean | string[];
   as?: "section" | "div" | "header";
@@ -64,7 +60,6 @@ export default function DeepBand({
           />
         </svg>
       )}
-      {rain && <HeroRain />}
       <div className="relative">{children}</div>
     </Tag>
   );

@@ -410,7 +410,7 @@ export default function AsapPage() {
     <>
       {/* HERO — answers the six-second test above the fold: what it is, what
           it does, what Ramya did, that it was built, and where to see it. */}
-      <DeepBand rain ribbon>
+      <DeepBand ribbon>
         <div
           className="wrap grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-10"
           style={{ paddingTop: "calc(var(--nav-h) + 36px)", paddingBottom: 64 }}

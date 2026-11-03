@@ -1,4 +1,3 @@
-import HeroRain from "@/components/HeroRain";
 import RibbonField from "@/components/ui/ribbon-field";
 import { LIGHT_BLUE } from "@/components/ribbonPalettes";
 import type { Metadata } from "next";
@@ -186,15 +185,14 @@ const i = {
 type Tone = "neutral" | "friction" | "water" | "strong";
 
 /** The light equivalent of DeepBand: an icy band that the nav does NOT invert over. */
-function LightBand({ children, className = "", rain = false }: { children: ReactNode; className?: string; rain?: boolean }) {
+function LightBand({ children, className = "", ribbon = false }: { children: ReactNode; className?: string; ribbon?: boolean }) {
   return (
-    <section className={`relative ${rain ? "overflow-hidden" : ""} ${className}`} style={{ background: "var(--bg-band)" }}>
-      {rain && (
+    <section className={`relative ${ribbon ? "overflow-hidden" : ""} ${className}`} style={{ background: "var(--bg-band)" }}>
+      {ribbon && (
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <RibbonField colors={LIGHT_BLUE} wave={24} />
         </div>
       )}
-      {rain && <HeroRain tone="light" />}
       <div className="relative">{children}</div>
     </section>
   );
@@ -332,7 +330,7 @@ export default function InvisibleImpactsPage() {
   return (
     <div className="theme-coac">
       {/* HERO — light band, deliberately not marked data-nav="dark" */}
-      <LightBand rain>
+      <LightBand ribbon>
         <div className="wrap" style={{ paddingTop: "calc(var(--nav-h) + 36px)", paddingBottom: 56 }}>
           <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.82fr)] lg:gap-14">
             <div className="hero-seq">

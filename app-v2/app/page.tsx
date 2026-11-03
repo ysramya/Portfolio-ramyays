@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────────── */}
-      <DeepBand rain ribbon>
+      <DeepBand ribbon>
         <div
           className="wrap grid items-center gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,0.92fr)] md:gap-14"
           style={{ paddingTop: "calc(var(--nav-h) + 40px)", paddingBottom: 56 }}

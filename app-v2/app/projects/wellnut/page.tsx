@@ -370,7 +370,7 @@ export default function WellnutPage() {
     // so the nav and footer travel with the page.
     <div className="theme-wellnut">
       {/* HERO */}
-      <DeepBand rain ribbon={DEEP_PLUM}>
+      <DeepBand ribbon={DEEP_PLUM}>
         <div className="wrap" style={{ paddingTop: "calc(var(--nav-h) + 36px)", paddingBottom: 56 }}>
           <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12">
             <div className="hero-seq">

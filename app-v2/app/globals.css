@@ -1294,42 +1294,6 @@ body:has(.theme-wellnut) .theme-deep {
   }
 }
 
-/* ── Data rain backdrop ──
-   Fixed behind the page (z-index -1), so only the bare ivory ground shows it.
-   The design system forbids blur, gradients and grain, so the component's
-   bloom, vignette and grain layers are hidden — the lines alone remain. */
-:root {
-  --dr-core: #12271f;
-}
-.dr-root {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  overflow: hidden;
-  opacity: 0.42;
-}
-.dr-root--contained {
-  position: absolute;
-  z-index: 0;
-}
-.dr-main {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.dr-bloom,
-.dr-vignette,
-.dr-grain {
-  display: none;
-}
-.theme-deep .dr-root,
-.dr-root--deep {
-  --dr-core: #f2efe7;
-  opacity: 0.6;
-}
-
 /* ── Ribbon-field grain ──
    Fractal-noise tile laid over the canvas, as in the source gradient. */
 .ribbon-grain {
