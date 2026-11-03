@@ -134,10 +134,7 @@ export default function Home() {
               including AI-focused teams.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <a href="mailto:ys.ramya@gmail.com" className="btn">
-                Get in touch <span aria-hidden>&#8594;</span>
-              </a>
-              <a href="/resume.pdf" target="_blank" rel="noopener" className="btn btn-outline">
+              <a href="/resume.pdf" target="_blank" rel="noopener" className="btn">
                 Resume <span aria-hidden>&#8599;</span>
               </a>
             </div>
