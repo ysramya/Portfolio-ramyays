@@ -3,6 +3,7 @@ import Link from "next/link";
 import AboutPortrait from "./AboutPortrait";
 import DeepBand from "@/components/ds/DeepBand";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
+import Rich from "@/components/ds/Rich";
 
 export const metadata: Metadata = {
   title: "About | Ramya Yerramilli",
@@ -11,8 +12,8 @@ export const metadata: Metadata = {
 
 const paragraphs = [
   "I started my career in design, and became more interested in the people and systems around a project than the project itself. During my first master's in Design Management & Entrepreneurship I discovered design thinking and service design, and with them the idea that good decisions start with understanding people, systems and constraints. That changed the direction of my career.",
-  "Over the next six years I led residential and commercial projects, working with clients, contractors and cross-functional teams to deliver complex work to scope. I then went back to school for a second master's in Human-Computer Interaction at DePaul University. Today I work where product, operations, research and AI meet: finding where a process or product is failing the people and the business, and turning that research into decisions a team can act on.",
-  "My work so far spans financial services, higher-education operations and responsible AI research, in both B2B and B2C settings. I'm most interested in product strategy and operations roles, where I can help a team work out what to build, why, and how to get it done.",
+  "Over the next six years I led residential and commercial projects, working with clients, contractors and cross-functional teams to deliver complex work to scope. I then went back to school for a **second master's in Human-Computer Interaction** at DePaul University. Today I work where **product, operations, research and AI meet**: finding where a process or product is failing the people and the business, and **turning that research into decisions a team can act on**.",
+  "My work so far spans **financial services, higher-education operations and responsible AI research**, in both B2B and B2C settings. I'm most interested in **product strategy and operations roles**, where I can help a team work out what to build, why, and how to get it done.",
   "Outside of work, you'll usually find me behind a camera, creating digital paintings, or experimenting in the kitchen. Different mediums, same curiosity: observing, exploring, and making.",
 ];
 
@@ -59,8 +60,8 @@ export default function AboutPage() {
       {/* Hero — portrait and story on the deep band */}
       <DeepBand rain ribbon>
         <div
-          className="wrap grid items-center gap-12 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16"
-          style={{ paddingTop: "calc(var(--nav-h) + 48px)", paddingBottom: 72 }}
+          className="wrap grid items-center gap-12 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] md:gap-14"
+          style={{ paddingTop: "calc(var(--nav-h) + 40px)", paddingBottom: 56 }}
         >
           <AboutPortrait src="/img/profile/ramya-portrait.webp" alt="Portrait of Ramya Yerramilli looking up and to the side, lit warmly against a deep green background" />
 
@@ -74,9 +75,9 @@ export default function AboutPage() {
                 <p
                   key={i}
                   className="text-[16px] leading-[1.8] text-[var(--body)]"
-                  style={{ animation: `about-rise 0.9s cubic-bezier(0.16,1,0.3,1) ${0.15 + i * 0.15}s both` }}
+                  style={{ animation: `about-rise 1s cubic-bezier(0.33,1,0.68,1) ${0.1 + i * 0.12}s both` }}
                 >
-                  {p}
+                  <Rich>{p}</Rich>
                 </p>
               ))}
             </div>
@@ -141,7 +142,7 @@ export default function AboutPage() {
 
       {/* Closing — Beyond the Screen */}
       <DeepBand>
-        <div className="wrap grid gap-10 py-[clamp(64px,8vw,112px)] md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:items-end md:gap-16">
+        <div className="wrap grid gap-10 py-[clamp(48px,6vw,80px)] md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:items-end md:gap-16">
           <div>
             <p className="eyebrow eyebrow-rule">Beyond the screen</p>
             <h2 className="mt-5" style={{ fontSize: "clamp(34px, 4vw, 54px)", lineHeight: 1.08 }}>
@@ -155,18 +156,18 @@ export default function AboutPage() {
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/beyond-the-screen" className="btn">
-                Explore <span aria-hidden>&#8594;</span>
+                See Beyond the Screen <span aria-hidden>&#8594;</span>
               </Link>
             </div>
           </div>
         </div>
       </DeepBand>
 
-      {/* transform-only — never opacity, so text can't get stuck invisible */}
+      {/* fade only: starts at 30% so text can never be stuck invisible */}
       <style>{`
         @keyframes about-rise {
-          from { transform: translateY(16px); }
-          to { transform: translateY(0); }
+          from { opacity: 0.3; }
+          to { opacity: 1; }
         }
       `}</style>
     </>

@@ -10,8 +10,8 @@
  * deep green; over ivory content it's ink on ivory. The hairline appears
  * once the page has scrolled.
  *
- * On case studies the right-hand action is "Back to projects" rather than
- * "Get in touch", matching the reference.
+ * On case studies the right-hand action is "All case studies" rather than
+ * the LinkedIn link.
  */
 
 import { useEffect, useState } from "react";
@@ -21,7 +21,7 @@ import Logo from "./Logo";
 import { trackClick } from "@/lib/analyticsClient";
 
 const links = [
-  { href: "/#work", label: "Work" },
+  { href: "/case-studies", label: "Case Studies" },
   { href: "/about", label: "About" },
   { href: "/beyond-the-screen", label: "Beyond the Screen" },
   { href: "/resume.pdf", label: "Resume", external: true },
@@ -101,8 +101,8 @@ export default function Nav() {
         </nav>
 
         {isCaseStudy ? (
-          <Link href="/#work" className="btn btn-outline btn-sm hidden md:inline-flex">
-            <span aria-hidden>&#8592;</span> Back to projects
+          <Link href="/case-studies" className="btn btn-outline btn-sm hidden md:inline-flex">
+            <span aria-hidden>&#8592;</span> All case studies
           </Link>
         ) : (
           <a
@@ -112,7 +112,7 @@ export default function Nav() {
             onClick={() => trackClick("LinkedIn")}
             className="btn btn-sm hidden md:inline-flex"
           >
-            Get in touch <span aria-hidden>&#8594;</span>
+            LinkedIn <span aria-hidden>&#8599;</span>
           </a>
         )}
 
@@ -148,11 +148,11 @@ export default function Nav() {
             {isCaseStudy && (
               <li>
                 <Link
-                  href="/#work"
+                  href="/case-studies"
                   onClick={() => setOpen(false)}
                   className="block py-3 text-[15px] text-[var(--body)]"
                 >
-                  <span aria-hidden>&#8592;</span> Back to projects
+                  <span aria-hidden>&#8592;</span> All case studies
                 </Link>
               </li>
             )}
@@ -184,7 +184,7 @@ export default function Nav() {
                 }}
                 className="btn btn-sm"
               >
-                Get in touch <span aria-hidden>&#8594;</span>
+                LinkedIn <span aria-hidden>&#8599;</span>
               </a>
             </li>
           </ul>

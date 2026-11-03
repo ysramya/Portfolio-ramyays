@@ -468,12 +468,12 @@ export default function RaahiPage() {
       {/* 01 — THE OUTCOME */}
       <CaseSummary
         rows={[
-          { label: "Business problem", body: "UX practitioners could recognize manipulative design but had no shared vocabulary and no consistent way to document it, so they struggled to prove it to stakeholders." },
+          { label: "Business problem", body: "UX practitioners could recognize manipulative design but had **no shared vocabulary** and no consistent way to document it, so they struggled to prove it to stakeholders." },
           { label: "My contribution", body: "As co-founder and product designer, ran 12 practitioner interviews and a 57+ response survey, set the product's scope (who it serves, where it lives, what it detects), designed the flag-to-evidence flow, and worked with design, engineering, legal and data science." },
           { label: "Insight", body: "Practitioners review live sites inside the browser, use “dark pattern” to mean different things, and lack evidence rather than awareness." },
-          { label: "Decisions I influenced", body: "Moved from a standalone app to a browser plugin, aimed at practitioners rather than end users so the intervention happens before patterns ship, introduced a three-tier shared taxonomy, and made every flag produce evidence." },
+          { label: "Decisions I influenced", body: "Moved from a standalone app to **a browser plugin**, aimed at practitioners rather than end users so the intervention happens before patterns ship, introduced **a three-tier shared taxonomy**, and **made every flag produce evidence**." },
           { label: "Solution", body: "A working browser prototype: detect a potential pattern in context, classify it as coercive, deceptive or addictive, and record it as evidence." },
-          { label: "Impact", body: "A research-backed product direction and a working prototype. Of 57+ practitioners surveyed, 78.9% regularly encounter dark patterns (a directional, self-selected sample). It has not shipped, so there are no adoption figures. Follow-on research is now studying dark patterns in generative AI." },
+          { label: "Impact", body: "A research-backed product direction and a working prototype. Of 57+ practitioners surveyed, **78.9% regularly encounter dark patterns** (a directional, self-selected sample). **It has not shipped**, so there are no adoption figures. Follow-on research is now studying dark patterns in generative AI." },
         ]}
       />
 
@@ -1095,8 +1095,8 @@ export default function RaahiPage() {
                 <a href="#prototype" className="btn">
                   Explore the prototype <span aria-hidden>&#8594;</span>
                 </a>
-                <Link href="/#work" className="btn btn-outline">
-                  Back to projects <span aria-hidden>&#8594;</span>
+                <Link href="/case-studies" className="btn btn-outline">
+                  All case studies <span aria-hidden>&#8594;</span>
                 </Link>
               </div>
             </div>
@@ -1104,11 +1104,11 @@ export default function RaahiPage() {
 
           <div className="mt-16 flex flex-wrap items-center justify-between gap-6 pt-8" style={{ borderTop: "1px solid var(--rule)" }}>
             <div>
-              <p className="meta">Next project</p>
+              <p className="meta">Next case study</p>
               <p className="mt-2 font-[family-name:var(--font-display)] text-[30px] leading-tight text-[var(--ink)]">Wellnut</p>
             </div>
             <Link href="/projects/wellnut" className="btn btn-outline">
-              View case study <span aria-hidden>&#8594;</span>
+              Read the case study <span aria-hidden>&#8594;</span>
             </Link>
           </div>
         </div>

@@ -7,11 +7,11 @@ import DeepBand from "./DeepBand";
  * as the reference: dark opening, ivory body, dark close.
  */
 export default function NextProjectBand({
-  eyebrow = "Next project",
+  eyebrow = "Next case study",
   title,
   description,
   href,
-  cta = "View case study",
+  cta = "Read the case study",
 }: {
   eyebrow?: string;
   title: string;
@@ -34,8 +34,8 @@ export default function NextProjectBand({
             <Link href={href} className="btn">
               {cta} <span aria-hidden>&#8594;</span>
             </Link>
-            <Link href="/#work" className="btn btn-outline">
-              All work
+            <Link href="/case-studies" className="btn btn-outline">
+              All case studies
             </Link>
           </div>
         </div>

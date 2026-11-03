@@ -498,12 +498,12 @@ export default function AsapPage() {
       {/* 01 — THE PROBLEM: statement · observations · key insight */}
       <CaseSummary
         rows={[
-          { label: "Business problem", body: "People with a big goal freeze at the blank page. Planning tools assume a plan already exists, and generic AI hands over advice without helping people decide what matters first." },
+          { label: "Business problem", body: "People with a big goal **freeze at the blank page**. Planning tools assume a plan already exists, and generic AI hands over advice without helping people decide what matters first." },
           { label: "My contribution", body: "On a four-person team, owned user research and usability testing, conversation and prompt design, AI behavior, confidence and limitation states, and turning findings into product requirements." },
           { label: "Insight", body: "Six interviews showed people did not need another task manager. They needed help getting started." },
-          { label: "Decisions I influenced", body: "Reframed the product from “make me a plan” to “help me figure out the plan”: ask before recommending, show one step at a time, and make AI uncertainty visible." },
+          { label: "Decisions I influenced", body: "Reframed the product from “make me a plan” to **“help me figure out the plan”**: ask before recommending, show one step at a time, and **make AI uncertainty visible**." },
           { label: "Solution", body: "A working mobile prototype on the Claude API: set a goal, answer a few clarifying questions, get a stepwise plan with confidence levels, then focus on one step." },
-          { label: "Impact", body: "Tested across 4 usability scenarios and 3 iterations. Testing exposed generic recommendations, unreliable responses and lost progress, which led to role-aware prompts, clearer response handling and step cues. It is a prototype, so there are no adoption numbers. The next test is whether people complete more of what they set out to do." },
+          { label: "Impact", body: "Tested across **4 usability scenarios and 3 iterations**. Testing exposed generic recommendations, unreliable responses and lost progress, which led to role-aware prompts, clearer response handling and step cues. It is a prototype, so there are **no adoption numbers**. The next test is whether people complete more of what they set out to do." },
         ]}
       />
 
@@ -1101,13 +1101,13 @@ export default function AsapPage() {
             style={{ borderTop: "1px solid var(--rule)" }}
           >
             <div>
-              <p className="meta">Next project</p>
+              <p className="meta">Next case study</p>
               <p className="mt-2 font-[family-name:var(--font-display)] text-[30px] leading-tight text-[var(--ink)]">
                 PM Dashboard
               </p>
             </div>
             <Link href="/projects/mainstreet" className="btn btn-outline">
-              View case study <span aria-hidden>&#8594;</span>
+              Read the case study <span aria-hidden>&#8594;</span>
             </Link>
           </div>
         </div>

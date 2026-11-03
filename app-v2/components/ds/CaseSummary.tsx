@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
+import Rich from "@/components/ds/Rich";
 
 /**
  * CaseSummary: the case in six lines, directly under a case study's hero.
@@ -26,7 +27,7 @@ export default function CaseSummary({ rows }: { rows: CaseSummaryRow[] }) {
               style={{ borderTop: "1px solid var(--rule)" }}
             >
               <dt className="text-[13px] font-medium tracking-[0.04em] text-[var(--muted)] md:pt-1">{row.label}</dt>
-              <dd className="text-[16px] leading-[1.7] text-[var(--body)]">{row.body}</dd>
+              <dd className="text-[16px] leading-[1.7] text-[var(--body)]">{typeof row.body === "string" ? <Rich>{row.body}</Rich> : row.body}</dd>
             </div>
           ))}
         </dl>

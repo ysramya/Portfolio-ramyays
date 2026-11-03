@@ -430,12 +430,12 @@ export default function WellnutPage() {
       {/* 01 — THE OUTCOME */}
       <CaseSummary
         rows={[
-          { label: "Business problem", body: "Free campus mental-health services existed, but 58% of students with chronic stress in the survey had never used them: stigma, lack of time, a preference for independence and uncertainty about where to start." },
+          { label: "Business problem", body: "Free campus mental-health services existed, but **58% of students with chronic stress** in the survey had never used them: stigma, lack of time, a preference for independence and uncertainty about where to start." },
           { label: "My contribution", body: "As UX researcher and project coordinator, designed and synthesized a 33-student survey, drew on a licensed-therapist consultation, set the MVP scope, wrote the conversation design and ethical guardrails, and coordinated a team across research, Unreal development, environment art, character art and audio." },
-          { label: "Insight", body: "The barrier comes before the first step. 71% saw value in VR meditation, and students need to feel heard before they can accept guidance." },
-          { label: "Decisions I influenced", body: "A private VR environment, an always-available avatar, and acknowledgement before meditation. Scoped version one to a single focused experience instead of five unfinished features." },
+          { label: "Insight", body: "The barrier comes before the first step. **71% saw value in VR meditation**, and students need to feel heard before they can accept guidance." },
+          { label: "Decisions I influenced", body: "A private VR environment, an always-available avatar, and acknowledgement before meditation. Scoped version one to **a single focused experience instead of five unfinished features**." },
           { label: "Solution", body: "A working VR prototype: a private forest, emotion selection, an empathetic avatar conversation and guided meditation." },
-          { label: "Impact", body: "Took an idea from research to a built prototype in 6 months and showed it at the Jarvis Innovation Showcase in May 2025, where feedback was positive and produced the next build list. It is a prototype, so there are no clinical or adoption outcomes to claim." },
+          { label: "Impact", body: "Took an idea from **research to a built prototype in 6 months** and showed it at the Jarvis Innovation Showcase in May 2025, where feedback was positive and produced the next build list. It is a prototype, so there are **no clinical or adoption outcomes** to claim." },
         ]}
       />
 
@@ -1119,8 +1119,8 @@ export default function WellnutPage() {
                 <a href="#experience" className="btn">
                   Explore the experience <span aria-hidden>&#8594;</span>
                 </a>
-                <Link href="/#work" className="btn btn-outline">
-                  Back to projects <span aria-hidden>&#8594;</span>
+                <Link href="/case-studies" className="btn btn-outline">
+                  All case studies <span aria-hidden>&#8594;</span>
                 </Link>
               </div>
             </div>
@@ -1128,11 +1128,11 @@ export default function WellnutPage() {
 
           <div className="mt-16 flex flex-wrap items-center justify-between gap-6 pt-8" style={{ borderTop: "1px solid var(--rule)" }}>
             <div>
-              <p className="meta">Next project</p>
+              <p className="meta">Next case study</p>
               <p className="mt-2 font-[family-name:var(--font-display)] text-[30px] leading-tight text-[var(--ink)]">Invisible Impacts</p>
             </div>
             <Link href="/projects/invisible-impacts" className="btn btn-outline">
-              View case study <span aria-hidden>&#8594;</span>
+              Read the case study <span aria-hidden>&#8594;</span>
             </Link>
           </div>
         </div>

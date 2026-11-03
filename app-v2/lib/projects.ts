@@ -9,6 +9,8 @@ export type Project = {
   /** How long the project ran, shown on the homepage card. Omitted where the
    *  case study doesn't state one. */
   duration?: string;
+  /** The headline result, shown on every case-study card so they read alike. */
+  impact: { stat: string; label: string };
   accent: "green" | "yellow";
 };
 
@@ -25,6 +27,7 @@ export const projects: Project[] = [
     image: "/img/mainstreet/dashboard-mockup.png",
     video: "/img/mainstreet/thumb.mp4",
     duration: "8 weeks",
+    impact: { stat: "~3 hrs", label: "saved every week per Portfolio Manager, with the portfolio view in under 10 seconds" },
     accent: "yellow",
   },
   {
@@ -36,6 +39,7 @@ export const projects: Project[] = [
     image: "/img/asap/thumb-poster.jpg",
     video: "/video/asap-thumb.mp4",
     duration: "10 weeks",
+    impact: { stat: "3 iterations", label: "across 4 usability scenarios with a live AI prototype; user testing reshaped the AI's behavior" },
     accent: "green",
   },
   {
@@ -46,6 +50,7 @@ export const projects: Project[] = [
     image: "/img/raahi/laptop-mockup.png",
     video: "/img/raahi/thumb.mp4",
     duration: "16 weeks",
+    impact: { stat: "57+", label: "practitioners surveyed, plus 12 interviews, which set the product's scope and direction" },
     accent: "green",
   },
   {
@@ -55,6 +60,7 @@ export const projects: Project[] = [
     category: "Product Research · VR",
     image: "/img/wellnut/vr-session.jpg",
     duration: "6 months",
+    impact: { stat: "6 months", label: "from research to a working VR prototype, shown at the Jarvis Innovation Showcase" },
     accent: "yellow",
   },
   {
@@ -65,6 +71,7 @@ export const projects: Project[] = [
     image: "/img/coac/laptop-mockup.png",
     video: "/img/coac/thumb.mp4",
     duration: "10 weeks",
+    impact: { stat: "85%", label: "of visitors reported changed awareness of AI's footprint (self-reported); grant winner" },
     accent: "green",
   },
 ];
@@ -84,8 +91,8 @@ export function getNextProject(slug: string): {
       href: `/projects/${next.slug}`,
       title: next.title,
       description: next.description,
-      eyebrow: "Next project",
-      cta: "View case study",
+      eyebrow: "Next case study",
+      cta: "Read the case study",
     };
   }
   return {
