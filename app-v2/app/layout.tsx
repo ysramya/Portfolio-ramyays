@@ -42,6 +42,10 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${prata.variable} ${dmSans.variable}`}
+      // The stylesheet turns on smooth scrolling for in-page links. This tells
+      // Next to switch it off during route changes, so opening a page starts at
+      // the top instead of visibly scrolling up from where the last one was.
+      data-scroll-behavior="smooth"
     >
       {/* suppressHydrationWarning: browser extensions (e.g. Dashlane) inject
           attributes like cz-shortcut-listen onto <body> after the server
