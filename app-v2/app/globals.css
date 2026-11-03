@@ -1211,8 +1211,8 @@ body:has(.theme-wellnut) .theme-deep {
   }
 
   @keyframes page-enter {
-    from { opacity: 0; transform: translate3d(64px, 0, 0); }
-    to { opacity: 1; transform: none; }
+    from { transform: translate3d(64px, 0, 0); }
+    to { transform: none; }
   }
 }
 
