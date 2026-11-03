@@ -13,13 +13,13 @@ export const metadata: Metadata = {
 export default function BeyondTheScreenPage() {
   const sections = [
     {
-      id: "paintings",
-      eyebrow: "Painting",
-      title: "Digital Paintings",
+      id: "interiors",
+      eyebrow: "Photography",
+      title: "Interiors",
       description:
-        "Ideas often begin long before they're structured into systems. Digital painting gives me space to experiment with color, composition, and atmosphere without constraints, exploring emotion before function.",
-      images: getGalleryImages("paintings"),
-      empty: "Paintings coming soon.",
+        "Rooms hold the same questions I ask in research: how does a space guide attention, invite pause, or shape a mood before anyone notices why. Interior photography is where that instinct started.",
+      images: getGalleryImages("interiors"),
+      empty: "Interiors coming soon.",
     },
     {
       id: "cityscapes",
@@ -40,15 +40,6 @@ export default function BeyondTheScreenPage() {
       empty: "Nature photos coming soon.",
     },
     {
-      id: "interiors",
-      eyebrow: "Photography",
-      title: "Interiors",
-      description:
-        "Rooms hold the same questions I ask in research: how does a space guide attention, invite pause, or shape a mood before anyone notices why. Interior photography is where that instinct started.",
-      images: getGalleryImages("interiors"),
-      empty: "Interiors coming soon.",
-    },
-    {
       id: "cooking",
       eyebrow: "Food",
       title: "Cooking",
@@ -56,6 +47,15 @@ export default function BeyondTheScreenPage() {
         "Cooking is another form of design. Every meal is a balance of experimentation, iteration, and intuition. It's where planning meets improvisation, and where small decisions come together to create something meaningful.",
       images: getGalleryImages("cooking"),
       empty: "Cooking photos coming soon.",
+    },
+    {
+      id: "paintings",
+      eyebrow: "Art",
+      title: "Digital Paintings",
+      description:
+        "Ideas often begin long before they're structured into systems. Digital painting gives me space to experiment with color, composition, and atmosphere without constraints, exploring emotion before function.",
+      images: getGalleryImages("paintings"),
+      empty: "Paintings coming soon.",
     },
   ];
 
