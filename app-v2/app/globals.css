@@ -1380,30 +1380,27 @@ body:has(.theme-wellnut) .theme-deep {
 }
 
 /* ── Hero tags ──
-   The credibility line under the headline. Highlighted as text (bright,
-   medium weight, a short accent rule in front) and deliberately not outlined or
-   rounded, so it reads as a statement and not as a row of buttons. */
+   The credibility line under the headline: bright phrases, each underlined by a
+   slim gold rule that fades out to the right. No outline, no rounded shape and
+   no fill, so it reads as marked-up text and not as buttons. They wrap with the
+   column, so they never run into the portrait. */
 .hero-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 28px;
+  gap: 14px 30px;
+  max-width: 100%;
 }
 .hero-tag {
-  position: relative;
-  padding-left: 20px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
-  letter-spacing: 0.01em;
+  line-height: 1.4;
+  letter-spacing: 0.005em;
   color: var(--ink);
-}
-.hero-tag::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.78em;
-  width: 12px;
-  height: 2px;
-  background: var(--numeral);
+  padding-bottom: 7px;
+  background-image: linear-gradient(90deg, #d9b48c 0%, #c29a79 45%, rgba(194, 154, 121, 0) 100%);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 2px;
 }
 
 /* ── Key points ──
