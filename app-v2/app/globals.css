@@ -1379,6 +1379,33 @@ body:has(.theme-wellnut) .theme-deep {
   }
 }
 
+/* ── Hero tags ──
+   The credibility line under the headline. Highlighted as text (bright,
+   medium weight, a short accent rule in front) and deliberately not outlined or
+   rounded, so it reads as a statement and not as a row of buttons. */
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+}
+.hero-tag {
+  position: relative;
+  padding-left: 20px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+.hero-tag::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.78em;
+  width: 12px;
+  height: 2px;
+  background: var(--numeral);
+}
+
 /* ── Key points ──
    Bold carries the eye to the phrases and numbers a skimmer needs. DM Sans
    600 in the full ink colour, so it reads on ivory and on the deep bands. */

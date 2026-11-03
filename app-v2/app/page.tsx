@@ -30,9 +30,9 @@ export default function Home() {
             >
               I turn complex user and operational problems into clear product decisions.
             </h2>
-            <ul className="mt-6 flex flex-wrap gap-2" aria-label="Areas of credibility">
+            <ul className="hero-tags mt-6" aria-label="Areas of credibility">
               {["Product discovery & planning", "Product operations & workflows", "Research-led decisions", "AI & emerging technology"].map((a) => (
-                <li key={a} className="pill">
+                <li key={a} className="hero-tag">
                   {a}
                 </li>
               ))}
