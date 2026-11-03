@@ -4,6 +4,7 @@ import AboutPortrait from "./AboutPortrait";
 import DeepBand from "@/components/ds/DeepBand";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
 import Rich from "@/components/ds/Rich";
+import InterestTags from "@/components/about/InterestTags";
 
 export const metadata: Metadata = {
   title: "About | Ramya Yerramilli",
@@ -28,31 +29,12 @@ const experience = [
 
 const research = [
   {
-    title: "Making AI Infrastructure Visible: Interactive Art as a Public-Facing AI Ethics Interface",
-    venue: "AIES 2026 · Under Review",
-  },
-  { title: "Consciously Assigning Personality to AI", venue: "CHI 2027 · In Progress" },
-  {
     title: "Exposing & Mitigating Dark Patterns in Generative AI for Vulnerable Users",
     venue: "RAISE Lab · Ongoing Research",
   },
   { title: "AI Safety Evaluation Framework for Community Banks", venue: "Research Proposal · 2026" },
 ];
 
-const interests = [
-  "Product Strategy",
-  "Product Operations",
-  "Product Discovery",
-  "Process Improvement",
-  "Data & Dashboards",
-  "Business Problem-Solving",
-  "Human-AI Interaction",
-  "Responsible AI",
-  "AI Safety",
-  "UX Research",
-  "Mixed Methods",
-  "Systems Thinking",
-];
 
 /**
  * Key facts under a section title. On desktop the title sits beside a long list
@@ -149,8 +131,8 @@ export default function AboutPage() {
           <SectionHead n="02" eyebrow="Research" title="Research & writing" className="md:sticky md:top-28">
             <SideStats
               stats={[
-                { value: "4", label: "studies, papers and proposals on human-AI interaction and AI safety" },
-                { value: "AIES 2026", label: "paper under review, with CHI 2027 in progress" },
+                { value: "2", label: "studies and proposals on human-AI interaction and AI safety" },
+                { value: "RAISE Lab", label: "ongoing research on dark patterns in generative AI for vulnerable users" },
               ]}
             />
           </SectionHead>
@@ -171,13 +153,7 @@ export default function AboutPage() {
           <SectionHead n="03" eyebrow="Focus" title="Areas of interest" />
           {/* Twelve tags; the CSS caps the delay from the fifth on, so this
               lands as one group settling rather than a slow cascade. */}
-          <ul data-reveal-group className="flex flex-wrap gap-2.5 md:pt-2">
-            {interests.map((tag) => (
-              <li key={tag} className="pill">
-                {tag}
-              </li>
-            ))}
-          </ul>
+          <InterestTags />
         </div>
       </Section>
 

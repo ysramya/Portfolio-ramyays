@@ -1068,7 +1068,7 @@ export default function RaahiPage() {
               ))}
             </ul>
             <p className="mt-6 pl-5 text-[15px] leading-relaxed text-[var(--body)]" style={{ borderLeft: "2px solid var(--numeral)" }}>
-              The follow-on research is now studying how dark patterns emerge in generative AI, with the longer-term goal of feeding those findings back into the product model. I&rsquo;m leading a team of five with two faculty advisors; the study is in data collection, targeting CHI 2027.
+              The follow-on research is now studying how dark patterns emerge in generative AI, with the longer-term goal of feeding those findings back into the product model. I&rsquo;m leading a team of five with two faculty advisors; the study is in data collection.
             </p>
           </div>
         </div>

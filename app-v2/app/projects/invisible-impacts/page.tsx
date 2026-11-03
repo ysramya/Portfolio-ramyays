@@ -1200,41 +1200,6 @@ export default function InvisibleImpactsPage() {
         </ul>
       </Section>
 
-      {/* 18 — CONTINUING RESEARCH */}
-      <Section id="next">
-        <div className="sec-grid">
-          <SectionHead n="18" eyebrow="Continuing research" title="The installation became a research platform.">
-            <p>
-              Further work on the project developed into a paper on interactive art as a
-              public-facing AI ethics interface.
-            </p>
-          </SectionHead>
-
-          <div className="lg:pt-10">
-            <figure className="panel p-7" aria-label="From installation to research evidence to academic paper">
-              <Chain
-                size="sm"
-                nodes={[
-                  { icon: i.drop, label: "Installation" },
-                  { icon: i.chart, label: "Research evidence", tone: "water" },
-                  { icon: i.doc, label: "Academic paper", tone: "strong" },
-                ]}
-              />
-            </figure>
-
-            <div className="mt-4 p-6" style={{ border: "1px solid var(--border-strong)", borderRadius: "var(--radius)", background: "var(--bg-raised)" }}>
-              <p className="text-[14px] leading-relaxed text-[var(--ink)]">
-                Cunningham, J. L., Iqbal, S., Nacu, D., Caplan, B., Yerramilli, R., &amp; Mukkamala,
-                D. D. (2026). &ldquo;Making AI Infrastructure Visible: Interactive Art as a
-                Public-Facing AI Ethics Interface.&rdquo;{" "}
-                <em>AAAI/ACM Conference on AI, Ethics, and Society (AIES 2026)</em>.
-              </p>
-              <p className="meta mt-3">Paper #343 · Under review, not accepted</p>
-            </div>
-          </div>
-        </div>
-      </Section>
-
       {/* CLOSING — light blue, per the brief: deep blue type, no dark navy */}
       <LightBand>
         <div className="wrap py-[clamp(64px,8vw,112px)]">
