@@ -473,7 +473,7 @@ export default function RaahiPage() {
           { label: "Insight", body: "Practitioners review live sites inside the browser, use “dark pattern” to mean different things, and lack evidence rather than awareness." },
           { label: "Decisions I influenced", body: "Moved from a standalone app to **a browser plugin**, aimed at practitioners rather than end users so the intervention happens before patterns ship, introduced **a three-tier shared taxonomy**, and **made every flag produce evidence**." },
           { label: "Solution", body: "A working browser prototype: detect a potential pattern in context, classify it as coercive, deceptive or addictive, and record it as evidence." },
-          { label: "Impact", body: "A research-backed product direction and a working prototype. Of 57+ practitioners surveyed, **78.9% regularly encounter dark patterns** (a directional, self-selected sample). **It has not shipped**, so there are no adoption figures. Follow-on research is now studying dark patterns in generative AI." },
+          { label: "Impact", body: "A research-backed product direction and a working prototype. Of 57+ practitioners surveyed, **78.9% regularly encounter dark patterns** (a directional, self-selected sample). **It has not shipped**, so there are no adoption figures." },
         ]}
       />
 
@@ -1067,9 +1067,6 @@ export default function RaahiPage() {
                 </li>
               ))}
             </ul>
-            <p className="mt-6 pl-5 text-[15px] leading-relaxed text-[var(--body)]" style={{ borderLeft: "2px solid var(--numeral)" }}>
-              The follow-on research is now studying how dark patterns emerge in generative AI, with the longer-term goal of feeding those findings back into the product model. I&rsquo;m leading a team of five with two faculty advisors; the study is in data collection.
-            </p>
           </div>
         </div>
       </Section>
