@@ -1452,3 +1452,24 @@ footer strong {
 .theme-deep .logo-on-light {
   display: none;
 }
+
+/* Cursor glow (components/ui/spotlight-background.tsx). The glow is a soft
+   disc that eases between a tight and a wide state; position is set from
+   script, so only opacity and size are animated here. */
+.spotlight-glow {
+  width: 520px;
+  height: 520px;
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: opacity 400ms ease-out, width 300ms ease-out, height 300ms ease-out;
+}
+
+.spotlight-glow[data-on="true"] {
+  opacity: 1;
+}
+
+/* Tighter while the cursor travels, wider once it rests. */
+.spotlight-glow[data-moving="true"] {
+  width: 420px;
+  height: 420px;
+}
