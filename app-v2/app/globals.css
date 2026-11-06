@@ -337,8 +337,8 @@ body:has(.theme-wellnut) .theme-deep {
 
   .meta {
     font-family: var(--font-body), system-ui, sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.14em;
+    font-size: 12px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--muted-2);
   }

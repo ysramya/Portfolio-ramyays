@@ -529,7 +529,7 @@ export default function MainstreetPage() {
                     }}
                   >
                     <Icon className="icon-line !h-5 !w-5">{s.icon}</Icon>
-                    <span className="mt-2 text-[11px] leading-tight text-[var(--body)]">{s.label}</span>
+                    <span className="mt-2 text-[12px] leading-tight text-[var(--body)]">{s.label}</span>
                   </li>
                 ))}
               </ul>
@@ -895,7 +895,7 @@ export default function MainstreetPage() {
             <figure aria-hidden className="flex h-[120px] items-center gap-3 px-4" style={{ background: "var(--bg-raised)", borderRadius: "var(--radius)" }}>
               <div className="flex flex-col gap-2">
                 {["Excel", "Excel", "CRM"].map((s, idx) => (
-                  <span key={idx} className="flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10.5px] text-[var(--ink)]" style={{ border: "1px solid var(--border-strong)" }}>
+                  <span key={idx} className="flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] text-[var(--ink)]" style={{ border: "1px solid var(--border-strong)" }}>
                     <Icon className="icon-line !h-3 !w-3">{s === "CRM" ? i.crm : i.sheet}</Icon>
                     {s}
                   </span>
@@ -903,13 +903,13 @@ export default function MainstreetPage() {
               </div>
               <Arrow />
               <div className="flex-1">
-                <span className="block rounded-full px-2.5 py-1 text-center text-[10.5px]" style={{ background: "var(--ink)", color: "var(--bg)" }}>
+                <span className="block rounded-full px-2.5 py-1 text-center text-[12px]" style={{ background: "var(--ink)", color: "var(--bg)" }}>
                   Dashboard
                 </span>
                 <div className="mx-auto h-2.5 w-px" style={{ background: "var(--border-strong)" }} />
                 <div className="grid grid-cols-2 gap-1">
                   {["KPIs", "Trends", "Portfolio", "Clients"].map((n) => (
-                    <span key={n} className="rounded-full py-0.5 text-center text-[10px] text-[var(--ink)]" style={{ border: "1px solid var(--border-strong)" }}>
+                    <span key={n} className="rounded-full py-0.5 text-center text-[12px] text-[var(--ink)]" style={{ border: "1px solid var(--border-strong)" }}>
                       {n}
                     </span>
                   ))}
@@ -940,7 +940,7 @@ export default function MainstreetPage() {
                     className="h-1.5 flex-none rounded-full"
                     style={{ width: `${22 + idx * 12}%`, background: idx === arr.length - 1 ? "var(--ink)" : "var(--border-strong)" }}
                   />
-                  <span className="text-[10.5px] text-[var(--ink)]">{s}</span>
+                  <span className="text-[12px] text-[var(--ink)]">{s}</span>
                 </div>
               ))}
             </figure>
@@ -1015,7 +1015,7 @@ export default function MainstreetPage() {
                   <Image src="/img/mainstreet/dashboard.jpg" alt="" fill sizes="200px" className="object-cover object-top" />
                 </div>
               </div>
-              <div className="mt-3 grid grid-cols-2 text-[11.5px] text-[var(--muted)] sm:grid-cols-4">
+              <div className="mt-3 grid grid-cols-2 text-[12px] text-[var(--muted)] sm:grid-cols-4">
                 <span>Early · table-heavy</span>
                 <span className="hidden sm:block" />
                 <span className="hidden sm:block">KPIs and visuals lead</span>
@@ -1279,8 +1279,8 @@ export default function MainstreetPage() {
                     className="block h-12 w-full"
                     style={{ background: s.hex, borderRadius: 4, border: "1px solid var(--border-strong)" }}
                   />
-                  <span className="mt-2 block text-[11.5px] leading-tight text-[var(--ink)]">{s.t}</span>
-                  <span className="block text-[11px] leading-tight text-[var(--muted)]">{s.hex}</span>
+                  <span className="mt-2 block text-[12px] leading-tight text-[var(--ink)]">{s.t}</span>
+                  <span className="block text-[12px] leading-tight text-[var(--muted)]">{s.hex}</span>
                 </li>
               ))}
             </ul>

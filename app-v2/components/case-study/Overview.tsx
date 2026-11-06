@@ -47,7 +47,7 @@ export default function Overview({
               key={m.label}
               className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3"
             >
-              <dt className="text-[10px] font-medium tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">
+              <dt className="text-[12px] font-medium tracking-[0.2em] uppercase text-[var(--color-ink-faint)]">
                 {m.label}
               </dt>
               <dd className="mt-1 text-sm text-[var(--color-ink)]">{m.value}</dd>

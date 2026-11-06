@@ -807,7 +807,7 @@ export default function WellnutPage() {
               <p className="eyebrow mt-5 !text-[var(--ink)]">{r.title}</p>
               <ul className="mt-3 flex flex-wrap gap-1.5">
                 {r.tags.map((t) => (
-                  <li key={t} className="tag !bg-[var(--bg-raised)] !text-[11.5px]">
+                  <li key={t} className="tag !bg-[var(--bg-raised)] !text-[12px]">
                     {t}
                   </li>
                 ))}
