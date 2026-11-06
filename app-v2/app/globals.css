@@ -406,6 +406,17 @@ body:has(.theme-wellnut) .theme-deep {
     }
   }
 
+  /* When one column is shorter than the other, it rides alongside the longer
+     one instead of leaving a blank block under (or above) it. The taller
+     column sets the section's height, so it never moves; only the shorter
+     one does, and only within the section. */
+  @media (min-width: 900px) {
+    .sec-grid > * {
+      position: sticky;
+      top: calc(var(--nav-h) + 28px);
+    }
+  }
+
   .sec-head {
     display: grid;
     grid-template-columns: 60px minmax(0, 1fr);

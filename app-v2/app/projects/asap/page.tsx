@@ -510,7 +510,7 @@ export default function AsapPage() {
       <Section id="problem">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-10">
           <SectionHead
-            n="01"
+            n="02"
             eyebrow="The problem"
             title="People have goals. The hard part is knowing where to start."
           >
@@ -567,7 +567,7 @@ export default function AsapPage() {
           elements on the page. */}
       <Section id="demo">
         <SectionHead
-          n="02"
+          n="03"
           eyebrow="See ASAP in action"
           title="From “I don’t know where to start” to a clear next step."
         >
@@ -592,7 +592,7 @@ export default function AsapPage() {
       <Section id="direction">
         <div className="sec-grid">
           <SectionHead
-            n="03"
+            n="04"
             eyebrow="Product direction"
             title="We moved from “make me a plan” to “help me figure out the plan.”"
           >
@@ -623,7 +623,7 @@ export default function AsapPage() {
 
       {/* 04 — THE EXPERIENCE: GOAL → CLARIFY → PLAN → FOCUS */}
       <Section id="experience">
-        <SectionHead n="04" eyebrow="The experience" title="A simple flow from goal to action.">
+        <SectionHead n="05" eyebrow="The experience" title="A simple flow from goal to action.">
           <p>The experience is built around four moments.</p>
         </SectionHead>
 
@@ -657,7 +657,7 @@ export default function AsapPage() {
       <Section id="ai">
         <div className="sec-grid">
           <div>
-            <SectionHead n="05" eyebrow="Designing the AI" title="The interface was only part of the design.">
+            <SectionHead n="06" eyebrow="Designing the AI" title="The interface was only part of the design.">
               <p>
                 Because ASAP relies on AI, I also had to design what happens behind the
                 interface: how the system asks questions, uses context, responds to users,
@@ -724,7 +724,7 @@ export default function AsapPage() {
           of the page so the evidence can be shown large enough to read. */}
       <Section id="build">
         <SectionHead
-          n="06"
+          n="07"
           eyebrow="Building with real AI"
           title="Testing the real AI exposed problems we couldn’t see in static screens."
         >
@@ -791,7 +791,7 @@ export default function AsapPage() {
       {/* 07 — VALIDATION */}
       <Section id="validation">
         <div className="sec-grid">
-          <SectionHead n="07" eyebrow="Validation" title="What we learned from using it with people.">
+          <SectionHead n="08" eyebrow="Validation" title="What we learned from using it with people.">
             <p>
               We ran 6 user interviews and 4 usability scenarios across 3 design iterations
               using a live AI-powered prototype.
@@ -853,7 +853,7 @@ export default function AsapPage() {
       <Section id="impact">
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
           <SectionHead
-            n="08"
+            n="09"
             eyebrow="Impact"
             title={
               <>
@@ -923,7 +923,7 @@ export default function AsapPage() {
       <Section id="role">
         <div className="sec-grid">
           <SectionHead
-            n="09"
+            n="10"
             eyebrow="My role"
             title="I worked on the experience between the user’s goal and the AI’s response."
           >
@@ -961,7 +961,7 @@ export default function AsapPage() {
       {/* 10 — DESIGN SYSTEM */}
       <Section id="design-system">
         <div className="sec-grid">
-          <SectionHead n="10" eyebrow="Design system" title="Calm by default, so the task stays dominant.">
+          <SectionHead n="11" eyebrow="Design system" title="Calm by default, so the task stays dominant.">
             <p>
               A slate-teal core with warm neutrals, sage and amber accents, and a restrained
               semantic set: enough structure to keep AI states legible without letting the
@@ -1048,7 +1048,7 @@ export default function AsapPage() {
       <Section id="next">
         <div className="sec-grid">
           <SectionHead
-            n="11"
+            n="12"
             eyebrow="What’s next"
             title="The next step is making ASAP useful beyond the prototype."
           >

@@ -445,7 +445,7 @@ export default function MainstreetPage() {
       <Section id="outcome">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
           <SectionHead
-            n="01"
+            n="02"
             eyebrow="The outcome"
             title={
               <>
@@ -486,7 +486,7 @@ export default function MainstreetPage() {
       <Section id="why">
         <div className="sec-grid">
           <SectionHead
-            n="02"
+            n="03"
             eyebrow="Why it mattered"
             title={
               <>
@@ -575,7 +575,7 @@ export default function MainstreetPage() {
 
       {/* 03 — THE WORKFLOW */}
       <Section id="workflow">
-        <SectionHead n="03" eyebrow="The workflow" title="From assembling reports to acting on them." />
+        <SectionHead n="04" eyebrow="The workflow" title="From assembling reports to acting on them." />
 
         <div className="mt-10 grid gap-5 lg:grid-cols-2">
           {/* BEFORE — Monday reporting ritual */}
@@ -661,7 +661,7 @@ export default function MainstreetPage() {
       {/* 04 — THE SOLUTION */}
       <Section id="solution">
         <div className="sec-grid">
-          <SectionHead n="04" eyebrow="The solution" title="One screen. The information PMs needed most.">
+          <SectionHead n="05" eyebrow="The solution" title="One screen. The information PMs needed most.">
             <p>
               The dashboard brought portfolio performance, investor activity, revenue, and client
               information into a single Power BI experience.
@@ -713,7 +713,7 @@ export default function MainstreetPage() {
       {/* 05 — THE DASHBOARD: real screenshot, annotated */}
       <Section id="dashboard">
         <SectionHead
-          n="05"
+          n="06"
           eyebrow="The dashboard"
           title={
             <>
@@ -795,58 +795,52 @@ export default function MainstreetPage() {
 
       {/* 06 — MY ROLE */}
       <Section id="role">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end lg:gap-14">
-          <SectionHead n="06" eyebrow="My role" title="I worked across the problem, the data, and the product.">
-            <p>
-              I owned the dashboard experience from understanding PM needs through information
-              architecture, data preparation, dashboard design, iteration, and delivery.
-            </p>
-            <p>
-              I worked closely with Portfolio Managers, operations, analysts, and engineering to
-              turn a fragmented reporting workflow into a usable internal product.
-            </p>
-          </SectionHead>
-          <div className="lg:pb-2">
-            <p className="meta">Tools</p>
-            <ul className="mt-3 flex flex-wrap gap-2">
-              {["Power BI", "Excel", "DAX", "Figma", "CRM data"].map((t) => (
-                <li key={t} className="pill">
-                  {t}
-                </li>
-              ))}
-            </ul>
+        <div className="sec-grid">
+          <div>
+            <SectionHead n="07" eyebrow="My role" title="I worked across the problem, the data, and the product.">
+              <p>
+                I owned the dashboard experience from understanding PM needs through information
+                architecture, data preparation, dashboard design, iteration, and delivery.
+              </p>
+              <p>
+                I worked closely with Portfolio Managers, operations, analysts, and engineering to
+                turn a fragmented reporting workflow into a usable internal product.
+              </p>
+            </SectionHead>
+            <div className="mt-8 pl-0 md:pl-[60px]">
+              <p className="meta">Tools</p>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {["Power BI", "Excel", "DAX", "Figma", "CRM data"].map((t) => (
+                  <li key={t} className="pill">
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
 
-        {/* Responsibility map */}
-        <ol className="mt-10 grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          {roleMap.map((r, idx) => (
-            <li key={r.title} className="panel relative flex flex-col p-5">
-              <div className="flex items-center justify-between">
-                <Icon>{r.icon}</Icon>
-                <span className="font-[family-name:var(--font-display)] text-[18px] text-[var(--numeral)]" aria-hidden>
-                  {String(idx + 1).padStart(2, "0")}
-                </span>
-              </div>
-              <p className="eyebrow mt-5 !text-[var(--ink)]">{r.title}</p>
-              <p className="mt-2 text-[13.5px] leading-snug text-[var(--body)]">{r.body}</p>
-              {idx < roleMap.length - 1 && (
-                <span
-                  aria-hidden
-                  className="absolute -right-[11px] top-1/2 z-10 hidden h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full lg:flex"
-                  style={{ background: "var(--bg)" }}
-                >
-                  <Icon className="icon-line !h-3.5 !w-3.5">{i.arrowR}</Icon>
-                </span>
-              )}
-            </li>
-          ))}
-        </ol>
+          {/* Responsibility map: beside the heading, so the section reads as
+              one block instead of a heading with a strip under it. */}
+          <ol className="grid gap-3 sm:grid-cols-2">
+            {roleMap.map((r, idx) => (
+              <li key={r.title} className="panel relative flex flex-col p-5">
+                <div className="flex items-center justify-between">
+                  <Icon>{r.icon}</Icon>
+                  <span className="font-[family-name:var(--font-display)] text-[18px] text-[var(--numeral)]" aria-hidden>
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <p className="eyebrow mt-5 !text-[var(--ink)]">{r.title}</p>
+                <p className="mt-2 text-[13.5px] leading-snug text-[var(--body)]">{r.body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
       </Section>
 
       {/* 07 — THE PROCESS: the real project progression */}
       <Section id="process">
-        <SectionHead n="07" eyebrow="The process" title="A collaborative process, shaped by real business constraints." />
+        <SectionHead n="08" eyebrow="The process" title="A collaborative process, shaped by real business constraints." />
 
         <div className="mt-10 grid gap-4 lg:grid-cols-3">
           {/* 01 Discover */}
@@ -1055,7 +1049,7 @@ export default function MainstreetPage() {
       {/* 08 — BEHIND THE DASHBOARD */}
       <Section id="data">
         <div className="sec-grid">
-          <SectionHead n="08" eyebrow="Behind the dashboard" title="The interface was only as good as the data underneath it.">
+          <SectionHead n="09" eyebrow="Behind the dashboard" title="The interface was only as good as the data underneath it.">
             <p>
               The dashboard depended on multiple Excel workbooks and internal CRM data. Before the
               interface could be trusted, the underlying information had to be cleaned,
@@ -1115,7 +1109,7 @@ export default function MainstreetPage() {
 
       {/* 09 — KEY DESIGN DECISIONS */}
       <Section id="decisions">
-        <SectionHead n="09" eyebrow="Key design decisions" title="Small decisions made the dashboard easier to use." />
+        <SectionHead n="10" eyebrow="Key design decisions" title="Small decisions made the dashboard easier to use." />
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {decisions.map((d, idx) => (
             <li key={d.title} className="panel flex flex-col p-6">
@@ -1134,7 +1128,7 @@ export default function MainstreetPage() {
 
       {/* 10 — IMPACT */}
       <Section id="impact">
-        <SectionHead n="10" eyebrow="Impact" title="The Monday reporting ritual became a live business tool." />
+        <SectionHead n="11" eyebrow="Impact" title="The Monday reporting ritual became a live business tool." />
 
         <figure className="mt-10 grid items-stretch gap-4 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
           <div className="flex flex-col p-8" style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", background: "var(--bg-raised)" }}>
@@ -1194,7 +1188,7 @@ export default function MainstreetPage() {
       {/* 11 — TEAM */}
       <Section id="team">
         <div className="sec-grid">
-          <SectionHead n="11" eyebrow="Team" title="1 designer · 2 engineers" />
+          <SectionHead n="12" eyebrow="Team" title="1 designer · 2 engineers" />
 
           <figure aria-label="Team structure">
             <div className="grid gap-4 sm:grid-cols-2">
@@ -1250,7 +1244,7 @@ export default function MainstreetPage() {
       {/* 12 — DESIGN SYSTEM */}
       <Section id="design-system">
         <div className="sec-grid">
-          <SectionHead n="12" eyebrow="Design system" title="Brand clarity and financial clarity in the same system.">
+          <SectionHead n="13" eyebrow="Design system" title="Brand clarity and financial clarity in the same system.">
             <p>
               The MainStreet palette stays recognisable while adapting to an enterprise analytics
               environment: green carries the brand signal and positive movement, slate and deep
@@ -1403,7 +1397,7 @@ export default function MainstreetPage() {
       {/* 13 — LOOKING AHEAD */}
       <Section id="next">
         <div className="sec-grid">
-          <SectionHead n="13" eyebrow="Looking ahead" title="A strong foundation for the next phase of reporting." />
+          <SectionHead n="14" eyebrow="Looking ahead" title="A strong foundation for the next phase of reporting." />
           <div>
             <p className="meta">Future opportunities, not delivered features</p>
             <ul className="mt-4 grid gap-4 sm:grid-cols-3">

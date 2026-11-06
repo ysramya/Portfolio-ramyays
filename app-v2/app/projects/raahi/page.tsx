@@ -479,7 +479,7 @@ export default function RaahiPage() {
 
       <Section id="outcome">
         <div className="sec-grid">
-          <SectionHead n="01" eyebrow="The outcome" title="From “I know a dark pattern when I see one” to evidence a team can act on." />
+          <SectionHead n="02" eyebrow="The outcome" title="From “I know a dark pattern when I see one” to evidence a team can act on." />
           <div className="sec-copy lg:pt-10">
             <p>Raahi gives UX practitioners a systematic way to identify and document manipulative interface patterns while reviewing live websites.</p>
             <p>Instead of relying on gut feel, checklists, or disconnected notes, practitioners can flag a pattern directly in the browser and connect it to a shared taxonomy.</p>
@@ -510,16 +510,16 @@ export default function RaahiPage() {
       <Section id="why">
         <div className="sec-grid">
           <div>
-            <SectionHead n="02" eyebrow="Why it mattered" title="Practitioners could recognize manipulation. They couldn’t consistently prove it." />
-            <dl className="mt-10 grid grid-cols-3 gap-4" style={{ paddingLeft: 0 }}>
+            <SectionHead n="03" eyebrow="Why it mattered" title="Practitioners could recognize manipulation. They couldn’t consistently prove it." />
+            <dl className="mt-10 grid grid-cols-[repeat(3,minmax(0,1fr))] gap-4" style={{ paddingLeft: 0 }}>
               {[
                 { value: "78.9%", label: "of surveyed practitioners regularly encounter dark patterns" },
                 { value: "57+", label: "practitioners surveyed across the US and India" },
                 { value: "12", label: "in-depth practitioner interviews" },
               ].map((m) => (
-                <div key={m.value} className="flex flex-col-reverse pt-4" style={{ borderTop: "1px solid var(--rule)" }}>
+                <div key={m.value} className="flex min-h-[148px] flex-col-reverse justify-end p-3 sm:p-4" style={{ border: "1px solid var(--rule)", borderRadius: "var(--radius)", background: "var(--bg-raised)" }}>
                   <dt className="mt-2 text-[13px] leading-snug text-[var(--body)]">{m.label}</dt>
-                  <dd className="whitespace-nowrap font-[family-name:var(--font-display)] leading-none text-[var(--ink)]" style={{ fontSize: "clamp(34px, 3.6vw, 50px)" }}>
+                  <dd className="whitespace-nowrap font-[family-name:var(--font-display)] leading-none text-[var(--ink)]" style={{ fontSize: "clamp(30px, 3vw, 42px)" }}>
                     {m.value}
                   </dd>
                 </div>
@@ -584,7 +584,7 @@ export default function RaahiPage() {
 
       {/* 03 — THE WORKFLOW */}
       <Section id="workflow">
-        <SectionHead n="03" eyebrow="The workflow" title="From manual review to evidence inside the browser." />
+        <SectionHead n="04" eyebrow="The workflow" title="From manual review to evidence inside the browser." />
 
         <div className="mt-10 grid gap-3">
           <div className="p-6" style={{ border: "1px dashed var(--border-strong)", borderRadius: "var(--radius)" }}>
@@ -639,7 +639,7 @@ export default function RaahiPage() {
       {/* 04 — THE PRODUCT: real prototype, annotated */}
       <Section id="product">
         <div className="sec-grid">
-          <SectionHead n="04" eyebrow="The product" title="Detection happens where the review happens." />
+          <SectionHead n="05" eyebrow="The product" title="Detection happens where the review happens." />
           <div className="sec-copy lg:pt-10">
             <p>
               Raahi runs as a browser plugin, scanning websites in real time and surfacing potential dark patterns as they appear. A practitioner can flag the pattern directly from the page and connect it to the product&rsquo;s shared taxonomy.
@@ -698,7 +698,7 @@ export default function RaahiPage() {
 
       {/* 05 — PRODUCT MODEL */}
       <Section id="model">
-        <SectionHead n="05" eyebrow="Product model" title="One vocabulary. One workflow. One source of evidence." />
+        <SectionHead n="06" eyebrow="Product model" title="One vocabulary. One workflow. One source of evidence." />
 
         <ul className="mt-10 grid gap-4 md:grid-cols-3">
           {[
@@ -732,7 +732,7 @@ export default function RaahiPage() {
       {/* 06 — RESEARCH */}
       <Section id="research">
         <div className="sec-grid">
-          <SectionHead n="06" eyebrow="Research" title="12 interviews. 57+ surveys. One product direction.">
+          <SectionHead n="07" eyebrow="Research" title="12 interviews. 57+ surveys. One product direction.">
             <p>I combined practitioner interviews with a broader survey to understand how UX professionals identify and document dark patterns.</p>
             <p>
               The important finding wasn&rsquo;t simply that practitioners wanted a tool. It was{" "}
@@ -803,7 +803,7 @@ export default function RaahiPage() {
 
       {/* 07 — RESEARCH → PRODUCT */}
       <Section id="decisions">
-        <SectionHead n="07" eyebrow="Research → product" title="Research didn’t validate the original idea. It changed it." />
+        <SectionHead n="08" eyebrow="Research → product" title="Research didn’t validate the original idea. It changed it." />
 
         <ol className="mt-10 flex flex-col gap-4">
           {changes.map((c) => (
@@ -844,7 +844,7 @@ export default function RaahiPage() {
 
       {/* 08 — PRODUCT STRATEGY */}
       <Section id="strategy">
-        <SectionHead n="08" eyebrow="Product strategy" title="Three decisions shaped the product." />
+        <SectionHead n="09" eyebrow="Product strategy" title="Three decisions shaped the product." />
         <ul className="mt-10 grid gap-4 md:grid-cols-3">
           {strategy.map((s) => (
             <li key={s.title} className="panel flex flex-col p-6">
@@ -872,7 +872,7 @@ export default function RaahiPage() {
       {/* 09 — MY ROLE */}
       <Section id="role">
         <div className="sec-grid">
-          <SectionHead n="09" eyebrow="My role" title="I connected the research, product strategy, and experience." />
+          <SectionHead n="10" eyebrow="My role" title="I connected the research, product strategy, and experience." />
           <div className="sec-copy lg:pt-10">
             <p>As Product Designer and Co-founder, I worked across research, product strategy, UX, and cross-functional decision-making.</p>
             <p>
@@ -911,7 +911,7 @@ export default function RaahiPage() {
 
       {/* 10 — THE PROCESS */}
       <Section id="process">
-        <SectionHead n="10" eyebrow="The process" title="A research-led process with decisions tied to evidence." />
+        <SectionHead n="11" eyebrow="The process" title="A research-led process with decisions tied to evidence." />
 
         <ol className="relative mt-12 grid gap-8 sm:grid-cols-3 lg:grid-cols-6 lg:gap-4">
           <span aria-hidden className="absolute left-[8%] right-[8%] top-[22px] hidden h-px lg:block" style={{ background: "var(--border-strong)" }} />
@@ -935,7 +935,7 @@ export default function RaahiPage() {
       {/* 11 — CORE INTERACTION: flag-to-evidence */}
       <Section id="interaction">
         <div className="panel-sage p-7 sm:p-10">
-          <SectionHead n="11" eyebrow="Core interaction" title="One click turns a hunch into evidence." />
+          <SectionHead n="12" eyebrow="Core interaction" title="One click turns a hunch into evidence." />
 
           <ol className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {flagFlow.map((s, idx) => {
@@ -967,7 +967,7 @@ export default function RaahiPage() {
       {/* 12 — THE PROTOTYPE: the real demo and stills */}
       <Section id="prototype">
         <div className="sec-grid">
-          <SectionHead n="12" eyebrow="The prototype" title="Raahi works inside the browser, not beside it." />
+          <SectionHead n="13" eyebrow="The prototype" title="Raahi works inside the browser, not beside it." />
           <div className="sec-copy lg:pt-10">
             <p>A working prototype demonstrates the core interaction: detecting a potential pattern in context, classifying it, and turning the observation into documented evidence.</p>
           </div>
@@ -1000,7 +1000,7 @@ export default function RaahiPage() {
       {/* 13 — IF THIS PRODUCT SHIPPED */}
       <Section id="shipped">
         <div className="sec-grid">
-          <SectionHead n="13" eyebrow="If this product shipped" title="The real test wouldn’t be installs. It would be whether practitioners use the evidence." />
+          <SectionHead n="14" eyebrow="If this product shipped" title="The real test wouldn’t be installs. It would be whether practitioners use the evidence." />
           <div className="sec-copy lg:pt-10">
             <p>
               Raahi is a <strong className="font-medium text-[var(--ink)]">working prototype, not a shipped commercial product</strong>. There are therefore no adoption or business-impact numbers to claim.
@@ -1022,7 +1022,7 @@ export default function RaahiPage() {
 
       {/* 14 — BEFORE SHIPPING: open risks */}
       <Section id="risks">
-        <SectionHead n="14" eyebrow="Before shipping" title="The hardest problem isn’t detecting more. It’s detecting accurately enough to be trusted." />
+        <SectionHead n="15" eyebrow="Before shipping" title="The hardest problem isn’t detecting more. It’s detecting accurately enough to be trusted." />
 
         <div className="mt-10 grid gap-4 md:grid-cols-3" role="table" aria-label="Open risks by area">
           {(["Product", "Evidence", "Operations"] as const).map((area) => (
@@ -1056,7 +1056,7 @@ export default function RaahiPage() {
       {/* 15 — WHAT'S NEXT */}
       <Section id="next">
         <div className="sec-grid">
-          <SectionHead n="15" eyebrow="What’s next" title="The next step is testing whether the concept holds up in real practice." />
+          <SectionHead n="16" eyebrow="What’s next" title="The next step is testing whether the concept holds up in real practice." />
           <div>
             <ul className="grid gap-4 sm:grid-cols-3">
               {nextSteps.map((n) => (

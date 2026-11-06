@@ -441,7 +441,7 @@ export default function WellnutPage() {
 
       <Section id="outcome">
         <div className="sec-grid">
-          <SectionHead n="01" eyebrow="The outcome" title="We turned a support gap into a focused VR experience." />
+          <SectionHead n="02" eyebrow="The outcome" title="We turned a support gap into a focused VR experience." />
           <div className="sec-copy lg:pt-10">
             <p>
               Wellnut became a working VR prototype: a private environment, an empathetic avatar,
@@ -497,7 +497,7 @@ export default function WellnutPage() {
       <Section id="why">
         <div className="sec-grid">
           <div>
-            <SectionHead n="02" eyebrow="Why it mattered" title="The problem wasn’t that support didn’t exist. The barrier came before the first step." />
+            <SectionHead n="03" eyebrow="Why it mattered" title="The problem wasn’t that support didn’t exist. The barrier came before the first step." />
 
             <ul className="mt-10 grid gap-3 sm:grid-cols-2">
               {barriers.map((b) => (
@@ -512,15 +512,6 @@ export default function WellnutPage() {
                 </li>
               ))}
             </ul>
-
-            <div className="mt-4 flex items-center gap-5 p-6" style={{ border: `1px solid ${CALM}`, borderRadius: "var(--radius)", background: "var(--bg-raised)" }}>
-              <p className="whitespace-nowrap font-[family-name:var(--font-display)] leading-none text-[var(--ink)]" style={{ fontSize: "clamp(34px, 3.6vw, 48px)" }}>
-                58%
-              </p>
-              <p className="text-[14px] leading-snug text-[var(--body)]">
-                of students with chronic stress had never accessed an on-campus mental health service, despite it being free.
-              </p>
-            </div>
 
             <p className="mt-5 text-[12.5px] leading-relaxed text-[var(--muted)]">
               <strong className="font-medium text-[var(--ink)]">Qualifier:</strong> figures come from a 33-student survey at a single
@@ -545,13 +536,22 @@ export default function WellnutPage() {
             <p className="max-w-[26em] font-[family-name:var(--font-display)] text-[clamp(21px,2.2vw,28px)] leading-[1.3] text-[var(--ink)]">
               The opportunity wasn&rsquo;t another resource directory. It was a lower-friction entry point to support.
             </p>
+
+            <div className="flex items-center gap-5 p-6" style={{ border: `1px solid ${CALM}`, borderRadius: "var(--radius)", background: "var(--bg-raised)" }}>
+              <p className="whitespace-nowrap font-[family-name:var(--font-display)] leading-none text-[var(--ink)]" style={{ fontSize: "clamp(34px, 3.6vw, 48px)" }}>
+                58%
+              </p>
+              <p className="text-[14px] leading-snug text-[var(--body)]">
+                of students with chronic stress had never accessed an on-campus mental health service, despite it being free.
+              </p>
+            </div>
           </div>
         </div>
       </Section>
 
       {/* 03 — PRODUCT STRATEGY */}
       <Section id="strategy">
-        <SectionHead n="03" eyebrow="Product strategy" title="We weren’t designing a replacement for therapy. We were designing what comes before it." />
+        <SectionHead n="04" eyebrow="Product strategy" title="We weren’t designing a replacement for therapy. We were designing what comes before it." />
 
         <div className="mt-10 grid gap-3">
           <div className="p-6" style={{ border: "1px dashed var(--border-strong)", borderRadius: "var(--radius)" }}>
@@ -589,7 +589,7 @@ export default function WellnutPage() {
       {/* 04 — RESEARCH → PRODUCT */}
       <Section id="research">
         <div className="sec-grid">
-          <SectionHead n="04" eyebrow="Research → product" title="Research didn’t just validate the concept. It changed what we built.">
+          <SectionHead n="05" eyebrow="Research → product" title="Research didn’t just validate the concept. It changed what we built.">
             <p>
               A 33-student survey across six disciplines told us what students needed. A licensed
               therapist told us how to deliver it. Neither alone was enough.
@@ -668,7 +668,7 @@ export default function WellnutPage() {
       {/* 05 — THE EXPERIENCE */}
       <Section id="experience">
         <div className="sec-grid">
-          <SectionHead n="05" eyebrow="The experience" title="A focused journey from emotion to regulation." />
+          <SectionHead n="06" eyebrow="The experience" title="A focused journey from emotion to regulation." />
           <div className="sec-copy lg:pt-10">
             <p>
               Six steps, built as one continuous experience: arrive in the forest, say how you feel,
@@ -724,7 +724,7 @@ export default function WellnutPage() {
       {/* 06 — CONVERSATIONAL DESIGN */}
       <Section id="conversation">
         <div className="sec-grid">
-          <SectionHead n="06" eyebrow="Conversational design" title="Validate first. Guide second.">
+          <SectionHead n="07" eyebrow="Conversational design" title="Validate first. Guide second.">
             <p>
               Originally the avatar moved straight from emotion selection into meditation. The
               therapist consultation added a step in between.
@@ -782,7 +782,7 @@ export default function WellnutPage() {
       {/* 07 — MY ROLE */}
       <Section id="role">
         <div className="sec-grid">
-          <SectionHead n="07" eyebrow="My role" title="I connected research, coordination, and the product experience." />
+          <SectionHead n="08" eyebrow="My role" title="I connected research, coordination, and the product experience." />
           <div className="sec-copy lg:pt-10">
             <p>
               As UX Researcher and Project Coordinator, I worked across research synthesis, product
@@ -824,7 +824,7 @@ export default function WellnutPage() {
 
       {/* 08 — THE PROCESS */}
       <Section id="process">
-        <SectionHead n="08" eyebrow="The process" title="Four phases. One progressively sharper product." />
+        <SectionHead n="09" eyebrow="The process" title="Four phases. One progressively sharper product." />
 
         <ol className="relative mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           <span aria-hidden className="absolute left-[10%] right-[10%] top-[22px] hidden h-px lg:block" style={{ background: "var(--border-strong)" }} />
@@ -849,7 +849,7 @@ export default function WellnutPage() {
       {/* 09 — PRODUCT SCOPE */}
       <Section id="scope">
         <div className="sec-grid">
-          <SectionHead n="09" eyebrow="Product scope" title="One exceptional experience over five half-finished features." />
+          <SectionHead n="10" eyebrow="Product scope" title="One exceptional experience over five half-finished features." />
           <div className="sec-copy lg:pt-10">
             <p>
               Scope was a research decision, not simply an engineering constraint. The survey pointed
@@ -895,7 +895,7 @@ export default function WellnutPage() {
       {/* 10 — BUILDING THE EXPERIENCE */}
       <Section id="build">
         <div className="sec-grid">
-          <SectionHead n="10" eyebrow="From concept to prototype" title="The research had to survive contact with a real build." />
+          <SectionHead n="11" eyebrow="From concept to prototype" title="The research had to survive contact with a real build." />
           <div className="sec-copy lg:pt-10">
             <p>
               The team translated the experience model into a working Unreal environment while
@@ -912,9 +912,11 @@ export default function WellnutPage() {
           <Chain size="sm" nodes={pipeline} />
         </figure>
 
-        <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
-          <figure>
-            <div className="relative overflow-hidden" style={{ aspectRatio: "1600 / 900", borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
+        <div className="mt-4 grid gap-4 lg:grid-cols-[minmax(0,2.2fr)_minmax(0,0.8fr)] lg:items-stretch">
+          {/* The tall phone video sets the row height; the editor screenshot
+              grows to fill it rather than sitting above an empty block. */}
+          <figure className="flex flex-col">
+            <div className="relative aspect-[1600/900] overflow-hidden lg:aspect-auto lg:min-h-0 lg:flex-1" style={{ borderRadius: "var(--radius)", border: "1px solid var(--border)" }}>
               <Image src="/img/wellnut/blueprint-editor.jpg" alt="The Unreal Engine editor: the emotion-bubble widget blueprint beside the forest level." fill sizes="(max-width: 1024px) 94vw, 660px" className="object-cover" />
             </div>
             <figcaption className="mt-2.5 text-[12.5px] text-[var(--muted)]">
@@ -935,7 +937,7 @@ export default function WellnutPage() {
       {/* 11 — VALIDATION */}
       <Section id="validation">
         <div className="sec-grid">
-          <SectionHead n="11" eyebrow="Validation" title="We put the experience in front of people before calling it finished." />
+          <SectionHead n="12" eyebrow="Validation" title="We put the experience in front of people before calling it finished." />
           <div className="sec-copy lg:pt-10">
             <p>
               The prototype was exhibited at the Jarvis Innovation Showcase in May 2025. Attendees
@@ -995,7 +997,7 @@ export default function WellnutPage() {
       {/* 12 — IMPACT */}
       <Section id="impact">
         <div className="sec-grid">
-          <SectionHead n="12" eyebrow="Impact" title="The prototype moved the idea from research into something people could actually experience." />
+          <SectionHead n="13" eyebrow="Impact" title="The prototype moved the idea from research into something people could actually experience." />
           <div className="sec-copy lg:pt-10">
             <p>
               The strongest result wasn&rsquo;t a scale metric. It was moving from an abstract problem
@@ -1020,7 +1022,7 @@ export default function WellnutPage() {
       {/* 13 — IF THIS SHIPPED */}
       <Section id="shipped">
         <div className="sec-grid">
-          <SectionHead n="13" eyebrow="If this shipped" title="The real test would be whether students choose to come back." />
+          <SectionHead n="14" eyebrow="If this shipped" title="The real test would be whether students choose to come back." />
           <div className="sec-copy lg:pt-10">
             <p>
               Wellnut is a <strong className="font-medium text-[var(--ink)]">prototype, not a deployed clinical or commercial service.</strong>{" "}
@@ -1043,7 +1045,7 @@ export default function WellnutPage() {
 
       {/* 14 — BEFORE SCALING */}
       <Section id="risks">
-        <SectionHead n="14" eyebrow="Before scaling" title="The prototype answered some questions. It also exposed the next ones." />
+        <SectionHead n="15" eyebrow="Before scaling" title="The prototype answered some questions. It also exposed the next ones." />
 
         <div className="mt-10 grid gap-4 md:grid-cols-3" role="table" aria-label="Open risks by area">
           {(["Evidence", "Product", "Operations"] as const).map((area) => (
@@ -1077,7 +1079,7 @@ export default function WellnutPage() {
       {/* 15 — WHAT'S NEXT */}
       <Section id="next">
         <div className="sec-grid">
-          <SectionHead n="15" eyebrow="What’s next" title="The next phase is broader validation, not simply more features." />
+          <SectionHead n="16" eyebrow="What’s next" title="The next phase is broader validation, not simply more features." />
           <div>
             <ul className="grid gap-4 sm:grid-cols-3">
               {nextSteps.map((n) => (

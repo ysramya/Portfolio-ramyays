@@ -407,7 +407,7 @@ export default function InvisibleImpactsPage() {
 
       <Section id="outcome">
         <div className="sec-grid">
-          <SectionHead n="01" eyebrow="The outcome" title="We turned an invisible environmental cost into something people could see and feel." />
+          <SectionHead n="02" eyebrow="The outcome" title="We turned an invisible environmental cost into something people could see and feel." />
           <div className="sec-copy lg:pt-10">
             <p>
               Cost of a Click connected an AI interaction to a physical consequence: visitors used
@@ -472,7 +472,7 @@ export default function InvisibleImpactsPage() {
       <Section id="problem">
         <div className="sec-grid">
           <div>
-            <SectionHead n="02" eyebrow="The problem" title="AI feels invisible. So do its environmental costs." />
+            <SectionHead n="03" eyebrow="The problem" title="AI feels invisible. So do its environmental costs." />
             <div className="sec-copy mt-6">
               <p>
                 AI depends on physical infrastructure (data centers, energy systems, and water used
@@ -542,7 +542,7 @@ export default function InvisibleImpactsPage() {
       {/* 03 — THE OPPORTUNITY */}
       <Section id="opportunity">
         <div className="sec-grid">
-          <SectionHead n="03" eyebrow="The opportunity" title="Don’t explain the infrastructure. Make people experience it.">
+          <SectionHead n="04" eyebrow="The opportunity" title="Don’t explain the infrastructure. Make people experience it.">
             <p>
               The project reframed the challenge from information delivery to experience design. The
               central hypothesis: a physical consequence could create a stronger connection to an
@@ -601,7 +601,7 @@ export default function InvisibleImpactsPage() {
       {/* 04 — RESEARCH */}
       <Section id="research">
         <div className="sec-grid">
-          <SectionHead n="04" eyebrow="Research" title="Research moved the project from “show the impact” to “make the impact felt.”" />
+          <SectionHead n="05" eyebrow="Research" title="Research moved the project from “show the impact” to “make the impact felt.”" />
 
           <div className="lg:pt-10">
             <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -639,7 +639,7 @@ export default function InvisibleImpactsPage() {
 
       {/* 05 — THE INSIGHT */}
       <Section id="insight">
-        <SectionHead n="05" eyebrow="The insight" title="Abstract environmental data was too easy to ignore." />
+        <SectionHead n="06" eyebrow="The insight" title="Abstract environmental data was too easy to ignore." />
 
         <div className="mt-8 grid gap-4 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:gap-14">
           <p className="font-[family-name:var(--font-display)] text-[clamp(20px,2vw,26px)] leading-[1.35] text-[var(--ink)]">
@@ -683,7 +683,7 @@ export default function InvisibleImpactsPage() {
       {/* 06 — THE EXPERIENCE */}
       <Section id="experience">
         <div className="sec-grid">
-          <SectionHead n="06" eyebrow="The experience" title="Every interaction creates a visible consequence." />
+          <SectionHead n="07" eyebrow="The experience" title="Every interaction creates a visible consequence." />
           <div className="sec-copy lg:pt-10">
             <p>
               The physical and digital layers were deliberately coupled, so the environmental cost
@@ -750,7 +750,7 @@ export default function InvisibleImpactsPage() {
       {/* 07 — SYSTEM DESIGN */}
       <Section id="system">
         <div className="sec-grid">
-          <SectionHead n="07" eyebrow="System design" title="From prompt to pump." />
+          <SectionHead n="08" eyebrow="System design" title="From prompt to pump." />
           <div className="sec-copy lg:pt-10">
             <p>
               One interaction drove two loops at once.{" "}
@@ -816,7 +816,7 @@ export default function InvisibleImpactsPage() {
       {/* 08 — WHY WATER */}
       <Section id="water">
         <div className="sec-grid">
-          <SectionHead n="08" eyebrow="Design rationale" title="Water gave an invisible system a physical volume.">
+          <SectionHead n="09" eyebrow="Design rationale" title="Water gave an invisible system a physical volume.">
             <p>A number can communicate scale. A physical quantity can communicate consequence.</p>
             <p>
               The installation used real water as a tangible representation of infrastructure people
@@ -843,7 +843,7 @@ export default function InvisibleImpactsPage() {
       {/* 09 — THE DYING TREE */}
       <Section id="tree">
         <div className="sec-grid">
-          <SectionHead n="09" eyebrow="Secondary metaphor" title="The digital environment showed what the physical interaction could not.">
+          <SectionHead n="10" eyebrow="Secondary metaphor" title="The digital environment showed what the physical interaction could not.">
             <p>
               As visitors interacted, the digital environment added a second layer of consequence
               through visual change: a tree withering over time to represent the accumulated impact
@@ -892,7 +892,7 @@ export default function InvisibleImpactsPage() {
       {/* 10 — MY ROLE */}
       <Section id="role">
         <div className="sec-grid">
-          <SectionHead n="10" eyebrow="My role" title="I connected research, experience design, and physical interaction." />
+          <SectionHead n="11" eyebrow="My role" title="I connected research, experience design, and physical interaction." />
           <div className="sec-copy lg:pt-10">
             <p>
               As Lead UX Researcher I led the research process and worked across experience design,
@@ -935,7 +935,7 @@ export default function InvisibleImpactsPage() {
 
       {/* 11 — THE PROCESS */}
       <Section id="process">
-        <SectionHead n="11" eyebrow="The process" title="Research-heavy at the start. Test-heavy at the end." />
+        <SectionHead n="12" eyebrow="The process" title="Research-heavy at the start. Test-heavy at the end." />
 
         <ol className="relative mt-12 grid gap-8 sm:grid-cols-4 lg:grid-cols-7 lg:gap-3">
           <span aria-hidden className="absolute left-[7%] right-[7%] top-[22px] hidden h-px lg:block" style={{ background: "var(--border-strong)" }} />
@@ -960,7 +960,7 @@ export default function InvisibleImpactsPage() {
       {/* 12 — ITERATION */}
       <Section id="iteration">
         <div className="sec-grid">
-          <SectionHead n="12" eyebrow="Iteration" title="Testing exposed problems the concept couldn’t.">
+          <SectionHead n="13" eyebrow="Iteration" title="Testing exposed problems the concept couldn’t.">
             <p>
               Two rounds of usability testing before the exhibition surfaced physical and
               interaction friction.
@@ -1016,7 +1016,7 @@ export default function InvisibleImpactsPage() {
       {/* 13 — BEHIND THE BUILD */}
       <Section id="build">
         <div className="sec-grid">
-          <SectionHead n="13" eyebrow="Behind the build" title="The prototype had a body, a screen, and a feedback loop." />
+          <SectionHead n="14" eyebrow="Behind the build" title="The prototype had a body, a screen, and a feedback loop." />
           <div className="lg:pt-10">
             <ul className="grid gap-3 sm:grid-cols-2">
               {buildLayers.map((l) => (
@@ -1034,7 +1034,7 @@ export default function InvisibleImpactsPage() {
       {/* 14 — EXHIBITION */}
       <Section id="exhibition">
         <div className="sec-grid">
-          <SectionHead n="14" eyebrow="Exhibition" title="The final test was putting the experience in front of people." />
+          <SectionHead n="15" eyebrow="Exhibition" title="The final test was putting the experience in front of people." />
           <div className="sec-copy lg:pt-10">
             <p>
               Cost of a Click was exhibited at the{" "}
@@ -1082,7 +1082,7 @@ export default function InvisibleImpactsPage() {
       {/* 15 — IMPACT */}
       <Section id="impact">
         <div className="sec-grid">
-          <SectionHead n="15" eyebrow="Impact" title="The installation made the invisible visible, and the response was measurable." />
+          <SectionHead n="16" eyebrow="Impact" title="The installation made the invisible visible, and the response was measurable." />
           <div className="sec-copy lg:pt-10">
             <p>
               The result wasn&rsquo;t simply that visitors saw a new data visualization. The
@@ -1116,16 +1116,25 @@ export default function InvisibleImpactsPage() {
       {/* 16 — SOCIAL REACH */}
       <Section id="reach">
         <div className="sec-grid">
-          <SectionHead n="16" eyebrow="Beyond the exhibition" title="The conversation left the room.">
-            <p>
-              After the DePaul exhibition, footage of Cost of a Click circulated on TikTok and
-              reached more than <strong className="font-medium text-[var(--ink)]">6 million views</strong>, broadening the
-              public conversation around AI&rsquo;s hidden environmental cost.
-            </p>
-            <p className="text-[12.5px] leading-relaxed text-[var(--muted)]">
-              6M+ views measure reach, not adoption, and not behaviour change.
-            </p>
-          </SectionHead>
+          <div>
+            <SectionHead n="17" eyebrow="Beyond the exhibition" title="The conversation left the room.">
+              <p>
+                After the DePaul exhibition, footage of Cost of a Click circulated on TikTok and
+                reached more than <strong className="font-medium text-[var(--ink)]">6 million views</strong>, broadening the
+                public conversation around AI&rsquo;s hidden environmental cost.
+              </p>
+            </SectionHead>
+            <div className="mt-8 pl-0 md:pl-[60px]">
+              <div className="pt-4" style={{ borderTop: "1px solid var(--rule)" }}>
+                <p className="font-[family-name:var(--font-display)] leading-none text-[var(--ink)]" style={{ fontSize: "clamp(48px, 5vw, 72px)" }}>
+                  6M+
+                </p>
+                <p className="mt-3 max-w-[22em] text-[13px] leading-snug text-[var(--body)]">
+                  views of the TikTok footage after the exhibition. This measures reach, not adoption and not behaviour change.
+                </p>
+              </div>
+            </div>
+          </div>
 
           <figure className="lg:pt-10">
             <div className="video-frame mx-auto" style={{ aspectRatio: "576 / 1024", maxWidth: 320 }}>
@@ -1182,7 +1191,7 @@ export default function InvisibleImpactsPage() {
 
       {/* 17 — KEY TAKEAWAYS */}
       <Section id="takeaways">
-        <SectionHead n="17" eyebrow="Key takeaways" title="Design the experience, not just the information." />
+        <SectionHead n="18" eyebrow="Key takeaways" title="Design the experience, not just the information." />
 
         <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {takeaways.map((t) => (

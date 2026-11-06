@@ -17,7 +17,7 @@ export default function BeyondTheScreenPage() {
       eyebrow: "Interior design",
       title: "Interiors",
       description:
-        "These are my designs. I designed and executed every interior shown here, from the first concept and layout through to the finished space. Rooms hold the same questions I ask in research: how does a space guide attention, invite pause, or shape a mood before anyone notices why.",
+        "A collection of spaces I’ve imagined, designed, and brought to life. From conceptualisation and spatial planning to material selection and execution, I approach each project with an eye for detail and an understanding of how thoughtful design shapes the way we experience a space. For me, interiors are as much about how a space feels as how it looks.",
       images: getGalleryImages("interiors"),
       empty: "Interiors coming soon.",
     },

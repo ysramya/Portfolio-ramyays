@@ -17,21 +17,21 @@ export type CaseSummaryRow = { label: string; body: ReactNode };
 export default function CaseSummary({ rows }: { rows: CaseSummaryRow[] }) {
   return (
     <Section id="at-a-glance" divided={false}>
-      <div className="sec-grid">
-        <SectionHead n="00" eyebrow="At a glance" title="The short version" />
-        <dl data-reveal-group>
-          {rows.map((row) => (
+      <SectionHead n="01" eyebrow="At a glance" title="The short version" />
+      {/* Stacked, not beside the heading: six tall rows next to a short title
+          left a column of empty space the full height of the list. */}
+      <dl data-reveal-group className="mt-8">
+        {rows.map((row) => (
             <div
               key={row.label}
-              className="grid gap-1 py-5 md:grid-cols-[190px_minmax(0,1fr)] md:gap-6"
+              className="grid gap-1 py-5 md:grid-cols-[240px_minmax(0,1fr)] md:gap-10"
               style={{ borderTop: "1px solid var(--rule)" }}
             >
               <dt className="text-[13px] font-medium tracking-[0.04em] text-[var(--muted)] md:pt-1">{row.label}</dt>
-              <dd className="text-[16px] leading-[1.7] text-[var(--body)]">{typeof row.body === "string" ? <Rich>{row.body}</Rich> : row.body}</dd>
+              <dd className="max-w-[52em] text-[16px] leading-[1.7] text-[var(--body)]">{typeof row.body === "string" ? <Rich>{row.body}</Rich> : row.body}</dd>
             </div>
           ))}
-        </dl>
-      </div>
+      </dl>
     </Section>
   );
 }
