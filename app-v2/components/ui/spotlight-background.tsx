@@ -13,17 +13,21 @@ import { usePathname } from "next/navigation";
  *  - The glow takes the page's own palette (warm ivory by default, lavender
  *    on Wellnut, icy blue on Cost of a Click), the same switch PageRibbon
  *    makes, so it reads as part of the ground rather than a UI effect.
- *  - It is deliberately faint (peak 15% opacity): text under it keeps its
- *    contrast ratio, including the muted labels on cream.
+ *  - It sits BEHIND the page content (same layer as the ribbon ground), so
+ *    it never washes over text, cards or the deep green bands; it only
+ *    tints the bare ground the text sits on, and is faint enough that the
+ *    muted labels keep a 4.5:1 ratio at its centre.
  *  - Decorative only: hidden from assistive tech, never takes pointer
  *    events, and not rendered at all for touch screens or for people who
  *    have asked for reduced motion.
  */
 
+// Soft tints of each page's own ground, never darker than the muted text
+// can stand on (4.5:1 holds at the centre of the glow).
 const GLOW = {
-  ivory: "196 160 118",
-  lavender: "170 140 200",
-  blue: "100 160 215",
+  ivory: "168 196 170",
+  lavender: "190 170 225",
+  blue: "140 185 225",
 } as const;
 
 export default function SpotlightBackground() {
@@ -93,14 +97,14 @@ export default function SpotlightBackground() {
       : GLOW.ivory;
 
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-40 overflow-hidden">
+    <div aria-hidden="true" className="pointer-events-none fixed inset-0 overflow-hidden" style={{ zIndex: -1 }}>
       <div
         ref={ref}
         className="spotlight-glow absolute left-0 top-0 rounded-full"
         data-on="false"
         data-moving="false"
         style={{
-          background: `radial-gradient(circle, rgb(${rgb} / 0.15) 0%, rgb(${rgb} / 0) 70%)`,
+          background: `radial-gradient(circle, rgb(${rgb} / 0.28) 0%, rgb(${rgb} / 0) 70%)`,
         }}
       />
     </div>
