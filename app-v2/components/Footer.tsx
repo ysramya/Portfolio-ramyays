@@ -47,7 +47,7 @@ export default function Footer() {
         </div>
 
         <div className="flex items-center gap-6">
-          <div className="flex items-center" style={{ gap: 22 }}>
+          <div className="flex items-center" style={{ gap: 6 }}>
             {socials.map((s) => (
               <a
                 key={s.label}
@@ -56,7 +56,7 @@ export default function Footer() {
                 rel={s.href.startsWith("http") ? "noopener" : undefined}
                 aria-label={s.label}
                 onClick={() => trackClick(s.label)}
-                className="transition-opacity hover:opacity-60"
+                className="inline-flex h-11 w-11 items-center justify-center transition-opacity hover:opacity-60"
               >
                 <svg viewBox="0 0 24 24" className="icon-solid" aria-hidden>
                   <path d={s.path} />

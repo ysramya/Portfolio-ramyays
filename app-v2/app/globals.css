@@ -23,7 +23,7 @@
   --ink-hover: #1d3a2e;
   --body: #3d4e45; /* body copy */
   --muted: #5c6b62; /* eyebrows, labels */
-  --muted-2: #66756c; /* meta, captions */
+  --muted-2: #576660; /* meta, captions: 4.5:1 or better on every ground */
 
   /* ── Lines ── */
   --rule: #e1ded4; /* section dividers */
@@ -35,7 +35,7 @@
   /* ── Accent ──
      Section numerals. Darkened from the reference tan until the 40px
      numeral clears 3:1 against ivory (large-text AA). */
-  --numeral: #a47e61;
+  --numeral: #85593c;
 
   /* ── Deep green ── the hero and closing ground */
   --deep: #10231b;
@@ -121,7 +121,7 @@ body:has(.theme-wellnut) {
   --ink-hover: #2f2450;
   --body: #4b4363;
   --muted: #665d84;
-  --muted-2: #6f6690;
+  --muted-2: #5f5681;
 
   --rule: #e4dcf2;
   --rule-2: #ddd3ee;
@@ -129,7 +129,7 @@ body:has(.theme-wellnut) {
   --border-strong: #c4b7dd;
   --divider: #d5cae9;
 
-  --numeral: #9a6f9b;
+  --numeral: #7d527e;
 
   --deep: #241a3d;
   --deep-2: #2f2350;
@@ -157,7 +157,7 @@ body:has(.theme-coac) {
   --ink-hover: #18405f;
   --body: #39546e;
   --muted: #536c86;
-  --muted-2: #5c748d;
+  --muted-2: #4d6680;
 
   --rule: #d9e5f1;
   --rule-2: #cfdeee;
@@ -165,7 +165,7 @@ body:has(.theme-coac) {
   --border-strong: #a5c0db;
   --divider: #c7d9e9;
 
-  --numeral: #3f739e;
+  --numeral: #2f5f88;
 
   --deep: #123a5c;
   --deep-2: #17456b;
@@ -1222,6 +1222,31 @@ body:has(.theme-wellnut) .theme-deep {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+/* The fixed bar would otherwise sit over whatever a keyboard user tabs to
+   near the top of the viewport (WCAG 2.4.11, focus not obscured). */
+html {
+  scroll-padding-top: calc(var(--nav-h) + 20px);
+}
+
+/* Bypass blocks (WCAG 2.4.1): the first tab stop on every page. Hidden until
+   it has focus, then it sits above the nav. */
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 300;
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 14px;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
 }
 
 /* §32 — reduced motion. Transforms and stagger go; colour and state

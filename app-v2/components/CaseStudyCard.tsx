@@ -15,9 +15,7 @@ import type { Project } from "@/lib/projects";
 export default function CaseStudyCard({ p, index, total }: { p: Project; index: number; total: number }) {
   return (
     <div className="grid items-stretch gap-6 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:gap-10">
-      <Link
-        href={`/projects/${p.slug}`}
-        aria-label={`${p.title}: read the case study`}
+      <div
         className="pop group relative block w-full overflow-hidden"
         style={{ aspectRatio: "4 / 3", background: "var(--panel)", borderRadius: "var(--radius)" }}
       >
@@ -31,13 +29,19 @@ export default function CaseStudyCard({ p, index, total }: { p: Project; index: 
         ) : (
           <Image
             src={p.image}
-            alt={`${p.title} preview`}
+            alt=""
             fill
             sizes="(max-width: 768px) 92vw, 560px"
             className="object-cover"
           />
         )}
-      </Link>
+        {/* The link covers the picture; the pause button sits above it. */}
+        <Link
+          href={`/projects/${p.slug}`}
+          aria-label={`${p.title}: read the case study`}
+          className="absolute inset-0 z-10 block"
+        />
+      </div>
 
       <div className="flex flex-col">
         <p className="meta">

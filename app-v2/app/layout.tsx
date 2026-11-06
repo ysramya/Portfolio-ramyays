@@ -51,9 +51,14 @@ export default function RootLayout({
           attributes like cz-shortcut-listen onto <body> after the server
           render, which otherwise trips React's hydration mismatch warning. */}
       <body className="min-h-screen flex flex-col" suppressHydrationWarning>
+        <a href="#main" className="skip-link">
+          Skip to main content
+        </a>
         <PageRibbon />
         <Nav />
-        <main className="flex-1">{children}</main>
+        <main id="main" tabIndex={-1} className="flex-1 outline-none">
+          {children}
+        </main>
         <Footer />
         <VoiceflowChat />
         <Analytics />

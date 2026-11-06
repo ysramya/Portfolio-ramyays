@@ -130,7 +130,7 @@ export default function Home() {
           <SectionHead n="01" title="Case studies" />
           <Link
             href="/case-studies"
-            className="text-[14px] text-[var(--body)] transition-colors hover:text-[var(--ink)]"
+            className="inline-flex min-h-[44px] items-center text-[14px] text-[var(--body)] transition-colors hover:text-[var(--ink)]"
           >
             All case studies <span aria-hidden>&#8594;</span>
           </Link>

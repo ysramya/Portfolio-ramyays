@@ -42,7 +42,8 @@ export default function MasonryGallery({ images, emptyLabel }: { images: Gallery
             onClick={() => setOpenIndex(i)}
             className="pop relative block w-full mb-8 rounded-2xl overflow-hidden cursor-zoom-in break-inside-avoid"
             style={img.wide ? { columnSpan: "all" } : undefined}
-            aria-label={`Open ${img.alt} in lightbox`}
+            aria-label={`View larger: ${img.alt} of ${images.length}`}
+            aria-haspopup="dialog"
           >
             <Image
               src={img.src}

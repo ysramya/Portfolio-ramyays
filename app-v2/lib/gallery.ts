@@ -18,6 +18,14 @@ export type GalleryImage = {
  * section with no photos yet just renders its empty state instead of
  * crashing the build.
  */
+const ALT_NOUN: Record<string, string> = {
+  interiors: "Interior design project",
+  cityscape: "Cityscape photograph",
+  nature: "Nature photograph",
+  cooking: "Cooking photograph",
+  paintings: "Digital painting",
+};
+
 export function getGalleryImages(folder: string): GalleryImage[] {
   const dir = path.join(process.cwd(), "public", "img", "beyond-the-screen", folder);
   let files: string[] = [];
@@ -26,15 +34,17 @@ export function getGalleryImages(folder: string): GalleryImage[] {
   } catch {
     return [];
   }
+  // File names are camera numbers ("20210927 144725"), which tell a screen
+  // reader nothing, so each photo is named by its category and position.
+  const noun = ALT_NOUN[folder.toLowerCase()] ?? "Photograph";
   return files
     .filter((f) => IMAGE_EXTENSIONS.has(path.extname(f).toLowerCase()))
     .sort()
-    .map((f) => {
+    .map((f, i) => {
       const base = path.basename(f, path.extname(f));
-      const alt = base.replace(/-wide$/i, "").replace(/[-_]/g, " ").trim();
       return {
         src: `/img/beyond-the-screen/${folder}/${f}`,
-        alt: alt.charAt(0).toUpperCase() + alt.slice(1),
+        alt: `${noun} ${i + 1}`,
         wide: /-wide$/i.test(base),
       };
     });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import type { GalleryImage } from "@/lib/gallery";
@@ -17,15 +17,42 @@ export default function Lightbox({
   onNavigate: (index: number) => void;
 }) {
   const image = images[index];
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   const goPrev = useCallback(() => onNavigate((index - 1 + images.length) % images.length), [index, images.length, onNavigate]);
   const goNext = useCallback(() => onNavigate((index + 1) % images.length), [index, images.length, onNavigate]);
+
+  /* Focus moves into the viewer when it opens, stays inside while it is
+     open, and goes back to the photo that opened it on close (WCAG 2.4.3). */
+  useEffect(() => {
+    const opener = document.activeElement as HTMLElement | null;
+    closeRef.current?.focus();
+    return () => opener?.focus?.();
+  }, []);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
       if (e.key === "ArrowLeft") goPrev();
       if (e.key === "ArrowRight") goNext();
+      if (e.key === "Tab") {
+        const items = dialogRef.current?.querySelectorAll<HTMLElement>("button");
+        if (!items || items.length === 0) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        const active = document.activeElement;
+        if (e.shiftKey && active === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && active === last) {
+          e.preventDefault();
+          first.focus();
+        } else if (!dialogRef.current?.contains(active)) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -43,6 +70,7 @@ export default function Lightbox({
      page and pushed the photo off-screen. */
   return createPortal(
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-label={image.alt}
@@ -55,6 +83,7 @@ export default function Lightbox({
       onClick={onClose}
     >
       <button
+        ref={closeRef}
         type="button"
         aria-label="Close"
         onClick={onClose}
@@ -88,7 +117,7 @@ export default function Lightbox({
       </div>
 
       <p className="absolute bottom-5 left-1/2 -translate-x-1/2 text-xs text-[var(--color-ink-faint)] tracking-wide">
-        {image.alt} · {index + 1} / {images.length}
+        {image.alt} of {images.length}
       </p>
     </div>,
     document.body,
