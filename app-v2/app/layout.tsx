@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import VoiceflowChat from "@/components/VoiceflowChat";
 import Analytics from "@/components/Analytics";
 import MotionReady from "@/components/MotionReady";
-import SpotlightBackground from "@/components/ui/spotlight-background";
+import SiteCursorTrail from "@/components/ui/site-cursor-trail";
 import PageRibbon from "@/components/PageRibbon";
 import "./globals.css";
 
@@ -61,7 +61,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <SpotlightBackground />
+        <SiteCursorTrail />
         <VoiceflowChat />
         <Analytics />
         <MotionReady />
