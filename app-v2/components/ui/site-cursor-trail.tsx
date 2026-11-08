@@ -6,9 +6,10 @@ import DottedTrailCursor from "@/components/ui/dotted-trail-cursor";
 
 /**
  * Site-wide cursor trail: the dotted-trail shader in overlay mode (trail
- * only, no grid), fixed over the whole viewport so it shows on every page,
- * on ivory and on the deep-green bands alike. Held to 55% opacity so text
- * keeps its contrast. Decorative: no pointer events, hidden from assistive
+ * only, no grid), fixed behind the page content, so photos, cards and text sit
+ * on top of it and are never tinted. It shows on the open ground of every
+ * page; the hero draws its own over the wave. Opacity is capped so the
+ * small grey labels keep their contrast. Decorative: no pointer events, hidden from assistive
  * tech, and only for a real pointer with motion welcome.
  */
 export default function SiteCursorTrail() {
@@ -33,8 +34,8 @@ export default function SiteCursorTrail() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-30"
-      style={{ opacity: 0.55 }}
+      className="pointer-events-none fixed inset-0"
+      style={{ zIndex: -1, opacity: 0.7 }}
     >
       <DottedTrailCursor
         transparent

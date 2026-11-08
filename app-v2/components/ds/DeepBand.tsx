@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import DottedTrailCursor from "@/components/ui/dotted-trail-cursor";
 import RibbonField from "@/components/ui/ribbon-field";
 import { DEEP_GREEN } from "@/components/ribbonPalettes";
 
@@ -40,6 +41,19 @@ export default function DeepBand({
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <RibbonField colors={Array.isArray(ribbon) ? ribbon : DEEP_GREEN} />
           <div className="ribbon-grain absolute inset-0" />
+          <div className="absolute inset-0">
+            <DottedTrailCursor
+              transparent
+              className="h-full"
+              colorA="#7fb89a"
+              colorB="#4f8f78"
+              headRadius={70}
+              glowRadius={260}
+              trailLength={20}
+              idleDelay={250}
+              idleFade={1400}
+            />
+          </div>
         </div>
       )}
       {shapes && !ribbon && (
