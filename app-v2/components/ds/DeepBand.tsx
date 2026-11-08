@@ -21,7 +21,7 @@ export default function DeepBand({
   className = "",
   shapes = true,
   ribbon = false,
-  dots = false,
+  trail = false,
   as: Tag = "section",
 }: {
   children: ReactNode;
@@ -30,8 +30,8 @@ export default function DeepBand({
   shapes?: boolean;
   /** Animated ribbon-field gradient as the band ground (replaces the leaf shapes). Pass a palette to match a themed page; `true` uses deep green. */
   ribbon?: boolean | string[];
-  /** Dotted grid that lights up behind the cursor (replaces ribbon and leaf shapes). */
-  dots?: boolean;
+  /** Cursor trail drawn over the ribbon ground (needs `ribbon`). */
+  trail?: boolean;
   as?: "section" | "div" | "header";
 }) {
   return (
@@ -40,31 +40,28 @@ export default function DeepBand({
       data-nav="dark"
       className={`theme-deep relative overflow-hidden ${className}`}
     >
-      {dots && (
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <DottedTrailCursor
-            className="h-full"
-            backgroundColor="#10231b"
-            colorA="#3a6e58"
-            colorB="#24493a"
-            dotColor="#2c4a3d"
-            activeDotColor="#7fa890"
-            headRadius={90}
-            glowRadius={320}
-            dotSpacing={30}
-            trailLength={20}
-            idleDelay={250}
-            idleFade={1400}
-          />
-        </div>
-      )}
-      {ribbon && !dots && (
+      {ribbon && (
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <RibbonField colors={Array.isArray(ribbon) ? ribbon : DEEP_GREEN} />
           <div className="ribbon-grain absolute inset-0" />
+          {trail && (
+            <div className="absolute inset-0">
+            <DottedTrailCursor
+              transparent
+              className="h-full"
+              colorA="#7fb89a"
+              colorB="#4f8f78"
+              headRadius={70}
+              glowRadius={260}
+              trailLength={20}
+              idleDelay={250}
+              idleFade={1400}
+            />
+            </div>
+          )}
         </div>
       )}
-      {shapes && !ribbon && !dots && (
+      {shapes && !ribbon && (
         <svg
           aria-hidden="true"
           focusable="false"

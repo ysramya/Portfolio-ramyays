@@ -118,6 +118,7 @@ uniform float uRimOuter;
 uniform float uEdgeDesaturate;
 uniform float uEdgeDesaturateSpan;
 uniform float uTailTilt;
+uniform float uTransparent;
 
 out vec4 outColor;
 
@@ -188,6 +189,13 @@ void main() {
 	// Edge fades to colorA
 	float edgeFade = 1.0 - smoothstep(-uHeadRadius * uEdgeDesaturateSpan, uHeadRadius * uEdgeDesaturateSpan, bodyField);
 	vec3 tint = mix(uColorA, uColorB, blend * mix(uEdgeDesaturate, 1.0, edgeFade));
+
+	// Overlay mode: only the trail, premultiplied, no grid, see-through elsewhere
+	if (uTransparent > 0.5) {
+		float a = ink * 0.6;
+		outColor = vec4(tint * a, a);
+		return;
+	}
 
 	vec3 color = mix(uBackground, tint, ink);
 
@@ -288,6 +296,8 @@ export interface DottedTrailCursorProps {
   edgeDesaturateSpan?: number;
   /** Extra drift toward colorB along the tail, 0-1. */
   tailTilt?: number;
+  /** Draw only the trail over whatever is behind (no grid, no background). */
+  transparent?: boolean;
   /** Sizing classes for the surface. Defaults to a full-screen block. */
   className?: string;
   /** Content rendered above the grid. */
@@ -314,6 +324,7 @@ export default function DottedTrailCursor({
   edgeDesaturate = EDGE_DESATURATE,
   edgeDesaturateSpan = EDGE_DESATURATE_SPAN,
   tailTilt = TAIL_TILT,
+  transparent = false,
   className = "h-screen",
   children,
 }: DottedTrailCursorProps) {
@@ -344,6 +355,7 @@ export default function DottedTrailCursor({
     edgeDesaturate,
     edgeDesaturateSpan,
     tailTilt,
+    transparent,
   });
   const reducedMotion = usePrefersReducedMotion();
 
@@ -367,6 +379,7 @@ export default function DottedTrailCursor({
     edgeDesaturate,
     edgeDesaturateSpan,
     tailTilt,
+    transparent,
   };
 
   // Resolves every colour prop (or its theme token) to RGB for the shader
@@ -454,7 +467,7 @@ export default function DottedTrailCursor({
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    const gl = canvas.getContext("webgl2", { antialias: false, alpha: false });
+    const gl = canvas.getContext("webgl2", { antialias: false, alpha: true, premultipliedAlpha: true });
     if (!gl) return;
 
     const vertexShader = compile(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
@@ -506,6 +519,7 @@ export default function DottedTrailCursor({
       edgeDesaturate: gl.getUniformLocation(program, "uEdgeDesaturate"),
       edgeDesaturateSpan: gl.getUniformLocation(program, "uEdgeDesaturateSpan"),
       tailTilt: gl.getUniformLocation(program, "uTailTilt"),
+      transparent: gl.getUniformLocation(program, "uTransparent"),
     };
 
     const trail = new Float32Array(TRAIL_LENGTH * 2);
@@ -550,6 +564,7 @@ export default function DottedTrailCursor({
       gl.uniform1f(uniforms.edgeDesaturate, settings.edgeDesaturate);
       gl.uniform1f(uniforms.edgeDesaturateSpan, settings.edgeDesaturateSpan);
       gl.uniform1f(uniforms.tailTilt, settings.tailTilt);
+      gl.uniform1f(uniforms.transparent, settings.transparent ? 1 : 0);
     };
 
     const resize = () => {
@@ -710,8 +725,8 @@ export default function DottedTrailCursor({
     <div
       ref={containerRef}
       // Runtime colour when set; theme token otherwise
-      style={backgroundColor ? { backgroundColor } : undefined}
-      className={`relative w-full overflow-hidden ${backgroundColor ? "" : "bg-background"} ${className}`}
+      style={backgroundColor && !transparent ? { backgroundColor } : undefined}
+      className={`relative w-full overflow-hidden ${backgroundColor || transparent ? "" : "bg-background"} ${className}`}
     >
       <canvas
         ref={canvasRef}
