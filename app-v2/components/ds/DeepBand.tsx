@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import RibbonField from "@/components/ui/ribbon-field";
+import DottedTrailCursor from "@/components/ui/dotted-trail-cursor";
 import { DEEP_GREEN } from "@/components/ribbonPalettes";
 
 
@@ -20,6 +21,7 @@ export default function DeepBand({
   className = "",
   shapes = true,
   ribbon = false,
+  dots = false,
   as: Tag = "section",
 }: {
   children: ReactNode;
@@ -28,6 +30,8 @@ export default function DeepBand({
   shapes?: boolean;
   /** Animated ribbon-field gradient as the band ground (replaces the leaf shapes). Pass a palette to match a themed page; `true` uses deep green. */
   ribbon?: boolean | string[];
+  /** Dotted grid that lights up behind the cursor (replaces ribbon and leaf shapes). */
+  dots?: boolean;
   as?: "section" | "div" | "header";
 }) {
   return (
@@ -36,13 +40,31 @@ export default function DeepBand({
       data-nav="dark"
       className={`theme-deep relative overflow-hidden ${className}`}
     >
-      {ribbon && (
+      {dots && (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <DottedTrailCursor
+            className="h-full"
+            backgroundColor="#10231b"
+            colorA="#3a6e58"
+            colorB="#24493a"
+            dotColor="#2c4a3d"
+            activeDotColor="#7fa890"
+            headRadius={90}
+            glowRadius={320}
+            dotSpacing={30}
+            trailLength={20}
+            idleDelay={250}
+            idleFade={1400}
+          />
+        </div>
+      )}
+      {ribbon && !dots && (
         <div aria-hidden="true" className="pointer-events-none absolute inset-0">
           <RibbonField colors={Array.isArray(ribbon) ? ribbon : DEEP_GREEN} />
           <div className="ribbon-grain absolute inset-0" />
         </div>
       )}
-      {shapes && !ribbon && (
+      {shapes && !ribbon && !dots && (
         <svg
           aria-hidden="true"
           focusable="false"

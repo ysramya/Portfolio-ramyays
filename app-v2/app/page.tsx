@@ -71,7 +71,7 @@ export default function Home() {
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────────── */}
-      <DeepBand ribbon>
+      <DeepBand dots>
         <div
           className="wrap grid items-center gap-12 md:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] md:gap-12"
           style={{ paddingTop: "calc(var(--nav-h) + 40px)", paddingBottom: 56 }}
