@@ -192,7 +192,7 @@ void main() {
 
 	// Overlay mode: only the trail, premultiplied, no grid, see-through elsewhere
 	if (uTransparent > 0.5) {
-		float a = ink * 0.6;
+		float a = ink * 0.95;
 		outColor = vec4(tint * a, a);
 		return;
 	}
