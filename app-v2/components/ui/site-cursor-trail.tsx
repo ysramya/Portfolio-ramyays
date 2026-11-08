@@ -7,7 +7,7 @@ import DottedTrailCursor from "@/components/ui/dotted-trail-cursor";
 /**
  * Site-wide cursor trail: the dotted-trail shader in overlay mode (trail
  * only, no grid), fixed over the whole viewport so it shows on every page,
- * on ivory and on the deep-green bands alike. Held to 30% opacity so text
+ * on ivory and on the deep-green bands alike. Held to 55% opacity so text
  * keeps its contrast. Decorative: no pointer events, hidden from assistive
  * tech, and only for a real pointer with motion welcome.
  */
@@ -34,13 +34,13 @@ export default function SiteCursorTrail() {
     <div
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 z-30"
-      style={{ opacity: 0.3 }}
+      style={{ opacity: 0.55 }}
     >
       <DottedTrailCursor
         transparent
         className="h-full"
-        colorA="#7fb89a"
-        colorB="#4f8f78"
+        colorA="#5a9c82"
+        colorB="#3a7a64"
         headRadius={70}
         glowRadius={260}
         trailLength={20}
