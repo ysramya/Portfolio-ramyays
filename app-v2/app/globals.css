@@ -1938,9 +1938,8 @@ body:has(.night) footer .logo-on-dark { display: inline-block; }
 @keyframes hvDraw { to { stroke-dashoffset: 0; } }
 .hv, .night-scroll { position: relative; z-index: 1; }
 .night-scroll { position: absolute; }
-@media (max-width: 700px) { .hv-side { right: 6vw; width: 38vw; } }
+@media (max-width: 700px) { .hv-side { right: 4vw; width: var(--fw); } }
 @media (prefers-reduced-motion: reduce) { .hv-side { animation: none; opacity: 1; transform: none; } .hv-me img { animation: none; } .hv-note-path { animation: none; stroke-dashoffset: 0; } }
-@media (max-width: 700px) { .night-scroll { display: none; } }
 
 /* Old notebook page: roughened (deckled) edges, a yellowed edge, a slight tilt. */
 .approach-paper { padding: 8px 6px 10px; filter: drop-shadow(0 10px 16px rgba(0,0,0,.55)); }
@@ -1997,10 +1996,9 @@ body:has(.night) footer .logo-on-dark { display: inline-block; }
 .night-hero { --fw: clamp(130px, 18vw, 290px); padding-bottom: calc(var(--fw) * 1.07 + 36px); }
 .hv-side { width: var(--fw); }
 .hv-name { margin-top: 0; }
-@media (max-width: 700px) { .night-hero { --fw: 38vw; } }
+@media (max-width: 700px) { .night-hero { --fw: 30vw; } }
 
 /* Hero: tighter, so the tagline and illustration sit closer together */
-.night-hero { min-height: min(100svh, 700px); }
 
 /* Sticky "Next project" tab. A slim tab in a reserved right gutter (the reading
    column leaves 64px for it), so it never sits on top of text or images.
@@ -2028,3 +2026,28 @@ body:has(.night) footer .logo-on-dark { display: inline-block; }
   .has-next-fab body { padding-bottom: 46px; }
 }
 @media print { .next-fab { display: none; } }
+
+/* Hero fills the first screen, so none of the map shows above the fold. The
+   copy sits a little lower, the illustration on the bottom edge, and the
+   "Scroll to explore" cue shows on every device. */
+.night-hero { min-height: 100svh; padding-top: calc(var(--nav-h) + clamp(40px, 9vh, 120px)); }
+@media (min-width: 1200px) { .night-hero { padding-bottom: calc(var(--fw) * .3 + 56px); } }
+.night-scroll { bottom: 22px; }
+.trail { margin-top: 0; }
+
+/* Hero copy centred vertically on the screen: equal padding above and below.
+   Below 1200px the padding is large enough to keep clear of the illustration. */
+.night-hero { --p: max(calc(var(--nav-h) + 16px), min(calc(var(--fw) * 1.07 + 36px), 28svh)); padding-top: var(--p); padding-bottom: var(--p); }
+@media (min-width: 1200px) { .night-hero { --p: calc(var(--nav-h) + 16px); } }
+
+/* Phones: "Scroll to explore" stays centred; the illustration is a little smaller and tucked right so they never touch. */
+@media (max-width: 700px) { .night-scroll { left: 50%; transform: translateX(-50%); align-items: center; } .hv-side { right: 3vw; } }
+@media (max-width: 700px) { .night-scroll-line { display: none; } .night-scroll { bottom: 76px; min-height: 0; } .hv-note { top: calc(12cqw - 22px); } .hv-arrow-svg { top: -22px; } }
+
+/* Phones: the note sits above the illustration's head (centred over her), with its own arrow down to her. */
+.hv-arrow-top { display: none; }
+@media (max-width: 700px) {
+  .hv-arrow-svg { display: none; }
+  .hv-arrow-top { display: block; position: absolute; left: 0; top: 0; width: 100%; height: 100cqw; overflow: visible; color: #d9b45a; }
+  .hv-note { left: auto; right: calc(100% - 12cqw); top: -43cqw; transform: rotate(-4deg); transform-origin: right center; }
+}

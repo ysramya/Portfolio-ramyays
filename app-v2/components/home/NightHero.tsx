@@ -37,6 +37,10 @@ export default function NightHero() {
           <path className="hv-note-path" d="M-6 19 C 2 17, 8 23, 12 35" />
           <path className="hv-note-path" d="M6 30 L12 36 L16 28" />
         </svg>
+        <svg className="hv-arrow-top" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path className="hv-note-path" d="M10 -31 C 24 -30 32 -16 38 4" />
+          <path className="hv-note-path" d="M31 -4 L38 5 L43 -4" />
+        </svg>
         <div className="hv-me" aria-hidden="true">
           <Image src="/img/about/ramya-illustration.png" alt="" width={915} height={980} priority sizes="(max-width: 700px) 36vw, 290px" />
         </div>
