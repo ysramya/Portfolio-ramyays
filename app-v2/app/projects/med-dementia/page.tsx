@@ -48,7 +48,7 @@ export default function MedDementiaPage() {
 
         <div className="mt-9 flex flex-wrap gap-3">
           <Link href="/case-studies" className="btn">
-            All case studies <span aria-hidden>&#8594;</span>
+            All work <span aria-hidden>&#8594;</span>
           </Link>
           <a href="mailto:ys.ramya@gmail.com" className="btn btn-outline">
             Ask me about it

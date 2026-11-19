@@ -3,6 +3,8 @@ export type Project = {
   title: string;
   description: string;
   category: string;
+  /** What kind of product it is, in a few words (shown on the map's Work panel). */
+  productType: string;
   image: string;
   /** Optional silent loop shown in place of `image` on the homepage card. */
   video?: string;
@@ -24,7 +26,8 @@ export const projects: Project[] = [
     title: "PM Dashboard",
     description: "Replaced a manual Monday reporting ritual with a live view of $1.2B+ in assets, saving about 3 hours a week per Portfolio Manager.",
     category: "Product Operations · Power BI",
-    image: "/img/mainstreet/dashboard-mockup.png",
+    productType: "Enterprise · Internal tool",
+    image: "/img/mainstreet/dashboard.jpg",
     video: "/img/mainstreet/thumb.mp4",
     duration: "8 weeks",
     impact: { stat: "~3 hrs", label: "saved every week per Portfolio Manager, with the portfolio view in under 10 seconds" },
@@ -35,6 +38,7 @@ export const projects: Project[] = [
     title: "ASAP",
     description: "An AI planning product that turns a vague goal into a clear next step, shaped by user research and tested across three iterations.",
     category: "AI Product Strategy · Mobile",
+    productType: "Consumer · AI mobile app",
     // `image` doubles as the loop's poster and the reduced-motion fallback.
     image: "/img/asap/thumb-poster.jpg",
     video: "/video/asap-thumb.mp4",
@@ -47,6 +51,7 @@ export const projects: Project[] = [
     title: "Raahi",
     description: "A browser plugin that turns a practitioner's instinct about dark patterns into documented evidence, built from 12 interviews and a 57+ response survey.",
     category: "0→1 Product · Browser Tool",
+    productType: "Professional tool · Browser extension",
     image: "/img/raahi/laptop-mockup.png",
     video: "/img/raahi/thumb.mp4",
     duration: "16 weeks",
@@ -58,6 +63,7 @@ export const projects: Project[] = [
     title: "Wellnut",
     description: "A VR companion that lowers the barrier to student mental-health support, taken from research to a working prototype in 6 months.",
     category: "Product Research · VR",
+    productType: "Consumer · VR wellness",
     image: "/img/wellnut/vr-session.jpg",
     duration: "6 months",
     impact: { stat: "6 months", label: "from research to a working VR prototype, shown at the Jarvis Innovation Showcase" },
@@ -68,6 +74,7 @@ export const projects: Project[] = [
     title: "Invisible Impacts",
     description: "An installation that makes AI's hidden environmental cost tangible, with measured visitor response and a grant win.",
     category: "Research & Delivery · Physical Computing",
+    productType: "Experience · Physical installation",
     image: "/img/coac/laptop-mockup.png",
     video: "/img/coac/thumb.mp4",
     duration: "10 weeks",

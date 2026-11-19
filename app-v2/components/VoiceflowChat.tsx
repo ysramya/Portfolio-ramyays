@@ -21,16 +21,16 @@ type VoiceflowWindow = Window & {
 // (500 is the primary: header, launcher, buttons). Fonts and finer touches live
 // in public/voiceflow-chat.css.
 const PALETTE = {
-  50: "#f4f6f2",
-  100: "#e5eae3",
-  200: "#c9d4cc",
-  300: "#a3b5a9",
-  400: "#6f8678",
-  500: "#12271f",
-  600: "#1d3a2e",
-  700: "#10231b",
-  800: "#0b1812",
-  900: "#07100c",
+  50: "#f4f5f7",
+  100: "#e3e7ec",
+  200: "#c5ced8",
+  300: "#9aa9bb",
+  400: "#5f748c",
+  500: "#0e1822",
+  600: "#1a2a3a",
+  700: "#0b141c",
+  800: "#080f15",
+  900: "#05090d",
 };
 
 // `onReady` fires again on every mount (and twice under Strict Mode in dev);
@@ -48,7 +48,7 @@ function load() {
     environmentID: "main",
     versionVariant: "published",
     assistant: {
-      color: "#12271f",
+      color: "#0e1822",
       palette: PALETTE,
       header: { title: "Raya" },
       stylesheet: `${window.location.origin}/voiceflow-chat.css`,

@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import NightPage from "@/components/home/NightPage";
 import DeepBand from "@/components/ds/DeepBand";
 import { Section } from "@/components/ds/SectionHead";
 import CaseStudyCard from "@/components/CaseStudyCard";
 import { projects } from "@/lib/projects";
 
 export const metadata: Metadata = {
-  title: "Case Studies | Ramya Yerramilli",
+  title: "Work | Ramya Yerramilli",
   description:
-    "Five case studies in product strategy and operations: the business problem, my contribution, the decisions I influenced and the impact.",
+    "Five projects: the business problem, my contribution, the decisions I influenced and the impact.",
 };
 
 /**
@@ -16,13 +17,13 @@ export const metadata: Metadata = {
  */
 export default function CaseStudiesPage() {
   return (
-    <>
-      <DeepBand ribbon>
+    <NightPage>
+      <DeepBand>
         <div className="wrap" style={{ paddingTop: "calc(var(--nav-h) + 48px)", paddingBottom: 56 }}>
           <div className="hero-seq">
-            <p className="eyebrow eyebrow-rule">Case Studies</p>
+            <p className="eyebrow eyebrow-rule">Work</p>
             <h1 className="mt-5" style={{ fontSize: "clamp(44px, 5vw, 72px)" }}>
-              Five case studies
+              Selected work
             </h1>
             <p className="lead mt-5" style={{ maxWidth: "36em" }}>
               Each one covers the <strong>business problem</strong>, what I did, the insight, the{" "}
@@ -46,6 +47,6 @@ export default function CaseStudiesPage() {
           ))}
         </ol>
       </Section>
-    </>
+    </NightPage>
   );
 }

@@ -13,7 +13,7 @@ import type { Project } from "@/lib/projects";
 export default function ProjectTabs({ projects }: { projects: Project[] }) {
   return (
     <AnimatedTabs
-      label="Case studies"
+      label="Work"
       tabs={projects.map((p, i) => ({
         id: p.slug,
         label: p.title,

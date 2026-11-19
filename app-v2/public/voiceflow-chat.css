@@ -14,10 +14,10 @@
 
 /* Launcher */
 .vfrc-launcher {
-  background: #12271f !important;
-  color: #f7f5f0 !important;
-  border: 1px solid rgba(247, 245, 240, 0.18) !important;
-  box-shadow: 0 6px 20px rgba(16, 35, 27, 0.28) !important;
+  background: #e8b870 !important;
+  color: #1b1405 !important;
+  border: 1px solid rgba(27, 20, 5, 0.18) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35) !important;
 }
 
 /* Chat window */
@@ -28,7 +28,7 @@
 
 /* Header: deep green with the cream monogram, so the logo reads */
 .vfrc-header {
-  background: #12271f !important;
+  background: #0e1822 !important;
 }
 .vfrc-header--title {
   color: #f7f5f0 !important;

@@ -10,7 +10,7 @@
  * deep green; over ivory content it's ink on ivory. The hairline appears
  * once the page has scrolled.
  *
- * On case studies the right-hand action is "All case studies" rather than
+ * On case studies the right-hand action is "All work" rather than
  * the LinkedIn link.
  */
 
@@ -21,7 +21,7 @@ import Logo from "./Logo";
 import { trackClick } from "@/lib/analyticsClient";
 
 const links = [
-  { href: "/case-studies", label: "Case Studies" },
+  { href: "/case-studies", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/beyond-the-screen", label: "Beyond the Screen" },
   { href: "/resume.pdf", label: "Resume", external: true },
@@ -30,6 +30,7 @@ const links = [
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [onDark, setOnDark] = useState(false);
+  const [onNight, setOnNight] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const isCaseStudy = pathname?.startsWith("/projects/") ?? false;
@@ -40,11 +41,16 @@ export default function Nav() {
       // Sample the vertical middle of the nav bar against every dark band.
       const y = 38;
       let dark = false;
+      let night = false;
       document.querySelectorAll<HTMLElement>('[data-nav="dark"]').forEach((band) => {
         const r = band.getBoundingClientRect();
-        if (r.top <= y && r.bottom >= y) dark = true;
+        if (r.top <= y && r.bottom >= y) {
+          dark = true;
+          if (band.classList.contains("night")) night = true;
+        }
       });
       setOnDark(dark);
+      setOnNight(night);
     };
     probe();
     window.addEventListener("scroll", probe, { passive: true });
@@ -57,14 +63,15 @@ export default function Nav() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 ${onDark ? "theme-deep" : ""}`}
+      className={`fixed top-0 inset-x-0 z-50 ${onDark ? "theme-deep" : ""} ${onNight ? "nav-night" : ""}`}
       style={{
         /* §05 — the bar compacts and gains a hairline once scrolled, and
            restores near the top. Height and background are the only things
            that change; the bar is never hidden. */
         height: scrolled ? "calc(var(--nav-h) - 10px)" : "var(--nav-h)",
-        backgroundColor: "var(--bg)",
-        borderBottom: `1px solid ${scrolled || open ? "var(--rule)" : "transparent"}`,
+        // Over the night sky the bar dissolves into the stars instead of sitting as a block.
+        background: onNight && !open ? "linear-gradient(to bottom, rgba(7,13,18,0.96) 0%, rgba(7,13,18,0.92) 60%, rgba(7,13,18,0) 100%)" : "var(--bg)",
+        borderBottom: `1px solid ${(scrolled || open) && !(onNight && !open) ? "var(--rule)" : "transparent"}`,
         transition:
           "background-color 0.3s ease, border-color 0.3s ease, height var(--mo-standard) var(--mo-ease)",
       }}
@@ -102,7 +109,7 @@ export default function Nav() {
 
         {isCaseStudy ? (
           <Link href="/case-studies" className="btn btn-outline btn-sm hidden md:inline-flex">
-            <span aria-hidden>&#8592;</span> All case studies
+            <span aria-hidden>&#8592;</span> All work
           </Link>
         ) : (
           <a
@@ -152,7 +159,7 @@ export default function Nav() {
                   onClick={() => setOpen(false)}
                   className="block py-3 text-[15px] text-[var(--body)]"
                 >
-                  <span aria-hidden>&#8592;</span> All case studies
+                  <span aria-hidden>&#8592;</span> All work
                 </Link>
               </li>
             )}
