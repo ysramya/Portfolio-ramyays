@@ -2042,7 +2042,7 @@ body:has(.night) footer .logo-on-dark { display: inline-block; }
 
 /* Phones: "Scroll to explore" stays centred; the illustration is a little smaller and tucked right so they never touch. */
 @media (max-width: 700px) { .night-scroll { left: 50%; transform: translateX(-50%); align-items: center; } .hv-side { right: 3vw; } }
-@media (max-width: 700px) { .night-scroll-line { display: none; } .night-scroll { bottom: 76px; min-height: 0; } .hv-note { top: calc(12cqw - 22px); } .hv-arrow-svg { top: -22px; } }
+@media (max-width: 700px) { .night-scroll { bottom: 24px; min-height: 0; } .hv-note { top: calc(12cqw - 22px); } .hv-arrow-svg { top: -22px; } }
 
 /* Phones: the note sits above the illustration's head (centred over her), with its own arrow down to her. */
 .hv-arrow-top { display: none; }
