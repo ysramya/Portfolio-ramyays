@@ -11,11 +11,8 @@ export default function NightHero() {
   return (
     <section className="night-hero wrap" aria-labelledby="hero-name">
       <div className="hv">
-        <p className="eyebrow hv-in" style={{ ["--i" as string]: 0 }}>
-          Ramya Yerramilli
-        </p>
-
         <h1 id="hero-name" className="hv-name">
+          <span className="sr-only">Ramya Yerramilli, </span>
           <span className="hv-line"><span className="hv-line-in" style={{ ["--i" as string]: 1 }}>UX &amp; Product Designer</span></span>
         </h1>
 

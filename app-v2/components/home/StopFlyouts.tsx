@@ -56,6 +56,14 @@ export default function StopFlyouts() {
     document.addEventListener("click", onClick, true);
     document.addEventListener("keydown", onKey);
     if (location.hash === "#case-studies") setOpenId("projects");
+    // Coming back from a project: reopen the Work list so the next one is a click away.
+    try {
+      if (sessionStorage.getItem("reopen-work")) {
+        sessionStorage.removeItem("reopen-work");
+        setOpenId("projects");
+        requestAnimationFrame(() => document.getElementById("trail")?.scrollIntoView({ block: "start" }));
+      }
+    } catch {}
     return () => {
       document.removeEventListener("click", onClick, true);
       document.removeEventListener("keydown", onKey);
@@ -107,7 +115,7 @@ export default function StopFlyouts() {
           <ol className="grid gap-2">
             {projects.map((p, k) => (
               <li key={p.slug}>
-                <Link href={`/projects/${p.slug}`} className="work-row">
+                <Link href={`/projects/${p.slug}`} className="work-row" onClick={() => { try { sessionStorage.setItem("reopen-work", "1"); } catch {} }}>
                   <span className="work-thumb">
                     <Image src={THUMB[p.slug] ?? p.image} alt="" fill sizes="96px" className="object-cover" />
                   </span>

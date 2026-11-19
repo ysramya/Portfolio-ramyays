@@ -7,6 +7,7 @@ import Analytics from "@/components/Analytics";
 import MotionReady from "@/components/MotionReady";
 import SiteCursorTrail from "@/components/ui/site-cursor-trail";
 import PageRibbon from "@/components/PageRibbon";
+import NextProjectFab from "@/components/case-study/NextProjectFab";
 import "./globals.css";
 
 /* Two families, no third — see design-system.md §2.
@@ -64,6 +65,7 @@ export default function RootLayout({
         </a>
         <PageRibbon />
         <Nav />
+        <NextProjectFab />
         <main id="main" tabIndex={-1} className="flex-1 outline-none">
           {children}
         </main>
