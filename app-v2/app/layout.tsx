@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Prata, DM_Sans } from "next/font/google";
+import { Prata, DM_Sans, Caveat } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import VoiceflowChat from "@/components/VoiceflowChat";
@@ -18,6 +18,13 @@ const prata = Prata({
   variable: "--font-prata",
   subsets: ["latin"],
   weight: "400",
+  display: "swap",
+});
+
+const caveat = Caveat({
+  variable: "--font-hand",
+  subsets: ["latin"],
+  weight: "500",
   display: "swap",
 });
 
@@ -42,7 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${prata.variable} ${dmSans.variable}`}
+      className={`${prata.variable} ${dmSans.variable} ${caveat.variable}`}
       // The stylesheet turns on smooth scrolling for in-page links. This tells
       // Next to switch it off during route changes, so opening a page starts at
       // the top instead of visibly scrolling up from where the last one was.

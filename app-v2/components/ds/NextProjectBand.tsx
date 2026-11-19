@@ -35,7 +35,7 @@ export default function NextProjectBand({
               {cta} <span aria-hidden>&#8594;</span>
             </Link>
             <Link href="/case-studies" className="btn btn-outline">
-              All case studies
+              All work
             </Link>
           </div>
         </div>

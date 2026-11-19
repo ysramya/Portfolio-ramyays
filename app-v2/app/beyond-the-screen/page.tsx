@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getGalleryImages } from "@/lib/gallery";
 import MasonryGallery from "@/components/beyond-the-screen/MasonryGallery";
+import NightPage from "@/components/home/NightPage";
 import DeepBand from "@/components/ds/DeepBand";
 import SectionHead, { Section } from "@/components/ds/SectionHead";
 
@@ -17,7 +18,7 @@ export default function BeyondTheScreenPage() {
       eyebrow: "Interior design",
       title: "Interiors",
       description:
-        "A collection of spaces I’ve imagined, designed, and brought to life. From conceptualisation and spatial planning to material selection and execution, I approach each project with an eye for detail and an understanding of how thoughtful design shapes the way we experience a space. For me, interiors are as much about how a space feels as how it looks.",
+        "Spaces I’ve designed and brought to life, from spatial planning to materials and execution. For me, a space is as much about how it feels as how it looks.",
       images: getGalleryImages("interiors"),
       empty: "Interiors coming soon.",
     },
@@ -60,10 +61,10 @@ export default function BeyondTheScreenPage() {
   ];
 
   return (
-    <>
+    <NightPage>
       {/* Kept compact on purpose: the first gallery has to break the fold so
           visitors see there's work below, not just a title card. */}
-      <DeepBand ribbon>
+      <DeepBand>
         <div className="wrap" style={{ paddingTop: "calc(var(--nav-h) + 40px)", paddingBottom: 56 }}>
           <p className="eyebrow eyebrow-rule">Outside the work</p>
           <h1 className="mt-5">Beyond the Screen</h1>
@@ -86,6 +87,6 @@ export default function BeyondTheScreenPage() {
           </div>
         </Section>
       ))}
-    </>
+    </NightPage>
   );
 }
